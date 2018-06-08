@@ -1,0 +1,27 @@
+﻿<script src="https://apis.google.com/js/platform.js"></script>
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function (event) {
+    $('#google-login').attr('disable', 'disable');
+
+    gapi.load('auth2', function () {
+      var parms = {
+        client_id: '287029206626-rmffeodje647m9fnb78lanj8arnks303.apps.googleusercontent.com'
+      };
+      gapi.auth2.init(parms);
+
+      var GoogleAuth = gapi.auth2.getAuthInstance();
+
+      $('#google-login').removeAttr('disabled');
+
+      $('#google-login').click(function () {
+        GoogleAuth.signIn().then(function (user) {
+          var id_token = user.getAuthResponse().id_token;
+          var url = "@Url.Action("Google", "Members")?token=" + id_token;
+          window.location.href = url;
+        });
+      });
+    });
+  });
+</script>
+
+@* docs https://developers.google.com/identity/sign-in/web/backend-auth *@

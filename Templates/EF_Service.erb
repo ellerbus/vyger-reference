@@ -1,0 +1,100 @@
+<%- . ($config.Templates + "/_Utilities.ps1") -%>
+<%- $config.OutFile = "Services/$service.cs" -%>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Augment;
+using EnsureThat;
+using <%= $config.Namespace %>.Models;
+
+namespace <%= $config.Namespace %>.Services
+{
+    #region Service interface
+
+    /// <summary>
+    /// Service Interface for <%= $class_name %>
+    /// </summary>
+    public interface I<%= $service %>
+    {
+        /// <summary>
+        /// Save Changes (wrapper to DbContext)
+        /// </summary>
+        /// <returns></returns>
+        int SaveChanges();
+
+        /// <summary>
+        /// Gets a single <%= $class_name %> based on the given primary key
+        /// </summary>
+        IList<<%= $class_name %>> Get<%= $class_names %>();
+
+        /// <summary>
+        /// Gets a single <%= $class_name %> based on the given primary key
+        /// </summary>
+        <%= $class_name %> Get<%= $class_name %>(<%= $primary_keys | ForEach-Object { "$($_ | CsType) $($_.Name | Camel)" } | Combine -Sep ", " %>);
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Service Implementation for <%= $class_name %>
+    /// </summary>
+    public class <%= $service %> : I<%= $service %>
+    {
+        #region Members
+
+        private IVygerContext _db;
+        private ISecurityActor _actor;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates a new instance
+        /// </summary>
+        public <%= $service %>(
+            IVygerContext db,
+            ISecurityActor actor)
+        {
+            _db = db;
+            _actor = actor;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public int SaveChanges()
+        {
+            return _db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Gets a single <%= $class_name %> based on the given primary key
+        /// </summary>
+        public IList<<%= $class_name %>> Get<%= $class_names %>()
+        {
+            IList<<%= $class_name %>> <%= $var_names %> = _db
+                .<%= $class_names %>
+                .ToList();
+
+            return <%= $var_names %>;
+        }
+
+        /// <summary>
+        /// Gets a single <%= $class_name %> based on the given primary key
+        /// </summary>
+        public <%= $class_name %> Get<%= $class_name %>(<%= $primary_keys | ForEach-Object { "$($_ | CsType) $($_.Name | Camel)" } | Combine -Sep ", " %>)
+        {
+            <%= $class_name %> <%= $var_name %> = _db
+                .<%= $class_names %>
+                .FirstOrDefault(x => <%= $primary_keys | ForEach-Object { "x.$($_.Name | Pascal) == $($_.Name | Camel)" } | Combine -Sep " && " %>);
+
+            _actor.VerifyCan(SecurityAccess.View, <%= $var_name %>);
+
+            return <%= $var_name %>;
+        }
+
+        #endregion
+    }
+}

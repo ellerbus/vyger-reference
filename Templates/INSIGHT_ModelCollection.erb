@@ -1,0 +1,69 @@
+<%- . ($config.Templates + "/_Utilities.ps1") -%>
+<%- $config.OutFile = "Models/$collection.cs" -%>
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using Augment;
+
+namespace <%= $config.Namespace %>.Models
+{
+	///	<summary>
+	///
+	///	</summary>
+	[DebuggerDisplay("{DebuggerDisplay,nq}")]
+	public class <%= $collection %> : Collection<<%= $class_name %>>
+	{
+		#region Constructors
+
+		public <%= $collection %>()
+		{
+		}
+
+		public <%= $collection %>(IEnumerable<<%= $class_name %>> <%= $var_names %>):this()
+		{
+			foreach (<%= $class_name %> <%= $var_name %> in <%= $var_names %>)
+			{
+				Add(<%= $var_name %>);
+			}
+		}
+
+		#endregion
+
+		#region ToString/DebuggerDisplay
+
+		///	<summary>
+		///	DebuggerDisplay for this object
+		///	</summary>
+		private string DebuggerDisplay
+		{
+			get { return "Count={0}".FormatArgs(Count); }
+		}
+		
+		#endregion
+
+        #region Foreign Key Properties
+        
+        <%- foreach ($fk in $foreign_keys) { -%>
+        /////	<summary>
+        /////	Gets / Sets the foreign key to '<%= $column.Name %>'
+        /////	</summary>
+        //public <%= ($fk.Name | Pascal) -replace 'Id$', '' %> <%= ($fk.Name | Pascal) -replace 'Id$', '' %>
+        //{
+        //	get
+        //	{
+        //		return _<%= ($fk.Name | Camel) -replace 'Id$', '' %>
+        //	}
+        //	set
+        //	{
+        //		_<%= ($fk.Name | Camel) -replace 'Id$', '' %> = value;
+        //
+        //		<%= $fk.Name | Pascal %> = value == null ? default(<%= $fk | CsType %>) : value.<%= $fk.Name | Pascal %>;
+        //	}
+        //}
+        //private <%= ($fk.Name | Pascal) -replace 'Id$', '' %> _<%= ($fk.Name | Camel) -replace 'Id$', '' %>;
+        
+        <%- } -%>
+        #endregion
+	}
+}

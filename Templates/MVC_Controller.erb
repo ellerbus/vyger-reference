@@ -1,0 +1,138 @@
+<%- . ($config.Templates + "/_Utilities.ps1") -%>
+<%- $config.OutFile = "Controllers/$($class_names)Controller.cs" -%>
+using System;
+using System.Security;
+using System.Web.Mvc;
+using FluentValidation.Mvc;
+using FluentValidation.Results;
+using <%= $common_ns %>;
+using <%= $common_ns %>.Models;
+using <%= $common_ns %>.Services;
+
+namespace vyger.Web.Controllers
+{
+    [RoutePrefix("<%= $class_names %>"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
+    public class <%= $controller %> : BaseController
+    {
+        #region Members
+
+        private ISecurityActor _actor;
+        private I<%= $service %> _service;
+
+        #endregion
+
+        #region Constructors
+
+        public <%= $class_name %>sController(
+            ISecurityActor actor,
+            I<%= $service %> service)
+        {
+            _actor = actor;
+            _service = service;
+        }
+
+        #endregion
+
+        #region "On" Methods
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            if (filterContext.Exception is SecurityException)
+            {
+                filterContext.ExceptionHandled = true;
+                filterContext.Result = RedirectToAction("Index", "<%= $class_names %>");
+            }
+
+            base.OnException(filterContext);
+        }
+
+        #endregion
+
+        #region List Methods
+
+        [HttpGet, Route("Index")]
+        public ActionResult Index()
+        {
+            <%= $collection %> <%= $var_names %> = _service.Get<%= $collection %>();
+
+            return View(<%= $var_names %>);
+        }
+
+        #endregion
+
+        #region Create Methods
+
+        [HttpGet, Route("Create")]
+        public ActionResult Create()
+        {
+            <%= $class_name %> <%= $var_name %> = Get<%= $class_name %>(0);
+
+            _actor.VerifyCan(SecurityAccess.Create, <%= $var_name %>);
+
+            return View(<%= $var_name %>);
+        }
+
+        [HttpPost, Route("Create"), ValidateAntiForgeryToken]
+        public ActionResult Create(<%= $class_name %> post)
+        {
+            <%= $class_name %> <%= $var_name %> = Get<%= $class_name %>(0);
+
+            _actor.VerifyCan(SecurityAccess.Create, <%= $var_name %>);
+
+            if (ModelState.IsValid)
+            {
+				<%= $var_name %>.OverlayWith(post);
+
+                _service.Add<%= $class_name %>(<%= $var_name %>);
+
+                AddFlashMessage(FlashMessageType.Success, "Exercise <%= $class_name %> created successfully");
+
+                return RedirectToAction("Index", "<%= $class_names %>");
+            }
+
+            return View(post);
+        }
+
+        #endregion
+
+        #region Edit Methods
+
+        [HttpGet, Route("Edit/{id:int}")]
+        public ActionResult Edit(int id)
+        {
+            <%= $class_name %> <%= $var_name %> = Get<%= $class_name %>(id);
+
+            if (<%= $var_name %> == null)
+            {
+                return RedirectToAction("Index", "<%= $class_names %>");
+            }
+
+            _actor.VerifyCan(SecurityAccess.Update, <%= $var_name %>);
+
+            return View(<%= $var_name %>);
+        }
+
+        [HttpPost, Route("Edit/{id:int}"), ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, <%= $class_name %> post)
+        {
+            <%= $class_name %> <%= $var_name %> = Get<%= $class_name %>(id);
+
+            _actor.VerifyCan(SecurityAccess.Update, <%= $var_name %>);
+
+            if (ModelState.IsValid)
+            {
+				<%= $var_name %>.OverlayWith(post);
+
+                _service.SaveChanges();
+
+                AddFlashMessage(FlashMessageType.Success, "Exercise <%= $class_name %> saved successfully");
+
+                return RedirectToAction("Index", "<%= $class_names %>");
+            }
+
+            return View(<%= $var_name %>);
+        }
+
+        #endregion
+    }
+}

@@ -1,0 +1,39 @@
+﻿@{
+  ViewBag.Title = "Groups";
+}
+
+@model IList<ExerciseGroup>
+
+<div class="row justify-content-md-center">
+  <div class="col-lg-8 col-md-10">
+    <table class="table">
+      <thead>
+        <tr>
+          <th colspan="2">
+            <a href="@Url.Action(MVC.ExerciseGroups.Create())" class="btn btn-sm btn-outline-success float-right">
+              <i class="fa fa-fw fa-plus"></i> Create
+            </a>
+            Exercise Group
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var group in Model.OrderBy(x => x.GroupName))
+        {
+          <tr>
+            <td>
+              <a href="@Url.Action(MVC.ExerciseGroups.Edit(group.GroupId))" style="display: block;">
+                @group.GroupName
+              </a>
+            </td>
+            <td class="text-right">
+              <a href="@Url.Action(MVC.Exercises.Index(group.GroupId))">
+                exercises
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

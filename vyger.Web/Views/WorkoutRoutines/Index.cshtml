@@ -1,0 +1,39 @@
+@{
+  ViewBag.Title = "Routines";
+}
+
+@model IList<WorkoutRoutine>
+
+<div class="row justify-content-md-center">
+  <div class="col-lg-8 col-md-10">
+    <table class="table">
+      <thead>
+        <tr>
+          <th colspan="2">
+            <a href="@Url.Action(MVC.WorkoutRoutines.Create())" class="btn btn-sm btn-outline-success float-right">
+              <i class="fa fa-fw fa-plus"></i> Create
+            </a>
+            Routine
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var routine in Model.OrderBy(x => x.RoutineName))
+        {
+          <tr>
+            <td>
+              <a href="@Url.Action(MVC.WorkoutRoutines.Edit(routine.RoutineId))" style="display: block;">
+                @routine.RoutineName
+              </a>
+            </td>
+            <td class="text-right">
+              <a href="@Url.Action(MVC.WorkoutRoutineExercises.Index(routine.RoutineId, 1))">
+                exercises
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

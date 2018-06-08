@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{399B6E6F-0D35-40D1-9EE0-3F954D36575A}"
+	ProjectSection(SolutionItems) = preProject
+		Templates\_Utilities.ps1 = Templates\_Utilities.ps1
+		Templates\EF_Entity.erb = Templates\EF_Entity.erb
+		Templates\EF_Model.erb = Templates\EF_Model.erb
+		Templates\EF_Service.erb = Templates\EF_Service.erb
+		Templates\MODEL_Comparer.erb = Templates\MODEL_Comparer.erb
+		Templates\MVC_Controller.erb = Templates\MVC_Controller.erb
+		Templates\MVC_Create.erb = Templates\MVC_Create.erb
+		Templates\MVC_Details.erb = Templates\MVC_Details.erb
+		Templates\MVC_Edit.erb = Templates\MVC_Edit.erb
+		Templates\MVC_Index.erb = Templates\MVC_Index.erb
+		Templates\TEST_Entity.erb = Templates\TEST_Entity.erb
+		Templates\TEST_Service.erb = Templates\TEST_Service.erb
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{0DD96D9E-77D5-43E2-85BD-19252CA61152}"
+	ProjectSection(SolutionItems) = preProject
+		gencode.ps1 = gencode.ps1
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vyger.Web", "vyger.Web\vyger.Web.csproj", "{41F73821-E151-47EB-AE5A-0DBA0FADDB96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vyger.Database", "vyger.Database\vyger.Database.csproj", "{F66714F5-B1C9-4B31-AC34-D179FB598EC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vyger.Common", "vyger.Common\vyger.Common.csproj", "{A4FAAE2F-A0D2-4DBD-96A0-448CCF42F559}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vyger.Tests", "vyger.Tests\vyger.Tests.csproj", "{34F1D999-D9F2-48A1-927B-6C03F123752A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41F73821-E151-47EB-AE5A-0DBA0FADDB96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41F73821-E151-47EB-AE5A-0DBA0FADDB96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41F73821-E151-47EB-AE5A-0DBA0FADDB96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41F73821-E151-47EB-AE5A-0DBA0FADDB96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F66714F5-B1C9-4B31-AC34-D179FB598EC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F66714F5-B1C9-4B31-AC34-D179FB598EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F66714F5-B1C9-4B31-AC34-D179FB598EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F66714F5-B1C9-4B31-AC34-D179FB598EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4FAAE2F-A0D2-4DBD-96A0-448CCF42F559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4FAAE2F-A0D2-4DBD-96A0-448CCF42F559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4FAAE2F-A0D2-4DBD-96A0-448CCF42F559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4FAAE2F-A0D2-4DBD-96A0-448CCF42F559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F1D999-D9F2-48A1-927B-6C03F123752A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F1D999-D9F2-48A1-927B-6C03F123752A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F1D999-D9F2-48A1-927B-6C03F123752A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F1D999-D9F2-48A1-927B-6C03F123752A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CDA4BCC9-A6D5-42E8-9124-99F5C9496A3E}
+	EndGlobalSection
+EndGlobal

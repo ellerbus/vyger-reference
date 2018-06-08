@@ -1,0 +1,12 @@
+group_id	group_name	status_enum	created_at	updated_at
+100000	Biceps	Active	5/10/2018 3:17:36 PM	NULL
+100001	Calves	Active	5/10/2018 3:17:36 PM	NULL
+100002	Chest	Active	5/10/2018 3:17:36 PM	NULL
+100003	Forearms	Active	5/10/2018 3:17:36 PM	NULL
+100004	Legs	Active	5/10/2018 3:17:36 PM	NULL
+100005	Lower Back	Active	5/10/2018 3:17:36 PM	NULL
+100006	Shoulders	Active	5/10/2018 3:17:36 PM	NULL
+100007	Traps	Active	5/10/2018 3:17:36 PM	NULL
+100008	Triceps	Active	5/10/2018 3:17:36 PM	NULL
+100009	Upper Back	Active	5/10/2018 3:17:36 PM	NULL
+100010	Abs	None	5/11/2018 1:04:49 PM	5/29/2018 6:44:49 PM

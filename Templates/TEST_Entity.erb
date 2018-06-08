@@ -1,0 +1,48 @@
+<%- . ($config.Templates + "/_Utilities.ps1") -%>
+<%- $config.OutFile = "Common/Models/$($class_name)Tests.cs" -%>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
+using <%= $common_ns %>.Models;
+
+namespace <%= $config.Namespace %>.Common.Models
+{
+    [TestClass]
+    public class <%= $class_name %>Tests
+    {
+        #region Methods
+
+		[TestMethod]
+		public void <%= $class_name %>_OverlayWith_ShouldNot_IncludePrimaryKey()
+		{
+			var a = Design.One<<%= $class_name %>>().Build();
+			var b = Design.One<<%= $class_name %>>().Build();
+
+			a.OverlayWith(b);
+
+			<%- foreach ($c in $columns) { -%>
+			a.<%= $c.Name | Pascal %>.Should().<% if ($c.IsPrimaryKey) { %>Not<% } %>Be(b.<%= $c.Name | Pascal %>);
+			<%- } -%>
+		}
+        
+        #endregion
+
+        #region Property Tests
+        
+        <%- foreach ($c in $columns){ -%>
+        //[TestMethod]
+        //public void <%= $class_name %>_<%= $c.Name | Pascal %>_Should_DoSomething()
+        //{
+        //  var expected = <%= $c | CsValue %>;
+        //
+        //	var <%= $var_name %> = new <%= $class_name %>() { <%= $c.Name | Pascal %> = <%= $c | CsValue %> };
+        //
+        //	<%= $var_name %>.<%= $c.Name | Pascal %>.Should().Be(expected);
+        //}
+
+        <%- } -%>
+        #endregion
+    }
+}
