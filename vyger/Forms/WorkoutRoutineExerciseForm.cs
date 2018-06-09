@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using vyger.Common.Models;
+using vyger.Models;
 
-namespace vyger.Web.Models
+namespace vyger.Forms
 {
     public class WorkoutRoutineExerciseForm
     {

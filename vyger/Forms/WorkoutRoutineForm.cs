@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Augment;
+using vyger.Models;
 
-namespace vyger.Models
+namespace vyger.Forms
 {
     public class WorkoutRoutineForm : WorkoutRoutine
     {

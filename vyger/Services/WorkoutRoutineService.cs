@@ -1,4 +1,3 @@
-using System.Linq;
 using vyger.Common;
 using vyger.Models;
 
@@ -25,6 +24,11 @@ namespace vyger.Services
         /// 
         /// </summary>
         void UpdateWorkoutRoutine(string id, WorkoutRoutine overlay);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void SaveWorkoutRoutines();
     }
 
     #endregion
@@ -85,7 +89,7 @@ namespace vyger.Services
         {
             _routines.Add(add);
 
-            SaveAll(_routines);
+            SaveWorkoutRoutines();
         }
 
         /// <summary>
@@ -97,6 +101,11 @@ namespace vyger.Services
 
             routine.OverlayWith(overlay);
 
+            SaveWorkoutRoutines();
+        }
+
+        public void SaveWorkoutRoutines()
+        {
             SaveAll(_routines);
         }
 

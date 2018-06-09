@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Augment;
 namespace vyger.Models
 {
@@ -46,6 +48,19 @@ namespace vyger.Models
             foreach (Exercise exercise in exercises)
             {
                 Add(exercise);
+            }
+        }
+
+        public IEnumerable<Exercise> NotIncluding(IEnumerable<WorkoutRoutineExercise> routineExercises)
+        {
+            HashSet<string> ids = new HashSet<string>(routineExercises.Select(x => x.ExerciseId));
+
+            foreach (Exercise ex in this)
+            {
+                if (!ids.Contains(ex.Id))
+                {
+                    yield return ex;
+                }
             }
         }
 

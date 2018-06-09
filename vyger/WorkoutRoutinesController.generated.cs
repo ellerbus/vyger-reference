@@ -159,10 +159,10 @@ namespace vyger.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, vyger.Models.WorkoutRoutineForm post);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, vyger.Forms.WorkoutRoutineForm post);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(vyger.Models.WorkoutRoutineForm post)
+        public override System.Web.Mvc.ActionResult Create(vyger.Forms.WorkoutRoutineForm post)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "post", post);

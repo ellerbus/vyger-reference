@@ -165,17 +165,17 @@ namespace vyger
             }
         }
 
-        //public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<Exercise> exercises)
-        //{
-        //    foreach (Exercise exercise in exercises.OrderBy(x => x.Group.GroupName).ThenBy(x => x.Name))
-        //    {
-        //        yield return new SelectListItem()
-        //        {
-        //            Value = exercise.ExerciseId.ToString(),
-        //            Text = $"{exercise.Group.GroupName} - {exercise.Name}"
-        //        };
-        //    }
-        //}
+        public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<Exercise> exercises)
+        {
+            foreach (Exercise exercise in exercises.OrderBy(x => x.Group.Name).ThenBy(x => x.Name))
+            {
+                yield return new SelectListItem()
+                {
+                    Value = exercise.Id.ToString(),
+                    Text = $"{exercise.Group.Name} - {exercise.Category.Name} - {exercise.Name}"
+                };
+            }
+        }
 
         //public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<WorkoutRoutine> routines)
         //{
@@ -183,7 +183,7 @@ namespace vyger
         //    {
         //        yield return new SelectListItem()
         //        {
-        //            Value = routine.RoutineId.ToString(),
+        //            Value = routine.Id.ToString(),
         //            Text = routine.RoutineName
         //        };
         //    }

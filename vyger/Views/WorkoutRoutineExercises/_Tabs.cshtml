@@ -1,15 +1,15 @@
 ﻿@model WorkoutRoutineExerciseForm
 
-  <div class="form-group">
-    <div class="col-lg-12 col-md-12">
-      <ul class="nav nav-tabs">
-        @for (var w = 0; w < Model.Routine.Weeks; w++)
-        {
-          <li class="nav-item">
-            <a class="nav-link @(w + 1 == Model.Week ? "active" : "")"
-               href="@Url.Action(MVC.WorkoutRoutineExercises.Index(Model.Routine.RoutineId, w+1))">Week@(w + 1)</a>
-            </li>
-          }
-      </ul>
-    </div>
+<div class="form-group">
+  <div class="col-lg-12 col-md-12">
+    <ul class="nav nav-tabs">
+      @for (var w = 0; w < Model.Routine.Weeks; w++)
+      {
+        <li class="nav-item">
+          <a class="nav-link @(w + 1 == Model.Week ? "active" : "")"
+             href="@Url.Action(MVC.WorkoutRoutineExercises.Index(Model.Routine.Id, w+1))">Week@(w + 1)</a>
+          </li>
+        }
+    </ul>
   </div>
+</div>

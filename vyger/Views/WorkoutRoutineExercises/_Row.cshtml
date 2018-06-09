@@ -9,10 +9,10 @@
       @Html.HiddenFor(m => m.DayId)
       @Html.HiddenFor(m => m.ExerciseId)
       @Html.HiddenFor(m => m.SequenceNumber)
-      @Model.Exercise.ExerciseName
+      @Model.Exercise.Name
     </td>
     <td class="text-center">
-      <a href="@Url.Action(MVC.WorkoutRoutineExercises.Delete(Model.RoutineId, Model.DayId, Model.ExerciseId))">
+      <a href="@Url.Action(MVC.WorkoutRoutineExercises.Delete(Model.Routine.Id, Model.DayId, Model.ExerciseId))">
         <i class="fa fa-fw fa-times text-muted"></i>
       </a>
     </td>
@@ -24,7 +24,7 @@
       @if (Model.WeekId < Model.Routine.Weeks)
       {
         <a title="Copy Forward"
-           href="@Url.Action(MVC.WorkoutRoutineExercises.Copy(Model.RoutineId, Model.WeekId, Model.DayId, Model.ExerciseId))">
+           href="@Url.Action(MVC.WorkoutRoutineExercises.Copy(Model.Routine.Id, Model.WeekId, Model.DayId, Model.ExerciseId))">
           <i class="fa fa-fw fa-angle-double-right text-muted"></i>
         </a>
       }

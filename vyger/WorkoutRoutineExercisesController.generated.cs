@@ -183,7 +183,17 @@ namespace vyger.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _Row = "_Row";
+                public readonly string _Tabs = "_Tabs";
+                public readonly string Create = "Create";
+                public readonly string Delete = "Delete";
+                public readonly string Index = "Index";
             }
+            public readonly string _Row = "~/Views/WorkoutRoutineExercises/_Row.cshtml";
+            public readonly string _Tabs = "~/Views/WorkoutRoutineExercises/_Tabs.cshtml";
+            public readonly string Create = "~/Views/WorkoutRoutineExercises/Create.cshtml";
+            public readonly string Delete = "~/Views/WorkoutRoutineExercises/Delete.cshtml";
+            public readonly string Index = "~/Views/WorkoutRoutineExercises/Index.cshtml";
         }
     }
 
@@ -193,10 +203,10 @@ namespace vyger.Controllers
         public T4MVC_WorkoutRoutineExercisesController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int week);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int week);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Index(int id, int week)
+        public override System.Web.Mvc.ActionResult Index(string id, int week)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -206,10 +216,10 @@ namespace vyger.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int week, int day, int exercise, vyger.Models.WorkoutRoutineExercise post);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int week, int day, string exercise, vyger.Models.WorkoutRoutineExercise post);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(int id, int week, int day, int exercise, vyger.Models.WorkoutRoutineExercise post)
+        public override System.Web.Mvc.ActionResult Edit(string id, int week, int day, string exercise, vyger.Models.WorkoutRoutineExercise post)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -222,10 +232,10 @@ namespace vyger.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int day);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int day);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(int id, int day)
+        public override System.Web.Mvc.ActionResult Create(string id, int day)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -235,10 +245,10 @@ namespace vyger.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int day, vyger.Models.WorkoutRoutineExercise post);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int day, vyger.Forms.WorkoutRoutineExerciseForm post);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(int id, int day, vyger.Models.WorkoutRoutineExercise post)
+        public override System.Web.Mvc.ActionResult Create(string id, int day, vyger.Forms.WorkoutRoutineExerciseForm post)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -249,10 +259,10 @@ namespace vyger.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int day, int exercise);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int day, string exercise);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(int id, int day, int exercise)
+        public override System.Web.Mvc.ActionResult Delete(string id, int day, string exercise)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -263,10 +273,10 @@ namespace vyger.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int day, int exercise, vyger.Models.WorkoutRoutineExercise post);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int day, string exercise, vyger.Models.WorkoutRoutineExercise post);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(int id, int day, int exercise, vyger.Models.WorkoutRoutineExercise post)
+        public override System.Web.Mvc.ActionResult Delete(string id, int day, string exercise, vyger.Models.WorkoutRoutineExercise post)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -278,10 +288,10 @@ namespace vyger.Controllers
         }
 
         [NonAction]
-        partial void CopyOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int week, int day, int exercise);
+        partial void CopyOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int week, int day, string exercise);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Copy(int id, int week, int day, int exercise)
+        public override System.Web.Mvc.ActionResult Copy(string id, int week, int day, string exercise)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Copy);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);

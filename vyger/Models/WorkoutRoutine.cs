@@ -17,7 +17,7 @@ namespace vyger.Models
 
         public WorkoutRoutine()
         {
-            RoutineExercises = new WorkoutRoutineExerciseCollection();
+            RoutineExercises = new WorkoutRoutineExerciseCollection(this, new WorkoutRoutineExercise[0]);
         }
 
         public WorkoutRoutine(WorkoutRoutine routine)
@@ -119,7 +119,15 @@ namespace vyger.Models
         /// <summary>
         /// 
         /// </summary>
-        public WorkoutRoutineExerciseCollection RoutineExercises { get; private set; }
+        public WorkoutRoutineExerciseCollection RoutineExercises
+        {
+            get { return _routineExercises; }
+            set
+            {
+                _routineExercises = new WorkoutRoutineExerciseCollection(this, value);
+            }
+        }
+        private WorkoutRoutineExerciseCollection _routineExercises;
 
         #endregion
     }

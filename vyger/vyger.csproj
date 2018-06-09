@@ -161,6 +161,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Forms\ExerciseForm.cs" />
+    <Compile Include="Forms\WorkoutRoutineExerciseForm.cs" />
     <Compile Include="Forms\WorkoutRoutineForm.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -227,6 +228,11 @@
     <Content Include="Views\WorkoutRoutines\Edit.cshtml" />
     <Content Include="Views\WorkoutRoutines\Index.cshtml" />
     <Content Include="Views\WorkoutRoutines\_Details.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\Index.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\_Row.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\_Tabs.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\Create.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

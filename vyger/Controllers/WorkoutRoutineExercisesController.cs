@@ -1,22 +1,28 @@
 using System;
+using System.Linq;
 using System.Security;
 using System.Web.Mvc;
 using vyger.Common;
+using vyger.Forms;
 using vyger.Models;
+using vyger.Services;
 
 namespace vyger.Controllers
 {
-    [RoutePrefix("Workouts/Routines/{id:int}/Exercises"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
+    [RoutePrefix("Workouts/Routines/{id}/Exercises"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
     public partial class WorkoutRoutineExercisesController : BaseController
     {
         #region Members
+
+        private IWorkoutRoutineService _service;
 
         #endregion
 
         #region Constructors
 
-        public WorkoutRoutineExercisesController()
+        public WorkoutRoutineExercisesController(IWorkoutRoutineService service)
         {
+            _service = service;
         }
 
         #endregion
@@ -41,20 +47,19 @@ namespace vyger.Controllers
         #region List Methods
 
         [HttpGet, Route("Index")]
-        public virtual ActionResult Index(int id, int week)
+        public virtual ActionResult Index(string id, int week)
         {
-            //WorkoutRoutine routine = _service.GetWorkoutRoutine(id);
+            WorkoutRoutineExerciseForm form = new WorkoutRoutineExerciseForm();
 
-            //_actor.VerifyCan(SecurityAccess.View, routine);
+            form.Routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            //_service.AttachWorkoutRoutineExercises(routine, week, 0, 0);
+            form.Week = week;
 
-            //return View(routine);
-            throw new NotImplementedException();
+            return View(form);
         }
 
         //[HttpPost, Route("Index")]
-        //public virtual ActionResult Index(int id, int week, WorkoutRoutineExerciseForm post)
+        //public virtual ActionResult Index(string id, int week, WorkoutRoutineExerciseForm post)
         //{
         //    _service.MergeExercisesWith(id, week, post.Routine.RoutineExercises);
 
@@ -68,13 +73,13 @@ namespace vyger.Controllers
         #region Edit Methods
 
         [HttpPost, Route("Edit"), ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(int id, int week, int day, int exercise, WorkoutRoutineExercise post)
+        public virtual ActionResult Edit(string id, int week, int day, string exercise, WorkoutRoutineExercise post)
         {
             //WorkoutRoutine routine = _service.GetWorkoutRoutine(id);
 
             //if (_actor.Can(SecurityAccess.Update, routine))
             //{
-            //    post.RoutineId = routine.RoutineId;
+            //    post.Id = routine.Id;
             //    post.WeekId = week;
             //    post.DayId = day;
             //    post.ExerciseId = exercise;
@@ -96,59 +101,54 @@ namespace vyger.Controllers
         #region Create Methods
 
         [HttpGet, Route("Create")]
-        public virtual ActionResult Create(int id, int day)
+        public virtual ActionResult Create(string id, int day)
         {
-            //WorkoutRoutineExerciseForm form = GetCreateForm(id, day);
+            WorkoutRoutineExerciseForm form = GetCreateForm(id, day);
 
-            //return View(form);
-            throw new NotImplementedException();
+            return View(form);
         }
 
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
-        public virtual ActionResult Create(int id, int day, WorkoutRoutineExercise post)
+        public virtual ActionResult Create(string id, int day, WorkoutRoutineExerciseForm post)
         {
-            //WorkoutRoutineExerciseForm form = GetCreateForm(id, day);
+            WorkoutRoutineExerciseForm form = GetCreateForm(id, day);
 
-            //if (ModelState.IsValid)
-            //{
-            //    _service.AddWorkoutRoutineExercise(form.Routine, day, post.RoutineExercise.ExerciseId, post.RoutineExercise.WorkoutRoutine);
+            if (ModelState.IsValid)
+            {
+                form.Routine.RoutineExercises.Add(day, post.RoutineExercise.ExerciseId, post.RoutineExercise.WorkoutRoutine);
 
-            //    AddFlashMessage(FlashMessageType.Success, $"Successfully added to Day {day}");
+                _service.SaveWorkoutRoutines();
 
-            //    return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, 1));
-            //}
+                AddFlashMessage(FlashMessageType.Success, $"Successfully added to Day {day}");
 
-            //return View(form);
-            throw new NotImplementedException();
+                return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, 1));
+            }
+
+            return View(form);
         }
 
-        //private WorkoutRoutineExerciseForm GetCreateForm(int id, int day)
-        //{
-        //    WorkoutRoutineExerciseForm form = new WorkoutRoutineExerciseForm()
-        //    {
-        //        Routine = _service.GetWorkoutRoutine(id),
-        //        RoutineExercise = new WorkoutRoutineExercise() { WeekId = 1, DayId = day, WorkoutRoutine = "12RM, 9RM, 6RM" }
-        //    };
+        private WorkoutRoutineExerciseForm GetCreateForm(string id, int day)
+        {
+            WorkoutRoutineExerciseForm form = new WorkoutRoutineExerciseForm()
+            {
+                Routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id),
+                RoutineExercise = new WorkoutRoutineExercise() { WeekId = 1, DayId = day, WorkoutRoutine = "12RM, 9RM, 6RM" }
+            };
 
-        //    _actor.VerifyCan(SecurityAccess.Update, form.Routine);
+            form.Exercises = form.Routine
+                .AllExercises
+                .NotIncluding(form.Routine.RoutineExercises.Find(1, day, ""))
+                .ToList();
 
-        //    _service.AttachWorkoutRoutineExercises(form.Routine, 1, day, 0);
-
-        //    //  now just trim the exercises to ones that aren't in "day"
-        //    foreach (Exercise ex in form.Routine.RoutineExercises.Select(x => x.Exercise))
-        //    {
-        //        form.Routine.AllExercises.Remove(ex);
-        //    }
-
-        //    return form;
-        //}
+            return form;
+        }
 
         #endregion
 
         #region Delete Methods
 
         [HttpGet, Route("Delete")]
-        public virtual ActionResult Delete(int id, int day, int exercise)
+        public virtual ActionResult Delete(string id, int day, string exercise)
         {
             //WorkoutRoutineExerciseForm form = GetDeleteForm(id, day, exercise);
 
@@ -157,7 +157,7 @@ namespace vyger.Controllers
         }
 
         [HttpPost, Route("Delete"), ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(int id, int day, int exercise, WorkoutRoutineExercise post)
+        public virtual ActionResult Delete(string id, int day, string exercise, WorkoutRoutineExercise post)
         {
             //WorkoutRoutineExerciseForm form = GetDeleteForm(id, 0, 0);
 
@@ -169,7 +169,7 @@ namespace vyger.Controllers
             throw new NotImplementedException();
         }
 
-        //private WorkoutRoutineExerciseForm GetDeleteForm(int id, int day, int exercise)
+        //private WorkoutRoutineExerciseForm GetDeleteForm(string id, int day, string exercise)
         //{
         //    WorkoutRoutineExerciseForm form = new WorkoutRoutineExerciseForm()
         //    {
@@ -193,7 +193,7 @@ namespace vyger.Controllers
         #region Copy Methods
 
         [HttpGet, Route("Copy")]
-        public virtual ActionResult Copy(int id, int week, int day, int exercise)
+        public virtual ActionResult Copy(string id, int week, int day, string exercise)
         {
             //WorkoutRoutineExerciseForm form = GetCopyForm(id, day, exercise);
 
@@ -219,7 +219,7 @@ namespace vyger.Controllers
             throw new NotImplementedException();
         }
 
-        //private WorkoutRoutineExerciseForm GetCopyForm(int id, int day, int exercise)
+        //private WorkoutRoutineExerciseForm GetCopyForm(string id, int day, string exercise)
         //{
         //    WorkoutRoutineExerciseForm form = new WorkoutRoutineExerciseForm()
         //    {

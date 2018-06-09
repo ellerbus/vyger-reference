@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using Augment;
 using EnsureThat;
 
@@ -15,6 +16,13 @@ namespace vyger.Models
         #region Constructors
 
         public WorkoutRoutineExerciseCollection() { }
+
+        public WorkoutRoutineExerciseCollection(WorkoutRoutine routine, IEnumerable<WorkoutRoutineExercise> exercises)
+        {
+            Routine = routine;
+
+            AddRange(exercises);
+        }
 
         #endregion
 
@@ -50,8 +58,10 @@ namespace vyger.Models
         {
             item.Routine = Routine;
 
-            if (item.Routine != null && item.Exercise == null)
+            if (item.Routine != null && item.Routine.AllExercises != null && item.Exercise == null)
             {
+                //  only after the deserializer has finished it's setup
+                //  to we have the proper handles to the routine and exercises
                 item.Exercise = Routine.AllExercises.GetByPrimaryKey(item.ExerciseId);
             }
 
@@ -71,6 +81,42 @@ namespace vyger.Models
             foreach (WorkoutRoutineExercise exercise in exercises)
             {
                 Add(exercise);
+            }
+        }
+
+        public IEnumerable<WorkoutRoutineExercise> Find(int weekId, int dayId, string exerciseId)
+        {
+            return this
+                .Where(x => weekId == 0 || x.WeekId == weekId)
+                .Where(x => dayId == 0 || x.DayId == dayId)
+                .Where(x => exerciseId.IsNullOrEmpty() || x.ExerciseId.IsSameAs(exerciseId))
+                .OrderBy(x => x.WeekId)
+                .ThenBy(x => x.DayId)
+                .ThenBy(x => x.SequenceNumber)
+                .ThenBy(x => x.Exercise.Name);
+        }
+
+        public void Add(int dayId, string exerciseId, string workoutRoutine)
+        {
+            workoutRoutine = WorkoutRoutineSetCollection.Format(workoutRoutine);
+
+            Exercise exercise = Routine.AllExercises.GetByPrimaryKey(exerciseId);
+
+            List<WorkoutRoutineExercise> routineExercises = new List<WorkoutRoutineExercise>();
+
+            for (int w = 0; w < Routine.Weeks; w++)
+            {
+                WorkoutRoutineExercise routineExercise = new WorkoutRoutineExercise()
+                {
+                    Routine = Routine,
+                    Exercise = exercise,
+                    WeekId = w + 1,
+                    DayId = dayId,
+                    WorkoutRoutine = workoutRoutine,
+                    SequenceNumber = 99
+                };
+
+                Add(routineExercise);
             }
         }
 
@@ -101,3 +147,17 @@ namespace vyger.Models
         #endregion
     }
 }
+/*
+
+        /// <summary>
+        /// Saves a WorkoutRoutineExercise
+        /// </summary>
+        /// <returns></returns>
+        public void DeleteWorkoutRoutineExercise(WorkoutRoutine routine, int dayId, int exerciseId)
+        {
+            Exercise exercise = routine.AllExercises.GetByPrimaryKey(exerciseId);
+
+            IList<WorkoutRoutineExercise> routineExercises = _repository.SelectMany(routine.RoutineId, 0, dayId, exerciseId);
+
+            _repository.DeleteMany(routineExercises);
+        }*/

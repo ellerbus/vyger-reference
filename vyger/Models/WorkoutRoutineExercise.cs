@@ -2,7 +2,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using Augment;
-using vyger.Common;
 using YamlDotNet.Serialization;
 
 namespace vyger.Models
@@ -63,7 +62,6 @@ namespace vyger.Models
         ///	</summary>
 		[Required]
         [DisplayName("Week Id")]
-        [Range(Constants.MinWeeks, Constants.MaxWeeks)]
         public int WeekId { get; set; }
 
         ///	<summary>
@@ -71,7 +69,6 @@ namespace vyger.Models
         ///	</summary>
 		[Required]
         [DisplayName("Day Id")]
-        [Range(Constants.MinDays, Constants.MaxDays)]
         public int DayId { get; set; }
 
         ///	<summary>
@@ -117,6 +114,7 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'routine_id'
         ///	</summary>
+        [YamlIgnore]
         public WorkoutRoutine Routine { get; set; }
 
         ///	<summary>
@@ -129,6 +127,7 @@ namespace vyger.Models
         /// 
         /// </summary>
         /// <returns></returns>
+        [YamlIgnore]
         public WorkoutRoutineSetCollection Sets
         {
             get

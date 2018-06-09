@@ -1,7 +1,7 @@
-using System;
 using System.Security;
 using System.Web.Mvc;
 using vyger.Common;
+using vyger.Forms;
 using vyger.Models;
 using vyger.Services;
 
@@ -75,11 +75,13 @@ namespace vyger.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.AddWorkoutRoutine(new WorkoutRoutine(post));
+                WorkoutRoutine routine = new WorkoutRoutine(post);
+
+                _service.AddWorkoutRoutine(routine);
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Routine created successfully");
 
-                return RedirectToAction(MVC.WorkoutRoutines.Index());
+                return RedirectToAction(MVC.WorkoutRoutineExercises.Index(routine.Id, 1));
             }
 
             return View(post);
@@ -113,7 +115,7 @@ namespace vyger.Controllers
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Routine saved successfully");
 
-                return RedirectToAction(MVC.WorkoutRoutineExercises.Index(0, 1));
+                return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, 1));
             }
 
             return View(post);
