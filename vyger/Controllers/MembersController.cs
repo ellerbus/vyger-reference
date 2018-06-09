@@ -73,7 +73,9 @@ namespace vyger.Controllers
 
         private void EnsureDataPath(Member member)
         {
-            string path = Server.MapPath($"~/App_Data/{member.Email}");
+            string folder = Constants.GetMemberFolder(member.Email);
+
+            string path = Server.MapPath($"~/App_Data/{folder}");
 
             if (!Directory.Exists(path))
             {

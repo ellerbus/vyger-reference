@@ -83,7 +83,9 @@ namespace vyger.Services
                 Ensure.That(Actor, nameof(Actor)).IsNotNull();
                 Ensure.That(Actor.Email, nameof(Actor.Email)).IsNotEmpty();
 
-                string path = System.Web.Hosting.HostingEnvironment.MapPath($"~/App_Data/{Actor.Email}");
+                string folder = Constants.GetMemberFolder(Actor.Email);
+
+                string path = System.Web.Hosting.HostingEnvironment.MapPath($"~/App_Data/{folder}");
 
                 return Path.Combine(path, typeof(T).Name + ".yaml");
             }

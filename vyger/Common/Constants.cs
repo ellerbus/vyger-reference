@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Text;
+using Augment;
 
 namespace vyger.Common
 {
@@ -35,6 +37,26 @@ namespace vyger.Common
 
         public const int MinWeight = 1;
         public const int MaxWeight = 9999;
+
+        public static string GetMemberFolder(string email)
+        {
+            StringBuilder hash = new StringBuilder();
+
+            if (email.IsNotEmpty())
+            {
+                using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+                {
+                    byte[] bytes = md5.ComputeHash(new UTF8Encoding().GetBytes(email));
+
+                    for (int i = 0; i < bytes.Length; i++)
+                    {
+                        hash.Append(bytes[i].ToString("x2"));
+                    }
+                }
+            }
+
+            return hash.ToString();
+        }
 
         #endregion
 
