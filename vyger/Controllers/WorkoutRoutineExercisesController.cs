@@ -93,6 +93,24 @@ namespace vyger.Controllers
             return Json(new { message = "Cannot Update Routine" });
         }
 
+        [HttpPost, Route("Sequence"), ValidateAntiForgeryToken]
+        public virtual ActionResult Sequence(string id, int week, int day, string exercises)
+        {
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
+
+            if (routineExercise != null)
+            {
+                routineExercise.WorkoutRoutine = WorkoutRoutineSetCollection.Format(post.WorkoutRoutine);
+                routineExercise.SequenceNumber = post.SequenceNumber;
+
+                _service.SaveWorkoutRoutines();
+
+                return Json(new { message = "Saved" });
+            }
+
+            return Json(new { message = "Cannot Update Routine" });
+        }
+
         #endregion
 
         #region Create Methods
