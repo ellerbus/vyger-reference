@@ -83,6 +83,7 @@ namespace vyger.Controllers
             if (routineExercise != null)
             {
                 routineExercise.WorkoutRoutine = WorkoutRoutineSetCollection.Format(post.WorkoutRoutine);
+                routineExercise.SequenceNumber = post.SequenceNumber;
 
                 _service.SaveWorkoutRoutines();
 
