@@ -120,6 +120,16 @@ namespace vyger.Models
             }
         }
 
+        public void DeleteWorkoutRoutineExercise(int dayId, string exerciseId)
+        {
+            IList<WorkoutRoutineExercise> remove = Find(0, dayId, exerciseId).ToList();
+
+            foreach (WorkoutRoutineExercise ex in remove)
+            {
+                Remove(ex);
+            }
+        }
+
         #endregion
 
         #region Foreign Key Properties
@@ -147,17 +157,3 @@ namespace vyger.Models
         #endregion
     }
 }
-/*
-
-        /// <summary>
-        /// Saves a WorkoutRoutineExercise
-        /// </summary>
-        /// <returns></returns>
-        public void DeleteWorkoutRoutineExercise(WorkoutRoutine routine, int dayId, int exerciseId)
-        {
-            Exercise exercise = routine.AllExercises.GetByPrimaryKey(exerciseId);
-
-            IList<WorkoutRoutineExercise> routineExercises = _repository.SelectMany(routine.RoutineId, 0, dayId, exerciseId);
-
-            _repository.DeleteMany(routineExercises);
-        }*/

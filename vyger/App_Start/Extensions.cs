@@ -167,7 +167,7 @@ namespace vyger
 
         public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<Exercise> exercises)
         {
-            foreach (Exercise exercise in exercises.OrderBy(x => x.Group.Name).ThenBy(x => x.Name))
+            foreach (Exercise exercise in exercises.OrderBy(x => x.Group.Name).ThenBy(x => x.Category.Name).ThenBy(x => x.Name))
             {
                 yield return new SelectListItem()
                 {

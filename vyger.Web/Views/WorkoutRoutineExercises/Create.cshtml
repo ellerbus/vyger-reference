@@ -13,11 +13,14 @@
       @Html.HiddenFor(m => m.RoutineExercise.WeekId);
       @Html.HiddenFor(m => m.RoutineExercise.DayId);
       <div class="form-group">
-        @Html.DropDownListFor(m => m.RoutineExercise.ExerciseId, Model.Exercises.ToSelectList(), "(exercise)", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.RoutineExercise.ExerciseId, Model.Routine.AllExercises.ToSelectList(), "(exercise)", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.RoutineExercise.ExerciseId, "", new { @class = "form-text text-danger" })
       </div>
       <div class="form-group">
-        @Html.TextBoxFor(m => m.RoutineExercise.WorkoutRoutine, new { @class = "form-control", placeholder = "workout routine" })
+        <span class="form-text text-muted">
+          The default workout routine (pattern) for the selected exercise
+        </span>
+        @Html.TextBoxFor(m => m.RoutineExercise.WorkoutRoutine, new { @class = "form-control form-control-sm workout-pattern", placeholder = "workout routine" })
         @Html.ValidationMessageFor(m => m.RoutineExercise.WorkoutRoutine, "", new { @class = "form-text text-danger" })
       </div>
 

@@ -5,6 +5,7 @@
   {
     <td class="drag-handler"></td>
     <td>
+      @Html.HiddenFor(m => m.RoutineId)
       @Html.HiddenFor(m => m.WeekId)
       @Html.HiddenFor(m => m.DayId)
       @Html.HiddenFor(m => m.ExerciseId)
@@ -17,7 +18,7 @@
       </a>
     </td>
     <td>
-      @Html.TextBoxFor(m => m.WorkoutRoutine, new { @class = "form-control form-control-sm", style = "font-family: 'Courier New', Courier, monospace" })
+      @Html.TextBoxFor(m => m.WorkoutRoutine, new { @class = "form-control form-control-sm workout-pattern" })
       @Html.ValidationMessageFor(m => m.WorkoutRoutine, "", new { @class = "form-text text-danger" })
     </td>
     <td class="text-center" style="width: 32px;">

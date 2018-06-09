@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Security;
 using System.Web.Mvc;
+using Augment;
 using vyger.Common;
 using vyger.Forms;
 using vyger.Models;
@@ -75,25 +76,20 @@ namespace vyger.Controllers
         [HttpPost, Route("Edit"), ValidateAntiForgeryToken]
         public virtual ActionResult Edit(string id, int week, int day, string exercise, WorkoutRoutineExercise post)
         {
-            //WorkoutRoutine routine = _service.GetWorkoutRoutine(id);
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            //if (_actor.Can(SecurityAccess.Update, routine))
-            //{
-            //    post.Id = routine.Id;
-            //    post.WeekId = week;
-            //    post.DayId = day;
-            //    post.ExerciseId = exercise;
+            WorkoutRoutineExercise routineExercise = routine.RoutineExercises.Find(week, day, exercise).FirstOrDefault();
 
-            //    WorkoutRoutineExercise routineExercise = _service.SaveWorkoutRoutineExercise(post);
+            if (routineExercise != null)
+            {
+                routineExercise.WorkoutRoutine = WorkoutRoutineSetCollection.Format(post.WorkoutRoutine);
 
-            //    return Json(routineExercise);
-            //}
+                _service.SaveWorkoutRoutines();
 
-            //Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            //Response.StatusDescription = "Cannot Update Routine";
+                return Json(new { routineExercise.WorkoutRoutine });
+            }
 
-            //return Json(new { message = "Cannot Update Routine" });
-            throw new NotImplementedException();
+            return Json(new { message = "Cannot Update Routine" });
         }
 
         #endregion
@@ -150,43 +146,39 @@ namespace vyger.Controllers
         [HttpGet, Route("Delete")]
         public virtual ActionResult Delete(string id, int day, string exercise)
         {
-            //WorkoutRoutineExerciseForm form = GetDeleteForm(id, day, exercise);
+            WorkoutRoutineExerciseForm form = GetDeleteForm(id, day, exercise);
 
-            //return View(form);
-            throw new NotImplementedException();
+            return View(form);
         }
 
         [HttpPost, Route("Delete"), ValidateAntiForgeryToken]
         public virtual ActionResult Delete(string id, int day, string exercise, WorkoutRoutineExercise post)
         {
-            //WorkoutRoutineExerciseForm form = GetDeleteForm(id, 0, 0);
+            WorkoutRoutineExerciseForm form = GetDeleteForm(id, 0, "");
 
-            //_service.DeleteWorkoutRoutineExercise(form.Routine, day, exercise);
+            form.Routine.RoutineExercises.DeleteWorkoutRoutineExercise(day, exercise);
 
-            //AddFlashMessage(FlashMessageType.Success, $"Exercise successfully removed from Day {day}");
+            _service.SaveWorkoutRoutines();
 
-            //return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, 1));
-            throw new NotImplementedException();
+            AddFlashMessage(FlashMessageType.Success, $"Exercise successfully removed from Day {day}");
+
+            return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, 1));
         }
 
-        //private WorkoutRoutineExerciseForm GetDeleteForm(string id, int day, string exercise)
-        //{
-        //    WorkoutRoutineExerciseForm form = new WorkoutRoutineExerciseForm()
-        //    {
-        //        Routine = _service.GetWorkoutRoutine(id)
-        //    };
+        private WorkoutRoutineExerciseForm GetDeleteForm(string id, int day, string exercise)
+        {
+            WorkoutRoutineExerciseForm form = new WorkoutRoutineExerciseForm()
+            {
+                Routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id)
+            };
 
-        //    _actor.VerifyCan(SecurityAccess.Update, form.Routine);
+            if (day > 0 || exercise.IsNotEmpty())
+            {
+                form.RoutineExercise = form.Routine.RoutineExercises.Find(1, day, exercise).FirstOrDefault();
+            }
 
-        //    if (day > 0 || exercise > 0)
-        //    {
-        //        _service.AttachWorkoutRoutineExercises(form.Routine, 1, day, exercise);
-
-        //        form.RoutineExercise = form.Routine.RoutineExercises.First();
-        //    }
-
-        //    return form;
-        //}
+            return form;
+        }
 
         #endregion
 

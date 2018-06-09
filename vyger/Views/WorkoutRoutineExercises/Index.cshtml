@@ -53,23 +53,69 @@
   <script type="text/javascript">
     $(function ()
     {
-      $('textarea').autogrow({ vertical: true, horizontal: false });
-
-      $('.collapse').on('shown.bs.collapse', function (e)
+      function resequence()
       {
-        var $card = $(this).closest('.card');
+        var ids = [];
 
-        $('html,body').animate({ scrollTop: $card.offset().top - 50 }, 500);
+        $('table.table-sortable').find('tbody').find('tr').each(function (idx)
+        {
+          var $exId = $(this).find('input[name$=ExerciseId]');
+          var $seq = $(this).find('input[name$=SequenceNumber]');
+
+          $seq.val(idx + 1);
+
+          ids.push($exId.val());
+        });
+
+        alert(ids.join(','));
+      }
+
+      var url = '@Url.Action(MVC.WorkoutRoutineExercises.Index(Model.Routine.Id, Model.Week))';
+
+      $('input[name$=WorkoutRoutine]').change(function ()
+      {
+        var $tr = $(this).closest('tr');
+
+        var routine_exercise = {
+          WeekId: $tr.find('input[name$=WeekId]').val(),
+          DayId: $tr.find('input[name$=DayId]').val(),
+          ExerciseId: $tr.find('input[name$=ExerciseId]').val(),
+          WorkoutRoutine: $tr.find('input[name$=WorkoutRoutine]').val(),
+          SequenceNumber: $tr.find('input[name$=SequenceNumber]').val(),
+          __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val()
+        };
+
+        routine_exercise.week = routine_exercise.WeekId;
+        routine_exercise.day = routine_exercise.DayId;
+        routine_exercise.exercise = routine_exercise.ExerciseId;
+
+        var name = $tr.find('td').eq(1).html();
+
+        var post_url = url.replace('/Index', '/Edit') + '&day=' + routine_exercise.DayId + '&exercise=' + routine_exercise.ExerciseId;
+
+        $.post(post_url, routine_exercise)
+          .done(function (data)
+          {
+            var msg = 'Successfully Updated ' + name +
+              ' (day ' + routine_exercise.DayId + ')';
+
+            $tr.find('input[name$=WorkoutRoutine]').val(data.WorkoutRoutine);
+
+            $.growl.success(msg);
+          })
+          .fail(function (xhr)
+          {
+            var msg = 'Could Not Update ' + name +
+              ' (day ' + routine_exercise.DayId + ')' +
+              ' <br/> ' + xhr.statusText;
+
+            $.growl.danger(msg);
+          });
       });
 
       $('button[type=submit]').click(function ()
       {
-        var $table = $('table.table-sortable').find('tbody').find('tr').each(function (idx)
-        {
-          var $seq = $(this).find('input[name$=SequenceNumber]');
-
-          $seq.val(idx + 1);
-        });
+        resequence();
       });
 
       $('.table-sortable').sortable({
@@ -77,7 +123,14 @@
         containerSelector: 'table',
         itemPath: '> tbody',
         itemSelector: 'tr',
-        placeholder: '<tr class="placeholder"/>'
+        placeholder: '<tr class="placeholder"/>',
+        delay: 250,
+        onDrop: function ($item, container, _super)
+        {
+          resequence();
+
+          _super($item, container);
+        }
       });
     });
   </script>

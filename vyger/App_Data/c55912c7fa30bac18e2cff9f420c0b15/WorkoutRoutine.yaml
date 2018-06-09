@@ -4,26 +4,6 @@
   Days: 2
   RoutineExercises:
   - WeekId: 1
-    DayId: 1
-    ExerciseId: LG-M-LPR
-    SequenceNumber: 99
-    WorkoutRoutine: S!*60%x5, S!*70%x5, S!*80%x5, S!*90%x5, 1RM*85%x5
-  - WeekId: 2
-    DayId: 1
-    ExerciseId: LG-M-LPR
-    SequenceNumber: 99
-    WorkoutRoutine: S!*60%x5, S!*70%x5, S!*80%x5, S!*90%x5, 1RM*85%x5
-  - WeekId: 3
-    DayId: 1
-    ExerciseId: LG-M-LPR
-    SequenceNumber: 99
-    WorkoutRoutine: S!*60%x5, S!*70%x5, S!*80%x5, S!*90%x5, 1RM*85%x5
-  - WeekId: 4
-    DayId: 1
-    ExerciseId: LG-M-LPR
-    SequenceNumber: 99
-    WorkoutRoutine: S!*60%x5, S!*70%x5, S!*80%x5, S!*90%x5, 1RM*85%x5
-  - WeekId: 1
     DayId: 2
     ExerciseId: LB-B-DLF
     SequenceNumber: 99
@@ -32,7 +12,7 @@
     DayId: 2
     ExerciseId: LB-B-DLF
     SequenceNumber: 99
-    WorkoutRoutine: S!*60%x5, S!*70%x5, S!*80%x5, S!*90%x5, 1RM*85%x5
+    WorkoutRoutine: S!*60%x5, S!*70%x5, S!*80%x5, S!*90%x5, 1RM*90%x3
   - WeekId: 3
     DayId: 2
     ExerciseId: LB-B-DLF
