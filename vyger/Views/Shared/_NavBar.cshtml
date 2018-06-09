@@ -1,0 +1,58 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary border-bottom">
+  <a class="navbar-brand" href="@Url.Action(MVC.Home.Index())">
+    <img src="@Url.Content("~/Content/NavBar.png")"
+         title="@Constants.Title" width="30" height="30"
+         class="mr-md-2" alt="@Constants.Title" />
+    @Constants.Title
+  </a>
+  @if (User.Identity.IsAuthenticated)
+  {
+    <button class="navbar-toggler" type="button"
+            data-toggle="collapse" data-target="#mainNavBar"
+            aria-controls="mainNavBar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNavBar">
+      <ul class="navbar-nav">
+        @*
+            <li class="nav-item mr-2">
+              <a class="nav-link" href="@Url.Action(MVC.WorkoutLogs.Index())">Logs</a>
+            </li>
+          <li class="nav-item mr-2">
+            <a class="nav-link" href="@Url.Action(MVC.WorkoutPlans.Index())">Plans</a>
+          </li>
+          <li class="nav-item mr-2">
+            <a class="nav-link" href="@Url.Action(MVC.WorkoutRoutines.Index())">Routines</a>
+          </li>
+        *@
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="@Url.Action(MVC.Exercises.Index())">Exercises</a>
+        </li>
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="@Url.Action(MVC.ExerciseGroups.Index())">Groups</a>
+        </li>
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="@Url.Action(MVC.ExerciseCategories.Index())">CATEGORIES</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="@Url.Action("Logout", "Members")">Logout</a>
+        </li>
+      </ul>
+    </div>
+  }
+  else
+  {
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a href="#" id="google-login" class="nav-link">
+          <i class="fab fa-google pr-1"></i>
+          <span class="d-none d-sm-inline"> Login</span>
+        </a>
+      </li>
+    </ul>
+    @Html.Partial("_GoogleLogin")
+  }
+</nav>
+

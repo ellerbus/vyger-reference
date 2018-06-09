@@ -1,0 +1,53 @@
+﻿@{
+  ViewBag.Title = "Exercises";
+}
+
+@model IList<Exercise>
+
+<div class="row justify-content-md-center">
+  <div class="col-lg-8 col-md-10">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width: 175px;">
+            Group
+          </th>
+          <th style="width: 175px;">
+            Category
+          </th>
+          <th>
+            <a href="@Url.Action(MVC.Exercises.Create())" class="btn btn-sm btn-outline-success float-right">
+              <i class="fa fa-fw fa-plus"></i> Create
+            </a>
+            Exercise
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var exercise in Model.OrderBy(x => x.Name))
+        {
+          <tr>
+            <td>
+              <a href="@Url.Action(MVC.Exercises.Index(groupId:exercise.GroupId))">@exercise.Group.Name</a>
+            </td>
+            <td>
+              <a href="@Url.Action(MVC.Exercises.Index(categoryId:exercise.CategoryId))">@exercise.Category.Name</a>
+            </td>
+            <td>
+              <a href="@Url.Action(MVC.Exercises.Edit(exercise.Id))" style="display: block;">
+                @exercise.Name
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">
+            <a href="@Url.Action(MVC.Exercises.Index())">(all)</a>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

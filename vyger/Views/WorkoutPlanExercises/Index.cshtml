@@ -1,0 +1,47 @@
+@{
+  ViewBag.Title = "Workout Plan";
+
+  var exercises = Model.PlanExercises
+      .Where(x => x.IsCalculated)
+      .OrderBy(x => x.Exercise.Group.GroupName)
+      .ThenBy(x => x.Exercise.ExerciseName);
+}
+
+@model WorkoutPlanCycle
+
+<div class="row justify-content-md-center">
+  <div class="col-lg-8 col-md-10">
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary()
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width: 150px;">Group</th>
+            <th>Exercise</th>
+            <th style="width: 100px;">Weight</th>
+            <th style="width: 100px;">Reps</th>
+            <th style="width: 100px;">Pullback %</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach (var exercise in exercises)
+          {
+            @Html.Partial("_Row", exercise)
+          }
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5" class="text-left">
+              <a href="Url.Action(MVC.WorkoutPlanLogs.Cycles(Model.Plan.PlanId, Model.Cycle.CycleId))" class="btn btn-outline-secondary float-right">skip</a>
+              <button type="submit" class="btn btn-primary">generate plan</button>
+              <a href="@Url.Action(MVC.WorkoutPlanCycles.Index(Model.PlanId))" class="btn btn-outline-secondary">cancel</a>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    }
+  </div>
+</div>
+

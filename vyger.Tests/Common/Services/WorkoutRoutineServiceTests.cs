@@ -1,10 +1,8 @@
-using System.Data.Entity;
-using System.Linq;
-using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using vyger.Common;
 using vyger.Common.Models;
+using vyger.Common.Repositories;
 using vyger.Common.Services;
 
 namespace vyger.Tests.Common.Services
@@ -25,18 +23,13 @@ namespace vyger.Tests.Common.Services
         #region Tests - Get
 
         [TestMethod]
-        public void WorkoutRoutineService_GetWorkoutRoutines_Should_CallIntoContext()
+        public void WorkoutRoutineService_GetWorkoutRoutines_Should_SelectMany()
         {
             //	arrange
-            var routines = Design.Many<WorkoutRoutine>()
-                .All()
-                .With(x => x.OwnerId = -1)
-                .Build();
+            var routines = Design.Many<WorkoutRoutine>().Build();
 
-            routines.Last().OwnerId = 99;
-
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.WorkoutRoutines)
+            Moxy.GetMock<IWorkoutRoutineRepository>()
+                .Setup(x => x.SelectMany(99))
                 .Returns(routines);
 
             Moxy.GetMock<ISecurityActor>()
@@ -53,98 +46,23 @@ namespace vyger.Tests.Common.Services
         }
 
         [TestMethod]
-        public void WorkoutRoutineService_GetWorkoutRoutines_Should_CallIntoContext_AndFilter()
-        {
-            //	arrange
-            var routines = Design.Many<WorkoutRoutine>()
-                .All()
-                .With(x => x.OwnerId = -1)
-                .Build();
-
-            routines.Last().OwnerId = 99;
-
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.WorkoutRoutines)
-                .Returns(routines);
-
-            Moxy.GetMock<ISecurityActor>()
-                .Setup(x => x.MemberId)
-                .Returns(99);
-
-            //	act
-            var actual = SubjectUnderTest.GetWorkoutRoutines();
-
-            //	assert
-            actual.Count.Should().Be(5);
-
-            Moxy.VerifyAll();
-        }
-
-        [TestMethod]
-        public void WorkoutRoutineService_GetWorkoutRoutineByPrimaryKey_Should_CallIntoContext()
-        {
-            //	arrange
-            var access = SecurityAccess.Update;
-
-            var routines = Design.Many<WorkoutRoutine>().Build();
-
-            var routine = routines.Last();
-
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.WorkoutRoutines)
-                .Returns(routines);
-
-            Moxy.GetMock<ISecurityActor>()
-                .Setup(x => x.VerifyCan(access, routine));
-
-            Moxy.GetMock<ISecurityActor>()
-                .Setup(x => x.MemberId)
-                .Returns(routine.OwnerId);
-
-            //	act
-            var actual = SubjectUnderTest.GetWorkoutRoutine(routine.RoutineId, access);
-
-            //	assert
-            actual.Should().BeSameAs(routine);
-
-            Moxy.VerifyAll();
-        }
-
-        #endregion
-
-        #region Tests - Add
-
-        [TestMethod]
-        public void WorkoutRoutineService_AddWorkoutRoutine_Should_CallContext()
+        public void WorkoutRoutineService_GetWorkoutRoutineByPrimaryKey_Should_UsePrimaryKey()
         {
             //	arrange
             var routine = Design.One<WorkoutRoutine>().Build();
 
-            var dbset = Moxy.GetMock<IDbSet<WorkoutRoutine>>();
-
-            dbset
-                .Setup(x => x.Add(routine))
+            Moxy.GetMock<IWorkoutRoutineRepository>()
+                .Setup(x => x.SelectOne(routine.RoutineId))
                 .Returns(routine);
 
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.WorkoutRoutines)
-                .Returns(dbset.Object);
-
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.SaveChanges())
-                .Returns(1);
-
             Moxy.GetMock<ISecurityActor>()
-                .Setup(x => x.MemberId)
-                .Returns(99);
+                .Setup(x => x.VerifyCan(SecurityAccess.View, routine));
 
             //	act
-            var actual = SubjectUnderTest.AddWorkoutRoutine(routine);
+            var actual = SubjectUnderTest.GetWorkoutRoutine(routine.RoutineId);
 
             //	assert
             actual.Should().BeSameAs(routine);
-
-            routine.OwnerId.Should().Be(99);
 
             Moxy.VerifyAll();
         }
@@ -154,18 +72,66 @@ namespace vyger.Tests.Common.Services
         #region Tests - Save
 
         [TestMethod]
-        public void WorkoutRoutineService_SaveChange_Should_CallContext()
+        public void WorkoutRoutineService_Save_Should_CreateNew()
         {
             //	arrange
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.SaveChanges())
-                .Returns(1);
+            var created = Design.One<WorkoutRoutine>().Build();
+
+            Moxy.GetMock<IWorkoutRoutineRepository>()
+                .Setup(x => x.Save(created));
+
+            Moxy.GetMock<IWorkoutRoutineRepository>()
+                .Setup(x => x.SelectOne(created.RoutineId))
+                .Returns(null as WorkoutRoutine);
+
+            Moxy.GetMock<ISecurityActor>()
+                .Setup(x => x.VerifyCan(SecurityAccess.Update, created));
+
+            Moxy.GetMock<ISecurityActor>()
+                .Setup(x => x.VerifyCan(SecurityAccess.View, null as WorkoutRoutine));
+
+            Moxy.GetMock<ISecurityActor>()
+                .Setup(x => x.EnsureAudit(created));
 
             //	act
-            var actual = SubjectUnderTest.SaveChanges();
+            var actual = SubjectUnderTest.SaveWorkoutRoutine(created);
 
             //	assert
-            actual.Should().Be(1);
+            actual.Should().BeSameAs(created);
+
+            Moxy.VerifyAll();
+        }
+
+        [TestMethod]
+        public void WorkoutRoutineService_Save_Should_UpdateExisting()
+        {
+            //	arrange
+
+            var original = Design.One<WorkoutRoutine>().Build();
+
+            var updated = Design.One<WorkoutRoutine>().Build();
+
+            Moxy.GetMock<IWorkoutRoutineRepository>()
+                .Setup(x => x.Save(original));
+
+            Moxy.GetMock<IWorkoutRoutineRepository>()
+                .Setup(x => x.SelectOne(updated.RoutineId))
+                .Returns(original);
+
+            Moxy.GetMock<ISecurityActor>()
+                .Setup(x => x.VerifyCan(SecurityAccess.Update, updated));
+
+            Moxy.GetMock<ISecurityActor>()
+                .Setup(x => x.VerifyCan(SecurityAccess.View, original));
+
+            Moxy.GetMock<ISecurityActor>()
+                .Setup(x => x.EnsureAudit(original));
+
+            //	act
+            var actual = SubjectUnderTest.SaveWorkoutRoutine(updated);
+
+            //	assert
+            actual.Should().BeSameAs(original);
 
             Moxy.VerifyAll();
         }

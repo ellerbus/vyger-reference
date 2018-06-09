@@ -1,0 +1,23 @@
+@{
+  ViewBag.Title = "Create a Cycle";
+}
+
+@model WorkoutPlanCycle
+
+<div class="row justify-content-md-center">
+  <div class="col-lg-6 col-md-8">
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary()
+      <div class="form-group">
+        @Html.TextBoxFor(m => m.CycleId, "", new { @class = "form-text text-danger" })
+        @Html.ValidationMessageFor(m => m.CycleId, "", new { @class = "form-text text-danger" })
+      </div>
+      <div class="form-group">
+        <a href="@Url.Action(MVC.WorkoutPlanCycles.Index(Model.Plan.PlanId))" class="btn btn-outline-secondary">cancel</a>
+      </div>
+    }
+  </div>
+</div>
+

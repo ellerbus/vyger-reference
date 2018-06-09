@@ -1,0 +1,33 @@
+@model WorkoutRoutineExercise
+
+<tr>
+  @using (Html.BeginFieldScope(Model, "Routine.RoutineExercises"))
+  {
+    <td class="drag-handler"></td>
+    <td>
+      @Html.HiddenFor(m => m.WeekId)
+      @Html.HiddenFor(m => m.DayId)
+      @Html.HiddenFor(m => m.ExerciseId)
+      @Html.HiddenFor(m => m.SequenceNumber)
+      @Model.Exercise.ExerciseName
+    </td>
+    <td class="text-center">
+      <a href="@Url.Action(MVC.WorkoutRoutineExercises.Delete(Model.RoutineId, Model.DayId, Model.ExerciseId))">
+        <i class="fa fa-fw fa-times text-muted"></i>
+      </a>
+    </td>
+    <td>
+      @Html.TextBoxFor(m => m.WorkoutRoutine, new { @class = "form-control form-control-sm", style = "font-family: 'Courier New', Courier, monospace" })
+      @Html.ValidationMessageFor(m => m.WorkoutRoutine, "", new { @class = "form-text text-danger" })
+    </td>
+    <td class="text-center" style="width: 32px;">
+      @if (Model.WeekId < Model.Routine.Weeks)
+      {
+        <a title="Copy Forward"
+           href="@Url.Action(MVC.WorkoutRoutineExercises.Copy(Model.RoutineId, Model.WeekId, Model.DayId, Model.ExerciseId))">
+          <i class="fa fa-fw fa-angle-double-right text-muted"></i>
+        </a>
+      }
+    </td>
+  }
+</tr>

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using Moq;
-using vyger.Common.Models;
+using vyger.Models;
 
 namespace vyger.Tests
 {
@@ -28,15 +27,15 @@ namespace vyger.Tests
 
         public static Member Member { get { return It.IsAny<Member>(); } }
 
-        public static Exercise Exercise { get { return It.IsAny<Exercise>(); } }
+        //public static Exercise Exercise { get { return It.IsAny<Exercise>(); } }
 
-        public static Expression<Func<Member, bool>> MemberPredicate
-        {
-            get
-            {
-                return It.IsAny<Expression<Func<Member, bool>>>();
-            }
-        }
+        //public static Expression<Func<Member, bool>> MemberPredicate
+        //{
+        //    get
+        //    {
+        //        return It.IsAny<Expression<Func<Member, bool>>>();
+        //    }
+        //}
 
         #endregion
     }

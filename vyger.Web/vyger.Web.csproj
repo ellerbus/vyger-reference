@@ -63,38 +63,8 @@
     <Reference Include="Augment.Caching, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Augment.Caching.3.0.0\lib\net471\Augment.Caching.dll</HintPath>
     </Reference>
-    <Reference Include="DatabaseSchemaReader, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DatabaseSchemaReader.2.5.1\lib\net45\DatabaseSchemaReader.dll</HintPath>
-    </Reference>
-    <Reference Include="EFCache, Version=1.1.2.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.Cache.1.1.2\lib\net45\EFCache.dll</HintPath>
-    </Reference>
     <Reference Include="Ensure.That, Version=8.0.0.86, Culture=neutral, PublicKeyToken=d7cf9132176ba30b, processorArchitecture=MSIL">
       <HintPath>..\packages\Ensure.That.8.0.0\lib\net451\Ensure.That.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.7.5.2\lib\net45\FluentValidation.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentValidation.Mvc, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.Mvc5.7.5.2\lib\net45\FluentValidation.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="Insight.Database, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Insight.Database.6.2.1\lib\net451\Insight.Database.dll</HintPath>
-    </Reference>
-    <Reference Include="Insight.Database.Configuration, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f35c6ef87e515afc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Insight.Database.Configuration.6.2.1\lib\net451\Insight.Database.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Insight.Database.Core, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f35c6ef87e515afc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Insight.Database.Core.6.2.1\lib\net451\Insight.Database.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Insight.Database.Providers.Default, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f35c6ef87e515afc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Insight.Database.Providers.Default.6.2.1\lib\net451\Insight.Database.Providers.Default.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="SimpleInjector, Version=4.3.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
@@ -106,17 +76,13 @@
     <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=4.3.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.4.3.0\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SqlClient, Version=4.2.0.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SqlClient.4.4.3\lib\net461\System.Data.SqlClient.dll</HintPath>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.ValueTuple">
-      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -152,9 +118,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\T4MVCExtensions.4.2.0\lib\net45\T4MVCExtensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Infrastructure">
@@ -162,19 +125,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\WORKOUTLOG.mdf" />
-    <Content Include="App_Data\WORKOUTLOG_log.ldf">
-      <DependentUpon>WORKOUTLOG.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\AccessDenied.png" />
     <Content Include="Content\NavBar.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
-    <None Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Views\ExerciseGroups\Create.cshtml" />
     <Content Include="Views\ExerciseGroups\Edit.cshtml" />
@@ -214,69 +169,10 @@
     <Compile Include="App_Start\MvcAuthorizeRolesAttribute.cs" />
     <Compile Include="App_Start\MvcConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ExerciseGroupsController.cs" />
-    <Compile Include="Controllers\ExercisesController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MembersController.cs" />
-    <Compile Include="Controllers\WorkoutLogsController.cs" />
-    <Compile Include="Controllers\WorkoutPlanCyclesController.cs" />
-    <Compile Include="Controllers\WorkoutPlanExercisesController.cs" />
-    <Compile Include="Controllers\WorkoutPlanLogsController.cs" />
-    <Compile Include="Controllers\WorkoutPlansController.cs" />
-    <Compile Include="Controllers\WorkoutRoutineExercisesController.cs" />
-    <Compile Include="Controllers\WorkoutRoutinesController.cs" />
-    <Compile Include="Controllers\_BaseController.cs" />
-    <Compile Include="ExerciseGroupsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ExercisesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HomeController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MembersController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ExerciseForm.cs" />
-    <Compile Include="Models\WorkoutLogForm.cs" />
-    <Compile Include="Models\WorkoutPlanForm.cs" />
-    <Compile Include="Models\WorkoutPlanLogForm.cs" />
-    <Compile Include="Models\WorkoutRoutineExerciseForm.cs" />
-    <Compile Include="Models\WorkoutRoutineForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutLogsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutPlanCyclesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutPlanExercisesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutPlanLogsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutPlansController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutRoutineExercisesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutRoutinesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -297,7 +193,6 @@
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Shared\_GoogleLogin.cshtml" />
     <Content Include="Views\Shared\_FlashMessage.cshtml" />
-    <None Include="T4MVC.tt.hooks.t4" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -306,12 +201,6 @@
     </None>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\vyger.Common\vyger.Common.csproj">
-      <Project>{A4FAAE2F-A0D2-4DBD-96A0-448CCF42F559}</Project>
-      <Name>vyger.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

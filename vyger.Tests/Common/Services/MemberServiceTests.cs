@@ -1,11 +1,10 @@
-using System.Data.Entity;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using vyger.Common;
 using vyger.Common.Models;
+using vyger.Common.Repositories;
 using vyger.Common.Services;
-using Moq.Language.Flow;
 
 namespace vyger.Tests.Common.Services
 {
@@ -30,16 +29,14 @@ namespace vyger.Tests.Common.Services
             //	arrange
             var request = SecurityAccess.None;
 
-            var members = Design.Many<Member>().Build();
+            var member = Design.One<Member>().Build();
 
-            var member = members.Last();
-
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.Members)
-                .Returns(members);
+            Moxy.GetMock<IMemberRepository>()
+                .Setup(x => x.SelectOneById(member.MemberId))
+                .Returns(member);
 
             Moxy.GetMock<ISecurityActor>()
-                .Setup(x => x.VerifyCan(SecurityAccess.None, member));
+                .Setup(x => x.VerifyCan(request, member));
 
             //	act
             var actual = SubjectUnderTest.GetMember(member.MemberId, request);
@@ -60,39 +57,18 @@ namespace vyger.Tests.Common.Services
 
             var member = members.Last();
 
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.Members)
-                .Returns(members);
+            Moxy.GetMock<IMemberRepository>()
+                .Setup(x => x.SelectOneByEmail(member.MemberEmail))
+                .Returns(member);
 
             Moxy.GetMock<ISecurityActor>()
-                .Setup(x => x.VerifyCan(SecurityAccess.None, member));
+                .Setup(x => x.VerifyCan(request, member));
 
             //	act
             var actual = SubjectUnderTest.GetMember(member.MemberEmail, request);
 
             //	assert
             actual.Should().BeSameAs(member);
-
-            Moxy.VerifyAll();
-        }
-
-        #endregion
-
-        #region Tests - Save
-
-        [TestMethod]
-        public void MemberService_SaveChange_Should_CallContext()
-        {
-            //	arrange
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.SaveChanges())
-                .Returns(1);
-
-            //	act
-            var actual = SubjectUnderTest.SaveChanges();
-
-            //	assert
-            actual.Should().Be(1);
 
             Moxy.VerifyAll();
         }
@@ -107,24 +83,24 @@ namespace vyger.Tests.Common.Services
             //	arrange
             var token = "x";
 
-            var members = Design.Many<Member>().Build();
-
-            var member = members.Last();
+            var member = Design.One<Member>().Build();
 
             Moxy.GetMock<IAuthenticationService>()
                 .Setup(x => x.VerifyGoogleAuthentication(token))
                 .Returns(new AuthenticationToken() { Email = member.MemberEmail });
 
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.SaveChanges())
-                .Returns(1);
+            Moxy.GetMock<IMemberRepository>()
+                .Setup(x => x.SelectOneByEmail(member.MemberEmail))
+                .Returns(member);
 
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.Members)
-                .Returns(members);
+            Moxy.GetMock<IMemberRepository>()
+                .Setup(x => x.Save(Any.Member));
 
             Moxy.GetMock<ISecurityActor>()
                 .Setup(x => x.VerifyCan(SecurityAccess.Authenticate, member));
+
+            Moxy.GetMock<ISecurityActor>()
+                .Setup(x => x.EnsureAudit(Any.Member));
 
             //	act
             var actual = SubjectUnderTest.AuthenticateLogin(token);
@@ -145,27 +121,19 @@ namespace vyger.Tests.Common.Services
 
             var member = Design.One<Member>().Build();
 
-            var dbset = Moxy.GetMock<IDbSet<Member>>();
-
-            dbset
-                .As<IQueryable<Member>>()
-                .Returns(members);
-
-            dbset
-                .Setup(x => x.Add(Any.Member))
-                .Returns(member);
-
             Moxy.GetMock<IAuthenticationService>()
                 .Setup(x => x.VerifyGoogleAuthentication(token))
-                .Returns(new AuthenticationToken() { Email = "new-email" });
+                .Returns(new AuthenticationToken() { Email = member.MemberEmail });
 
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.SaveChanges())
-                .Returns(1);
+            Moxy.GetMock<IMemberRepository>()
+                .Setup(x => x.SelectOneByEmail(member.MemberEmail))
+                .Returns(null as Member);
 
-            Moxy.GetMock<IVygerContext>()
-                .Setup(x => x.Members)
-                .Returns(dbset.Object);
+            Moxy.GetMock<IMemberRepository>()
+                .Setup(x => x.Save(Any.Member));
+
+            Moxy.GetMock<ISecurityActor>()
+                .Setup(x => x.EnsureAudit(Any.Member));
 
             Moxy.GetMock<ISecurityActor>()
                 .Setup(x => x.VerifyCan(SecurityAccess.Authenticate, null as Member));
@@ -174,7 +142,6 @@ namespace vyger.Tests.Common.Services
             var actual = SubjectUnderTest.AuthenticateLogin(token);
 
             //	assert
-            actual.Should().BeSameAs(member);
 
             Moxy.VerifyAll();
         }

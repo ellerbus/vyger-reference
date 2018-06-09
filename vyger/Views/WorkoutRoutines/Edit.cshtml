@@ -1,0 +1,22 @@
+@{
+  ViewBag.Title = "Edit Routine";
+}
+
+@model WorkoutRoutineForm
+
+<div class="row justify-content-md-center">
+  <div class="col-lg-6 col-md-8">
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary()
+      @Html.Partial("_Details", Model)
+      <div class="form-group">
+        <a href="@Url.Action(MVC.WorkoutRoutineExercises.Index(Model.RoutineId, 1))" class="btn btn-outline-secondary float-right">skip</a>
+        <button type="submit" class="btn btn-primary">update</button>
+        <a href="@Url.Action(MVC.WorkoutRoutines.Index())" class="btn btn-outline-secondary">cancel</a>
+      </div>
+    }
+  </div>
+</div>
+

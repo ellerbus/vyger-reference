@@ -4,11 +4,9 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using FluentValidation.Mvc;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
-using vyger.Common;
 
 namespace vyger.Web
 {

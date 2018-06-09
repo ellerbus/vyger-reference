@@ -1,0 +1,15 @@
+@model WorkoutRoutineForm
+
+<div class="form-group">
+  @Html.TextBoxFor(m => m.RoutineName, new { @class = "form-control", placeholder = "routine name" })
+  @Html.ValidationMessageFor(m => m.RoutineName, "", new { @class = "form-text text-danger" })
+</div>
+<div class="form-group">
+  @Html.DropDownListFor(m => m.Weeks, Model.GetWeekSelectListItems(), "(weeks per cycle)", new { @class = "form-control" })
+  @Html.ValidationMessageFor(m => m.Weeks, "", new { @class = "form-text text-danger" })
+</div>
+<div class="form-group">
+  @Html.DropDownListFor(m => m.Days, Model.GetDaySelectListItems(), "(days per week)", new { @class = "form-control" })
+  @Html.ValidationMessageFor(m => m.Days, "", new { @class = "form-text text-danger" })
+</div>
+

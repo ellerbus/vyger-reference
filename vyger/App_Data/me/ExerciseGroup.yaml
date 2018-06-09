@@ -1,0 +1,22 @@
+- Id: AB
+  Name: Abs
+- Id: CH
+  Name: Chest
+- Id: CA
+  Name: Calves
+- Id: LG
+  Name: Legs
+- Id: UB
+  Name: Upper Back
+- Id: LB
+  Name: Lower Back
+- Id: SH
+  Name: Shoulders
+- Id: BC
+  Name: Biceps
+- Id: TC
+  Name: Triceps
+- Id: FA
+  Name: Forearms
+- Id: TR
+  Name: Traps
