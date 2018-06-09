@@ -1,21 +1,33 @@
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using Augment;
-using vyger.Common.Collections;
+using vyger.Common;
+using YamlDotNet.Serialization;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public partial class WorkoutRoutine
+    public class WorkoutRoutine
     {
         #region Constructors
 
-        public WorkoutRoutine() { }
+        public WorkoutRoutine()
+        {
+            RoutineExercises = new WorkoutRoutineExerciseCollection();
+        }
+
+        public WorkoutRoutine(WorkoutRoutine routine)
+            : this()
+        {
+            Id = routine.Id;
+            Name = routine.Name;
+            Weeks = routine.Weeks;
+            Days = routine.Days;
+        }
 
         #endregion
 
@@ -33,11 +45,11 @@ namespace vyger.Common.Models
         {
             get
             {
-                string pk = $"[{RoutineId}]";
+                string id = $"[{Id}]";
 
-                string uq = $"[{OwnerId}, {RoutineName}]";
+                string nm = $"[{Name}]";
 
-                return "{0}, pk={1}, uq={2}".FormatArgs("WorkoutRoutine", pk, uq);
+                return "{0}, id={1}, nm={2}".FormatArgs(nameof(WorkoutRoutine), id, nm);
             }
         }
 
@@ -50,99 +62,49 @@ namespace vyger.Common.Models
         /// </summary>
         public void OverlayWith(WorkoutRoutine other)
         {
-            RoutineName = other.RoutineName;
+            Name = other.Name;
             Weeks = other.Weeks;
             Days = other.Days;
-            Status = other.Status;
         }
 
         #endregion
 
         #region Properties
-
         ///	<summary>
-        ///	Gets / Sets database column 'routine_id'
+        ///	
         ///	</summary>
         [Required]
-        [DisplayName("Routine Id")]
-        public override int RoutineId
+        [DisplayName("ID")]
+        [MinLength(1), MaxLength(1)]
+        public string Id
         {
-            get { return base.RoutineId; }
-            set { base.RoutineId = value; }
+            get { return _id; }
+            set { _id = value.ToUpper(); }
         }
+        private string _id;
 
         ///	<summary>
-        ///	Gets / Sets database column 'owner_id'
+        ///	
         ///	</summary>
 		[Required]
-        [DisplayName("Owner Id")]
-        public override int OwnerId
-        {
-            get { return base.OwnerId; }
-            set { base.OwnerId = value; }
-        }
+        [DisplayName("Name")]
+        public string Name { get; set; }
 
         ///	<summary>
-        ///	Gets / Sets database column 'routine_name'
-        ///	</summary>
-		[Required]
-        [DisplayName("Routine Name")]
-        public override string RoutineName
-        {
-            get { return base.RoutineName; }
-            set { base.RoutineName = value; }
-        }
-
-        ///	<summary>
-        ///	Gets / Sets database column 'weeks'
+        ///	
         ///	</summary>
 		[Required]
         [DisplayName("Weeks")]
         [Range(Constants.MinWeeks, Constants.MaxWeeks)]
-        public override int Weeks
-        {
-            get { return base.Weeks; }
-            set { base.Weeks = value; }
-        }
+        public int Weeks { get; set; }
 
         ///	<summary>
-        ///	Gets / Sets database column 'days'
+        ///	
         ///	</summary>
 		[Required]
         [DisplayName("Days")]
         [Range(Constants.MinDays, Constants.MaxDays)]
-        public override int Days
-        {
-            get { return base.Days; }
-            set { base.Days = value; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public StatusTypes Status
-        {
-            get { return StatusEnum.ToEnum<StatusTypes>(); }
-            set { StatusEnum = value.ToString(); }
-        }
-
-        public override string StatusEnum
-        {
-            get { return base.StatusEnum.AssertNotNull(StatusTypes.None.ToString()); }
-            set { base.StatusEnum = value; }
-        }
-
-        public override DateTime CreatedAt
-        {
-            get { return base.CreatedAt.EnsureUtc(); }
-            set { base.CreatedAt = value.EnsureUtc(); }
-        }
-
-        public override DateTime? UpdatedAt
-        {
-            get { return base.UpdatedAt.EnsureUtc(); }
-            set { base.UpdatedAt = value.EnsureUtc(); }
-        }
+        public int Days { get; set; }
 
         #endregion
 
@@ -151,19 +113,13 @@ namespace vyger.Common.Models
         /// <summary>
         /// 
         /// </summary>
+        [YamlIgnore]
         public ExerciseCollection AllExercises { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public WorkoutRoutineExerciseCollection RoutineExercises
-        {
-            get
-            {
-                return _routineExercises = (_routineExercises ?? new WorkoutRoutineExerciseCollection(this));
-            }
-        }
-        private WorkoutRoutineExerciseCollection _routineExercises;
+        public WorkoutRoutineExerciseCollection RoutineExercises { get; private set; }
 
         #endregion
     }

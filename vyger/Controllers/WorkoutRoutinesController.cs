@@ -1,30 +1,25 @@
-using System.Collections.Generic;
+using System;
 using System.Security;
 using System.Web.Mvc;
 using vyger.Common;
-using vyger.Common.Models;
-using vyger.Common.Services;
-using vyger.Web.Forms;
+using vyger.Models;
+using vyger.Services;
 
-namespace vyger.Web.Controllers
+namespace vyger.Controllers
 {
     [RoutePrefix("Workouts/Routines"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
     public partial class WorkoutRoutinesController : BaseController
     {
         #region Members
 
-        private ISecurityActor _actor;
         private IWorkoutRoutineService _service;
 
         #endregion
 
         #region Constructors
 
-        public WorkoutRoutinesController(
-            ISecurityActor actor,
-            IWorkoutRoutineService service)
+        public WorkoutRoutinesController(IWorkoutRoutineService service)
         {
-            _actor = actor;
             _service = service;
         }
 
@@ -52,7 +47,7 @@ namespace vyger.Web.Controllers
         [HttpGet, Route("Index")]
         public virtual ActionResult Index()
         {
-            IList<WorkoutRoutine> routines = _service.GetWorkoutRoutines();
+            WorkoutRoutineCollection routines = _service.GetWorkoutRoutines();
 
             return View(routines);
         }
@@ -66,7 +61,11 @@ namespace vyger.Web.Controllers
         {
             WorkoutRoutineForm form = new WorkoutRoutineForm();
 
-            _actor.VerifyCan(SecurityAccess.Create, form);
+            const string ids = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            int idx = _service.GetWorkoutRoutines().Count;
+
+            form.Id = ids[idx].ToString();
 
             return View(form);
         }
@@ -74,14 +73,9 @@ namespace vyger.Web.Controllers
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
         public virtual ActionResult Create(WorkoutRoutineForm post)
         {
-            _actor.VerifyCan(SecurityAccess.Create, post);
-
             if (ModelState.IsValid)
             {
-                post.OwnerId = _actor.MemberId;
-                post.Status = StatusTypes.Active;
-
-                _service.SaveWorkoutRoutine(post);
+                _service.AddWorkoutRoutine(new WorkoutRoutine(post));
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Routine created successfully");
 
@@ -95,39 +89,31 @@ namespace vyger.Web.Controllers
 
         #region Edit Methods
 
-        [HttpGet, Route("Edit/{id:int}")]
-        public virtual ActionResult Edit(int id)
+        [HttpGet, Route("Edit/{id}")]
+        public virtual ActionResult Edit(string id)
         {
-            WorkoutRoutine routine = _service.GetWorkoutRoutine(id);
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
             if (routine == null)
             {
                 return RedirectToAction(MVC.WorkoutRoutines.Index());
             }
 
-            _actor.VerifyCan(SecurityAccess.Update, routine);
-
             WorkoutRoutineForm form = new WorkoutRoutineForm(routine);
 
             return View(form);
         }
 
-        [HttpPost, Route("Edit/{id:int}"), ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(int id, WorkoutRoutineForm post)
+        [HttpPost, Route("Edit/{id}"), ValidateAntiForgeryToken]
+        public virtual ActionResult Edit(string id, WorkoutRoutine post)
         {
             if (ModelState.IsValid)
             {
-                WorkoutRoutine routine = _service.GetWorkoutRoutine(id);
-
-                _actor.VerifyCan(SecurityAccess.Update, routine);
-
-                routine.OverlayWith(post);
-
-                _service.SaveWorkoutRoutine(post);
+                _service.UpdateWorkoutRoutine(id, post);
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Routine saved successfully");
 
-                //return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, 1));
+                return RedirectToAction(MVC.WorkoutRoutineExercises.Index(0, 1));
             }
 
             return View(post);

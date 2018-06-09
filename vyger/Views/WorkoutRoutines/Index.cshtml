@@ -18,16 +18,16 @@
         </tr>
       </thead>
       <tbody>
-        @foreach (var routine in Model.OrderBy(x => x.RoutineName))
+        @foreach (var routine in Model.OrderBy(x => x.Name))
         {
           <tr>
             <td>
-              <a href="@Url.Action(MVC.WorkoutRoutines.Edit(routine.RoutineId))" style="display: block;">
-                @routine.RoutineName
+              <a href="@Url.Action(MVC.WorkoutRoutines.Edit(routine.Id))" style="display: block;">
+                @routine.Name
               </a>
             </td>
             <td class="text-right">
-              <a href="@Url.Action(MVC.WorkoutRoutineExercises.Index(routine.RoutineId, 1))">
+              <a href="@Url.Action(MVC.WorkoutRoutineExercises.Index(routine.Id, 1))">
                 exercises
               </a>
             </td>

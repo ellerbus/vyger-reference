@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using vyger.Common.Collections;
-using vyger.Common.Models;
-using vyger.Common.Repositories;
+using System.Linq;
+using vyger.Common;
+using vyger.Models;
 
-namespace vyger.Common.Services
+namespace vyger.Services
 {
     #region Service interface
 
@@ -13,19 +12,19 @@ namespace vyger.Common.Services
     public interface IWorkoutRoutineService
     {
         /// <summary>
-        /// Gets a single WorkoutRoutine based on the given primary key
+        /// 
         /// </summary>
         WorkoutRoutineCollection GetWorkoutRoutines();
 
         /// <summary>
-        /// Gets a single WorkoutRoutine based on the given primary key
+        /// 
         /// </summary>
-        WorkoutRoutine GetWorkoutRoutine(int routineId);
+        void AddWorkoutRoutine(WorkoutRoutine routine);
 
         /// <summary>
         /// 
         /// </summary>
-        WorkoutRoutine SaveWorkoutRoutine(WorkoutRoutine routine);
+        void UpdateWorkoutRoutine(string id, WorkoutRoutine overlay);
     }
 
     #endregion
@@ -33,12 +32,12 @@ namespace vyger.Common.Services
     /// <summary>
     /// Service Implementation for WorkoutRoutine
     /// </summary>
-    public class WorkoutRoutineService : IWorkoutRoutineService
+    public class WorkoutRoutineService : BaseService<WorkoutRoutine>, IWorkoutRoutineService
     {
         #region Members
 
-        private IWorkoutRoutineRepository _repository;
-        private ISecurityActor _actor;
+        private IExerciseService _exercises;
+        private WorkoutRoutineCollection _routines;
 
         #endregion
 
@@ -48,11 +47,23 @@ namespace vyger.Common.Services
         /// Creates a new instance
         /// </summary>
         public WorkoutRoutineService(
-            IWorkoutRoutineRepository repository,
+            IExerciseService exercises,
             ISecurityActor actor)
+            : base(actor)
         {
-            _repository = repository;
-            _actor = actor;
+            _exercises = exercises;
+
+            _routines = new WorkoutRoutineCollection(LoadAll());
+
+            foreach (WorkoutRoutine r in _routines)
+            {
+                r.AllExercises = _exercises.GetExercises();
+
+                foreach (WorkoutRoutineExercise ex in r.RoutineExercises)
+                {
+                    ex.Exercise = r.AllExercises.GetByPrimaryKey(ex.ExerciseId);
+                }
+            }
         }
 
         #endregion
@@ -60,67 +71,33 @@ namespace vyger.Common.Services
         #region Methods
 
         /// <summary>
-        /// Gets a single WorkoutRoutine based on the given primary key
+        /// 
         /// </summary>
         public WorkoutRoutineCollection GetWorkoutRoutines()
         {
-            IList<WorkoutRoutine> list = _repository.SelectMany(_actor.MemberId);
-
-            WorkoutRoutineCollection routines = new WorkoutRoutineCollection(list);
-
-            return routines;
+            return _routines;
         }
 
         /// <summary>
-        /// Gets a single WorkoutRoutine based on the given primary key
+        /// 
         /// </summary>
-        public WorkoutRoutine GetWorkoutRoutine(int routineId)
+        public void AddWorkoutRoutine(WorkoutRoutine add)
         {
-            WorkoutRoutine routine = _repository.SelectOne(routineId);
+            _routines.Add(add);
 
-            _actor.VerifyCan(SecurityAccess.View, routine);
-
-            return routine;
+            SaveAll(_routines);
         }
 
         /// <summary>
-        /// Saves a WorkoutRoutine
+        /// 
         /// </summary>
-        /// <returns></returns>
-        public WorkoutRoutine SaveWorkoutRoutine(WorkoutRoutine temp)
+        public void UpdateWorkoutRoutine(string id, WorkoutRoutine overlay)
         {
-            _actor.VerifyCan(SecurityAccess.Update, temp);
+            WorkoutRoutine routine = _routines.GetByPrimaryKey(overlay.Id);
 
-            WorkoutRoutine routine = OverlayCache(temp);
+            routine.OverlayWith(overlay);
 
-            if (routine.IsModified)
-            {
-                _actor.EnsureAudit(routine);
-
-                _repository.Save(routine);
-            }
-
-            return routine;
-        }
-
-        /// <summary>
-        /// OverlayCache for WorkoutRoutine
-        /// </summary>
-        /// <returns></returns>
-        private WorkoutRoutine OverlayCache(WorkoutRoutine temp)
-        {
-            WorkoutRoutine routine = GetWorkoutRoutine(temp.RoutineId);
-
-            if (routine == null)
-            {
-                routine = temp;
-            }
-            else
-            {
-                routine.OverlayWith(temp);
-            }
-
-            return routine;
+            SaveAll(_routines);
         }
 
         #endregion

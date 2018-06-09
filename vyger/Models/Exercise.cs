@@ -11,7 +11,7 @@ namespace vyger.Models
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public partial class Exercise
+    public class Exercise
     {
         #region Constructors
 

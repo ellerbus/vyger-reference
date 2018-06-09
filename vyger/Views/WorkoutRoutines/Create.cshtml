@@ -4,18 +4,18 @@
 
 @model WorkoutRoutineForm
 
-  <div class="row justify-content-md-center">
-    <div class="col-lg-6 col-md-8">
-      @using (Html.BeginForm())
-      {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary()
-        @Html.Partial("_Details", Model)
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">create</button>
-          <a href="@Url.Action(MVC.WorkoutRoutines.Index())" class="btn btn-outline-secondary">cancel</a>
-        </div>
-      }
-    </div>
+<div class="row justify-content-md-center">
+  <div class="col-lg-6 col-md-8">
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary()
+      @Html.Partial("_Details", Model)
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">create</button>
+        <a href="@Url.Action(MVC.WorkoutRoutines.Index())" class="btn btn-outline-secondary">cancel</a>
+      </div>
+    }
   </div>
+</div>
 

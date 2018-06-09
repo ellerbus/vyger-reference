@@ -12,7 +12,7 @@
       @Html.ValidationSummary()
       @Html.Partial("_Details", Model)
       <div class="form-group">
-        <a href="@Url.Action(MVC.WorkoutRoutineExercises.Index(Model.RoutineId, 1))" class="btn btn-outline-secondary float-right">skip</a>
+        <a href="@Url.Action(MVC.WorkoutRoutineExercises.Index(Model.Id, 1))" class="btn btn-outline-secondary float-right">skip</a>
         <button type="submit" class="btn btn-primary">update</button>
         <a href="@Url.Action(MVC.WorkoutRoutines.Index())" class="btn btn-outline-secondary">cancel</a>
       </div>

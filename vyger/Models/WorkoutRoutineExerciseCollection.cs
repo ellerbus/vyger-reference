@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Augment;
 using EnsureThat;
-using vyger.Common.Models;
 
-namespace vyger.Common.Collections
+namespace vyger.Models
 {
     ///	<summary>
     ///
@@ -16,16 +14,7 @@ namespace vyger.Common.Collections
     {
         #region Constructors
 
-        public WorkoutRoutineExerciseCollection(WorkoutRoutine routine)
-        {
-            Routine = routine;
-        }
-
-        public WorkoutRoutineExerciseCollection(WorkoutRoutine routine, IEnumerable<WorkoutRoutineExercise> exercises)
-            : this(routine)
-        {
-            AddRange(exercises);
-        }
+        public WorkoutRoutineExerciseCollection() { }
 
         #endregion
 

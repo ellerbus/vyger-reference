@@ -1,17 +1,17 @@
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using Augment;
-using vyger.Common.Collections;
+using vyger.Common;
+using YamlDotNet.Serialization;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public partial class WorkoutRoutineExercise
+    public class WorkoutRoutineExercise
     {
         #region Constructors
 
@@ -33,11 +33,11 @@ namespace vyger.Common.Models
         {
             get
             {
-                string pk = $"[{RoutineId}, {WeekId}, {DayId}, {ExerciseId}]";
+                string id = $"[{WeekId}, {DayId}, {ExerciseId}]";
 
-                string uq = $"[{Exercise?.ExerciseName}]";
+                string nm = $"[{Exercise?.Name}]";
 
-                return "{0}, pk={1}, uq={2}".FormatArgs("WorkoutRoutineExercise", pk, uq);
+                return "{0}, id={1}, nm={2}".FormatArgs("WorkoutRoutineExercise", id, nm);
             }
         }
 
@@ -59,87 +59,56 @@ namespace vyger.Common.Models
         #region Properties
 
         ///	<summary>
-        ///	Gets / Sets database column 'routine_id'
-        ///	</summary>
-        [Required]
-        [DisplayName("Routine Id")]
-        public override int RoutineId
-        {
-            get { return Routine == null ? base.RoutineId : Routine.RoutineId; }
-            set { base.RoutineId = value; }
-        }
-
-        ///	<summary>
-        ///	Gets / Sets database column 'week_id'
+        ///	
         ///	</summary>
 		[Required]
         [DisplayName("Week Id")]
-        public override int WeekId
-        {
-            get { return base.WeekId; }
-            set { base.WeekId = value; }
-        }
+        [Range(Constants.MinWeeks, Constants.MaxWeeks)]
+        public int WeekId { get; set; }
 
         ///	<summary>
-        ///	Gets / Sets database column 'day_id'
+        ///	
         ///	</summary>
 		[Required]
         [DisplayName("Day Id")]
-        public override int DayId
-        {
-            get { return base.DayId; }
-            set { base.DayId = value; }
-        }
+        [Range(Constants.MinDays, Constants.MaxDays)]
+        public int DayId { get; set; }
 
         ///	<summary>
-        ///	Gets / Sets database column 'exercise_id'
+        ///	
         ///	</summary>
 		[Required]
         [DisplayName("Exercise Id")]
-        public override int ExerciseId
+        public string ExerciseId
         {
-            get { return Exercise == null ? base.ExerciseId : Exercise.ExerciseId; }
-            set { base.ExerciseId = value; }
+            get { return Exercise == null ? _exerciseId : Exercise.Id; }
+            set { _exerciseId = value; }
         }
+        private string _exerciseId;
 
         ///	<summary>
-        ///	Gets / Sets database column 'sequence_number'
+        ///	
         ///	</summary>
 		[Required]
         [DisplayName("Sequence Number")]
-        public override int SequenceNumber
-        {
-            get { return base.SequenceNumber; }
-            set { base.SequenceNumber = value; }
-        }
+        public int SequenceNumber { get; set; }
 
         ///	<summary>
-        ///	Gets / Sets database column 'workout_routine'
+        ///	
         ///	</summary>
 		[Required]
         [DisplayName("Workout Routine")]
-        public override string WorkoutRoutine
+        public string WorkoutRoutine
         {
-            get { return base.WorkoutRoutine; }
+            get { return _workoutRoutine; }
             set
             {
-                base.WorkoutRoutine = value;
+                _workoutRoutine = value;
 
                 _sets = null;
             }
         }
-
-        public override DateTime CreatedAt
-        {
-            get { return base.CreatedAt.EnsureUtc(); }
-            set { base.CreatedAt = value.EnsureUtc(); }
-        }
-
-        public override DateTime? UpdatedAt
-        {
-            get { return base.UpdatedAt.EnsureUtc(); }
-            set { base.UpdatedAt = value.EnsureUtc(); }
-        }
+        private string _workoutRoutine;
 
         #endregion
 
@@ -153,6 +122,7 @@ namespace vyger.Common.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
+        [YamlIgnore]
         public Exercise Exercise { get; set; }
 
         /// <summary>
@@ -171,6 +141,7 @@ namespace vyger.Common.Models
             }
         }
         private WorkoutRoutineSetCollection _sets;
+
         #endregion
     }
 }

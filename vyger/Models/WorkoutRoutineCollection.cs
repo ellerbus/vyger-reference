@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Augment;
-using vyger.Common.Models;
 
-namespace vyger.Common.Collections
+namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class WorkoutRoutineCollection : SingleKeyCollection<WorkoutRoutine, int>
+    public class WorkoutRoutineCollection : SingleKeyCollection<WorkoutRoutine, string>
     {
         #region Constructors
 
@@ -38,9 +37,9 @@ namespace vyger.Common.Collections
 
         #region Methods
 
-        protected override int GetPrimaryKey(WorkoutRoutine item)
+        protected override string GetPrimaryKey(WorkoutRoutine item)
         {
-            return item.RoutineId;
+            return item.Id;
         }
 
         public void AddRange(IEnumerable<WorkoutRoutine> routines)

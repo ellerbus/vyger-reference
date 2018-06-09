@@ -2,7 +2,7 @@
 using System.Linq;
 using vyger.Common.Models;
 
-namespace vyger.Common.Collections
+namespace vyger.Models
 {
     public class WorkoutRoutineSetCollection : List<WorkoutRoutineSet>
     {
