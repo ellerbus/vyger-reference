@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Web.Mvc;
@@ -98,17 +99,25 @@ namespace vyger.Controllers
         {
             WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            if (routineExercise != null)
+            int seq = 0;
+
+            foreach (string exercise in exercises.Split(','))
             {
-                routineExercise.WorkoutRoutine = WorkoutRoutineSetCollection.Format(post.WorkoutRoutine);
-                routineExercise.SequenceNumber = post.SequenceNumber;
+                seq += 1;
 
-                _service.SaveWorkoutRoutines();
+                IEnumerable<WorkoutRoutineExercise> routineExercises = routine
+                    .RoutineExercises
+                    .Find(0, day, exercise);
 
-                return Json(new { message = "Saved" });
+                foreach (WorkoutRoutineExercise rex in routineExercises)
+                {
+                    rex.SequenceNumber = seq;
+                }
             }
 
-            return Json(new { message = "Cannot Update Routine" });
+            _service.SaveWorkoutRoutines();
+
+            return Json(new { message = "Saved" });
         }
 
         #endregion

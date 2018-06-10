@@ -26,22 +26,22 @@
   - WeekId: 1
     DayId: 1
     ExerciseId: LG-M-LPR
-    SequenceNumber: 99
+    SequenceNumber: 1
     WorkoutRoutine: S!*60%x5, S!*70%x5, S!*80%x5, S!*90%x5, 1RM*85%x5
   - WeekId: 2
     DayId: 1
     ExerciseId: LG-M-LPR
-    SequenceNumber: 99
+    SequenceNumber: 1
     WorkoutRoutine: S!*60%x5, S!*70%x5, S!*80%x5, S!*90%x5, 1RM*90%x3
   - WeekId: 3
     DayId: 1
     ExerciseId: LG-M-LPR
-    SequenceNumber: 99
+    SequenceNumber: 1
     WorkoutRoutine: S!*60%, S!*70%, S!*80%, S!*90%, 1RM*85%x5
   - WeekId: 4
     DayId: 1
     ExerciseId: LG-M-LPR
-    SequenceNumber: 99
+    SequenceNumber: 1
     WorkoutRoutine: S!*60%, S!*70%, S!*80%, S!*90%, 1RM*85%x5
   - WeekId: 1
     DayId: 1
@@ -51,97 +51,97 @@
   - WeekId: 2
     DayId: 1
     ExerciseId: CH-D-FBP
-    SequenceNumber: 99
+    SequenceNumber: 2
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 3
     DayId: 1
     ExerciseId: CH-D-FBP
-    SequenceNumber: 99
+    SequenceNumber: 2
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 4
     DayId: 1
     ExerciseId: CH-D-FBP
-    SequenceNumber: 99
+    SequenceNumber: 2
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 1
     DayId: 1
     ExerciseId: CH-H-DBP
-    SequenceNumber: 99
+    SequenceNumber: 4
     WorkoutRoutine: S!*90%x5, 1RM*85%x5
   - WeekId: 2
     DayId: 1
     ExerciseId: CH-H-DBP
-    SequenceNumber: 99
+    SequenceNumber: 4
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 3
     DayId: 1
     ExerciseId: CH-H-DBP
-    SequenceNumber: 99
+    SequenceNumber: 4
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 4
     DayId: 1
     ExerciseId: CH-H-DBP
-    SequenceNumber: 99
+    SequenceNumber: 4
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 1
     DayId: 1
     ExerciseId: LG-B-FSQ
-    SequenceNumber: 99
+    SequenceNumber: 5
     WorkoutRoutine: 85x5x2
   - WeekId: 2
     DayId: 1
     ExerciseId: LG-B-FSQ
-    SequenceNumber: 99
+    SequenceNumber: 5
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 3
     DayId: 1
     ExerciseId: LG-B-FSQ
-    SequenceNumber: 99
+    SequenceNumber: 5
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 4
     DayId: 1
     ExerciseId: LG-B-FSQ
-    SequenceNumber: 99
+    SequenceNumber: 5
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 1
     DayId: 1
     ExerciseId: AB-M-CRN
-    SequenceNumber: 99
+    SequenceNumber: 3
     WorkoutRoutine: 50x12x3
   - WeekId: 2
     DayId: 1
     ExerciseId: AB-M-CRN
-    SequenceNumber: 99
+    SequenceNumber: 3
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 3
     DayId: 1
     ExerciseId: AB-M-CRN
-    SequenceNumber: 99
+    SequenceNumber: 3
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 4
     DayId: 1
     ExerciseId: AB-M-CRN
-    SequenceNumber: 99
+    SequenceNumber: 3
     WorkoutRoutine: 12RM, 9RM, 6RM
   - WeekId: 1
     DayId: 1
     ExerciseId: TR-H-SHR
-    SequenceNumber: 99
+    SequenceNumber: 6
     WorkoutRoutine: S!*80%x5, S!*90%x5, 1RM*85%x5
   - WeekId: 2
     DayId: 1
     ExerciseId: TR-H-SHR
-    SequenceNumber: 99
+    SequenceNumber: 6
     WorkoutRoutine: S!*80%x5, S!*90%x5, 1RM*85%x5
   - WeekId: 3
     DayId: 1
     ExerciseId: TR-H-SHR
-    SequenceNumber: 99
+    SequenceNumber: 6
     WorkoutRoutine: S!*80%x5, S!*90%x5, 1RM*85%x5
   - WeekId: 4
     DayId: 1
     ExerciseId: TR-H-SHR
-    SequenceNumber: 99
+    SequenceNumber: 6
     WorkoutRoutine: S!*80%x5, S!*90%x5, 1RM*85%x5
   - WeekId: 1
     DayId: 2

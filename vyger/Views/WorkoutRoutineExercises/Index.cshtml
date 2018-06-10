@@ -72,7 +72,9 @@
 
         var post_url = url.replace('/Index', '/Sequence') + '&day=' + day + '&exercises=' + ids.join(',');
 
-        $.post(post_url, {})
+        var data = { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() };
+
+        $.post(post_url, data)
           .done(function (data)
           {
             var msg = 'Successfully Updated Exercise Sequences' +
