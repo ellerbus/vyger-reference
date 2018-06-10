@@ -215,43 +215,42 @@ namespace vyger.Controllers
         [HttpGet, Route("Copy")]
         public virtual ActionResult Copy(string id, int week, int day, string exercise)
         {
-            //WorkoutRoutineExerciseForm form = GetCopyForm(id, day, exercise);
+            WorkoutRoutineExerciseForm form = GetCopyForm(id, day, exercise);
 
-            //string workoutRoutine = form.Routine
-            //    .RoutineExercises
-            //    .Where(x => x.WeekId == week)
-            //    .Select(x => x.WorkoutRoutine)
-            //    .First();
+            string workoutRoutine = form.Routine
+                .RoutineExercises
+                .Find(week, day, exercise)
+                .Select(x => x.WorkoutRoutine)
+                .First();
 
-            //foreach (WorkoutRoutineExercise e in form.Routine.RoutineExercises)
-            //{
-            //    if (e.WeekId > week)
-            //    {
-            //        e.WorkoutRoutine = workoutRoutine;
-            //    }
-            //}
+            IEnumerable<WorkoutRoutineExercise> routineExercises = form.Routine
+                .RoutineExercises
+                .Find(0, day, exercise);
 
-            //_service.SaveWorkoutRoutineExercises(form.Routine.RoutineExercises);
+            foreach (WorkoutRoutineExercise rex in routineExercises)
+            {
+                if (rex.WeekId > week)
+                {
+                    rex.WorkoutRoutine = workoutRoutine;
+                }
+            }
 
-            //AddFlashMessage(FlashMessageType.Success, "Copied workout routine forward successfully");
+            _service.SaveWorkoutRoutines();
 
-            //return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, week));
-            throw new NotImplementedException();
+            AddFlashMessage(FlashMessageType.Success, "Copied workout routine forward successfully");
+
+            return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, week));
         }
 
-        //private WorkoutRoutineExerciseForm GetCopyForm(string id, int day, string exercise)
-        //{
-        //    WorkoutRoutineExerciseForm form = new WorkoutRoutineExerciseForm()
-        //    {
-        //        Routine = _service.GetWorkoutRoutine(id)
-        //    };
+        private WorkoutRoutineExerciseForm GetCopyForm(string id, int day, string exercise)
+        {
+            WorkoutRoutineExerciseForm form = new WorkoutRoutineExerciseForm()
+            {
+                Routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id)
+            };
 
-        //    _actor.VerifyCan(SecurityAccess.Update, form.Routine);
-
-        //    _service.AttachWorkoutRoutineExercises(form.Routine, 0, day, exercise);
-
-        //    return form;
-        //}
+            return form;
+        }
 
         #endregion
     }
