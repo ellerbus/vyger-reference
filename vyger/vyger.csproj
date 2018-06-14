@@ -105,8 +105,8 @@
     <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\T4MVCExtensions.4.2.0\lib\net45\T4MVCExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="YamlDotNet, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YamlDotNet.4.3.1\lib\net45\YamlDotNet.dll</HintPath>
+    <Reference Include="YamlDotNet, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.4.3.2\lib\net45\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +148,7 @@
     <Compile Include="Controllers\ExercisesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\WorkoutPlansController.cs" />
     <Compile Include="Controllers\WorkoutRoutineExercisesController.cs" />
     <Compile Include="Controllers\WorkoutRoutinesController.cs" />
     <Compile Include="Controllers\_BaseController.cs" />
@@ -161,6 +162,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Forms\ExerciseForm.cs" />
+    <Compile Include="Forms\WorkoutPlanForm.cs" />
     <Compile Include="Forms\WorkoutRoutineExerciseForm.cs" />
     <Compile Include="Forms\WorkoutRoutineForm.cs" />
     <Compile Include="Global.asax.cs">
@@ -180,7 +182,9 @@
     <Compile Include="Models\ExerciseCategoryCollection.cs" />
     <Compile Include="Models\ExerciseGroupCollection.cs" />
     <Compile Include="Models\Member.cs" />
+    <Compile Include="Models\WorkoutPlan.cs" />
     <Compile Include="Models\WorkoutRoutine.cs" />
+    <Compile Include="Models\WorkoutPlanCollection.cs" />
     <Compile Include="Models\WorkoutRoutineCollection.cs" />
     <Compile Include="Models\WorkoutRoutineExercise.cs" />
     <Compile Include="Models\WorkoutRoutineExerciseCollection.cs" />
@@ -192,6 +196,7 @@
     <Compile Include="Services\ExerciseGroupService.cs" />
     <Compile Include="Services\ExerciseService.cs" />
     <Compile Include="Services\MemberService.cs" />
+    <Compile Include="Services\WorkoutPlanService.cs" />
     <Compile Include="Services\WorkoutRoutineService.cs" />
     <Compile Include="Services\_BaseService.cs" />
     <Compile Include="SharedController.generated.cs">
@@ -200,6 +205,9 @@
     <Compile Include="T4MVC.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkoutPlansController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="WorkoutRoutineExercisesController.generated.cs">
@@ -233,6 +241,8 @@
     <Content Include="Views\WorkoutRoutineExercises\_Tabs.cshtml" />
     <Content Include="Views\WorkoutRoutineExercises\Create.cshtml" />
     <Content Include="Views\WorkoutRoutineExercises\Delete.cshtml" />
+    <Content Include="Views\WorkoutPlans\Index.cshtml" />
+    <Content Include="Views\WorkoutPlans\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

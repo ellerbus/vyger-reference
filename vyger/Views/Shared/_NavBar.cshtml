@@ -15,13 +15,13 @@
     <div class="collapse navbar-collapse" id="mainNavBar">
       <ul class="navbar-nav">
         @*
-            <li class="nav-item mr-2">
-              <a class="nav-link" href="@Url.Action(MVC.WorkoutLogs.Index())">Logs</a>
-            </li>
           <li class="nav-item mr-2">
-            <a class="nav-link" href="@Url.Action(MVC.WorkoutPlans.Index())">Plans</a>
+            <a class="nav-link" href="@Url.Action(MVC.WorkoutLogs.Index())">Logs</a>
           </li>
         *@
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="@Url.Action(MVC.WorkoutPlans.Index())">Plans</a>
+        </li>
         <li class="nav-item mr-2">
           <a class="nav-link" href="@Url.Action(MVC.WorkoutRoutines.Index())">Routines</a>
         </li>
@@ -55,4 +55,3 @@
     @Html.Partial("_GoogleLogin")
   }
 </nav>
-

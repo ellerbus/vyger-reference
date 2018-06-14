@@ -1,33 +1,32 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using Augment;
+using vyger.Common;
+using YamlDotNet.Serialization;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
-    #region Extensions
-
-    public static class WorkoutPlanExtensions
-    {
-        public static void CreateSetup(this WorkoutPlanCycle cycle, IEnumerable<WorkoutLog> logs)
-        {
-        }
-    }
-
-    #endregion
-
     ///	<summary>
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public partial class WorkoutPlan
+    public class WorkoutPlan
     {
         #region Constructors
 
-        public WorkoutPlan() : base() { }
+        public WorkoutPlan()
+        {
+            //RoutineExercises = new WorkoutRoutineExerciseCollection(this, new WorkoutRoutineExercise[0]);
+        }
+
+        public WorkoutPlan(WorkoutRoutine routine)
+        {
+            Id = Constants.IdGenerator.Next();
+            Routine = routine;
+            CreatedAt = DateTime.Now;
+        }
 
         #endregion
 
@@ -45,9 +44,9 @@ namespace vyger.Common.Models
         {
             get
             {
-                string pk = $"[{PlanId}]";
+                string pk = $"[{Id}]";
 
-                string uq = $"[{Routine?.RoutineName}]";
+                string uq = $"[{Routine?.Name}]";
 
                 return "{0}, pk={1}, uq={2}".FormatArgs("WorkoutPlan", pk, uq);
             }
@@ -74,57 +73,30 @@ namespace vyger.Common.Models
         ///	</summary>
         [Required]
         [DisplayName("Plan Id")]
-        public override int PlanId { get; set; }
-
-        ///	<summary>
-        ///	Gets / Sets database column 'owner_id'
-        ///	</summary>
-		[Required]
-        [DisplayName("Owner Id")]
-        public override int OwnerId { get; set; }
+        public string Id { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'routine_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Routine Id")]
-        public override int RoutineId { get; set; }
+        public string RoutineId
+        {
+            get { return Routine == null ? _routineId : Routine.Id; }
+            set { _routineId = value; }
+        }
 
-        ///	<summary>
-        ///	Gets / Sets database column 'cycle_id'
-        ///	</summary>
-		[Required]
-        [DisplayName("Cycle Id")]
-        [Range(Constants.MinCycles, Constants.MaxCycles)]
-        public override int CycleId { get; set; }
+        private string _routineId;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-		[NotMapped]
-        public StatusTypes Status
-        {
-            get { return StatusEnum.ToEnum<StatusTypes>(); }
-            set { StatusEnum = value.ToString(); }
-        }
+        public StatusTypes Status { get; set; }
 
-        public override string StatusEnum
-        {
-            get { return base.StatusEnum.AssertNotNull(StatusTypes.None.ToString()); }
-            set { base.StatusEnum = value; }
-        }
-
-        public override DateTime CreatedAt
-        {
-            get { return base.CreatedAt.EnsureUtc(); }
-            set { base.CreatedAt = value.EnsureUtc(); }
-        }
-
-        public override DateTime? UpdatedAt
-        {
-            get { return base.UpdatedAt.EnsureUtc(); }
-            set { base.UpdatedAt = value.EnsureUtc(); }
-        }
+        /// <summary>
+        ///
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
 
         #endregion
 
@@ -133,13 +105,13 @@ namespace vyger.Common.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'routine_id'
         ///	</summary>
-        [ForeignKey(nameof(RoutineId))]
+        [YamlIgnore]
         public WorkoutRoutine Routine { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        public IList<WorkoutPlanCycle> Cycles { get; set; }
+        //public IList<WorkoutPlanCycle> Cycles { get; set; }
 
         #endregion
     }

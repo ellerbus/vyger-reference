@@ -70,8 +70,9 @@ namespace vyger.Models
         #endregion
 
         #region Properties
+
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
         [Required]
         [DisplayName("ID")]
@@ -81,27 +82,28 @@ namespace vyger.Models
             get { return _id; }
             set { _id = value.ToUpper(); }
         }
+
         private string _id;
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Name")]
         public string Name { get; set; }
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Weeks")]
         [Range(Constants.MinWeeks, Constants.MaxWeeks)]
         public int Weeks { get; set; }
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Days")]
         [Range(Constants.MinDays, Constants.MaxDays)]
         public int Days { get; set; }
@@ -111,13 +113,13 @@ namespace vyger.Models
         #region Foreign Key Properties
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [YamlIgnore]
         public ExerciseCollection AllExercises { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public WorkoutRoutineExerciseCollection RoutineExercises
         {
@@ -127,6 +129,7 @@ namespace vyger.Models
                 _routineExercises = new WorkoutRoutineExerciseCollection(this, value);
             }
         }
+
         private WorkoutRoutineExerciseCollection _routineExercises;
 
         #endregion

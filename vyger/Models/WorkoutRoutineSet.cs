@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     public class WorkoutRoutineSet
     {

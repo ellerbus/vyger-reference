@@ -1,19 +1,17 @@
-using System.Collections.Generic;
 using System.Security;
 using System.Web.Mvc;
 using vyger.Common;
-using vyger.Common.Models;
-using vyger.Common.Services;
-using vyger.Web.Models;
+using vyger.Forms;
+using vyger.Models;
+using vyger.Services;
 
-namespace vyger.Web.Controllers
+namespace vyger.Controllers
 {
     [RoutePrefix("Workouts/Plans"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
-    public partial class WorkoutPlansController : BaseController<WorkoutPlansController>
+    public partial class WorkoutPlansController : BaseController
     {
         #region Members
 
-        private ISecurityActor _actor;
         private IWorkoutPlanService _service;
         private IWorkoutRoutineService _routines;
 
@@ -21,12 +19,8 @@ namespace vyger.Web.Controllers
 
         #region Constructors
 
-        public WorkoutPlansController(
-            ISecurityActor actor,
-            IWorkoutPlanService service,
-            IWorkoutRoutineService routines)
+        public WorkoutPlansController(IWorkoutPlanService service, IWorkoutRoutineService routines)
         {
-            _actor = actor;
             _service = service;
             _routines = routines;
         }
@@ -55,7 +49,7 @@ namespace vyger.Web.Controllers
         [HttpGet, Route("Index")]
         public virtual ActionResult Index()
         {
-            IList<WorkoutPlan> plans = _service.GetWorkoutPlans();
+            WorkoutPlanCollection plans = _service.GetWorkoutPlans();
 
             return View(plans);
         }
@@ -69,12 +63,8 @@ namespace vyger.Web.Controllers
         {
             WorkoutPlanForm form = new WorkoutPlanForm()
             {
-                CycleId = 1
+                Routines = _routines.GetWorkoutRoutines()
             };
-
-            _actor.VerifyCan(SecurityAccess.Create, form);
-
-            form.Routines = _routines.GetWorkoutRoutines();
 
             return View(form);
         }
@@ -82,12 +72,11 @@ namespace vyger.Web.Controllers
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
         public virtual ActionResult Create(WorkoutPlanForm post)
         {
-            _actor.VerifyCan(SecurityAccess.Create, post);
-
             if (ModelState.IsValid)
             {
-                //  force a downgrade
-                _service.AddWorkoutPlan(new WorkoutPlan(post));
+                WorkoutRoutine routine = _routines.GetWorkoutRoutines().GetByPrimaryKey(post.RoutineId);
+
+                _service.AddWorkoutPlan(new WorkoutPlan(routine));
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Plan created successfully");
 
@@ -102,4 +91,3 @@ namespace vyger.Web.Controllers
         #endregion
     }
 }
-

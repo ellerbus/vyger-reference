@@ -70,6 +70,12 @@ namespace vyger.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Sequence()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Sequence);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult Create()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
@@ -104,6 +110,7 @@ namespace vyger.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
+            public readonly string Sequence = "Sequence";
             public readonly string Create = "Create";
             public readonly string Delete = "Delete";
             public readonly string Copy = "Copy";
@@ -114,6 +121,7 @@ namespace vyger.Controllers
         {
             public const string Index = "Index";
             public const string Edit = "Edit";
+            public const string Sequence = "Sequence";
             public const string Create = "Create";
             public const string Delete = "Delete";
             public const string Copy = "Copy";
@@ -140,6 +148,17 @@ namespace vyger.Controllers
             public readonly string day = "day";
             public readonly string exercise = "exercise";
             public readonly string post = "post";
+        }
+        static readonly ActionParamsClass_Sequence s_params_Sequence = new ActionParamsClass_Sequence();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Sequence SequenceParams { get { return s_params_Sequence; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Sequence
+        {
+            public readonly string id = "id";
+            public readonly string week = "week";
+            public readonly string day = "day";
+            public readonly string exercises = "exercises";
         }
         static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -228,6 +247,21 @@ namespace vyger.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "exercise", exercise);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "post", post);
             EditOverride(callInfo, id, week, day, exercise, post);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void SequenceOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int week, int day, string exercises);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Sequence(string id, int week, int day, string exercises)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Sequence);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "week", week);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "day", day);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "exercises", exercises);
+            SequenceOverride(callInfo, id, week, day, exercises);
             return callInfo;
         }
 

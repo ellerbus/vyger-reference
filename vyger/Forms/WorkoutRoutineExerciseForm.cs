@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
-using vyger.Common.Models;
 using vyger.Models;
 
 namespace vyger.Forms
 {
     public class WorkoutRoutineExerciseForm
     {
-        public WorkoutRoutineExerciseForm() { }
+        public WorkoutRoutineExerciseForm()
+        {
+        }
 
         public WorkoutRoutine Routine { get; set; }
 

@@ -177,17 +177,17 @@ namespace vyger
             }
         }
 
-        //public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<WorkoutRoutine> routines)
-        //{
-        //    foreach (WorkoutRoutine routine in routines.OrderBy(x => x.RoutineName))
-        //    {
-        //        yield return new SelectListItem()
-        //        {
-        //            Value = routine.Id.ToString(),
-        //            Text = routine.RoutineName
-        //        };
-        //    }
-        //}
+        public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<WorkoutRoutine> routines)
+        {
+            foreach (WorkoutRoutine routine in routines.OrderBy(x => x.Name))
+            {
+                yield return new SelectListItem()
+                {
+                    Value = routine.Id.ToString(),
+                    Text = routine.Name
+                };
+            }
+        }
     }
 
     public static class HtmlExtensions
@@ -257,7 +257,7 @@ namespace vyger
             return queue;
         }
 
-        class HtmlFieldScope : IDisposable
+        private class HtmlFieldScope : IDisposable
         {
             public readonly TemplateInfo TemplateInfo;
             public readonly string PreviousHtmlFieldPrefix;
