@@ -14,7 +14,9 @@ namespace vyger.Models
     {
         #region Constructors
 
-        public WorkoutRoutineExercise() { }
+        public WorkoutRoutineExercise()
+        {
+        }
 
         #endregion
 
@@ -58,42 +60,43 @@ namespace vyger.Models
         #region Properties
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Week Id")]
         public int WeekId { get; set; }
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Day Id")]
         public int DayId { get; set; }
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Exercise Id")]
         public string ExerciseId
         {
             get { return Exercise == null ? _exerciseId : Exercise.Id; }
             set { _exerciseId = value; }
         }
+
         private string _exerciseId;
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Sequence Number")]
         public int SequenceNumber { get; set; }
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Workout Routine")]
         public string WorkoutRoutine
         {
@@ -105,6 +108,7 @@ namespace vyger.Models
                 _sets = null;
             }
         }
+
         private string _workoutRoutine;
 
         #endregion
@@ -124,7 +128,7 @@ namespace vyger.Models
         public Exercise Exercise { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         [YamlIgnore]
@@ -139,6 +143,7 @@ namespace vyger.Models
                 return _sets;
             }
         }
+
         private WorkoutRoutineSetCollection _sets;
 
         #endregion

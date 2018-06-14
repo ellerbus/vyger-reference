@@ -4,12 +4,11 @@
   @using (Html.BeginFieldScope(Model, "Exercises"))
   {
     <td>
-      @Model.Exercise.Group.GroupName
+      @Model.Exercise.Group.Name
     </td>
     <td>
-      @Html.HiddenFor(m => m.CycleId)
       @Html.HiddenFor(m => m.ExerciseId)
-      @Model.Exercise.ExerciseName
+      @Model.Exercise.Name
     </td>
     <td>
       @Html.TextBoxFor(m => m.Weight, new { @class = "form-control form-control-sm", style = "font-family: 'Courier New', Courier, monospace" })

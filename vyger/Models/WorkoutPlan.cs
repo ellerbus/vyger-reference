@@ -18,14 +18,14 @@ namespace vyger.Models
 
         public WorkoutPlan()
         {
-            //RoutineExercises = new WorkoutRoutineExerciseCollection(this, new WorkoutRoutineExercise[0]);
+            Cycles = new WorkoutPlanCycleCollection(this, new WorkoutPlanCycle[0]);
         }
 
-        public WorkoutPlan(WorkoutRoutine routine)
+        public WorkoutPlan(WorkoutRoutine routine) : this()
         {
             Id = Constants.IdGenerator.Next();
             Routine = routine;
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
         }
 
         #endregion
@@ -71,7 +71,6 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets database column 'plan_id'
         ///	</summary>
-        [Required]
         [DisplayName("Plan Id")]
         public string Id { get; set; }
 
@@ -111,7 +110,7 @@ namespace vyger.Models
         /// <summary>
         ///
         /// </summary>
-        //public IList<WorkoutPlanCycle> Cycles { get; set; }
+        public WorkoutPlanCycleCollection Cycles { get; set; }
 
         #endregion
     }

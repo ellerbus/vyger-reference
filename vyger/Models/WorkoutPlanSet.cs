@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     public class WorkoutPlanSet
     {
@@ -38,9 +38,11 @@ namespace vyger.Common.Models
                     case "weight":
                         CalculatedWeight = int.Parse(group.Value);
                         break;
+
                     case "reps":
                         Reps = int.Parse(group.Value);
                         break;
+
                     case "sets":
                         Sets = int.Parse(group.Value);
                         break;
@@ -77,17 +79,17 @@ namespace vyger.Common.Models
         #region Properties
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public WorkoutPlanExercise PlanExercise { get; private set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public WorkoutRoutineExercise RoutineExercise { get; private set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public WorkoutRoutineSet RoutineSet { get; private set; }
 
@@ -108,7 +110,7 @@ namespace vyger.Common.Models
         public double CalculatedWeight { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int Weight
         {
@@ -116,17 +118,17 @@ namespace vyger.Common.Models
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int Reps { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int Sets { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public double OneRepMax
         {
@@ -134,7 +136,7 @@ namespace vyger.Common.Models
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Display
         {

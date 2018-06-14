@@ -1,23 +1,24 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
-using System.Linq;
 using Augment;
+using vyger.Common;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public partial class WorkoutPlanCycle
+    public class WorkoutPlanCycle
     {
         #region Constructors
 
-        public WorkoutPlanCycle() : base() { }
+        public WorkoutPlanCycle()
+        {
+            PlanExercises = new WorkoutPlanExerciseCollection(this, new WorkoutPlanExercise[0]);
+        }
 
         #endregion
 
@@ -35,9 +36,9 @@ namespace vyger.Common.Models
         {
             get
             {
-                string pk = $"[{PlanId}, {CycleId}]";
+                string pk = $"[ {CycleId}]";
 
-                string uq = $"[{Plan?.Routine?.RoutineName}]";
+                string uq = $"[{Plan?.Routine?.Name}]";
 
                 return "{0}, pk={1}, uq={2}".FormatArgs("WorkoutPlanCycle", pk, uq);
             }
@@ -60,46 +61,21 @@ namespace vyger.Common.Models
         #region Properties
 
         ///	<summary>
-        ///	Gets / Sets database column 'plan_id'
-        ///	</summary>
-        [Required]
-        [DisplayName("Plan Id")]
-        public override int PlanId { get; set; }
-
-        ///	<summary>
         ///	Gets / Sets database column 'cycle_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Cycle Id")]
-        public override int CycleId { get; set; }
+        public int CycleId { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-		[NotMapped]
-        public StatusTypes Status
-        {
-            get { return StatusEnum.ToEnum<StatusTypes>(); }
-            set { StatusEnum = value.ToString(); }
-        }
+        public StatusTypes Status { get; set; }
 
-        public override string StatusEnum
-        {
-            get { return base.StatusEnum.AssertNotNull(StatusTypes.None.ToString()); }
-            set { base.StatusEnum = value; }
-        }
-
-        public override DateTime CreatedAt
-        {
-            get { return base.CreatedAt.EnsureUtc(); }
-            set { base.CreatedAt = value.EnsureUtc(); }
-        }
-
-        public override DateTime? UpdatedAt
-        {
-            get { return base.UpdatedAt.EnsureUtc(); }
-            set { base.UpdatedAt = value.EnsureUtc(); }
-        }
+        /// <summary>
+        ///
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
 
         #endregion
 
@@ -108,13 +84,12 @@ namespace vyger.Common.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'plan_id'
         ///	</summary>
-        [ForeignKey(nameof(PlanId))]
         public WorkoutPlan Plan { get; set; }
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-        public IList<WorkoutPlanExercise> PlanExercises { get; set; } = new List<WorkoutPlanExercise>();
+        public WorkoutPlanExerciseCollection PlanExercises { get; set; }
 
         #endregion
     }

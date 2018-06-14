@@ -1,28 +1,24 @@
 using System.Security;
 using System.Web.Mvc;
 using vyger.Common;
-using vyger.Common.Models;
-using vyger.Common.Services;
+using vyger.Models;
+using vyger.Services;
 
-namespace vyger.Web.Controllers
+namespace vyger.Controllers
 {
-    [RoutePrefix("Workouts/Plans/{id:int}/Exercises"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
-    public partial class WorkoutPlanExercisesController : BaseController<WorkoutPlanExercisesController>
+    [RoutePrefix("Workouts/Plans/{id}/Exercises"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
+    public partial class WorkoutPlanExercisesController : BaseController
     {
         #region Members
 
-        private ISecurityActor _actor;
         private IWorkoutPlanService _service;
 
         #endregion
 
         #region Constructors
 
-        public WorkoutPlanExercisesController(
-            ISecurityActor actor,
-            IWorkoutPlanService service)
+        public WorkoutPlanExercisesController(IWorkoutPlanService service)
         {
-            _actor = actor;
             _service = service;
         }
 
@@ -48,28 +44,36 @@ namespace vyger.Web.Controllers
         #region List Methods
 
         [HttpGet, Route("Index")]
-        public virtual ActionResult Index(int id, int cycle)
+        public virtual ActionResult Index(string id, int cycle)
         {
-            WorkoutPlanCycle c = _service.GetWorkoutPlanCycle(id, cycle, SecurityAccess.View);
+            WorkoutPlanCycle planCycle = _service.GetWorkoutPlans()
+                .GetByPrimaryKey(id)
+                .Cycles
+                .GetByPrimaryKey(cycle);
 
-            if (c.Status == StatusTypes.None)
-            {
-                return View(c);
-            }
+            //if (c.Status == StatusTypes.None)
+            //{
+            //    return View(planCycle);
+            //}
 
-            AddFlashMessage(FlashMessageType.Danger, $"Exercise Plan cannot be setup for this Cycle");
+            //AddFlashMessage(FlashMessageType.Danger, $"Exercise Plan cannot be setup for this Cycle");
 
-            return RedirectToAction(MVC.WorkoutPlanLogs.Index(id, cycle));
+            //return RedirectToAction(MVC.WorkoutPlanLogs.Index(id, cycle));
+
+            return View(planCycle);
         }
 
         [HttpPost, Route("Index")]
-        public virtual ActionResult Index(int id, int cycle, WorkoutPlanCycle post)
+        public virtual ActionResult Index(string id, int cycle, WorkoutPlanCycle post)
         {
-            WorkoutPlanCycle planCycle = _service.GetWorkoutPlanCycle(id, cycle, SecurityAccess.Update);
+            WorkoutPlanCycle planCycle = _service.GetWorkoutPlans()
+                .GetByPrimaryKey(id)
+                .Cycles
+                .GetByPrimaryKey(cycle);
 
             if (planCycle.Status == StatusTypes.None)
             {
-                _service.GenerateCycle(id, cycle, post.PlanExercises);
+                //_service.GenerateCycle(id, cycle, post.PlanExercises);
 
                 AddFlashMessage(FlashMessageType.Success, $"Exercise Plan Generated for Cycle {cycle}");
             }
@@ -78,10 +82,10 @@ namespace vyger.Web.Controllers
                 AddFlashMessage(FlashMessageType.Danger, $"Exercise Plan cannot be setup for this Cycle");
             }
 
-            return RedirectToAction(MVC.WorkoutPlanLogs.Index(id, cycle));
+            return View(planCycle);
+            //return RedirectToAction(MVC.WorkoutPlanLogs.Index(id, cycle));
         }
 
         #endregion
     }
 }
-

@@ -3,8 +3,8 @@
 
   var exercises = Model.PlanExercises
       .Where(x => x.IsCalculated)
-      .OrderBy(x => x.Exercise.Group.GroupName)
-      .ThenBy(x => x.Exercise.ExerciseName);
+      .OrderBy(x => x.Exercise.Group.Name)
+      .ThenBy(x => x.Exercise.Name);
 }
 
 @model WorkoutPlanCycle
@@ -34,9 +34,9 @@
         <tfoot>
           <tr>
             <td colspan="5" class="text-left">
-              <a href="Url.Action(MVC.WorkoutPlanLogs.Cycles(Model.Plan.PlanId, Model.Cycle.CycleId))" class="btn btn-outline-secondary float-right">skip</a>
+              <a href="Url.Action(MVC.WorkoutPlanLogs.Cycles(Model.Plan.Id, Model.Cycle.CycleId))" class="btn btn-outline-secondary float-right">skip</a>
               <button type="submit" class="btn btn-primary">generate plan</button>
-              <a href="@Url.Action(MVC.WorkoutPlanCycles.Index(Model.PlanId))" class="btn btn-outline-secondary">cancel</a>
+              <a href="@Url.Action(MVC.WorkoutPlanCycles.Index(Model.Plan.Id))" class="btn btn-outline-secondary">cancel</a>
             </td>
           </tr>
         </tfoot>
@@ -44,4 +44,3 @@
     }
   </div>
 </div>
-

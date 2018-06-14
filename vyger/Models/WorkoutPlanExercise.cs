@@ -1,22 +1,23 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using Augment;
+using vyger.Common;
+using YamlDotNet.Serialization;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public partial class WorkoutPlanExercise
+    public class WorkoutPlanExercise
     {
         #region Constructors
 
-        public WorkoutPlanExercise() : base() { }
+        public WorkoutPlanExercise()
+        {
+        }
 
         #endregion
 
@@ -34,9 +35,9 @@ namespace vyger.Common.Models
         {
             get
             {
-                string pk = $"[{PlanId}, {CycleId}, {ExerciseId}]";
+                string pk = $"[{ExerciseId}]";
 
-                string uq = $"[{Cycle?.Plan?.Routine?.RoutineName}, {Exercise?.ExerciseName}]";
+                string uq = $"[{Cycle?.Plan?.Routine?.Name}, {Exercise?.Name}]";
 
                 return "{0}, pk={1}, uq={2}".FormatArgs("WorkoutPlanExercise", pk, uq);
             }
@@ -62,73 +63,52 @@ namespace vyger.Common.Models
         #region Properties
 
         ///	<summary>
-        ///	Gets / Sets database column 'plan_id'
+        ///
         ///	</summary>
         [Required]
-        [DisplayName("Plan Id")]
-        public override int PlanId { get; set; }
-
-        ///	<summary>
-        ///	Gets / Sets database column 'cycle_id'
-        ///	</summary>
-		[Required]
-        [DisplayName("Cycle Id")]
-        public override int CycleId { get; set; }
-
-        ///	<summary>
-        ///	Gets / Sets database column 'exercise_id'
-        ///	</summary>
-		[Required]
         [DisplayName("Exercise Id")]
-        public override int ExerciseId { get; set; }
+        public string ExerciseId
+        {
+            get { return Exercise == null ? _exerciseId : Exercise.Id; }
+            set { _exerciseId = value; }
+        }
+
+        private string _exerciseId;
 
         ///	<summary>
         ///	Gets / Sets database column 'weight'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Weight")]
         [Range(0, Constants.MaxWeight)]
-        public override int Weight { get; set; }
+        public int Weight { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'reps'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Reps")]
         [Range(0, Constants.MaxReps)]
-        public override int Reps { get; set; }
+        public int Reps { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'pullback'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Pullback")]
         [Range(0, 50)]
-        public override int Pullback { get; set; }
+        public int Pullback { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'is_calculated'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Is Calculated")]
-        public override bool IsCalculated { get; set; }
-
-        public override DateTime CreatedAt
-        {
-            get { return base.CreatedAt.EnsureUtc(); }
-            set { base.CreatedAt = value.EnsureUtc(); }
-        }
-
-        public override DateTime? UpdatedAt
-        {
-            get { return base.UpdatedAt.EnsureUtc(); }
-            set { base.UpdatedAt = value.EnsureUtc(); }
-        }
+        public bool IsCalculated { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        [NotMapped]
         public double OneRepMax
         {
             get { return WorkoutCalculator.OneRepMax(Weight, Reps); }
@@ -141,19 +121,18 @@ namespace vyger.Common.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'cycle_id'
         ///	</summary>
-        [ForeignKey(nameof(PlanId) + "," + nameof(CycleId))]
         public WorkoutPlanCycle Cycle { get; set; }
 
         ///	<summary>
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
-        [ForeignKey(nameof(ExerciseId))]
+        [YamlIgnore]
         public Exercise Exercise { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        public IList<WorkoutPlanLog> PlanLogs { get; set; }
+        //public IList<WorkoutPlanLog> PlanLogs { get; set; }
 
         #endregion
     }

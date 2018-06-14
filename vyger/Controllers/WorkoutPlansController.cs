@@ -76,11 +76,15 @@ namespace vyger.Controllers
             {
                 WorkoutRoutine routine = _routines.GetWorkoutRoutines().GetByPrimaryKey(post.RoutineId);
 
-                _service.AddWorkoutPlan(new WorkoutPlan(routine));
+                WorkoutPlan plan = new WorkoutPlan(routine);
+
+                _service.CreateCycle(plan);
+
+                _service.AddWorkoutPlan(plan);
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Plan created successfully");
 
-                return RedirectToAction(MVC.WorkoutPlans.Index());
+                return RedirectToAction(MVC.WorkoutPlanExercises.Index(plan.Id, 1));
             }
 
             post.Routines = _routines.GetWorkoutRoutines();

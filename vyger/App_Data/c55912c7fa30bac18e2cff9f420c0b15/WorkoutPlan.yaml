@@ -1,0 +1,42 @@
+- &o0
+  Id: 4u4nz6nz6x6i
+  RoutineId: A
+  CreatedAt: 2018-06-14T03:51:58.1771898Z
+  Cycles:
+  - &o1
+    CycleId: 1
+    CreatedAt: 2018-06-14T03:51:58.1781897Z
+    Plan: *o0
+    PlanExercises:
+    - ExerciseId: LB-B-DLF
+      IsCalculated: true
+      Cycle: *o1
+    - ExerciseId: LG-M-LPR
+      IsCalculated: true
+      Cycle: *o1
+    - ExerciseId: CH-D-FBP
+      IsCalculated: true
+      Cycle: *o1
+    - ExerciseId: CH-H-DBP
+      IsCalculated: true
+      Cycle: *o1
+    - ExerciseId: LG-B-FSQ
+      Cycle: *o1
+    - ExerciseId: AB-M-CRN
+      Cycle: *o1
+    - ExerciseId: TR-H-SHR
+      IsCalculated: true
+      Cycle: *o1
+    - ExerciseId: SH-H-PRS
+      IsCalculated: true
+      Cycle: *o1
+    - ExerciseId: BC-D-CRL
+      Cycle: *o1
+    - ExerciseId: SH-D-SLR
+      Cycle: *o1
+    - ExerciseId: SH-D-FLR
+      Cycle: *o1
+    - ExerciseId: FA-B-SWC
+      Cycle: *o1
+    - ExerciseId: FA-B-RWC
+      Cycle: *o1

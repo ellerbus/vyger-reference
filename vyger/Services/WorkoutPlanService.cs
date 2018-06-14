@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using vyger.Common;
 using vyger.Models;
 
@@ -29,6 +32,12 @@ namespace vyger.Services
         ///
         /// </summary>
         void SaveWorkoutPlans();
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        WorkoutPlanCycle CreateCycle(WorkoutPlan plan);
     }
 
     #endregion
@@ -63,10 +72,12 @@ namespace vyger.Services
             {
                 p.Routine = _routines.GetWorkoutRoutines().GetByPrimaryKey(p.RoutineId);
 
-                //foreach (WorkoutPlanRoutine ex in p.PlanRoutines)
-                //{
-                //    ex.Routine = p.AllRoutines.GetByPrimaryKey(ex.RoutineId);
-                //}
+                IEnumerable<WorkoutPlanExercise> exercises = p.Cycles.SelectMany(x => x.PlanExercises);
+
+                foreach (WorkoutPlanExercise pex in exercises)
+                {
+                    pex.Exercise = p.Routine.AllExercises.GetByPrimaryKey(pex.ExerciseId);
+                }
             }
         }
 
@@ -107,6 +118,27 @@ namespace vyger.Services
         public void SaveWorkoutPlans()
         {
             SaveAll(_plans);
+        }
+
+        #endregion
+
+        #region Generator
+
+        public WorkoutPlanCycle CreateCycle(WorkoutPlan plan)
+        {
+            WorkoutPlanCycle cycle = new WorkoutPlanCycle()
+            {
+                CycleId = plan.Cycles.Count + 1,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            plan.Cycles.Add(cycle);
+
+            WorkoutCycleGenerator generator = new WorkoutCycleGenerator(plan, cycle);
+
+            generator.InitializeCycle();
+
+            return cycle;
         }
 
         #endregion

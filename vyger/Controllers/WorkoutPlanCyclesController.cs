@@ -1,35 +1,27 @@
-using System;
-using System.Linq;
 using System.Security;
 using System.Web.Mvc;
 using vyger.Common;
-using vyger.Common.Models;
-using vyger.Common.Services;
+using vyger.Models;
+using vyger.Services;
 
-namespace vyger.Web.Controllers
+namespace vyger.Controllers
 {
-    [RoutePrefix("Workouts/Plans/{id:int}/Cycles"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
-    public partial class WorkoutPlanCyclesController : BaseController<WorkoutPlanCyclesController>
+    [RoutePrefix("Workouts/Plans/{id}/Cycles"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
+    public partial class WorkoutPlanCyclesController : BaseController
     {
         #region Members
 
-        private ISecurityActor _actor;
         private IWorkoutPlanService _service;
-        private IWorkoutLogService _logs;
 
         #endregion
 
         #region Constructors
 
-        public WorkoutPlanCyclesController(
-            ISecurityActor actor,
-            IWorkoutPlanService service,
-            IWorkoutLogService logs)
+        public WorkoutPlanCyclesController(IWorkoutPlanService service)
         {
-            _actor = actor;
             _service = service;
-            _logs = logs;
         }
+
         #endregion
 
         #region "On" Methods
@@ -62,9 +54,9 @@ namespace vyger.Web.Controllers
         #region List Methods
 
         [HttpGet, Route("Index")]
-        public virtual ActionResult Index(int id)
+        public virtual ActionResult Index(string id)
         {
-            WorkoutPlan plan = _service.GetWorkoutPlanWithCycles(id, SecurityAccess.View);
+            WorkoutPlan plan = _service.GetWorkoutPlans().GetByPrimaryKey(id);
 
             return View(plan);
         }
@@ -74,9 +66,11 @@ namespace vyger.Web.Controllers
         #region Create Methods
 
         [HttpGet, Route("Create")]
-        public virtual ActionResult Create(int id)
+        public virtual ActionResult Create(string id)
         {
-            WorkoutPlanCycle cycle = _service.AddWorkoutCycle(id);
+            WorkoutPlan plan = _service.GetWorkoutPlans().GetByPrimaryKey(id);
+
+            WorkoutPlanCycle cycle = _service.CreateCycle(plan);
 
             AddFlashMessage(FlashMessageType.Success, $"Cycle  created successfully");
 
@@ -86,4 +80,3 @@ namespace vyger.Web.Controllers
         #endregion
     }
 }
-
