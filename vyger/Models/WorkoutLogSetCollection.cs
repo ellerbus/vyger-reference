@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     public class WorkoutLogSetCollection : List<WorkoutLogSet>
     {

@@ -28,6 +28,13 @@ namespace vyger.Models
 
         #region Methods
 
+        public static string Format(string logPlan)
+        {
+            WorkoutPlanSetCollection sets = new WorkoutPlanSetCollection(logPlan);
+
+            return sets.Display;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

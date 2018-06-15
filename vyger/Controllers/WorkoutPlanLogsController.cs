@@ -1,33 +1,25 @@
 using System.Security;
 using System.Web.Mvc;
 using vyger.Common;
-using vyger.Common.Models;
-using vyger.Common.Services;
-using vyger.Web.Models;
+using vyger.Models;
+using vyger.Services;
 
-namespace vyger.Web.Controllers
+namespace vyger.Controllers
 {
-    [RoutePrefix("Workouts/Plans/{id:int}/Logs"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
-    public partial class WorkoutPlanLogsController : BaseController<WorkoutPlanLogsController>
+    [RoutePrefix("Workouts/Plans/{id}/Logs"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
+    public partial class WorkoutPlanLogsController : BaseController
     {
         #region Members
 
-        private ISecurityActor _actor;
         private IWorkoutPlanService _service;
-        private IWorkoutRoutineService _routines;
 
         #endregion
 
         #region Constructors
 
-        public WorkoutPlanLogsController(
-            ISecurityActor actor,
-            IWorkoutPlanService service,
-            IWorkoutRoutineService routines)
+        public WorkoutPlanLogsController(IWorkoutPlanService service)
         {
-            _actor = actor;
             _service = service;
-            _routines = routines;
         }
 
         #endregion
@@ -52,19 +44,15 @@ namespace vyger.Web.Controllers
         #region List Methods
 
         [HttpGet, Route("Index")]
-        public virtual ActionResult Index(int id, int cycle)
+        public virtual ActionResult Index(string id, int cycle)
         {
-            WorkoutPlanLogForm form = new WorkoutPlanLogForm()
-            {
-                Cycle = _service.GetWorkoutPlanCycle(id, cycle, SecurityAccess.View)
-            };
+            WorkoutPlan plan = _service.GetWorkoutPlans().GetByPrimaryKey(id);
 
-            form.Routine = _routines.GetWorkoutRoutine(form.Cycle.Plan.RoutineId, SecurityAccess.View);
+            WorkoutPlanCycle planCycle = plan.Cycles.GetByPrimaryKey(cycle);
 
-            return View(form);
+            return View(planCycle);
         }
 
         #endregion
     }
 }
-

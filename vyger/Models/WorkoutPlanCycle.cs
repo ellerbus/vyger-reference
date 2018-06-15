@@ -18,6 +18,7 @@ namespace vyger.Models
         public WorkoutPlanCycle()
         {
             PlanExercises = new WorkoutPlanExerciseCollection(this, new WorkoutPlanExercise[0]);
+            PlanLogs = new WorkoutPlanLogCollection(this, new WorkoutPlanLog[0]);
         }
 
         #endregion
@@ -90,6 +91,11 @@ namespace vyger.Models
         ///
         ///	</summary>
         public WorkoutPlanExerciseCollection PlanExercises { get; set; }
+
+        ///	<summary>
+        ///
+        ///	</summary>
+        public WorkoutPlanLogCollection PlanLogs { get; set; }
 
         #endregion
     }

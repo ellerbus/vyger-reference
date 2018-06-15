@@ -150,6 +150,7 @@
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\WorkoutPlanCyclesController.cs" />
     <Compile Include="Controllers\WorkoutPlanExercisesController.cs" />
+    <Compile Include="Controllers\WorkoutPlanLogsController.cs" />
     <Compile Include="Controllers\WorkoutPlansController.cs" />
     <Compile Include="Controllers\WorkoutRoutineExercisesController.cs" />
     <Compile Include="Controllers\WorkoutRoutinesController.cs" />
@@ -185,11 +186,18 @@
     <Compile Include="Models\ExerciseGroupCollection.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\WorkoutCycleGenerator.cs" />
+    <Compile Include="Models\WorkoutLog.cs" />
+    <Compile Include="Models\WorkoutLogSet.cs" />
+    <Compile Include="Models\WorkoutLogSetCollection.cs" />
     <Compile Include="Models\WorkoutPlan.cs" />
+    <Compile Include="Models\WorkoutPlanLogCollection.cs" />
     <Compile Include="Models\WorkoutPlanExerciseCollection.cs" />
     <Compile Include="Models\WorkoutPlanCycleCollection.cs" />
     <Compile Include="Models\WorkoutPlanCycle.cs" />
     <Compile Include="Models\WorkoutPlanExercise.cs" />
+    <Compile Include="Models\WorkoutPlanLog.cs" />
+    <Compile Include="Models\WorkoutPlanSet.cs" />
+    <Compile Include="Models\WorkoutPlanSetCollection.cs" />
     <Compile Include="Models\WorkoutRoutine.cs" />
     <Compile Include="Models\WorkoutPlanCollection.cs" />
     <Compile Include="Models\WorkoutRoutineCollection.cs" />
@@ -218,6 +226,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="WorkoutPlanExercisesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkoutPlanLogsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="WorkoutPlansController.generated.cs">
@@ -260,6 +271,7 @@
     <Content Include="Views\WorkoutPlanCycles\Create.cshtml" />
     <Content Include="Views\WorkoutPlanExercises\_Row.cshtml" />
     <Content Include="Views\WorkoutPlanExercises\Index.cshtml" />
+    <Content Include="Views\WorkoutPlanLogs\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using vyger.Common;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     public class WorkoutLogSet
     {
@@ -27,9 +28,11 @@ namespace vyger.Common.Models
                     case "weight":
                         Weight = int.Parse(group.Value);
                         break;
+
                     case "reps":
                         Reps = int.Parse(group.Value);
                         break;
+
                     case "sets":
                         Sets = int.Parse(group.Value);
                         break;
@@ -41,6 +44,13 @@ namespace vyger.Common.Models
 
         #region Methods
 
+        public static string Format(string workoutLog)
+        {
+            WorkoutLogSetCollection sets = new WorkoutLogSetCollection(workoutLog);
+
+            return sets.Display;
+        }
+
         public override string ToString()
         {
             return Display;
@@ -51,22 +61,22 @@ namespace vyger.Common.Models
         #region Properties
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int Weight { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int Reps { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int Sets { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public double OneRepMax
         {
@@ -74,7 +84,7 @@ namespace vyger.Common.Models
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Display
         {

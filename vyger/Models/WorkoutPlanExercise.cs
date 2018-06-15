@@ -129,11 +129,6 @@ namespace vyger.Models
         [YamlIgnore]
         public Exercise Exercise { get; set; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        //public IList<WorkoutPlanLog> PlanLogs { get; set; }
-
         #endregion
     }
 }

@@ -1,23 +1,23 @@
 ﻿@{
-  ViewBag.Title = "Workout Log Plan for Cycle #" + Model.Cycle.CycleId;
+  ViewBag.Title = "Workout Log Plan for Cycle #" + Model.CycleId;
 }
 
-@model WorkoutPlanLogForm
+@model WorkoutPlanCycle
 
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-md-10">
     <table class="table table-sm">
-      @for (var w = 0; w < Model.Routine.Weeks; w++)
+      @for (var w = 0; w < Model.Plan.Routine.Weeks; w++)
       {
-        for (var d = 0; d < Model.Routine.Days; d++)
+        for (var d = 0; d < Model.Plan.Routine.Days; d++)
         {
           <thead>
             <tr>
-              <th style="width: 250px">Cycle @Model.Cycle.CycleId, Week @(w + 1), Day @(d + 1)</th>
+              <th style="width: 250px">Cycle @Model.CycleId, Week @(w + 1), Day @(d + 1)</th>
               <th>
-                @if (Model.GetLogsFor(w + 1, d + 1).Any(x => x.Status != StatusTypes.Complete))
+                @if (Model.PlanLogs.CanCreateLogInputFor(w + 1, d + 1))
                 {
-                  <a href="@Url.Action(MVC.WorkoutLogs.Plans(Model.Cycle.Plan.PlanId, Model.Cycle.CycleId, w+1, d+1))"
+                  <a href="Url.Action(MVC.WorkoutLogs.Plans(Model.Plan.Id, Model.CycleId, w+1, d+1))"
                      class="d-print-none btn btn-sm btn-outline-success float-right">
                     <i class="fa fa-fw fa-plus"></i> Log It
                   </a>
@@ -26,10 +26,10 @@
             </tr>
           </thead>
           <tbody>
-            @foreach (var log in Model.GetLogsFor(w + 1, d + 1))
+            @foreach (var log in Model.PlanLogs.GetLogsFor(w + 1, d + 1))
             {
               <tr>
-                <td style="padding-left: 32px;">@log.Exercise.ExerciseName</td>
+                <td style="padding-left: 32px;">@log.PlanExercise.Exercise.Name</td>
                 <td style="font-size: 1.1em; font-family: 'Courier New', Courier, monospace">@log.WorkoutPlan</td>
               </tr>
             }
@@ -39,4 +39,3 @@
     </table>
   </div>
 </div>
-

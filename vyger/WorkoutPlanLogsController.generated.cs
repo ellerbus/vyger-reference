@@ -25,10 +25,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace vyger.Controllers
 {
-    public partial class WorkoutPlanExercisesController
+    public partial class WorkoutPlanLogsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected WorkoutPlanExercisesController(Dummy d) { }
+        protected WorkoutPlanLogsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -64,13 +64,13 @@ namespace vyger.Controllers
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public WorkoutPlanExercisesController Actions { get { return MVC.WorkoutPlanExercises; } }
+        public WorkoutPlanLogsController Actions { get { return MVC.WorkoutPlanLogs; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "WorkoutPlanExercises";
+        public readonly string Name = "WorkoutPlanLogs";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "WorkoutPlanExercises";
+        public const string NameConst = "WorkoutPlanLogs";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -96,7 +96,6 @@ namespace vyger.Controllers
         {
             public readonly string id = "id";
             public readonly string cycle = "cycle";
-            public readonly string post = "post";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -108,18 +107,16 @@ namespace vyger.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _Row = "_Row";
                 public readonly string Index = "Index";
             }
-            public readonly string _Row = "~/Views/WorkoutPlanExercises/_Row.cshtml";
-            public readonly string Index = "~/Views/WorkoutPlanExercises/Index.cshtml";
+            public readonly string Index = "~/Views/WorkoutPlanLogs/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_WorkoutPlanExercisesController : vyger.Controllers.WorkoutPlanExercisesController
+    public partial class T4MVC_WorkoutPlanLogsController : vyger.Controllers.WorkoutPlanLogsController
     {
-        public T4MVC_WorkoutPlanExercisesController() : base(Dummy.Instance) { }
+        public T4MVC_WorkoutPlanLogsController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int cycle);
@@ -131,20 +128,6 @@ namespace vyger.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cycle", cycle);
             IndexOverride(callInfo, id, cycle);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, int cycle, vyger.Models.WorkoutPlanCycle post);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Index(string id, int cycle, vyger.Models.WorkoutPlanCycle post)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cycle", cycle);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "post", post);
-            IndexOverride(callInfo, id, cycle, post);
             return callInfo;
         }
 

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,25 +6,27 @@ using System.Diagnostics;
 using System.Linq;
 using Augment;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public partial class WorkoutLog
+    public class WorkoutLog
     {
         #region Constructors
 
-        public WorkoutLog() : base() { }
+        public WorkoutLog() : base()
+        {
+        }
 
         public WorkoutLog(WorkoutPlanLog planLog) : this()
         {
-            ExerciseId = planLog.ExerciseId;
-            Exercise = planLog.Exercise;
+            ExerciseId = planLog.PlanExercise.ExerciseId;
+            Exercise = planLog.PlanExercise.Exercise;
             Workout = planLog.WorkoutPlan;
-            PlanId = planLog.PlanId;
-            CycleId = planLog.CycleId;
+            PlanId = planLog.Cycle.Plan.Id;
+            CycleId = planLog.Cycle.CycleId;
             WeekId = planLog.WeekId;
             DayId = planLog.DayId;
             SequenceNumber = planLog.SequenceNumber;
@@ -47,11 +48,11 @@ namespace vyger.Common.Models
         {
             get
             {
-                string pk = $"[{MemberId}, {LogDate}, {ExerciseId}]";
+                string id = $"[{LogDate:d}, {ExerciseId}]";
 
-                string uq = $"[{Exercise.ExerciseName},{Workout}]";
+                string nm = $"[{Exercise?.Name},{Workout}]";
 
-                return "{0}, pk={1}, uq={2}".FormatArgs("WorkoutLog", pk, uq);
+                return "{0}, id={1}, nm={2}".FormatArgs("WorkoutLog", id, nm);
             }
         }
 
@@ -78,89 +79,74 @@ namespace vyger.Common.Models
         #region Properties
 
         ///	<summary>
-        ///	Gets / Sets database column 'member_id'
-        ///	</summary>
-        [Required]
-        [DisplayName("Member Id")]
-        public override int MemberId { get; set; }
-
-        ///	<summary>
         ///	Gets / Sets database column 'log_date'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Log Date")]
-        public override DateTime LogDate { get; set; }
+        public DateTime LogDate { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'exercise_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Exercise Id")]
-        public override int ExerciseId { get; set; }
+        public string ExerciseId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'workout'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Workout")]
-        public override string Workout
+        public string Workout
         {
-            get { return base.Workout; }
+            get { return _workout; }
             set
             {
-                base.Workout = value;
+                _workout = value;
                 _sets = null;
             }
         }
 
+        private string _workout;
+
         ///	<summary>
         ///	Gets / Sets database column 'plan_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Plan Id")]
-        public override int PlanId { get; set; }
+        public string PlanId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'cycle_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Cycle Id")]
-        public override int CycleId { get; set; }
+        public int CycleId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'week_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Week Id")]
-        public override int WeekId { get; set; }
+        public int WeekId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'day_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Day Id")]
-        public override int DayId { get; set; }
+        public int DayId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'sequence_number'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Sequence Number")]
-        public override int SequenceNumber { get; set; }
+        public int SequenceNumber { get; set; }
 
-        public override DateTime CreatedAt
-        {
-            get { return base.CreatedAt.EnsureUtc(); }
-            set { base.CreatedAt = value.EnsureUtc(); }
-        }
-
-        public override DateTime? UpdatedAt
-        {
-            get { return base.UpdatedAt.EnsureUtc(); }
-            set { base.UpdatedAt = value.EnsureUtc(); }
-        }
-
-        [NotMapped]
+        /// <summary>
+        ///
+        /// </summary>
         public double OneRepMax
         {
             get
@@ -179,19 +165,12 @@ namespace vyger.Common.Models
         #region Foreign Key Properties
 
         ///	<summary>
-        ///	Gets / Sets the foreign key to 'member_id'
-        ///	</summary>
-        [ForeignKey(nameof(MemberId))]
-        public Member Member { get; set; }
-
-        ///	<summary>
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
-        [ForeignKey(nameof(ExerciseId))]
         public Exercise Exercise { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         [NotMapped]
@@ -206,6 +185,7 @@ namespace vyger.Common.Models
                 return _sets;
             }
         }
+
         private WorkoutLogSetCollection _sets;
 
         #endregion

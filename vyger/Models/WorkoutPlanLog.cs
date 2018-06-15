@@ -1,21 +1,22 @@
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using Augment;
+using vyger.Common;
 
-namespace vyger.Common.Models
+namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public partial class WorkoutPlanLog
+    public class WorkoutPlanLog
     {
         #region Constructors
 
-        public WorkoutPlanLog() : base() { }
+        public WorkoutPlanLog() : base()
+        {
+        }
 
         #endregion
 
@@ -33,9 +34,9 @@ namespace vyger.Common.Models
         {
             get
             {
-                string pk = $"[{PlanId}, {CycleId}, {WeekId}, {DayId}, {ExerciseId}]";
+                string pk = $"[{WeekId}, {DayId}, {ExerciseId}]";
 
-                string uq = $"[{Exercise?.ExerciseName}]";
+                string uq = $"[{PlanExercise?.Exercise?.Name}]";
 
                 return "{0}, pk={1}, uq={2}".FormatArgs("WorkoutPlanLog", pk, uq);
             }
@@ -52,9 +53,7 @@ namespace vyger.Common.Models
         {
             SequenceNumber = other.SequenceNumber;
             WorkoutPlan = other.WorkoutPlan;
-            StatusEnum = other.StatusEnum;
-            CreatedAt = other.CreatedAt;
-            UpdatedAt = other.UpdatedAt;
+            Status = other.Status;
         }
 
         #endregion
@@ -62,81 +61,44 @@ namespace vyger.Common.Models
         #region Properties
 
         ///	<summary>
-        ///	Gets / Sets database column 'plan_id'
-        ///	</summary>
-        [Required]
-        [DisplayName("Plan Id")]
-        public override int PlanId { get; set; }
-
-        ///	<summary>
-        ///	Gets / Sets database column 'cycle_id'
-        ///	</summary>
-		[Required]
-        [DisplayName("Cycle Id")]
-        public override int CycleId { get; set; }
-
-        ///	<summary>
         ///	Gets / Sets database column 'week_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Week Id")]
-        public override int WeekId { get; set; }
+        public int WeekId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'day_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Day Id")]
-        public override int DayId { get; set; }
+        public int DayId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'exercise_id'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Exercise Id")]
-        public override int ExerciseId { get; set; }
+        public string ExerciseId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'sequence_number'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Sequence Number")]
-        public override int SequenceNumber { get; set; }
+        public int SequenceNumber { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'workout_plan'
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Workout Plan")]
-        public override string WorkoutPlan { get; set; }
+        public string WorkoutPlan { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-		[NotMapped]
-        public StatusTypes Status
-        {
-            get { return StatusEnum.ToEnum<StatusTypes>(); }
-            set { StatusEnum = value.ToString(); }
-        }
-
-        public override string StatusEnum
-        {
-            get { return base.StatusEnum.AssertNotNull(StatusTypes.None.ToString()); }
-            set { base.StatusEnum = value; }
-        }
-
-        public override DateTime CreatedAt
-        {
-            get { return base.CreatedAt.EnsureUtc(); }
-            set { base.CreatedAt = value.EnsureUtc(); }
-        }
-
-        public override DateTime? UpdatedAt
-        {
-            get { return base.UpdatedAt.EnsureUtc(); }
-            set { base.UpdatedAt = value.EnsureUtc(); }
-        }
+        public StatusTypes Status { get; set; }
 
         #endregion
 
@@ -145,14 +107,12 @@ namespace vyger.Common.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'cycle_id'
         ///	</summary>
-        [ForeignKey(nameof(PlanId) + "," + nameof(CycleId) + "," + nameof(ExerciseId))]
-        public WorkoutPlanExercise PlanExercise { get; set; }
+        public WorkoutPlanCycle Cycle { get; set; }
 
         ///	<summary>
-        ///	Gets / Sets the foreign key to 'exercise_id'
+        ///	Gets / Sets the foreign key to 'cycle_id'
         ///	</summary>
-        [ForeignKey(nameof(ExerciseId))]
-        public Exercise Exercise { get; set; }
+        public WorkoutPlanExercise PlanExercise { get; set; }
 
         #endregion
     }
