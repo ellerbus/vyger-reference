@@ -98,6 +98,24 @@ namespace vyger.Models
                 .ToList();
         }
 
+        public IEnumerable<WorkoutLog> GetMostRecent()
+        {
+            HashSet<string> exercises = new HashSet<string>();
+
+            IEnumerable<WorkoutLog> logs = this.OrderByDescending(x => x.LogDate);
+
+            //  workout backwards
+            foreach (WorkoutLog log in logs)
+            {
+                if (!exercises.Contains(log.ExerciseId))
+                {
+                    yield return log;
+
+                    exercises.Add(log.ExerciseId);
+                }
+            }
+        }
+
         #endregion
     }
 }

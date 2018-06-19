@@ -14,7 +14,7 @@
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <a class="btn btn-outline-secondary"
-               href="@Url.Action("Index", "WorkoutLogs", new { date=Model.LogDate.AddDays(-1).ToString("yyyy-MM-dd") })">
+               href="@Url.Action(MVC.WorkoutLogs.Index(Model.LogDate.AddDays(-1).Date))">
               <i class="fa fa-fw fa-angle-left"></i>
             </a>
           </div>
@@ -22,13 +22,13 @@
           @Html.ValidationMessageFor(m => m.LogDate, "", new { @class = "form-text text-danger" })
           <div class="input-group-append">
             <a class="btn btn-outline-secondary"
-               href="@Url.Action("Index", "WorkoutLogs", new { date=Model.LogDate.AddDays(1).ToString("yyyy-MM-dd") })">
+               href="@MVC.WorkoutLogs.Index(Model.LogDate.AddDays(1).Date)">
               <i class="fa fa-fw fa-angle-right"></i>
             </a>
           </div>
         </div>
       </div>
-      if (Model.Logs.Count > 0)
+      if (Model.Logs.Count() > 0)
       {
         <table class="table">
           <thead>
@@ -39,7 +39,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach (var log in Model.Logs.OrderBy(x => x.SequenceNumber).ThenBy(x => x.Exercise.ExerciseName))
+            @foreach (var log in Model.Logs.OrderBy(x => x.SequenceNumber).ThenBy(x => x.Exercise.Name))
             {
               @Html.Partial("_Row", log)
             }
@@ -48,7 +48,7 @@
             <tr>
               <td colspan="5" class="text-left">
                 <button type="submit" class="btn btn-primary">save workout</button>
-                <a href="@Url.Action("Index", "WorkoutLogs")" class="btn btn-outline-secondary">cancel</a>
+                <a href="@Url.Action(MVC.WorkoutLogs.Index())" class="btn btn-outline-secondary">cancel</a>
               </td>
             </tr>
           </tfoot>

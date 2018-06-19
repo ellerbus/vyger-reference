@@ -38,6 +38,11 @@ namespace vyger.Services
         /// </summary>
         /// <returns></returns>
         WorkoutPlanCycle CreateCycle(WorkoutPlan plan, IEnumerable<WorkoutLog> logs);
+
+        /// <summary>
+        ///
+        /// </summary>
+        void GenerateCycle(WorkoutPlan plan, WorkoutPlanCycle cycle, IEnumerable<WorkoutLog> logs);
     }
 
     #endregion
@@ -134,11 +139,16 @@ namespace vyger.Services
 
             plan.Cycles.Add(cycle);
 
+            GenerateCycle(plan, cycle, logs);
+
+            return cycle;
+        }
+
+        public void GenerateCycle(WorkoutPlan plan, WorkoutPlanCycle cycle, IEnumerable<WorkoutLog> logs)
+        {
             WorkoutCycleGenerator generator = new WorkoutCycleGenerator(plan, cycle);
 
             generator.InitializeCycle(logs.ToList());
-
-            return cycle;
         }
 
         #endregion

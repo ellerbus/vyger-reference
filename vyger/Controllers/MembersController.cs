@@ -37,7 +37,7 @@ namespace vyger.Controllers
 
             Ensure.That(verified, nameof(verified)).IsNotNull();
 
-            FormsAuthenticationTicket ticket = Authenticated(new SecurityActor(verified.Email));
+            FormsAuthenticationTicket ticket = Authenticated(new SecurityActor(verified.Email, true));
 
             string url = TempData["ReturnUrl"] as string;
 

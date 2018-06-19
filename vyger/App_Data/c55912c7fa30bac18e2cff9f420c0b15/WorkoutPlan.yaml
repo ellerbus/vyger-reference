@@ -1,34 +1,40 @@
 - &o0
   Id: 4u4nz6nz6x6i
   RoutineId: A
-  CreatedAt: 2018-06-14T03:51:58.1771898Z
+  CreatedAt: 2018-06-13T21:51:58.1771898-06:00
   Cycles:
   - &o1
     CycleId: 1
-    CreatedAt: 2018-06-14T03:51:58.1781897Z
+    CreatedAt: 2018-06-18T20:31:01.6255773-06:00
     Plan: *o0
     PlanExercises:
     - ExerciseId: LB-B-DLF
-      IsCalculated: true
+      Weight: 200
+      Reps: 1
       Cycle: *o1
     - ExerciseId: LG-M-LPR
-      IsCalculated: true
+      Weight: 450
+      Reps: 1
       Cycle: *o1
     - ExerciseId: CH-D-FBP
-      IsCalculated: true
+      Weight: 50
+      Reps: 8
       Cycle: *o1
     - ExerciseId: CH-H-DBP
-      IsCalculated: true
+      Weight: 250
+      Reps: 1
       Cycle: *o1
     - ExerciseId: LG-B-FSQ
       Cycle: *o1
     - ExerciseId: AB-M-CRN
       Cycle: *o1
     - ExerciseId: TR-H-SHR
-      IsCalculated: true
+      Weight: 250
+      Reps: 1
       Cycle: *o1
     - ExerciseId: SH-H-PRS
-      IsCalculated: true
+      Weight: 165
+      Reps: 1
       Cycle: *o1
     - ExerciseId: BC-D-CRL
       Cycle: *o1
@@ -40,3 +46,4 @@
       Cycle: *o1
     - ExerciseId: FA-B-RWC
       Cycle: *o1
+    PlanLogs: []

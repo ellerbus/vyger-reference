@@ -81,6 +81,7 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets database column 'log_date'
         ///	</summary>
+        [Key]
         [Required]
         [DisplayName("Log Date")]
         public DateTime LogDate { get; set; }
@@ -88,6 +89,7 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets database column 'exercise_id'
         ///	</summary>
+        [Key]
         [Required]
         [DisplayName("Exercise Id")]
         public string ExerciseId { get; set; }

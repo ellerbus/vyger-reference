@@ -88,7 +88,7 @@ namespace vyger.Controllers
 
         #region Create Methods
 
-        [HttpGet, Route("Plans/{plan:string}")]
+        [HttpGet, Route("Plans/{plan}")]
         public virtual ActionResult Plans(string plan, int cycle, int week, int day)
         {
             WorkoutLogForm form = new WorkoutLogForm();
@@ -111,7 +111,7 @@ namespace vyger.Controllers
             return View(form);
         }
 
-        [HttpPost, Route("Plans/{plan:string}"), ValidateAntiForgeryToken]
+        [HttpPost, Route("Plans/{plan}"), ValidateAntiForgeryToken]
         public virtual ActionResult Plans(int plan, int cycle, int week, int day, WorkoutLogForm post)
         {
             //WorkoutLogForm form = new WorkoutLogForm();

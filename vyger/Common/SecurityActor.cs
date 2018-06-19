@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Principal;
 using Augment;
 
 namespace vyger.Common
@@ -10,6 +11,8 @@ namespace vyger.Common
         string[] GetRoles();
 
         string Email { get; }
+
+        bool IsAuthenticated { get; }
     }
 
     #endregion
@@ -18,9 +21,17 @@ namespace vyger.Common
     {
         #region Constructors
 
-        public SecurityActor(string email)
+        public SecurityActor(string email, bool? isAuthenticated)
         {
             Email = email.AssertNotNull().ToLower();
+
+            IsAuthenticated = isAuthenticated.GetValueOrDefault();
+        }
+
+        public SecurityActor(IIdentity identity)
+            : this(identity?.Name, identity?.IsAuthenticated)
+        {
+            Identity = identity;
         }
 
         #endregion
@@ -43,7 +54,11 @@ namespace vyger.Common
 
         #region Properties
 
+        public IIdentity Identity { get; private set; }
+
         public string Email { get; private set; }
+
+        public bool IsAuthenticated { get; private set; }
 
         #endregion
     }

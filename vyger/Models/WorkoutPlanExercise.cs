@@ -65,6 +65,7 @@ namespace vyger.Models
         ///	<summary>
         ///
         ///	</summary>
+        [Key]
         [Required]
         [DisplayName("Exercise Id")]
         public string ExerciseId
@@ -109,6 +110,7 @@ namespace vyger.Models
         /// <summary>
         ///
         /// </summary>
+        [YamlIgnore]
         public double OneRepMax
         {
             get { return WorkoutCalculator.OneRepMax(Weight, Reps); }

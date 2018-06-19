@@ -81,7 +81,9 @@ namespace vyger.Controllers
 
             WorkoutPlanCycle cycle = _service.CreateCycle(plan, lastCycle);
 
-            AddFlashMessage(FlashMessageType.Success, $"Cycle  created successfully");
+            _service.SaveWorkoutPlans();
+
+            AddFlashMessage(FlashMessageType.Success, $"Cycle #{cycle.CycleId} created successfully");
 
             return RedirectToAction(MVC.WorkoutPlanExercises.Index(id, cycle.CycleId));
         }

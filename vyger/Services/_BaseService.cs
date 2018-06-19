@@ -37,7 +37,7 @@ namespace vyger.Services
 
         protected virtual T LoadOne()
         {
-            if (File.Exists(FileName))
+            if (Actor.IsAuthenticated && File.Exists(FileName))
             {
                 switch (RepositoryType)
                 {
@@ -64,7 +64,7 @@ namespace vyger.Services
 
         protected virtual IEnumerable<T> LoadAll()
         {
-            if (File.Exists(FileName))
+            if (Actor.IsAuthenticated && File.Exists(FileName))
             {
                 switch (RepositoryType)
                 {

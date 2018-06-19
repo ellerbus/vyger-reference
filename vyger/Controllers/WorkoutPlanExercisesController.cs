@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security;
 using System.Web.Mvc;
 using vyger.Common;
@@ -12,14 +13,16 @@ namespace vyger.Controllers
         #region Members
 
         private IWorkoutPlanService _service;
+        private IWorkoutLogService _logs;
 
         #endregion
 
         #region Constructors
 
-        public WorkoutPlanExercisesController(IWorkoutPlanService service)
+        public WorkoutPlanExercisesController(IWorkoutPlanService service, IWorkoutLogService logs)
         {
             _service = service;
+            _logs = logs;
         }
 
         #endregion
@@ -71,19 +74,29 @@ namespace vyger.Controllers
                 .Cycles
                 .GetByPrimaryKey(cycle);
 
+            planCycle.PlanExercises.OverlayWith(post.PlanExercises);
+
             if (planCycle.Status == StatusTypes.None)
             {
-                //_service.GenerateCycle(id, cycle, post.PlanExercises);
+                IEnumerable<WorkoutLog> logs = _logs.GetWorkoutLogs().GetWorkoutLogs(id, cycle - 1);
 
-                AddFlashMessage(FlashMessageType.Success, $"Exercise Plan Generated for Cycle {cycle}");
+                if (cycle == 1)
+                {
+                    logs = _logs.GetWorkoutLogs().GetMostRecent();
+                }
+
+                _service.CreateCycle(planCycle.Plan, logs);
+
+                _service.SaveWorkoutPlans();
+
+                AddFlashMessage(FlashMessageType.Success, $"Exercise Plan Generated for Cycle #{cycle}");
             }
             else
             {
                 AddFlashMessage(FlashMessageType.Danger, $"Exercise Plan cannot be setup for this Cycle");
             }
 
-            return View(planCycle);
-            //return RedirectToAction(MVC.WorkoutPlanLogs.Index(id, cycle));
+            return RedirectToAction(MVC.WorkoutPlanLogs.Index(id, cycle));
         }
 
         #endregion

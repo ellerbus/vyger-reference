@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Web;
-using Augment;
 using SimpleInjector;
 
 namespace vyger.Common
@@ -71,19 +70,12 @@ namespace vyger.Common
         {
             IPrincipal p = GetPrincipal();
 
-            if (p != null && p.Identity != null & p.Identity.IsAuthenticated)
+            if (p != null && p.Identity != null)
             {
-                string name = p.Identity.Name;
-
-                if (name.IsNullOrEmpty())
-                {
-                    name = "x";
-                }
-
-                return new SecurityActor(p.Identity.Name);
+                return new SecurityActor(p.Identity);
             }
 
-            return new SecurityActor("");
+            return new SecurityActor("", false);
         }
 
         private static IPrincipal GetPrincipal()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Augment;
@@ -80,6 +81,16 @@ namespace vyger.Models
             foreach (WorkoutPlanExercise exercise in exercises)
             {
                 Add(exercise);
+            }
+        }
+
+        public void OverlayWith(IEnumerable<WorkoutPlanExercise> planExercises)
+        {
+            foreach(WorkoutPlanExercise source in planExercises)
+            {
+                WorkoutPlanExercise target = GetByPrimaryKey(source.ExerciseId);
+
+                target.OverlayWith(source);
             }
         }
 
