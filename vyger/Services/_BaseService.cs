@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using EnsureThat;
 using vyger.Common;
@@ -8,11 +9,18 @@ namespace vyger.Services
 {
     public class BaseService<T>
     {
+        #region Members
+
+        protected enum RepositoryTypes { Csv, Yaml }
+
+        #endregion
+
         #region Constructor
 
-        protected BaseService(ISecurityActor actor)
+        protected BaseService(ISecurityActor actor, RepositoryTypes repositoryType)
         {
             Actor = actor;
+            RepositoryType = repositoryType;
         }
 
         #endregion
@@ -20,6 +28,8 @@ namespace vyger.Services
         #region Properties
 
         protected ISecurityActor Actor { get; private set; }
+
+        protected RepositoryTypes RepositoryType { get; private set; }
 
         #endregion
 
@@ -29,34 +39,70 @@ namespace vyger.Services
         {
             if (File.Exists(FileName))
             {
-                using (StreamReader sr = new StreamReader(FileName))
+                switch (RepositoryType)
                 {
-                    Deserializer deserializer = new DeserializerBuilder().Build();
+                    case RepositoryTypes.Yaml:
+                        return GetOneFromYaml();
 
-                    return deserializer.Deserialize<T>(sr.ReadToEnd());
+                    default:
+                        throw new NotImplementedException($"Unhandled LoadOne ({RepositoryType})");
                 }
             }
 
             return default(T);
         }
 
+        private T GetOneFromYaml()
+        {
+            using (StreamReader sr = new StreamReader(FileName))
+            {
+                Deserializer deserializer = new DeserializerBuilder().Build();
+
+                return deserializer.Deserialize<T>(sr.ReadToEnd());
+            }
+        }
 
         protected virtual IEnumerable<T> LoadAll()
         {
             if (File.Exists(FileName))
             {
-                using (StreamReader sr = new StreamReader(FileName))
+                switch (RepositoryType)
                 {
-                    Deserializer deserializer = new DeserializerBuilder().Build();
+                    case RepositoryTypes.Yaml:
+                        return GetAllFromYaml();
 
-                    return deserializer.Deserialize<IEnumerable<T>>(sr.ReadToEnd());
+                    default:
+                        throw new NotImplementedException($"Unhandled LoadAll ({RepositoryType})");
                 }
             }
 
             return new T[0];
         }
 
+        private IEnumerable<T> GetAllFromYaml()
+        {
+            using (StreamReader sr = new StreamReader(FileName))
+            {
+                Deserializer deserializer = new DeserializerBuilder().Build();
+
+                return deserializer.Deserialize<IEnumerable<T>>(sr.ReadToEnd());
+            }
+        }
+
         protected virtual void SaveOne(T one)
+        {
+            switch (RepositoryType)
+            {
+                case RepositoryTypes.Yaml:
+                    SaveOneYaml(one);
+                    break;
+
+                default:
+                    throw new NotImplementedException($"Unhandled SaveOne ({RepositoryType})");
+            }
+        }
+
+        private void SaveOneYaml(T one)
         {
             using (StreamWriter sw = new StreamWriter(FileName))
             {
@@ -67,6 +113,19 @@ namespace vyger.Services
         }
 
         protected virtual void SaveAll(IEnumerable<T> all)
+        {
+            switch (RepositoryType)
+            {
+                case RepositoryTypes.Yaml:
+                    SaveAllYaml(all);
+                    break;
+
+                default:
+                    throw new NotImplementedException($"Unhandled SaveAll ({RepositoryType})");
+            }
+        }
+
+        private void SaveAllYaml(IEnumerable<T> all)
         {
             using (StreamWriter sw = new StreamWriter(FileName))
             {

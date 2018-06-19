@@ -14,15 +14,20 @@ namespace vyger.Controllers
 
         private IWorkoutPlanService _service;
         private IWorkoutRoutineService _routines;
+        private IWorkoutLogService _logs;
 
         #endregion
 
         #region Constructors
 
-        public WorkoutPlansController(IWorkoutPlanService service, IWorkoutRoutineService routines)
+        public WorkoutPlansController(
+            IWorkoutPlanService service,
+            IWorkoutRoutineService routines,
+            IWorkoutLogService logs)
         {
             _service = service;
             _routines = routines;
+            _logs = logs;
         }
 
         #endregion
@@ -78,7 +83,9 @@ namespace vyger.Controllers
 
                 WorkoutPlan plan = new WorkoutPlan(routine);
 
-                _service.CreateCycle(plan);
+                WorkoutLogCollection logs = _logs.GetWorkoutLogs();
+
+                _service.CreateCycle(plan, logs.GetRecent());
 
                 _service.AddWorkoutPlan(plan);
 

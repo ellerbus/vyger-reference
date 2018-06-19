@@ -6,10 +6,7 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Web;
 using Augment;
-using Augment.Caching;
 using SimpleInjector;
-using vyger.Models;
-using vyger.Services;
 
 namespace vyger.Common
 {
@@ -37,8 +34,6 @@ namespace vyger.Common
 
         private void RegisterSupportItems()
         {
-            Register<ICacheProvider, HttpRuntimeCacheProvider>();
-            Register<ICacheManager, CacheManager>();
             Register<ISecurityActor>(() => GetSecurityActor());
         }
 
@@ -85,19 +80,10 @@ namespace vyger.Common
                     name = "x";
                 }
 
-                ISecurityActor sa = new SecurityActor(new Member(p.Identity.Name));
-
-                IMemberService members = new MemberService(sa);
-
-                Member member = members.GetMember();
-
-                if (member != null)
-                {
-                    return new SecurityActor(member);
-                }
+                return new SecurityActor(p.Identity.Name);
             }
 
-            return new SecurityActor(new Member());
+            return new SecurityActor("");
         }
 
         private static IPrincipal GetPrincipal()

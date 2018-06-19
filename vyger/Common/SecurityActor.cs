@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Augment;
-using vyger.Models;
 
 namespace vyger.Common
 {
@@ -9,10 +7,6 @@ namespace vyger.Common
 
     public interface ISecurityActor
     {
-        void EnsureAudit<T>(T item);
-
-        void EnsureAudits<T>(IEnumerable<T> items);
-
         string[] GetRoles();
 
         string Email { get; }
@@ -24,39 +18,14 @@ namespace vyger.Common
     {
         #region Constructors
 
-        public SecurityActor(Member member)
+        public SecurityActor(string email)
         {
-            Member = member;
+            Email = email.AssertNotNull().ToLower();
         }
 
         #endregion
 
         #region Methods
-
-        public void EnsureAudits<T>(IEnumerable<T> items)
-        {
-            foreach (T item in items)
-            {
-                EnsureAudit<T>(item);
-            }
-        }
-
-        public void EnsureAudit<T>(T item)
-        {
-            if (ReflectionHelper.HasProperty(item, "CreatedAt"))
-            {
-                DateTime dttm = (DateTime)ReflectionHelper.GetValueOfProperty(item, "CreatedAt");
-
-                if (dttm == DateTime.MinValue)
-                {
-                    ReflectionHelper.SetValueOfProperty(item, "CreatedAt", DateTime.UtcNow);
-                }
-                else if (ReflectionHelper.HasProperty(item, "UpdatedAt"))
-                {
-                    ReflectionHelper.SetValueOfProperty(item, "UpdatedAt", DateTime.UtcNow);
-                }
-            }
-        }
 
         public string[] GetRoles()
         {
@@ -74,9 +43,7 @@ namespace vyger.Common
 
         #region Properties
 
-        public Member Member { get; private set; }
-
-        public string Email { get { return Member == null ? null : Member.Email; } }
+        public string Email { get; private set; }
 
         #endregion
     }

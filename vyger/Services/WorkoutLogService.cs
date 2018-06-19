@@ -1,39 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using vyger.Common.Models;
+using vyger.Common;
+using vyger.Models;
 
-namespace vyger.Common.Services
+namespace vyger.Services
 {
     #region Service interface
 
     /// <summary>
-    /// Service Interface for WorkoutLog
+    /// Service Interface for WorkoutPlan
     /// </summary>
     public interface IWorkoutLogService
     {
         /// <summary>
-        /// Save Changes (wrapper to DbContext)
+        ///
         /// </summary>
-        /// <returns></returns>
-        int SaveChanges();
+        WorkoutLogCollection GetWorkoutLogs();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <param name="log"></param>
-        void AddWorkoutLog(WorkoutLog log);
-
-        /// <summary>
-        /// Gets WorkoutLogs
-        /// </summary>
-        IList<WorkoutLog> GetWorkoutLogs(DateTime date);
-
-        /// <summary>
-        /// Gets WorkoutLogs
-        /// </summary>
-        IList<WorkoutLog> GetWorkoutLogs(int planId, int cycleId);
+        void SaveWorkoutPlans();
     }
 
     #endregion
@@ -41,12 +26,11 @@ namespace vyger.Common.Services
     /// <summary>
     /// Service Implementation for WorkoutLog
     /// </summary>
-    public class WorkoutLogService : IWorkoutLogService
+    public class WorkoutLogService : BaseService<WorkoutLog>, IWorkoutLogService
     {
         #region Members
 
-        private IVygerContext _db;
-        private ISecurityActor _actor;
+        private WorkoutLogCollection _logs;
 
         #endregion
 
@@ -56,57 +40,28 @@ namespace vyger.Common.Services
         /// Creates a new instance
         /// </summary>
         public WorkoutLogService(
-            IVygerContext db,
+            IExerciseService exercises,
             ISecurityActor actor)
+            : base(actor, RepositoryTypes.Csv)
         {
-            _db = db;
-            _actor = actor;
+            _logs = new WorkoutLogCollection(exercises.GetExercises(), LoadAll());
         }
 
         #endregion
 
         #region Methods
 
-        public int SaveChanges()
-        {
-            return _db.SaveChanges();
-        }
-
-        public void AddWorkoutLog(WorkoutLog log)
-        {
-            _db.WorkoutLogs.Add(log);
-        }
-
         /// <summary>
-        /// Gets a single WorkoutLog based on the given primary key
+        ///
         /// </summary>
-        public IList<WorkoutLog> GetWorkoutLogs(DateTime logDate)
+        public WorkoutLogCollection GetWorkoutLogs()
         {
-            IList<WorkoutLog> logs = _db
-                .WorkoutLogs
-                .Where(x => x.MemberId == _actor.MemberId && x.LogDate == logDate)
-                .Include(x => x.Exercise)
-                .OrderBy(x => x.SequenceNumber)
-                .ThenBy(x => x.Exercise.ExerciseName)
-                .ToList();
-
-            return logs;
+            return _logs;
         }
 
-        /// <summary>
-        /// Gets a single WorkoutLog based on the given primary key
-        /// </summary>
-        public IList<WorkoutLog> GetWorkoutLogs(int planId, int cycleId)
+        public void SaveWorkoutPlans()
         {
-            IList<WorkoutLog> logs = _db
-                .WorkoutLogs
-                .Where(x => x.MemberId == _actor.MemberId && x.PlanId == planId && x.CycleId == cycleId)
-                .Include(x => x.Exercise)
-                .OrderBy(x => x.SequenceNumber)
-                .ThenBy(x => x.Exercise.ExerciseName)
-                .ToList();
-
-            return logs;
+            SaveAll(_logs);
         }
 
         #endregion

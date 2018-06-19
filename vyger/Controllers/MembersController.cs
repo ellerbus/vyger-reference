@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -38,9 +37,7 @@ namespace vyger.Controllers
 
             Ensure.That(verified, nameof(verified)).IsNotNull();
 
-            Member member = new Member { Email = verified.Email };
-
-            FormsAuthenticationTicket ticket = Authenticated(member);
+            FormsAuthenticationTicket ticket = Authenticated(new SecurityActor(verified.Email));
 
             string url = TempData["ReturnUrl"] as string;
 
@@ -52,11 +49,9 @@ namespace vyger.Controllers
             return Redirect(url);
         }
 
-        private FormsAuthenticationTicket Authenticated(Member member)
+        private FormsAuthenticationTicket Authenticated(SecurityActor sa)
         {
-            EnsureDataPath(member);
-
-            SecurityActor sa = new SecurityActor(member);
+            EnsureDataPath(sa);
 
             FormsAuthenticationTicket ticket = sa.ToAuthenticationTicket();
 
@@ -66,14 +61,12 @@ namespace vyger.Controllers
 
             Response.Cookies.Add(cookie);
 
-            member = SaveMember(sa);
-
             return ticket;
         }
 
-        private void EnsureDataPath(Member member)
+        private void EnsureDataPath(SecurityActor sa)
         {
-            string folder = Constants.GetMemberFolder(member.Email);
+            string folder = Constants.GetMemberFolder(sa.Email);
 
             string path = Server.MapPath($"~/App_Data/{folder}");
 
@@ -81,22 +74,6 @@ namespace vyger.Controllers
             {
                 Directory.CreateDirectory(path);
             }
-        }
-
-        private Member SaveMember(SecurityActor sa)
-        {
-            IMemberService svc = new MemberService(sa);
-
-            Member member = svc.GetMember();
-
-            if (member == null)
-            {
-                member = sa.Member;
-            }
-
-            svc.SaveMember(member);
-
-            return member;
         }
 
         #endregion

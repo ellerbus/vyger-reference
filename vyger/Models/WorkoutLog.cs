@@ -1,10 +1,10 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Linq;
 using Augment;
+using YamlDotNet.Serialization;
 
 namespace vyger.Models
 {
@@ -167,13 +167,14 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
+        [YamlIgnore]
         public Exercise Exercise { get; set; }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        [NotMapped]
+        [YamlIgnore]
         public WorkoutLogSetCollection Sets
         {
             get

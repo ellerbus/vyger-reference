@@ -37,7 +37,7 @@ namespace vyger.Services
         ///
         /// </summary>
         /// <returns></returns>
-        WorkoutPlanCycle CreateCycle(WorkoutPlan plan);
+        WorkoutPlanCycle CreateCycle(WorkoutPlan plan, IEnumerable<WorkoutLog> logs);
     }
 
     #endregion
@@ -62,7 +62,7 @@ namespace vyger.Services
         public WorkoutPlanService(
             IWorkoutRoutineService routines,
             ISecurityActor actor)
-            : base(actor)
+            : base(actor, RepositoryTypes.Yaml)
         {
             _routines = routines;
 
@@ -124,7 +124,7 @@ namespace vyger.Services
 
         #region Generator
 
-        public WorkoutPlanCycle CreateCycle(WorkoutPlan plan)
+        public WorkoutPlanCycle CreateCycle(WorkoutPlan plan, IEnumerable<WorkoutLog> logs)
         {
             WorkoutPlanCycle cycle = new WorkoutPlanCycle()
             {
@@ -136,7 +136,7 @@ namespace vyger.Services
 
             WorkoutCycleGenerator generator = new WorkoutCycleGenerator(plan, cycle);
 
-            generator.InitializeCycle();
+            generator.InitializeCycle(logs.ToList());
 
             return cycle;
         }

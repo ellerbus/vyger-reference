@@ -11,22 +11,22 @@ namespace vyger.Services
     public interface IWorkoutRoutineService
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         WorkoutRoutineCollection GetWorkoutRoutines();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         void AddWorkoutRoutine(WorkoutRoutine routine);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         void UpdateWorkoutRoutine(string id, WorkoutRoutine overlay);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         void SaveWorkoutRoutines();
     }
@@ -53,7 +53,7 @@ namespace vyger.Services
         public WorkoutRoutineService(
             IExerciseService exercises,
             ISecurityActor actor)
-            : base(actor)
+            : base(actor, RepositoryTypes.Yaml)
         {
             _exercises = exercises;
 
@@ -75,7 +75,7 @@ namespace vyger.Services
         #region Methods
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public WorkoutRoutineCollection GetWorkoutRoutines()
         {
@@ -83,7 +83,7 @@ namespace vyger.Services
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void AddWorkoutRoutine(WorkoutRoutine add)
         {
@@ -93,7 +93,7 @@ namespace vyger.Services
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void UpdateWorkoutRoutine(string id, WorkoutRoutine overlay)
         {

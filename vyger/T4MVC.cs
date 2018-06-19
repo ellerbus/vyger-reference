@@ -32,6 +32,7 @@ public static partial class MVC
     public static vyger.Controllers.ExercisesController Exercises = new vyger.Controllers.T4MVC_ExercisesController();
     public static vyger.Controllers.HomeController Home = new vyger.Controllers.T4MVC_HomeController();
     public static vyger.Controllers.MembersController Members = new vyger.Controllers.T4MVC_MembersController();
+    public static vyger.Controllers.WorkoutLogsController WorkoutLogs = new vyger.Controllers.T4MVC_WorkoutLogsController();
     public static vyger.Controllers.WorkoutPlanCyclesController WorkoutPlanCycles = new vyger.Controllers.T4MVC_WorkoutPlanCyclesController();
     public static vyger.Controllers.WorkoutPlanExercisesController WorkoutPlanExercises = new vyger.Controllers.T4MVC_WorkoutPlanExercisesController();
     public static vyger.Controllers.WorkoutPlanLogsController WorkoutPlanLogs = new vyger.Controllers.T4MVC_WorkoutPlanLogsController();

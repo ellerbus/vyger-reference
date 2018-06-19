@@ -11,17 +11,17 @@ namespace vyger.Services
     public interface IExerciseCategoryService
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         ExerciseCategoryCollection GetExerciseCategories();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         void AddExerciseCategory(ExerciseCategory category);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         void UpdateExerciseCategory(string id, ExerciseCategory overlay);
     }
@@ -44,7 +44,8 @@ namespace vyger.Services
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public ExerciseCategoryService(ISecurityActor actor) : base(actor)
+        public ExerciseCategoryService(ISecurityActor actor)
+            : base(actor, RepositoryTypes.Yaml)
         {
             _categories = new ExerciseCategoryCollection(LoadAll());
         }
@@ -54,7 +55,7 @@ namespace vyger.Services
         #region Methods
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public ExerciseCategoryCollection GetExerciseCategories()
         {
@@ -62,7 +63,7 @@ namespace vyger.Services
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void AddExerciseCategory(ExerciseCategory add)
         {
@@ -74,7 +75,7 @@ namespace vyger.Services
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void UpdateExerciseCategory(string id, ExerciseCategory overlay)
         {

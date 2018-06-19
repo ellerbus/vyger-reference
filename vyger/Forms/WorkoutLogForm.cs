@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using vyger.Common.Models;
+using vyger.Models;
 
-namespace vyger.Web.Models
+namespace vyger.Forms
 {
     public class WorkoutLogForm
     {
-        public WorkoutLogForm() { }
+        public WorkoutLogForm()
+        {
+        }
 
         public WorkoutPlan Plan { get; set; }
 
@@ -17,6 +19,6 @@ namespace vyger.Web.Models
         [DisplayName("Workout Date"), DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime LogDate { get; set; }
 
-        public IList<WorkoutLog> Logs { get; set; }
+        public IEnumerable<WorkoutLog> Logs { get; set; }
     }
 }

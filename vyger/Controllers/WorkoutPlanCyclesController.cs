@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security;
 using System.Web.Mvc;
 using vyger.Common;
@@ -12,14 +13,18 @@ namespace vyger.Controllers
         #region Members
 
         private IWorkoutPlanService _service;
+        private IWorkoutLogService _logs;
 
         #endregion
 
         #region Constructors
 
-        public WorkoutPlanCyclesController(IWorkoutPlanService service)
+        public WorkoutPlanCyclesController(
+            IWorkoutPlanService service,
+            IWorkoutLogService logs)
         {
             _service = service;
+            _logs = logs;
         }
 
         #endregion
@@ -70,7 +75,11 @@ namespace vyger.Controllers
         {
             WorkoutPlan plan = _service.GetWorkoutPlans().GetByPrimaryKey(id);
 
-            WorkoutPlanCycle cycle = _service.CreateCycle(plan);
+            WorkoutLogCollection logs = _logs.GetWorkoutLogs();
+
+            IList<WorkoutLog> lastCycle = logs.GetWorkoutLogs(plan.Id, plan.Cycles.Count);
+
+            WorkoutPlanCycle cycle = _service.CreateCycle(plan, lastCycle);
 
             AddFlashMessage(FlashMessageType.Success, $"Cycle  created successfully");
 

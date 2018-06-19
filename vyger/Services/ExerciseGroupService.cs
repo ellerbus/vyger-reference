@@ -11,17 +11,17 @@ namespace vyger.Services
     public interface IExerciseGroupService
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         ExerciseGroupCollection GetExerciseGroups();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         void AddExerciseGroup(ExerciseGroup group);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         void UpdateExerciseGroup(string id, ExerciseGroup overlay);
     }
@@ -44,7 +44,8 @@ namespace vyger.Services
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public ExerciseGroupService(ISecurityActor actor) : base(actor)
+        public ExerciseGroupService(ISecurityActor actor)
+            : base(actor, RepositoryTypes.Yaml)
         {
             _groups = new ExerciseGroupCollection(LoadAll());
         }
@@ -54,7 +55,7 @@ namespace vyger.Services
         #region Methods
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public ExerciseGroupCollection GetExerciseGroups()
         {
@@ -62,7 +63,7 @@ namespace vyger.Services
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void AddExerciseGroup(ExerciseGroup add)
         {
@@ -74,7 +75,7 @@ namespace vyger.Services
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void UpdateExerciseGroup(string id, ExerciseGroup overlay)
         {
