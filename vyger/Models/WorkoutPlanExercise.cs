@@ -55,7 +55,6 @@ namespace vyger.Models
             Weight = other.Weight;
             Reps = other.Reps;
             Pullback = other.Pullback;
-            IsCalculated = other.IsCalculated;
         }
 
         #endregion

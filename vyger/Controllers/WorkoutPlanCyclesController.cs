@@ -77,7 +77,7 @@ namespace vyger.Controllers
 
             WorkoutLogCollection logs = _logs.GetWorkoutLogs();
 
-            IList<WorkoutLog> lastCycle = logs.GetWorkoutLogs(plan.Id, plan.Cycles.Count);
+            IEnumerable<WorkoutLog> lastCycle = logs.GetRecentWorkoutLogs(plan.Id, plan.Cycles.Count);
 
             WorkoutPlanCycle cycle = _service.CreateCycle(plan, lastCycle);
 

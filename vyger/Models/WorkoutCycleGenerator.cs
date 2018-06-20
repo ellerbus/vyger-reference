@@ -79,18 +79,7 @@ namespace vyger.Models
                 //
                 if (!exerciseIds.Contains(rex.ExerciseId))
                 {
-                    //  is this static or requires calculations from an "RM"
-                    bool requiresOneRepMax = Plan.Routine.RoutineExercises
-                        .Where(x => x.ExerciseId == rex.ExerciseId)
-                        .SelectMany(x => x.Sets)
-                        .Any(x => x.IsRepMax);
-
-                    WorkoutPlanExercise exercise = new WorkoutPlanExercise()
-                    {
-                        Cycle = Cycle,
-                        Exercise = rex.Exercise,
-                        IsCalculated = requiresOneRepMax
-                    };
+                    WorkoutPlanExercise exercise = GetWorkoutPlanExercise(rex.Exercise);
 
                     if (exercise.Cycle.CycleId > 1)
                     {
@@ -102,11 +91,38 @@ namespace vyger.Models
                         SetupGoal(exercise, logs);
                     }
 
-                    Cycle.PlanExercises.Add(exercise);
-
                     exerciseIds.Add(rex.ExerciseId);
                 }
             }
+        }
+
+        private WorkoutPlanExercise GetWorkoutPlanExercise(Exercise exercise)
+        {
+            //  is this static or requires calculations from an "RM"
+            bool requiresOneRepMax = Plan.Routine.RoutineExercises
+                .Where(x => x.ExerciseId == exercise.Id)
+                .SelectMany(x => x.Sets)
+                .Any(x => x.IsRepMax);
+
+            WorkoutPlanExercise pex = null;
+
+            if (Cycle.PlanExercises.ContainsPrimaryKey(exercise.Id))
+            {
+                pex = Cycle.PlanExercises.GetByPrimaryKey(exercise.Id);
+            }
+            else
+            {
+                pex = new WorkoutPlanExercise()
+                {
+                    Cycle = Cycle,
+                    Exercise = exercise,
+                    IsCalculated = requiresOneRepMax
+                };
+
+                Cycle.PlanExercises.Add(pex);
+            }
+
+            return pex;
         }
 
         private void MergePreviousCycle(WorkoutPlanExercise current)

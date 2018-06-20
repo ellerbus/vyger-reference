@@ -78,14 +78,14 @@ namespace vyger.Controllers
 
             if (planCycle.Status == StatusTypes.None)
             {
-                IEnumerable<WorkoutLog> logs = _logs.GetWorkoutLogs().GetWorkoutLogs(id, cycle - 1);
+                IEnumerable<WorkoutLog> logs = _logs.GetWorkoutLogs().GetRecentWorkoutLogs(id, cycle - 1);
 
-                if (cycle == 1)
+                foreach (WorkoutPlanExercise item in post.PlanExercises)
                 {
-                    logs = _logs.GetWorkoutLogs().GetMostRecent();
+                    planCycle.PlanExercises.GetByPrimaryKey(item.ExerciseId).OverlayWith(item);
                 }
 
-                _service.CreateCycle(planCycle.Plan, logs);
+                _service.GenerateCycle(planCycle.Plan, planCycle, logs);
 
                 _service.SaveWorkoutPlans();
 

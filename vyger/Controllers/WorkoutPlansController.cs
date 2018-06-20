@@ -85,7 +85,7 @@ namespace vyger.Controllers
 
                 WorkoutLogCollection logs = _logs.GetWorkoutLogs();
 
-                _service.CreateCycle(plan, logs.GetMostRecent());
+                _service.CreateCycle(plan, logs.GetRecentWorkoutLogs(plan.Id, 1));
 
                 _service.AddWorkoutPlan(plan);
 

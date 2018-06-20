@@ -77,11 +77,17 @@ namespace vyger.Services
             {
                 p.Routine = _routines.GetWorkoutRoutines().GetByPrimaryKey(p.RoutineId);
 
-                IEnumerable<WorkoutPlanExercise> exercises = p.Cycles.SelectMany(x => x.PlanExercises);
-
-                foreach (WorkoutPlanExercise pex in exercises)
+                foreach (WorkoutPlanCycle cycle in p.Cycles)
                 {
-                    pex.Exercise = p.Routine.AllExercises.GetByPrimaryKey(pex.ExerciseId);
+                    foreach (WorkoutPlanExercise pex in cycle.PlanExercises)
+                    {
+                        pex.Exercise = p.Routine.AllExercises.GetByPrimaryKey(pex.ExerciseId);
+                    }
+
+                    foreach (WorkoutPlanLog pl in cycle.PlanLogs)
+                    {
+                        pl.PlanExercise = cycle.PlanExercises.GetByPrimaryKey(pl.ExerciseId);
+                    }
                 }
             }
         }
@@ -139,7 +145,9 @@ namespace vyger.Services
 
             plan.Cycles.Add(cycle);
 
-            GenerateCycle(plan, cycle, logs);
+            WorkoutCycleGenerator generator = new WorkoutCycleGenerator(plan, cycle);
+
+            generator.InitializeCycle(logs.ToList());
 
             return cycle;
         }
@@ -148,7 +156,9 @@ namespace vyger.Services
         {
             WorkoutCycleGenerator generator = new WorkoutCycleGenerator(plan, cycle);
 
-            generator.InitializeCycle(logs.ToList());
+            cycle.PlanLogs.Clear();
+
+            cycle.PlanLogs.AddRange(generator.GenerateLogItems());
         }
 
         #endregion

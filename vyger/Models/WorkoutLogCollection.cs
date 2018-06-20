@@ -89,17 +89,21 @@ namespace vyger.Models
         /// <summary>
         /// Gets a single WorkoutLog based on the given primary key
         /// </summary>
-        public IList<WorkoutLog> GetWorkoutLogs(string planId, int cycleId)
+        public IEnumerable<WorkoutLog> GetRecentWorkoutLogs(string planId, int cycleId)
         {
-            return this
-                .Where(x => x.PlanId == planId && x.CycleId == cycleId)
-                .OrderBy(x => x.SequenceNumber)
-                .ThenBy(x => x.Exercise.Name)
-                .ToList();
-        }
+            if (cycleId > 1)
+            {
+                IEnumerable<WorkoutLog> lastCycle = this
+                   .Where(x => x.PlanId == planId && x.CycleId == cycleId)
+                   .OrderBy(x => x.SequenceNumber)
+                   .ThenBy(x => x.Exercise.Name);
 
-        public IEnumerable<WorkoutLog> GetMostRecent()
-        {
+                foreach (WorkoutLog item in lastCycle)
+                {
+                    yield return item;
+                }
+            }
+
             HashSet<string> exercises = new HashSet<string>();
 
             IEnumerable<WorkoutLog> logs = this.OrderByDescending(x => x.LogDate);
