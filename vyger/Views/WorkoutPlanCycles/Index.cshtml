@@ -22,30 +22,15 @@
         {
           <tr>
             <td>
-              @if (cycle.Status == StatusTypes.None)
-              {
-                <a href="@Url.Action(MVC.WorkoutPlanExercises.Index(Model.Id, cycle.CycleId))" style="display: block;">
-                  Cycle #@cycle.CycleId
-                </a>
-              }
-              else
-              {
-                <a href="Url.Action(MVC.WorkoutPlanLogs.Index(Model.Id, cycle.CycleId))" style="display: block;">
-                  Cycle #@cycle.CycleId
-                </a>
-              }
+              <a href="@Url.Action(MVC.WorkoutPlanLogs.Index(Model.Id, cycle.CycleId))" style="display: block;">
+                Cycle #@cycle.CycleId
+              </a>
             </td>
             <td style="width: 125px;" class="text-center">
               @if (cycle.Status == StatusTypes.None)
               {
                 <a href="@Url.Action(MVC.WorkoutPlanExercises.Index(Model.Id, cycle.CycleId))" style="display: block;">
                   Setup
-                </a>
-              }
-              else
-              {
-                <a href="Url.Action(MVC.WorkoutPlanLogs.Index(Model.Id, cycle.CycleId))" style="display: block;">
-                  View Log
                 </a>
               }
             </td>

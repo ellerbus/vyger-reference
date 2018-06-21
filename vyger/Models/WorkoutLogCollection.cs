@@ -120,6 +120,16 @@ namespace vyger.Models
             }
         }
 
+        public void RemoveAll(DateTime logDate)
+        {
+            IList<WorkoutLog> remove = this.Where(x => x.LogDate == logDate).ToList();
+
+            foreach (WorkoutLog log in remove)
+            {
+                Remove(log);
+            }
+        }
+
         #endregion
     }
 }

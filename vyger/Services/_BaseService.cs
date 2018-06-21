@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using CsvHelper;
+using CsvHelper.Configuration;
 using EnsureThat;
 using vyger.Common;
 using YamlDotNet.Serialization;
@@ -71,6 +74,9 @@ namespace vyger.Services
                     case RepositoryTypes.Yaml:
                         return GetAllFromYaml();
 
+                    case RepositoryTypes.Csv:
+                        return GetAllFromCsv();
+
                     default:
                         throw new NotImplementedException($"Unhandled LoadAll ({RepositoryType})");
                 }
@@ -86,6 +92,18 @@ namespace vyger.Services
                 Deserializer deserializer = new DeserializerBuilder().Build();
 
                 return deserializer.Deserialize<IEnumerable<T>>(sr.ReadToEnd());
+            }
+        }
+
+        private IEnumerable<T> GetAllFromCsv()
+        {
+            using (StreamReader sr = new StreamReader(FileName))
+            {
+                CsvReader csv = new CsvReader(sr);
+
+                csv.Configuration.RegisterClassMap(GetCsvClassMap());
+
+                return csv.GetRecords<T>().ToList();
             }
         }
 
@@ -120,6 +138,10 @@ namespace vyger.Services
                     SaveAllYaml(all);
                     break;
 
+                case RepositoryTypes.Csv:
+                    SaveAllCsv(all);
+                    break;
+
                 default:
                     throw new NotImplementedException($"Unhandled SaveAll ({RepositoryType})");
             }
@@ -133,6 +155,23 @@ namespace vyger.Services
 
                 sw.Write(serializer.Serialize(all));
             }
+        }
+
+        private void SaveAllCsv(IEnumerable<T> all)
+        {
+            using (StreamWriter sw = new StreamWriter(FileName))
+            {
+                CsvWriter csv = new CsvWriter(sw);
+
+                csv.Configuration.RegisterClassMap(GetCsvClassMap());
+
+                csv.WriteRecords(all);
+            }
+        }
+
+        protected virtual ClassMap<T> GetCsvClassMap()
+        {
+            throw new NotImplementedException();
         }
 
         private string FileName

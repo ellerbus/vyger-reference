@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Web.Mvc;
@@ -91,6 +92,51 @@ namespace vyger.Controllers
         [HttpGet, Route("Plans/{plan}")]
         public virtual ActionResult Plans(string plan, int cycle, int week, int day)
         {
+            WorkoutLogForm form = GetWorkoutPlanLogForm(plan, cycle, week, day);
+
+            return View(form);
+        }
+
+        [HttpPost, Route("Plans/{plan}"), ValidateAntiForgeryToken]
+        public virtual ActionResult Plans(string plan, int cycle, int week, int day, WorkoutLogForm post)
+        {
+            WorkoutLogForm form = GetWorkoutPlanLogForm(plan, cycle, week, day);
+
+            form.LogDate = post.LogDate.Date;
+
+            form.Cycle.Status = StatusTypes.Active;
+
+            WorkoutLogCollection logs = _service.GetWorkoutLogs();
+
+            logs.RemoveAll(form.LogDate);
+
+            foreach (WorkoutLog log in post.Logs)
+            {
+                log.LogDate = form.LogDate;
+                log.Workout = WorkoutLogSetCollection.Format(log.Workout);
+
+                logs.Add(log);
+            }
+
+            IEnumerable<WorkoutPlanLog> planLogs = form.Cycle.PlanLogs
+                .Where(x => x.WeekId == week && x.DayId == day);
+
+            foreach (WorkoutPlanLog planLog in planLogs)
+            {
+                planLog.Status = StatusTypes.Complete;
+            }
+
+            _service.SaveWorkoutPlans();
+
+            _plans.SaveWorkoutPlans();
+
+            AddFlashMessage(FlashMessageType.Success, $"Workout Log saved for {post.LogDate:d}");
+
+            return RedirectToAction(MVC.WorkoutLogs.Index(post.LogDate.Date));
+        }
+
+        private WorkoutLogForm GetWorkoutPlanLogForm(string plan, int cycle, int week, int day)
+        {
             WorkoutLogForm form = new WorkoutLogForm();
 
             form.LogDate = DateTime.Today;
@@ -108,50 +154,7 @@ namespace vyger.Controllers
                 .OrderBy(x => x.SequenceNumber)
                 .ToList();
 
-            return View(form);
-        }
-
-        [HttpPost, Route("Plans/{plan}"), ValidateAntiForgeryToken]
-        public virtual ActionResult Plans(int plan, int cycle, int week, int day, WorkoutLogForm post)
-        {
-            //WorkoutLogForm form = new WorkoutLogForm();
-
-            //form.LogDate = post.LogDate;
-
-            //form.Cycle = _plans.GetWorkoutPlanCycle(plan, cycle, SecurityAccess.Update);
-
-            //form.Cycle.Status = StatusTypes.Active;
-
-            //foreach (WorkoutLog log in post.Logs)
-            //{
-            //    log.MemberId = _actor.MemberId;
-            //    log.LogDate = form.LogDate;
-            //    log.Workout = WorkoutLogSetCollection.Format(log.Workout);
-
-            //    _service.AddWorkoutLog(log);
-            //}
-
-            ////  remove not found
-            ////  update found
-            ////  add missing
-
-            //IList<WorkoutPlanLog> planLogs = form.Cycle
-            //    .PlanExercises
-            //    .SelectMany(x => x.PlanLogs)
-            //    .Where(x => x.WeekId == week && x.DayId == day)
-            //    .ToList();
-
-            //foreach (WorkoutPlanLog planLog in planLogs)
-            //{
-            //    planLog.Status = StatusTypes.Complete;
-            //}
-
-            //_service.SaveChanges();
-
-            //AddFlashMessage(FlashMessageType.Success, $"Workout Log saved for {post.LogDate:d}");
-
-            //return RedirectToAction(MVC.WorkoutLogs.Index(post.LogDate));
-            throw new NotImplementedException();
+            return form;
         }
 
         #endregion

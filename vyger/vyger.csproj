@@ -110,7 +110,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AccessDenied.png" />
+    <Content Include="Content\Growler.js" />
+    <Content Include="Content\NavBar.png" />
+    <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Site.css.map" />
+    <Content Include="Content\Site.less" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>

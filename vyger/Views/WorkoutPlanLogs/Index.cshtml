@@ -17,7 +17,7 @@
               <th>
                 @if (Model.PlanLogs.CanCreateLogInputFor(w + 1, d + 1))
                 {
-                  <a href="Url.Action(MVC.WorkoutLogs.Plans(Model.Plan.Id, Model.CycleId, w+1, d+1))"
+                  <a href="@Url.Action(MVC.WorkoutLogs.Plans(Model.Plan.Id, Model.CycleId, w+1, d+1))"
                      class="d-print-none btn btn-sm btn-outline-success float-right">
                     <i class="fa fa-fw fa-plus"></i> Log It
                   </a>

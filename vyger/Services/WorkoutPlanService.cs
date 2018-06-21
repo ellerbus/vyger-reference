@@ -86,6 +86,7 @@ namespace vyger.Services
 
                     foreach (WorkoutPlanLog pl in cycle.PlanLogs)
                     {
+                        pl.Cycle = cycle;
                         pl.PlanExercise = cycle.PlanExercises.GetByPrimaryKey(pl.ExerciseId);
                     }
                 }
@@ -148,6 +149,8 @@ namespace vyger.Services
             WorkoutCycleGenerator generator = new WorkoutCycleGenerator(plan, cycle);
 
             generator.InitializeCycle(logs.ToList());
+
+            GenerateCycle(plan, cycle, logs);
 
             return cycle;
         }

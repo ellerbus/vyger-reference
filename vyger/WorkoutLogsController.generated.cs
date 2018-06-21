@@ -121,7 +121,13 @@ namespace vyger.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _Row = "_Row";
+                public readonly string Index = "Index";
+                public readonly string Plans = "Plans";
             }
+            public readonly string _Row = "~/Views/WorkoutLogs/_Row.cshtml";
+            public readonly string Index = "~/Views/WorkoutLogs/Index.cshtml";
+            public readonly string Plans = "~/Views/WorkoutLogs/Plans.cshtml";
         }
     }
 
@@ -171,10 +177,10 @@ namespace vyger.Controllers
         }
 
         [NonAction]
-        partial void PlansOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int plan, int cycle, int week, int day, vyger.Forms.WorkoutLogForm post);
+        partial void PlansOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string plan, int cycle, int week, int day, vyger.Forms.WorkoutLogForm post);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Plans(int plan, int cycle, int week, int day, vyger.Forms.WorkoutLogForm post)
+        public override System.Web.Mvc.ActionResult Plans(string plan, int cycle, int week, int day, vyger.Forms.WorkoutLogForm post)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Plans);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "plan", plan);

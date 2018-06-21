@@ -1,3 +1,4 @@
+using CsvHelper.Configuration;
 using vyger.Common;
 using vyger.Models;
 
@@ -29,6 +30,21 @@ namespace vyger.Services
     public class WorkoutLogService : BaseService<WorkoutLog>, IWorkoutLogService
     {
         #region Members
+
+        private class WorkoutLogClassMap : ClassMap<WorkoutLog>
+        {
+            public WorkoutLogClassMap()
+            {
+                Map(m => m.LogDate);
+                Map(m => m.ExerciseId);
+                Map(m => m.Workout);
+                Map(m => m.PlanId);
+                Map(m => m.CycleId);
+                Map(m => m.WeekId);
+                Map(m => m.DayId);
+                Map(m => m.SequenceNumber);
+            }
+        }
 
         private WorkoutLogCollection _logs;
 
@@ -62,6 +78,11 @@ namespace vyger.Services
         public void SaveWorkoutPlans()
         {
             SaveAll(_logs);
+        }
+
+        protected override ClassMap<WorkoutLog> GetCsvClassMap()
+        {
+            return new WorkoutLogClassMap();
         }
 
         #endregion

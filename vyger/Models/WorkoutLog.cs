@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using Augment;
+using CsvHelper.Configuration.Attributes;
 using YamlDotNet.Serialization;
 
 namespace vyger.Models
@@ -149,6 +150,7 @@ namespace vyger.Models
         /// <summary>
         ///
         /// </summary>
+        [Ignore]
         public double OneRepMax
         {
             get
@@ -169,6 +171,7 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
+        [Ignore]
         [YamlIgnore]
         public Exercise Exercise { get; set; }
 
@@ -176,6 +179,7 @@ namespace vyger.Models
         ///
         /// </summary>
         /// <returns></returns>
+        [Ignore]
         [YamlIgnore]
         public WorkoutLogSetCollection Sets
         {
