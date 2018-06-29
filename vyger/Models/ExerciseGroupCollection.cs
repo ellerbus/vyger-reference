@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
 
 namespace vyger.Models
@@ -7,6 +8,7 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("exercise-groups")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ExerciseGroupCollection : SingleKeyCollection<ExerciseGroup, string>
     {

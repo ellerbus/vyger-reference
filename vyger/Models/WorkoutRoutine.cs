@@ -1,15 +1,16 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
 using vyger.Common;
-using YamlDotNet.Serialization;
 
 namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-routine")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutRoutine
     {
@@ -17,7 +18,7 @@ namespace vyger.Models
 
         public WorkoutRoutine()
         {
-            RoutineExercises = new WorkoutRoutineExerciseCollection(this, new WorkoutRoutineExercise[0]);
+            RoutineExercises = new WorkoutRoutineExerciseCollection(this);
         }
 
         public WorkoutRoutine(WorkoutRoutine routine)
@@ -77,6 +78,7 @@ namespace vyger.Models
         [Required]
         [DisplayName("ID")]
         [MinLength(1), MaxLength(1)]
+        [XmlAttribute("id")]
         public string Id
         {
             get { return _id; }
@@ -90,6 +92,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Name")]
+        [XmlAttribute("name")]
         public string Name { get; set; }
 
         ///	<summary>
@@ -98,6 +101,7 @@ namespace vyger.Models
         [Required]
         [DisplayName("Weeks")]
         [Range(Constants.MinWeeks, Constants.MaxWeeks)]
+        [XmlAttribute("weeks")]
         public int Weeks { get; set; }
 
         ///	<summary>
@@ -106,6 +110,7 @@ namespace vyger.Models
         [Required]
         [DisplayName("Days")]
         [Range(Constants.MinDays, Constants.MaxDays)]
+        [XmlAttribute("days")]
         public int Days { get; set; }
 
         #endregion
@@ -115,22 +120,14 @@ namespace vyger.Models
         /// <summary>
         ///
         /// </summary>
-        [YamlIgnore]
+        [XmlIgnore]
         public ExerciseCollection AllExercises { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public WorkoutRoutineExerciseCollection RoutineExercises
-        {
-            get { return _routineExercises; }
-            set
-            {
-                _routineExercises = new WorkoutRoutineExerciseCollection(this, value);
-            }
-        }
-
-        private WorkoutRoutineExerciseCollection _routineExercises;
+        [XmlArray("workout-routine-exercises"), XmlArrayItem("workout-routine-exercise")]
+        public WorkoutRoutineExerciseCollection RoutineExercises { get; private set; }
 
         #endregion
     }

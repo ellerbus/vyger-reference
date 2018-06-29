@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
 
 namespace vyger.Models
@@ -7,6 +8,7 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-plans")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlanCollection : SingleKeyCollection<WorkoutPlan, string>
     {
@@ -16,9 +18,12 @@ namespace vyger.Models
         {
         }
 
-        public WorkoutPlanCollection(IEnumerable<WorkoutPlan> routines) : this()
+        public WorkoutPlanCollection(WorkoutRoutineCollection routines, IEnumerable<WorkoutPlan> plans)
+            : this()
         {
-            AddRange(routines);
+            Routines = routines;
+
+            AddRange(plans);
         }
 
         #endregion
@@ -42,13 +47,45 @@ namespace vyger.Models
             return item.Id;
         }
 
-        public void AddRange(IEnumerable<WorkoutPlan> routines)
+        protected override void InsertItem(int index, WorkoutPlan item)
         {
-            foreach (WorkoutPlan routine in routines)
+            base.InsertItem(index, item);
+
+            UpdateReferences(item);
+        }
+
+        protected override void SetItem(int index, WorkoutPlan item)
+        {
+            base.SetItem(index, item);
+
+            UpdateReferences(item);
+        }
+
+        private void UpdateReferences(WorkoutPlan item)
+        {
+            if (Routines != null)
             {
-                Add(routine);
+                item.Routine = Routines.GetByPrimaryKey(item.RoutineId);
             }
         }
+
+        public void AddRange(IEnumerable<WorkoutPlan> plans)
+        {
+            foreach (WorkoutPlan plan in plans)
+            {
+                Add(plan);
+            }
+        }
+
+        #endregion
+
+        #region Foreign Keys
+
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlIgnore]
+        public WorkoutRoutineCollection Routines { get; private set; }
 
         #endregion
     }

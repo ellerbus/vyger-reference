@@ -12,15 +12,9 @@ namespace vyger.Models
     {
         #region Constructors
 
-        public WorkoutPlanCycleCollection()
-        {
-        }
-
-        public WorkoutPlanCycleCollection(WorkoutPlan plan, IEnumerable<WorkoutPlanCycle> cycles)
+        public WorkoutPlanCycleCollection(WorkoutPlan plan)
         {
             Plan = plan;
-
-            AddRange(cycles);
         }
 
         #endregion

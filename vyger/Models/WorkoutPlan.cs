@@ -2,15 +2,16 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
 using vyger.Common;
-using YamlDotNet.Serialization;
 
 namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-plan")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlan
     {
@@ -18,10 +19,11 @@ namespace vyger.Models
 
         public WorkoutPlan()
         {
-            Cycles = new WorkoutPlanCycleCollection(this, new WorkoutPlanCycle[0]);
+            Cycles = new WorkoutPlanCycleCollection(this);
         }
 
-        public WorkoutPlan(WorkoutRoutine routine) : this()
+        public WorkoutPlan(WorkoutRoutine routine)
+            : this()
         {
             Id = Constants.IdGenerator.Next();
             Routine = routine;
@@ -72,6 +74,7 @@ namespace vyger.Models
         ///	Gets / Sets database column 'plan_id'
         ///	</summary>
         [DisplayName("Plan Id")]
+        [XmlAttribute("plan-id")]
         public string Id { get; set; }
 
         ///	<summary>
@@ -79,6 +82,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Routine Id")]
+        [XmlAttribute("routine-id")]
         public string RoutineId
         {
             get { return Routine == null ? _routineId : Routine.Id; }
@@ -90,11 +94,13 @@ namespace vyger.Models
         /// <summary>
         ///
         /// </summary>
+        [XmlAttribute("status")]
         public StatusTypes Status { get; set; }
 
         /// <summary>
         ///
         /// </summary>
+        [XmlAttribute("created-at")]
         public DateTime CreatedAt { get; set; }
 
         #endregion
@@ -104,13 +110,14 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'routine_id'
         ///	</summary>
-        [YamlIgnore]
+        [XmlIgnore]
         public WorkoutRoutine Routine { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public WorkoutPlanCycleCollection Cycles { get; set; }
+        [XmlArray("workout-cycles"), XmlArrayItem("workout-cycle")]
+        public WorkoutPlanCycleCollection Cycles { get; private set; }
 
         #endregion
     }

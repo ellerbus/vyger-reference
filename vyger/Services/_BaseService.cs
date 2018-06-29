@@ -1,29 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using CsvHelper;
-using CsvHelper.Configuration;
+﻿using System.IO;
+using System.Web.Hosting;
 using EnsureThat;
 using vyger.Common;
-using YamlDotNet.Serialization;
 
 namespace vyger.Services
 {
-    public class BaseService<T>
+    public abstract class BaseService
     {
-        #region Members
-
-        protected enum RepositoryTypes { Csv, Yaml }
-
-        #endregion
-
         #region Constructor
 
-        protected BaseService(ISecurityActor actor, RepositoryTypes repositoryType)
+        protected BaseService(ISecurityActor actor)
         {
             Actor = actor;
-            RepositoryType = repositoryType;
         }
 
         #endregion
@@ -32,161 +20,50 @@ namespace vyger.Services
 
         protected ISecurityActor Actor { get; private set; }
 
-        protected RepositoryTypes RepositoryType { get; private set; }
+        protected abstract string FileName { get; }
 
         #endregion
 
         #region Loaders/Savers
 
-        protected virtual T LoadOne()
+        protected T ReadData<T>()
         {
-            if (Actor.IsAuthenticated && File.Exists(FileName))
-            {
-                switch (RepositoryType)
-                {
-                    case RepositoryTypes.Yaml:
-                        return GetOneFromYaml();
+            string xml = GetContents();
 
-                    default:
-                        throw new NotImplementedException($"Unhandled LoadOne ({RepositoryType})");
-                }
-            }
-
-            return default(T);
+            return Serializers.FromXml<T>(xml);
         }
 
-        private T GetOneFromYaml()
+        protected void SaveData(object value)
         {
-            using (StreamReader sr = new StreamReader(FileName))
-            {
-                Deserializer deserializer = new DeserializerBuilder().Build();
+            string xml = Serializers.ToXml(value);
 
-                return deserializer.Deserialize<T>(sr.ReadToEnd());
-            }
+            PutContents(xml);
         }
 
-        protected virtual IEnumerable<T> LoadAll()
+        private string GetContents()
         {
-            if (Actor.IsAuthenticated && File.Exists(FileName))
-            {
-                switch (RepositoryType)
-                {
-                    case RepositoryTypes.Yaml:
-                        return GetAllFromYaml();
+            string fullpath = GetFullPath();
 
-                    case RepositoryTypes.Csv:
-                        return GetAllFromCsv();
-
-                    default:
-                        throw new NotImplementedException($"Unhandled LoadAll ({RepositoryType})");
-                }
-            }
-
-            return new T[0];
+            return File.ReadAllText(fullpath);
         }
 
-        private IEnumerable<T> GetAllFromYaml()
+        private void PutContents(string contents)
         {
-            using (StreamReader sr = new StreamReader(FileName))
-            {
-                Deserializer deserializer = new DeserializerBuilder().Build();
+            string fullpath = GetFullPath();
 
-                return deserializer.Deserialize<IEnumerable<T>>(sr.ReadToEnd());
-            }
+            File.WriteAllText(fullpath, contents);
         }
 
-        private IEnumerable<T> GetAllFromCsv()
+        private string GetFullPath()
         {
-            using (StreamReader sr = new StreamReader(FileName))
-            {
-                CsvReader csv = new CsvReader(sr);
+            Ensure.That(Actor, nameof(Actor)).IsNotNull();
+            Ensure.That(Actor.Email, nameof(Actor.Email)).IsNotEmpty();
 
-                csv.Configuration.RegisterClassMap(GetCsvClassMap());
+            string folder = Constants.GetMemberFolder(Actor.Email);
 
-                return csv.GetRecords<T>().ToList();
-            }
-        }
+            string path = HostingEnvironment.MapPath($"~/App_Data/{folder}");
 
-        protected virtual void SaveOne(T one)
-        {
-            switch (RepositoryType)
-            {
-                case RepositoryTypes.Yaml:
-                    SaveOneYaml(one);
-                    break;
-
-                default:
-                    throw new NotImplementedException($"Unhandled SaveOne ({RepositoryType})");
-            }
-        }
-
-        private void SaveOneYaml(T one)
-        {
-            using (StreamWriter sw = new StreamWriter(FileName))
-            {
-                Serializer serializer = new SerializerBuilder().Build();
-
-                sw.Write(serializer.Serialize(one));
-            }
-        }
-
-        protected virtual void SaveAll(IEnumerable<T> all)
-        {
-            switch (RepositoryType)
-            {
-                case RepositoryTypes.Yaml:
-                    SaveAllYaml(all);
-                    break;
-
-                case RepositoryTypes.Csv:
-                    SaveAllCsv(all);
-                    break;
-
-                default:
-                    throw new NotImplementedException($"Unhandled SaveAll ({RepositoryType})");
-            }
-        }
-
-        private void SaveAllYaml(IEnumerable<T> all)
-        {
-            using (StreamWriter sw = new StreamWriter(FileName))
-            {
-                Serializer serializer = new SerializerBuilder().Build();
-
-                sw.Write(serializer.Serialize(all));
-            }
-        }
-
-        private void SaveAllCsv(IEnumerable<T> all)
-        {
-            using (StreamWriter sw = new StreamWriter(FileName))
-            {
-                CsvWriter csv = new CsvWriter(sw);
-
-                csv.Configuration.RegisterClassMap(GetCsvClassMap());
-
-                csv.WriteRecords(all);
-            }
-        }
-
-        protected virtual ClassMap<T> GetCsvClassMap()
-        {
-            throw new NotImplementedException();
-        }
-
-        private string FileName
-        {
-            get
-            {
-                Ensure.That(Actor, nameof(Actor)).IsNotNull();
-                Ensure.That(Actor.Email, nameof(Actor.Email)).IsNotEmpty();
-
-                string folder = Constants.GetMemberFolder(Actor.Email);
-
-                string path = System.Web.Hosting.HostingEnvironment.MapPath($"~/App_Data/{folder}");
-
-                return Path.Combine(path, typeof(T).Name + ".yaml");
-            }
+            return Path.Combine(path, FileName + ".xml");
         }
 
         #endregion

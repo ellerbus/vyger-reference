@@ -1,4 +1,4 @@
-using CsvHelper.Configuration;
+using System.Collections.Generic;
 using vyger.Common;
 using vyger.Models;
 
@@ -19,7 +19,7 @@ namespace vyger.Services
         /// <summary>
         ///
         /// </summary>
-        void SaveWorkoutPlans();
+        void SaveWorkoutLogs();
     }
 
     #endregion
@@ -27,24 +27,9 @@ namespace vyger.Services
     /// <summary>
     /// Service Implementation for WorkoutLog
     /// </summary>
-    public class WorkoutLogService : BaseService<WorkoutLog>, IWorkoutLogService
+    public class WorkoutLogService : BaseService, IWorkoutLogService
     {
         #region Members
-
-        private class WorkoutLogClassMap : ClassMap<WorkoutLog>
-        {
-            public WorkoutLogClassMap()
-            {
-                Map(m => m.LogDate);
-                Map(m => m.ExerciseId);
-                Map(m => m.Workout);
-                Map(m => m.PlanId);
-                Map(m => m.CycleId);
-                Map(m => m.WeekId);
-                Map(m => m.DayId);
-                Map(m => m.SequenceNumber);
-            }
-        }
 
         private WorkoutLogCollection _logs;
 
@@ -58,9 +43,13 @@ namespace vyger.Services
         public WorkoutLogService(
             IExerciseService exercises,
             ISecurityActor actor)
-            : base(actor, RepositoryTypes.Csv)
+            : base(actor)
         {
-            _logs = new WorkoutLogCollection(exercises.GetExercises(), LoadAll());
+            ExerciseCollection ex = exercises.GetExercises();
+
+            IEnumerable<WorkoutLog> logs = ReadData<WorkoutLogCollection>();
+
+            _logs = new WorkoutLogCollection(ex, logs);
         }
 
         #endregion
@@ -75,14 +64,21 @@ namespace vyger.Services
             return _logs;
         }
 
-        public void SaveWorkoutPlans()
+        public void SaveWorkoutLogs()
         {
-            SaveAll(_logs);
+            SaveData(_logs);
         }
 
-        protected override ClassMap<WorkoutLog> GetCsvClassMap()
+        #endregion
+
+        #region Properties
+
+        protected override string FileName
         {
-            return new WorkoutLogClassMap();
+            get
+            {
+                return typeof(WorkoutLog).Name;
+            }
         }
 
         #endregion

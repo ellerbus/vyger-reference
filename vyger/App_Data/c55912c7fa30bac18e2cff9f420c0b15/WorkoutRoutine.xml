@@ -1,0 +1,62 @@
+<workout-routines>
+	<workout-routine id="A" name="Wendler 531" weeks="4" days="2">
+		<workout-routine-exercises>
+			<workout-routine-exercise week-id="1" day-id="2" exercise-id="LB-B-DLF" sequence-number="1" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x5 1RM*85%x5" />
+			<workout-routine-exercise week-id="2" day-id="2" exercise-id="LB-B-DLF" sequence-number="1" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x5 1RM*90%x3" />
+			<workout-routine-exercise week-id="3" day-id="2" exercise-id="LB-B-DLF" sequence-number="1" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x3 1RM*95%" />
+			<workout-routine-exercise week-id="4" day-id="2" exercise-id="LB-B-DLF" sequence-number="1" workout-routine="S!*80%x8 S!*90%x8 1RM*60%x8" />
+			<workout-routine-exercise week-id="1" day-id="1" exercise-id="LG-M-LPR" sequence-number="1" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x5 1RM*85%x5" />
+			<workout-routine-exercise week-id="2" day-id="1" exercise-id="LG-M-LPR" sequence-number="1" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x5 1RM*90%x3" />
+			<workout-routine-exercise week-id="3" day-id="1" exercise-id="LG-M-LPR" sequence-number="1" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x3 1RM*95%" />
+			<workout-routine-exercise week-id="4" day-id="1" exercise-id="LG-M-LPR" sequence-number="1" workout-routine="S!*80%x8 S!*90%x8 1RM*60%x8" />
+			<workout-routine-exercise week-id="1" day-id="1" exercise-id="CH-D-FBP" sequence-number="2" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x5 1RM*85%x5" />
+			<workout-routine-exercise week-id="2" day-id="1" exercise-id="CH-D-FBP" sequence-number="2" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x5 1RM*90%x3" />
+			<workout-routine-exercise week-id="3" day-id="1" exercise-id="CH-D-FBP" sequence-number="2" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x3 1RM*95%" />
+			<workout-routine-exercise week-id="4" day-id="1" exercise-id="CH-D-FBP" sequence-number="2" workout-routine="S!*80%x8 S!*90%x8 1RM*60%x8" />
+			<workout-routine-exercise week-id="1" day-id="1" exercise-id="CH-H-DBP" sequence-number="3" workout-routine="S!*90%x5 1RM*85%x5" />
+			<workout-routine-exercise week-id="2" day-id="1" exercise-id="CH-H-DBP" sequence-number="3" workout-routine="S!*90%x5 1RM*90%x3" />
+			<workout-routine-exercise week-id="3" day-id="1" exercise-id="CH-H-DBP" sequence-number="3" workout-routine="S!*90%x5 1RM*85%x5" />
+			<workout-routine-exercise week-id="4" day-id="1" exercise-id="CH-H-DBP" sequence-number="3" workout-routine="S!*80%x8 S!*90%x8 1RM*60%x8" />
+			<workout-routine-exercise week-id="1" day-id="1" exercise-id="LG-B-FSQ" sequence-number="4" workout-routine="85x5x2" />
+			<workout-routine-exercise week-id="2" day-id="1" exercise-id="LG-B-FSQ" sequence-number="4" workout-routine="85x5x2" />
+			<workout-routine-exercise week-id="3" day-id="1" exercise-id="LG-B-FSQ" sequence-number="4" workout-routine="85x5x2" />
+			<workout-routine-exercise week-id="4" day-id="1" exercise-id="LG-B-FSQ" sequence-number="4" workout-routine="85x5x2" />
+			<workout-routine-exercise week-id="1" day-id="1" exercise-id="AB-M-CRN" sequence-number="6" workout-routine="50x12x3" />
+			<workout-routine-exercise week-id="2" day-id="1" exercise-id="AB-M-CRN" sequence-number="6" workout-routine="50x12x3" />
+			<workout-routine-exercise week-id="3" day-id="1" exercise-id="AB-M-CRN" sequence-number="6" workout-routine="50x12x3" />
+			<workout-routine-exercise week-id="4" day-id="1" exercise-id="AB-M-CRN" sequence-number="6" workout-routine="50x12x3" />
+			<workout-routine-exercise week-id="1" day-id="1" exercise-id="TR-H-SHR" sequence-number="5" workout-routine="S!*80%x5 S!*90%x5 1RM*85%x5" />
+			<workout-routine-exercise week-id="2" day-id="1" exercise-id="TR-H-SHR" sequence-number="5" workout-routine="S!*80%x5 S!*90%x5 1RM*90%x3" />
+			<workout-routine-exercise week-id="3" day-id="1" exercise-id="TR-H-SHR" sequence-number="5" workout-routine="S!*80%x5 S!*90%x3 1RM*95%" />
+			<workout-routine-exercise week-id="4" day-id="1" exercise-id="TR-H-SHR" sequence-number="5" workout-routine="S!*80%x8 S!*90%x8 1RM*60%x8" />
+			<workout-routine-exercise week-id="1" day-id="2" exercise-id="SH-H-PRS" sequence-number="2" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x5 1RM*85%x5" />
+			<workout-routine-exercise week-id="2" day-id="2" exercise-id="SH-H-PRS" sequence-number="2" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x5 1RM*90%x3" />
+			<workout-routine-exercise week-id="3" day-id="2" exercise-id="SH-H-PRS" sequence-number="2" workout-routine="S!*60%x5 S!*70%x5 S!*80%x5 S!*90%x3 1RM*95%" />
+			<workout-routine-exercise week-id="4" day-id="2" exercise-id="SH-H-PRS" sequence-number="2" workout-routine="S!*80%x8 S!*90%x8 1RM*60%x8" />
+			<workout-routine-exercise week-id="1" day-id="2" exercise-id="BC-D-CRL" sequence-number="3" workout-routine="25x8 30x8" />
+			<workout-routine-exercise week-id="2" day-id="2" exercise-id="BC-D-CRL" sequence-number="3" workout-routine="25x8 30x8" />
+			<workout-routine-exercise week-id="3" day-id="2" exercise-id="BC-D-CRL" sequence-number="3" workout-routine="25x8 30x8" />
+			<workout-routine-exercise week-id="4" day-id="2" exercise-id="BC-D-CRL" sequence-number="3" workout-routine="25x8 30x8" />
+			<workout-routine-exercise week-id="1" day-id="2" exercise-id="SH-D-SLR" sequence-number="4" workout-routine="15x8x2" />
+			<workout-routine-exercise week-id="2" day-id="2" exercise-id="SH-D-SLR" sequence-number="4" workout-routine="15x8x2" />
+			<workout-routine-exercise week-id="3" day-id="2" exercise-id="SH-D-SLR" sequence-number="4" workout-routine="15x8x2" />
+			<workout-routine-exercise week-id="4" day-id="2" exercise-id="SH-D-SLR" sequence-number="4" workout-routine="15x8x2" />
+			<workout-routine-exercise week-id="1" day-id="2" exercise-id="SH-D-FLR" sequence-number="5" workout-routine="15x8x2" />
+			<workout-routine-exercise week-id="2" day-id="2" exercise-id="SH-D-FLR" sequence-number="5" workout-routine="15x8x2" />
+			<workout-routine-exercise week-id="3" day-id="2" exercise-id="SH-D-FLR" sequence-number="5" workout-routine="15x8x2" />
+			<workout-routine-exercise week-id="4" day-id="2" exercise-id="SH-D-FLR" sequence-number="5" workout-routine="15x8x2" />
+			<workout-routine-exercise week-id="1" day-id="2" exercise-id="FA-B-SWC" sequence-number="7" workout-routine="65x8 85x8" />
+			<workout-routine-exercise week-id="2" day-id="2" exercise-id="FA-B-SWC" sequence-number="7" workout-routine="65x8 85x8" />
+			<workout-routine-exercise week-id="3" day-id="2" exercise-id="FA-B-SWC" sequence-number="7" workout-routine="65x8 85x8" />
+			<workout-routine-exercise week-id="4" day-id="2" exercise-id="FA-B-SWC" sequence-number="7" workout-routine="65x8 85x8" />
+			<workout-routine-exercise week-id="1" day-id="2" exercise-id="FA-B-RWC" sequence-number="6" workout-routine="45x8 55x8" />
+			<workout-routine-exercise week-id="2" day-id="2" exercise-id="FA-B-RWC" sequence-number="6" workout-routine="45x8 55x8" />
+			<workout-routine-exercise week-id="3" day-id="2" exercise-id="FA-B-RWC" sequence-number="6" workout-routine="45x8 55x8" />
+			<workout-routine-exercise week-id="4" day-id="2" exercise-id="FA-B-RWC" sequence-number="6" workout-routine="45x8 55x8" />
+			<workout-routine-exercise week-id="1" day-id="2" exercise-id="AB-M-CRN" sequence-number="8" workout-routine="50x12x3" />
+			<workout-routine-exercise week-id="2" day-id="2" exercise-id="AB-M-CRN" sequence-number="8" workout-routine="50x12x3" />
+			<workout-routine-exercise week-id="3" day-id="2" exercise-id="AB-M-CRN" sequence-number="8" workout-routine="50x12x3" />
+			<workout-routine-exercise week-id="4" day-id="2" exercise-id="AB-M-CRN" sequence-number="8" workout-routine="50x12x3" />
+		</workout-routine-exercises>
+	</workout-routine>
+</workout-routines>

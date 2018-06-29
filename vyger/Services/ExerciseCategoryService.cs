@@ -31,7 +31,7 @@ namespace vyger.Services
     /// <summary>
     /// Service Implementation for ExerciseCategory
     /// </summary>
-    public class ExerciseCategoryService : BaseService<ExerciseCategory>, IExerciseCategoryService
+    public class ExerciseCategoryService : BaseService, IExerciseCategoryService
     {
         #region Members
 
@@ -45,9 +45,9 @@ namespace vyger.Services
         /// Creates a new instance
         /// </summary>
         public ExerciseCategoryService(ISecurityActor actor)
-            : base(actor, RepositoryTypes.Yaml)
+            : base(actor)
         {
-            _categories = new ExerciseCategoryCollection(LoadAll());
+            _categories = ReadData<ExerciseCategoryCollection>();
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace vyger.Services
 
             _categories.Add(add);
 
-            SaveAll(_categories);
+            SaveData(_categories);
         }
 
         /// <summary>
@@ -83,7 +83,19 @@ namespace vyger.Services
 
             category.OverlayWith(overlay);
 
-            SaveAll(_categories);
+            SaveData(_categories);
+        }
+
+        #endregion
+
+        #region Properties
+
+        protected override string FileName
+        {
+            get
+            {
+                return typeof(ExerciseCategory).Name;
+            }
         }
 
         #endregion

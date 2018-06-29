@@ -31,7 +31,7 @@ namespace vyger.Services
     /// <summary>
     /// Service Implementation for ExerciseGroup
     /// </summary>
-    public class ExerciseGroupService : BaseService<ExerciseGroup>, IExerciseGroupService
+    public class ExerciseGroupService : BaseService, IExerciseGroupService
     {
         #region Members
 
@@ -45,9 +45,9 @@ namespace vyger.Services
         /// Creates a new instance
         /// </summary>
         public ExerciseGroupService(ISecurityActor actor)
-            : base(actor, RepositoryTypes.Yaml)
+            : base(actor)
         {
-            _groups = new ExerciseGroupCollection(LoadAll());
+            _groups = ReadData<ExerciseGroupCollection>();
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace vyger.Services
 
             _groups.Add(add);
 
-            SaveAll(_groups);
+            SaveData(_groups);
         }
 
         /// <summary>
@@ -83,7 +83,19 @@ namespace vyger.Services
 
             group.OverlayWith(overlay);
 
-            SaveAll(_groups);
+            SaveData(_groups);
+        }
+
+        #endregion
+
+        #region Properties
+
+        protected override string FileName
+        {
+            get
+            {
+                return typeof(ExerciseGroup).Name;
+            }
         }
 
         #endregion

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
 using vyger.Common;
 
@@ -10,6 +11,7 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-cycle")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlanCycle
     {
@@ -17,8 +19,8 @@ namespace vyger.Models
 
         public WorkoutPlanCycle()
         {
-            PlanExercises = new WorkoutPlanExerciseCollection(this, new WorkoutPlanExercise[0]);
-            PlanLogs = new WorkoutPlanLogCollection(this, new WorkoutPlanLog[0]);
+            PlanExercises = new WorkoutPlanExerciseCollection(this);
+            PlanLogs = new WorkoutPlanLogCollection(this);
         }
 
         #endregion
@@ -85,17 +87,20 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'plan_id'
         ///	</summary>
+        [XmlIgnore]
         public WorkoutPlan Plan { get; set; }
 
         ///	<summary>
         ///
         ///	</summary>
-        public WorkoutPlanExerciseCollection PlanExercises { get; set; }
+        [XmlArray("workout-plan=exercises"), XmlArrayItem("workout-plan=exercise")]
+        public WorkoutPlanExerciseCollection PlanExercises { get; private set; }
 
         ///	<summary>
         ///
         ///	</summary>
-        public WorkoutPlanLogCollection PlanLogs { get; set; }
+        [XmlArray("workout-plan=logs"), XmlArrayItem("workout-plan=log")]
+        public WorkoutPlanLogCollection PlanLogs { get; private set; }
 
         #endregion
     }

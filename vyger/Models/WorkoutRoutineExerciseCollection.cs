@@ -2,26 +2,23 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Serialization;
 using Augment;
-using EnsureThat;
 
 namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-routine-exercises")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutRoutineExerciseCollection : Collection<WorkoutRoutineExercise>
     {
         #region Constructors
 
-        public WorkoutRoutineExerciseCollection() { }
-
-        public WorkoutRoutineExerciseCollection(WorkoutRoutine routine, IEnumerable<WorkoutRoutineExercise> exercises)
+        public WorkoutRoutineExerciseCollection(WorkoutRoutine routine)
         {
             Routine = routine;
-
-            AddRange(exercises);
         }
 
         #endregion
@@ -65,15 +62,15 @@ namespace vyger.Models
                 item.Exercise = Routine.AllExercises.GetByPrimaryKey(item.ExerciseId);
             }
 
-            if (WeekId > 0)
-            {
-                Ensure.That(item.WeekId, nameof(WeekId)).Is(WeekId);
-            }
+            //if (WeekId > 0)
+            //{
+            //    Ensure.That(item.WeekId, nameof(WeekId)).Is(WeekId);
+            //}
 
-            if (DayId > 0)
-            {
-                Ensure.That(item.DayId, nameof(DayId)).Is(DayId);
-            }
+            //if (DayId > 0)
+            //{
+            //    Ensure.That(item.DayId, nameof(DayId)).Is(DayId);
+            //}
         }
 
         public void AddRange(IEnumerable<WorkoutRoutineExercise> exercises)
@@ -134,25 +131,29 @@ namespace vyger.Models
 
         #region Foreign Key Properties
 
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlIgnore]
         public WorkoutRoutine Routine { get; private set; }
 
-        /// <summary>
-        /// Only set if this collection is a subset (or a single week basically)
-        /// &gt 1 means there's a week assigned
-        /// </summary>
-        public int WeekId { get; set; }
+        ///// <summary>
+        ///// Only set if this collection is a subset (or a single week basically)
+        ///// &gt 1 means there's a week assigned
+        ///// </summary>
+        //public int WeekId { get; set; }
 
-        /// <summary>
-        /// Only set if this collection is a subset (or a single day basically)
-        /// &gt 1 means there's a day assigned
-        /// </summary>
-        public int DayId { get; set; }
+        ///// <summary>
+        ///// Only set if this collection is a subset (or a single day basically)
+        ///// &gt 1 means there's a day assigned
+        ///// </summary>
+        //public int DayId { get; set; }
 
-        /// <summary>
-        /// Only set if this collection is a subset (or a single exercise basically)
-        /// &gt 1 means there's a exercise assigned
-        /// </summary>
-        public int ExerciseId { get; set; }
+        ///// <summary>
+        ///// Only set if this collection is a subset (or a single exercise basically)
+        ///// &gt 1 means there's a exercise assigned
+        ///// </summary>
+        //public int ExerciseId { get; set; }
 
         #endregion
     }

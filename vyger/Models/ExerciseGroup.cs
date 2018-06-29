@@ -1,15 +1,15 @@
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
-using vyger.Common;
 
 namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("exercise-group")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ExerciseGroup
     {
@@ -52,23 +52,26 @@ namespace vyger.Models
         #region Properties
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
         [Required]
         [DisplayName("ID")]
         [MinLength(2), MaxLength(2)]
+        [XmlAttribute("id")]
         public string Id
         {
             get { return _id; }
             set { _id = value.ToUpper(); }
         }
+
         private string _id;
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
         [Required]
         [DisplayName("Name")]
+        [XmlAttribute("name")]
         public string Name { get; set; }
 
         #endregion

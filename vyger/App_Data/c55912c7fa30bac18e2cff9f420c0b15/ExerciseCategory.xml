@@ -1,0 +1,7 @@
+<exercise-categories>
+	<exercise-category id="B" name="Barbell" />
+	<exercise-category id="D" name="Dumbbell" />
+	<exercise-category id="H" name="Hammer" />
+	<exercise-category id="M" name="Machine" />
+	<exercise-category id="Y" name="Body" />
+</exercise-categories>

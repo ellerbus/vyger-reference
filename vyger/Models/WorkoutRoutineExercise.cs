@@ -1,14 +1,15 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
-using YamlDotNet.Serialization;
 
 namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-routine-exercise")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutRoutineExercise
     {
@@ -64,6 +65,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Week Id")]
+        [XmlAttribute("week-id")]
         public int WeekId { get; set; }
 
         ///	<summary>
@@ -71,6 +73,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Day Id")]
+        [XmlAttribute("day-id")]
         public int DayId { get; set; }
 
         ///	<summary>
@@ -78,6 +81,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Exercise Id")]
+        [XmlAttribute("exercise-id")]
         public string ExerciseId
         {
             get { return Exercise == null ? _exerciseId : Exercise.Id; }
@@ -91,6 +95,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Sequence Number")]
+        [XmlAttribute("sequence-number")]
         public int SequenceNumber { get; set; }
 
         ///	<summary>
@@ -98,6 +103,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Workout Routine")]
+        [XmlAttribute("workout-routine")]
         public string WorkoutRoutine
         {
             get { return _workoutRoutine; }
@@ -118,20 +124,20 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'routine_id'
         ///	</summary>
-        [YamlIgnore]
+        [XmlIgnore]
         public WorkoutRoutine Routine { get; set; }
 
         ///	<summary>
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
-        [YamlIgnore]
+        [XmlIgnore]
         public Exercise Exercise { get; set; }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        [YamlIgnore]
+        [XmlIgnore]
         public WorkoutRoutineSetCollection Sets
         {
             get

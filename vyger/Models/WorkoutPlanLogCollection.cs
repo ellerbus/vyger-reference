@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Serialization;
 using Augment;
 using vyger.Common;
 
@@ -10,20 +11,15 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-plan-logs")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlanLogCollection : Collection<WorkoutPlanLog>
     {
         #region Constructors
 
-        public WorkoutPlanLogCollection()
-        {
-        }
-
-        public WorkoutPlanLogCollection(WorkoutPlanCycle cycle, IEnumerable<WorkoutPlanLog> logs)
+        public WorkoutPlanLogCollection(WorkoutPlanCycle cycle)
         {
             Cycle = cycle;
-
-            AddRange(logs);
         }
 
         #endregion
@@ -138,6 +134,10 @@ namespace vyger.Models
 
         #region Foreign Key Properties
 
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlIgnore]
         public WorkoutPlanCycle Cycle { get; private set; }
 
         #endregion

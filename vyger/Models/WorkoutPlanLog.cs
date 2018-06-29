@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
 using vyger.Common;
 
@@ -9,6 +10,7 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-plan-log")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlanLog
     {
@@ -65,6 +67,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Week Id")]
+        [XmlAttribute("week-id")]
         public int WeekId { get; set; }
 
         ///	<summary>
@@ -72,6 +75,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Day Id")]
+        [XmlAttribute("day-id")]
         public int DayId { get; set; }
 
         ///	<summary>
@@ -79,13 +83,21 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Exercise Id")]
-        public string ExerciseId { get; set; }
+        [XmlAttribute("exercise-id")]
+        public string ExerciseId
+        {
+            get { return PlanExercise == null ? _exerciseId : PlanExercise.Exercise.Id; }
+            set { _exerciseId = value; }
+        }
+
+        private string _exerciseId;
 
         ///	<summary>
         ///	Gets / Sets database column 'sequence_number'
         ///	</summary>
         [Required]
         [DisplayName("Sequence Number")]
+        [XmlAttribute("sequence-number")]
         public int SequenceNumber { get; set; }
 
         ///	<summary>
@@ -93,11 +105,13 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Workout Plan")]
+        [XmlAttribute("workout-plan")]
         public string WorkoutPlan { get; set; }
 
         /// <summary>
         ///
         /// </summary>
+        [XmlAttribute("status")]
         public StatusTypes Status { get; set; }
 
         #endregion
@@ -107,11 +121,13 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'cycle_id'
         ///	</summary>
+        [XmlIgnore]
         public WorkoutPlanCycle Cycle { get; set; }
 
         ///	<summary>
         ///	Gets / Sets the foreign key to 'cycle_id'
         ///	</summary>
+        [XmlIgnore]
         public WorkoutPlanExercise PlanExercise { get; set; }
 
         #endregion

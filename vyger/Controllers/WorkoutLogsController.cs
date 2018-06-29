@@ -126,7 +126,7 @@ namespace vyger.Controllers
                 planLog.Status = StatusTypes.Complete;
             }
 
-            _service.SaveWorkoutPlans();
+            _service.SaveWorkoutLogs();
 
             _plans.SaveWorkoutPlans();
 

@@ -45,9 +45,6 @@
     <Reference Include="Augment, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Augment.3.0.0\lib\net471\Augment.dll</HintPath>
     </Reference>
-    <Reference Include="CsvHelper, Version=7.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\packages\CsvHelper.7.1.1\lib\net45\CsvHelper.dll</HintPath>
-    </Reference>
     <Reference Include="Ensure.That, Version=8.0.0.86, Culture=neutral, PublicKeyToken=d7cf9132176ba30b, processorArchitecture=MSIL">
       <HintPath>..\packages\Ensure.That.8.0.0\lib\net451\Ensure.That.dll</HintPath>
     </Reference>
@@ -105,9 +102,6 @@
     <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\T4MVCExtensions.4.2.0\lib\net45\T4MVCExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="YamlDotNet, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YamlDotNet.4.3.2\lib\net45\YamlDotNet.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AccessDenied.png" />
@@ -147,6 +141,7 @@
     <Compile Include="Common\DateTimeExtensions.cs" />
     <Compile Include="Common\Injector.cs" />
     <Compile Include="Common\SecurityActor.cs" />
+    <Compile Include="Common\Serializers.cs" />
     <Compile Include="Common\StatusTypes.cs" />
     <Compile Include="Common\WorkoutCalculator.cs" />
     <Compile Include="Controllers\ExerciseCategoriesController.cs" />

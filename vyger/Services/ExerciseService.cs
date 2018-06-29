@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using vyger.Common;
 using vyger.Models;
 
@@ -31,12 +32,10 @@ namespace vyger.Services
     /// <summary>
     /// Service Implementation for Exercise
     /// </summary>
-    public class ExerciseService : BaseService<Exercise>, IExerciseService
+    public class ExerciseService : BaseService, IExerciseService
     {
         #region Members
 
-        private IExerciseGroupService _groups;
-        private IExerciseCategoryService _categories;
         private ExerciseCollection _exercises;
 
         #endregion
@@ -50,18 +49,15 @@ namespace vyger.Services
             IExerciseGroupService groups,
             IExerciseCategoryService categories,
             ISecurityActor actor)
-            : base(actor, RepositoryTypes.Yaml)
+            : base(actor)
         {
-            _groups = groups;
-            _categories = categories;
+            ExerciseGroupCollection grps = groups.GetExerciseGroups();
 
-            _exercises = new ExerciseCollection(LoadAll());
+            ExerciseCategoryCollection cats = categories.GetExerciseCategories();
 
-            foreach (Exercise ex in _exercises)
-            {
-                ex.Group = _groups.GetExerciseGroups().GetByPrimaryKey(ex.GroupId);
-                ex.Category = _categories.GetExerciseCategories().GetByPrimaryKey(ex.CategoryId);
-            }
+            IEnumerable<Exercise> exercises = ReadData<ExerciseCollection>();
+
+            _exercises = new ExerciseCollection(grps, cats, exercises);
         }
 
         #endregion
@@ -81,13 +77,9 @@ namespace vyger.Services
         /// </summary>
         public void AddExercise(Exercise add)
         {
-            add.Group = _groups.GetExerciseGroups().GetByPrimaryKey(add.GroupId);
-
-            add.Category = _categories.GetExerciseCategories().GetByPrimaryKey(add.CategoryId);
-
             _exercises.Add(add);
 
-            SaveAll(_exercises);
+            SaveData(_exercises);
         }
 
         /// <summary>
@@ -99,7 +91,19 @@ namespace vyger.Services
 
             exercise.OverlayWith(overlay);
 
-            SaveAll(_exercises);
+            SaveData(_exercises);
+        }
+
+        #endregion
+
+        #region Properties
+
+        protected override string FileName
+        {
+            get
+            {
+                return typeof(Exercise).Name;
+            }
         }
 
         #endregion

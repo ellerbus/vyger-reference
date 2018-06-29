@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using vyger.Common;
 using vyger.Models;
 
@@ -36,11 +37,10 @@ namespace vyger.Services
     /// <summary>
     /// Service Implementation for WorkoutRoutine
     /// </summary>
-    public class WorkoutRoutineService : BaseService<WorkoutRoutine>, IWorkoutRoutineService
+    public class WorkoutRoutineService : BaseService, IWorkoutRoutineService
     {
         #region Members
 
-        private IExerciseService _exercises;
         private WorkoutRoutineCollection _routines;
 
         #endregion
@@ -53,21 +53,13 @@ namespace vyger.Services
         public WorkoutRoutineService(
             IExerciseService exercises,
             ISecurityActor actor)
-            : base(actor, RepositoryTypes.Yaml)
+            : base(actor)
         {
-            _exercises = exercises;
+            ExerciseCollection ex = exercises.GetExercises();
 
-            _routines = new WorkoutRoutineCollection(LoadAll());
+            IEnumerable<WorkoutRoutine> routines = ReadData<WorkoutRoutineCollection>();
 
-            foreach (WorkoutRoutine r in _routines)
-            {
-                r.AllExercises = _exercises.GetExercises();
-
-                foreach (WorkoutRoutineExercise ex in r.RoutineExercises)
-                {
-                    ex.Exercise = r.AllExercises.GetByPrimaryKey(ex.ExerciseId);
-                }
-            }
+            _routines = new WorkoutRoutineCollection(ex, routines);
         }
 
         #endregion
@@ -106,7 +98,19 @@ namespace vyger.Services
 
         public void SaveWorkoutRoutines()
         {
-            SaveAll(_routines);
+            SaveData(_routines);
+        }
+
+        #endregion
+
+        #region Properties
+
+        protected override string FileName
+        {
+            get
+            {
+                return typeof(WorkoutRoutine).Name;
+            }
         }
 
         #endregion

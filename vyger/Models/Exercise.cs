@@ -1,21 +1,23 @@
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
-using YamlDotNet.Serialization;
 
 namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("exercise")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Exercise
     {
         #region Constructors
 
-        public Exercise() { }
+        public Exercise()
+        {
+        }
 
         public Exercise(Exercise exercise)
         {
@@ -71,42 +73,49 @@ namespace vyger.Models
         [Required]
         [DisplayName("ID")]
         [MinLength(8), MaxLength(8)]
+        [XmlAttribute("id")]
         public string Id
         {
             get { return _id; }
             set { _id = value.ToUpper(); }
         }
+
         private string _id;
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Name")]
+        [XmlAttribute("name")]
         public string Name { get; set; }
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Category Id")]
+        [XmlAttribute("category-id")]
         public string CategoryId
         {
             get { return Category == null ? _categoryId : Category.Id; }
             set { _categoryId = value; }
         }
+
         private string _categoryId;
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-		[Required]
+        [Required]
         [DisplayName("Group Id")]
+        [XmlAttribute("group-id")]
         public string GroupId
         {
             get { return Group == null ? _groupId : Group.Id; }
             set { _groupId = value; }
         }
+
         private string _groupId;
 
         #endregion
@@ -114,15 +123,15 @@ namespace vyger.Models
         #region Foreign Key Properties
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-        [YamlIgnore]
+        [XmlIgnore]
         public ExerciseGroup Group { get; set; }
 
         ///	<summary>
-        ///	
+        ///
         ///	</summary>
-        [YamlIgnore]
+        [XmlIgnore]
         public ExerciseCategory Category { get; set; }
 
         #endregion

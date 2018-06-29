@@ -1,91 +1,102 @@
-Exercise ID
-	dumbbell-barbell-hammer-machine
+Converting to XML
+- working serialization / services / models
 
+```cs
+using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
-	A List Of The Best Chest Exercises
-FBBP
-IBBP
-DBBP
+namespace Yamler
+{
+    internal static class Program
+    {
+        private static void Main(string[] args)
+        {
+            Parent parent = new Parent();
 
+            for (var x = 0; x < 5; x++)
+            {
+                parent.Children.Add(new Child() { Id = x + 1 });
+            }
 
-Flat Barbell or Dumbbell Bench Press
-Incline Barbell or Dumbbell Bench Press
-Decline Barbell or Dumbbell Bench Press
-Flat Chest Press Machine
-Incline Chest Press Machine
-Decline Chest Press Machine
-Dips (on parallel bars with slight forward lean)
-Push-Ups
-Flat Dumbbell Flyes
-Incline Dumbbell Flyes
-Decline Dumbbell Flyes
-Pec Deck Machine
-Cable Crossovers/Cable Flyes
-(Compound chest exercises also target the triceps and shoulders secondarily.)
+            //string yaml = new Serializer().Serialize(parent);
 
-A List Of The Best Back Exercises
-Pull-Ups
-Chin-Ups
-Lat Pull-Downs
-Bent Over Barbell or Dumbbell Rows
-T-Bar Rows
-Seated Cable Rows
-Chest Supported Barbell or Dumbbell Rows
-Chest Supported Machine Rows
-Inverted Rows
-Barbell, Dumbbell or Machine Shrugs
-(Compound back exercises also target the biceps secondarily.)
+            //Console.WriteLine(yaml);
 
-A List Of The Best Shoulder Exercises
-Seated Overhead Barbell or Dumbbell Press
-Standing Overhead Barbell or Dumbbell Press
-Overhead Machine Press
-Arnold Press
-Barbell, Dumbbell or Machine Upright Rows
-Dumbbell, Cable or Machine Lateral Raises
-Dumbbell, Cable or Machine Front Raises
-Barbell, Dumbbell, or Machine Rear Delt Rows, Raises or Flyes
-(Compound shoulder exercises also target the triceps secondarily.)
+            //Parent clone = new Deserializer().Deserialize<Parent>(yaml);
 
-A List Of The Best Quadriceps Exercises
-Barbell or Dumbbell Squats
-Barbell or Dumbbell Front Squats
-Barbell or Dumbbell Split Squats
-Barbell or Dumbbell Lunges
-Barbell or Dumbbell Step-Ups
-Leg Press
-Single Leg Press
-Machine Squat/Hack Squat
-Leg Extensions
-(Compound quad exercises also target a significant portion of the lower body/posterior chain.)
+            //string json = JsonConvert.SerializeObject(parent, Formatting.Indented);
 
-A List Of The Best Hamstring Exercises
-Barbell or Dumbbell Romanian Deadlifts
-Barbell or Dumbbell Straight Leg Deadlifts
-Barbell or Dumbbell Sumo Deadlifts
-Glute-Ham Raises
-Hyperextensions
-Cable Pull-Throughs
-Good-Mornings
-Leg Curls
-(Compound hamstring exercises also target a significant portion of the lower body/posterior chain.)
+            //Console.WriteLine(json);
 
-A List Of The Best Biceps Exercises
-Standing Barbell or Dumbbell Curls
-Barbell or Dumbbell Preacher Curls
-Seated Dumbbell Curls
-Incline Dumbbell Curls
-Hammer Curls
-Concentration Curls
-Cable Curls
-Biceps Curl Machine
-A List Of The Best Triceps Exercises
-Dips (on parallel bars, elbows close to body, without forward lean)
-Flat Close Grip Bench Press
-Decline Close Grip Bench Press
-Close Grip Push-Ups
-Laying Barbell or Dumbbell Triceps Extensions
-Skull Crushers
-Overhead Barbell or Dumbbell Triceps Extensions
-Cable Press-Downs
-Bench Dips
+            //Parent clone = JsonConvert.DeserializeObject<Parent>(json);
+
+            string xml = parent.Serialize();
+
+            Console.WriteLine(xml);
+
+            //Parent clone = Deserialize<Parent>(xml);
+        }
+
+        public static T Deserialize<T>(string xml)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+            using (StringReader rdr = new StringReader(xml))
+            {
+                T results = (T)serializer.Deserialize(rdr);
+
+                return results;
+            }
+        }
+
+        public static string Serialize<T>(this T value)
+        {
+            if (value == null) return string.Empty;
+
+            var xmlSerializer = new XmlSerializer(typeof(T));
+
+            using (var stringWriter = new StringWriter())
+            {
+                using (var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings { Indent = true }))
+                {
+                    xmlSerializer.Serialize(xmlWriter, value);
+                    return stringWriter.ToString();
+                }
+            }
+        }
+    }
+
+    [XmlRoot("parent")]
+    public class Parent
+    {
+        public Parent()
+        {
+            Children = new ChildCollection(this);
+        }
+
+        [XmlArray("children"), XmlArrayItem("child")]
+        public ChildCollection Children { get; private set; }
+    }
+
+    [XmlRoot("child`")]
+    public class Child
+    {
+        [XmlAttribute("id")]
+        public int Id { get; set; }
+
+        [XmlAttribute("name")]
+        public string Name { get; set; }
+    }
+
+    [XmlRoot("children")]
+    public class ChildCollection : Collection<Child>
+    {
+        public ChildCollection(Parent parent)
+        {
+        }
+    }
+}
+```

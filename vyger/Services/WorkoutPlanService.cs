@@ -50,11 +50,10 @@ namespace vyger.Services
     /// <summary>
     /// Service Implementation for WorkoutPlan
     /// </summary>
-    public class WorkoutPlanService : BaseService<WorkoutPlan>, IWorkoutPlanService
+    public class WorkoutPlanService : BaseService, IWorkoutPlanService
     {
         #region Members
 
-        private IWorkoutRoutineService _routines;
         private WorkoutPlanCollection _plans;
 
         #endregion
@@ -67,30 +66,13 @@ namespace vyger.Services
         public WorkoutPlanService(
             IWorkoutRoutineService routines,
             ISecurityActor actor)
-            : base(actor, RepositoryTypes.Yaml)
+            : base(actor)
         {
-            _routines = routines;
+            WorkoutRoutineCollection r = routines.GetWorkoutRoutines();
 
-            _plans = new WorkoutPlanCollection(LoadAll());
+            IEnumerable<WorkoutPlan> plans = ReadData<WorkoutPlanCollection>();
 
-            foreach (WorkoutPlan p in _plans)
-            {
-                p.Routine = _routines.GetWorkoutRoutines().GetByPrimaryKey(p.RoutineId);
-
-                foreach (WorkoutPlanCycle cycle in p.Cycles)
-                {
-                    foreach (WorkoutPlanExercise pex in cycle.PlanExercises)
-                    {
-                        pex.Exercise = p.Routine.AllExercises.GetByPrimaryKey(pex.ExerciseId);
-                    }
-
-                    foreach (WorkoutPlanLog pl in cycle.PlanLogs)
-                    {
-                        pl.Cycle = cycle;
-                        pl.PlanExercise = cycle.PlanExercises.GetByPrimaryKey(pl.ExerciseId);
-                    }
-                }
-            }
+            _plans = new WorkoutPlanCollection(r, plans);
         }
 
         #endregion
@@ -129,7 +111,7 @@ namespace vyger.Services
 
         public void SaveWorkoutPlans()
         {
-            SaveAll(_plans);
+            SaveData(_plans);
         }
 
         #endregion
@@ -162,6 +144,18 @@ namespace vyger.Services
             cycle.PlanLogs.Clear();
 
             cycle.PlanLogs.AddRange(generator.GenerateLogItems());
+        }
+
+        #endregion
+
+        #region Properties
+
+        protected override string FileName
+        {
+            get
+            {
+                return typeof(WorkoutPlan).Name;
+            }
         }
 
         #endregion

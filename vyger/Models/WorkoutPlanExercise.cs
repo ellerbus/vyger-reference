@@ -1,15 +1,16 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
 using vyger.Common;
-using YamlDotNet.Serialization;
 
 namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-plan-exercise")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlanExercise
     {
@@ -67,6 +68,7 @@ namespace vyger.Models
         [Key]
         [Required]
         [DisplayName("Exercise Id")]
+        [XmlAttribute("exercise-id")]
         public string ExerciseId
         {
             get { return Exercise == null ? _exerciseId : Exercise.Id; }
@@ -81,6 +83,7 @@ namespace vyger.Models
         [Required]
         [DisplayName("Weight")]
         [Range(0, Constants.MaxWeight)]
+        [XmlAttribute("weight")]
         public int Weight { get; set; }
 
         ///	<summary>
@@ -89,6 +92,7 @@ namespace vyger.Models
         [Required]
         [DisplayName("Reps")]
         [Range(0, Constants.MaxReps)]
+        [XmlAttribute("reps")]
         public int Reps { get; set; }
 
         ///	<summary>
@@ -97,6 +101,7 @@ namespace vyger.Models
         [Required]
         [DisplayName("Pullback")]
         [Range(0, 50)]
+        [XmlAttribute("pullback")]
         public int Pullback { get; set; }
 
         ///	<summary>
@@ -104,12 +109,13 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Is Calculated")]
+        [XmlAttribute("is-calculated")]
         public bool IsCalculated { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        [YamlIgnore]
+        [XmlIgnore]
         public double OneRepMax
         {
             get { return WorkoutCalculator.OneRepMax(Weight, Reps); }
@@ -122,12 +128,13 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'cycle_id'
         ///	</summary>
+        [XmlIgnore]
         public WorkoutPlanCycle Cycle { get; set; }
 
         ///	<summary>
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
-        [YamlIgnore]
+        [XmlIgnore]
         public Exercise Exercise { get; set; }
 
         #endregion

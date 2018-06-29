@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Xml.Serialization;
 using Augment;
 
 namespace vyger.Models
@@ -8,20 +8,15 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-plan-exercises")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlanExerciseCollection : SingleKeyCollection<WorkoutPlanExercise, string>
     {
         #region Constructors
 
-        public WorkoutPlanExerciseCollection()
-        {
-        }
-
-        public WorkoutPlanExerciseCollection(WorkoutPlanCycle cycle, IEnumerable<WorkoutPlanExercise> exercises)
+        public WorkoutPlanExerciseCollection(WorkoutPlanCycle cycle)
         {
             Cycle = cycle;
-
-            AddRange(exercises);
         }
 
         #endregion
@@ -86,7 +81,7 @@ namespace vyger.Models
 
         public void OverlayWith(IEnumerable<WorkoutPlanExercise> planExercises)
         {
-            foreach(WorkoutPlanExercise source in planExercises)
+            foreach (WorkoutPlanExercise source in planExercises)
             {
                 WorkoutPlanExercise target = GetByPrimaryKey(source.ExerciseId);
 
@@ -144,6 +139,10 @@ namespace vyger.Models
 
         #region Foreign Key Properties
 
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlIgnore]
         public WorkoutPlanCycle Cycle { get; private set; }
 
         #endregion

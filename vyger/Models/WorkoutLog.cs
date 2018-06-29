@@ -3,15 +3,15 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Serialization;
 using Augment;
-using CsvHelper.Configuration.Attributes;
-using YamlDotNet.Serialization;
 
 namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-log")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutLog
     {
@@ -85,6 +85,7 @@ namespace vyger.Models
         [Key]
         [Required]
         [DisplayName("Log Date")]
+        [XmlAttribute("log-date")]
         public DateTime LogDate { get; set; }
 
         ///	<summary>
@@ -93,13 +94,21 @@ namespace vyger.Models
         [Key]
         [Required]
         [DisplayName("Exercise Id")]
-        public string ExerciseId { get; set; }
+        [XmlAttribute("exercise-id")]
+        public string ExerciseId
+        {
+            get { return Exercise == null ? _exerciseId : Exercise.Id; }
+            set { _exerciseId = value; }
+        }
+
+        private string _exerciseId;
 
         ///	<summary>
         ///	Gets / Sets database column 'workout'
         ///	</summary>
         [Required]
         [DisplayName("Workout")]
+        [XmlAttribute("workout")]
         public string Workout
         {
             get { return _workout; }
@@ -117,6 +126,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Plan Id")]
+        [XmlAttribute("plan-id")]
         public string PlanId { get; set; }
 
         ///	<summary>
@@ -124,6 +134,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Cycle Id")]
+        [XmlAttribute("cycle-id")]
         public int CycleId { get; set; }
 
         ///	<summary>
@@ -131,6 +142,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Week Id")]
+        [XmlAttribute("week-id")]
         public int WeekId { get; set; }
 
         ///	<summary>
@@ -138,6 +150,7 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Day Id")]
+        [XmlAttribute("day-id")]
         public int DayId { get; set; }
 
         ///	<summary>
@@ -145,12 +158,13 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Sequence Number")]
+        [XmlAttribute("sequence-number")]
         public int SequenceNumber { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        [Ignore]
+        [XmlIgnore]
         public double OneRepMax
         {
             get
@@ -171,16 +185,14 @@ namespace vyger.Models
         ///	<summary>
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
-        [Ignore]
-        [YamlIgnore]
+        [XmlIgnore]
         public Exercise Exercise { get; set; }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        [Ignore]
-        [YamlIgnore]
+        [XmlIgnore]
         public WorkoutLogSetCollection Sets
         {
             get

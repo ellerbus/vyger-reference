@@ -1,13 +1,15 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Serialization;
 using Augment;
+
 namespace vyger.Models
 {
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("exercises")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ExerciseCollection : SingleKeyCollection<Exercise, string>
     {
@@ -17,8 +19,15 @@ namespace vyger.Models
         {
         }
 
-        public ExerciseCollection(IEnumerable<Exercise> exercises) : this()
+        public ExerciseCollection(
+            ExerciseGroupCollection groups,
+            ExerciseCategoryCollection categories,
+            IEnumerable<Exercise> exercises)
+            : this()
         {
+            Groups = groups;
+            Categories = categories;
+
             AddRange(exercises);
         }
 
@@ -41,6 +50,33 @@ namespace vyger.Models
         protected override string GetPrimaryKey(Exercise item)
         {
             return item.Id;
+        }
+
+        protected override void InsertItem(int index, Exercise item)
+        {
+            base.InsertItem(index, item);
+
+            UpdateReferences(item);
+        }
+
+        protected override void SetItem(int index, Exercise item)
+        {
+            base.SetItem(index, item);
+
+            UpdateReferences(item);
+        }
+
+        private void UpdateReferences(Exercise item)
+        {
+            if (Groups != null)
+            {
+                item.Group = Groups.GetByPrimaryKey(item.GroupId);
+            }
+
+            if (Categories != null)
+            {
+                item.Category = Categories.GetByPrimaryKey(item.CategoryId);
+            }
         }
 
         public void AddRange(IEnumerable<Exercise> exercises)
@@ -66,7 +102,19 @@ namespace vyger.Models
 
         #endregion
 
-        #region Foreign Key Properties
+        #region Foreign Keys
+
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlIgnore]
+        public ExerciseCategoryCollection Categories { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlIgnore]
+        public ExerciseGroupCollection Groups { get; set; }
 
         #endregion
     }

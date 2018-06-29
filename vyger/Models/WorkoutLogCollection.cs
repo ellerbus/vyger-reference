@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Serialization;
 using Augment;
 
 namespace vyger.Models
@@ -10,25 +11,21 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-logs")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutLogCollection : Collection<WorkoutLog>
     {
-        #region Members
-
-        private ExerciseCollection _exercises;
-
-        #endregion
-
         #region Constructors
 
-        public WorkoutLogCollection(ExerciseCollection exercises)
+        public WorkoutLogCollection()
         {
-            _exercises = exercises;
         }
 
         public WorkoutLogCollection(ExerciseCollection exercises, IEnumerable<WorkoutLog> logs)
-            : this(exercises)
+            : this()
         {
+            Exercises = exercises;
+
             AddRange(logs);
         }
 
@@ -64,7 +61,10 @@ namespace vyger.Models
 
         private void UpdateReferences(WorkoutLog item)
         {
-            item.Exercise = _exercises.GetByPrimaryKey(item.ExerciseId);
+            if (Exercises != null)
+            {
+                item.Exercise = Exercises.GetByPrimaryKey(item.ExerciseId);
+            }
         }
 
         public void AddRange(IEnumerable<WorkoutLog> routines)
@@ -129,6 +129,16 @@ namespace vyger.Models
                 Remove(log);
             }
         }
+
+        #endregion
+
+        #region Foreign Keys
+
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlIgnore]
+        public ExerciseCollection Exercises { get; set; }
 
         #endregion
     }
