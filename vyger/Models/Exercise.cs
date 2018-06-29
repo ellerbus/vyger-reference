@@ -9,7 +9,7 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
-    [XmlRoot("exercise")]
+    [XmlType("exercise")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Exercise
     {

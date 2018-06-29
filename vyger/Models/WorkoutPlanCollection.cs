@@ -71,9 +71,12 @@ namespace vyger.Models
 
         public void AddRange(IEnumerable<WorkoutPlan> plans)
         {
-            foreach (WorkoutPlan plan in plans)
+            if (plans != null)
             {
-                Add(plan);
+                foreach (WorkoutPlan plan in plans)
+                {
+                    Add(plan);
+                }
             }
         }
 

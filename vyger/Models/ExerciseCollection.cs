@@ -81,9 +81,12 @@ namespace vyger.Models
 
         public void AddRange(IEnumerable<Exercise> exercises)
         {
-            foreach (Exercise exercise in exercises)
+            if (exercises != null)
             {
-                Add(exercise);
+                foreach (Exercise exercise in exercises)
+                {
+                    Add(exercise);
+                }
             }
         }
 

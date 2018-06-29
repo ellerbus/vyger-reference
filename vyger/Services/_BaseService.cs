@@ -28,9 +28,14 @@ namespace vyger.Services
 
         protected T ReadData<T>()
         {
-            string xml = GetContents();
+            if (Actor.IsAuthenticated)
+            {
+                string xml = GetContents();
 
-            return Serializers.FromXml<T>(xml);
+                return Serializers.FromXml<T>(xml);
+            }
+
+            return default(T);
         }
 
         protected void SaveData(object value)

@@ -69,9 +69,12 @@ namespace vyger.Models
 
         public void AddRange(IEnumerable<WorkoutLog> routines)
         {
-            foreach (WorkoutLog routine in routines)
+            if (routines != null)
             {
-                Add(routine);
+                foreach (WorkoutLog routine in routines)
+                {
+                    Add(routine);
+                }
             }
         }
 

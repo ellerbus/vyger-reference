@@ -46,9 +46,12 @@ namespace vyger.Models
 
         public void AddRange(IEnumerable<ExerciseGroup> groups)
         {
-            foreach (ExerciseGroup group in groups)
+            if (groups != null)
             {
-                Add(group);
+                foreach (ExerciseGroup group in groups)
+                {
+                    Add(group);
+                }
             }
         }
 

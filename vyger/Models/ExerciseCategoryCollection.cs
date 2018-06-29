@@ -44,11 +44,14 @@ namespace vyger.Models
             return item.Id;
         }
 
-        public void AddRange(IEnumerable<ExerciseCategory> groups)
+        public void AddRange(IEnumerable<ExerciseCategory> categories)
         {
-            foreach (ExerciseCategory group in groups)
+            if (categories != null)
             {
-                Add(group);
+                foreach (ExerciseCategory category in categories)
+                {
+                    Add(category);
+                }
             }
         }
 
