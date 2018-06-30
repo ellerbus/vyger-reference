@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FizzWare.NBuilder;
 using FizzWare.NBuilder.PropertyNaming;
 using vyger.Models;
@@ -56,75 +57,72 @@ namespace vyger.Tests
         }
     }
 
-    //    static class BuildA
-    //    {
-    //        public static WorkoutRoutine Routine()
-    //        {
-    //            var routine = Design.One<WorkoutRoutine>()
-    //                .With(x => x.Weeks = 4)
-    //                .And(x => x.Days = 3)
-    //                .Build();
+    static class BuildA
+    {
+        public static WorkoutRoutine WorkoutRoutine(int numberWeeks = 4, int numberDays = 3, int numberExercises = 5)
+        {
+            var exercises = BuildAn.ExerciseCollection(numberExercises);
 
-    //            var exercise = Design.One<Exercise>()
-    //                .With(x => x.Group = Design.One<ExerciseGroup>().Build())
-    //                .Build();
+            var routine = Design.One<WorkoutRoutine>()
+                .With(x => x.Weeks = numberWeeks)
+                .And(x => x.Days = numberDays)
+                .And(x => x.AllExercises = exercises)
+                .Build();
 
-    //            routine.AllExercises = new ExerciseCollection(new[] { exercise });
 
-    //            var routineExercises = Design.One<WorkoutRoutineExercise>()
-    //                .With(x => x.ExerciseId = exercise.ExerciseId)
-    //                .Build();
+            //  apply all exercises over weeks & days
+            for (int week = 1; week <= numberWeeks; week++)
+            {
+                for (int day = 1; day <= numberDays; day++)
+                {
+                    foreach (var ex in exercises)
+                    {
+                        var rex = Design.One<WorkoutRoutineExercise>()
+                            .With(x => x.ExerciseId = ex.Id)
+                            .And(x => x.WeekId = week)
+                            .And(x => x.DayId = day)
+                            .And(x => x.Routine = routine)
+                            .Build();
 
-    //            routine.RoutineExercises.Add(routineExercises);
+                        routine.RoutineExercises.Add(rex);
+                    }
+                }
+            }
 
-    //            return routine;
-    //        }
-    //        //public static WorkoutRoutine CompleteRoutine(int numberWeeks = 4, int numberDays = 3, int numberExercises = 5)
-    //        //{
-    //        //    var routine = Design.One<WorkoutRoutine>()
-    //        //        .With(x => x.Weeks = numberWeeks)
-    //        //        .And(x => x.Days = numberDays)
-    //        //        .Build();
+            return routine;
+        }
 
-    //        //    var exercises = Design.Many<Exercise>(numberExercises).Build();
+        public static WorkoutPlan WorkoutPlanFrom(WorkoutRoutine routine, int numberOfCycles = 1)
+        {
+            var plan = new WorkoutPlan(routine);
 
-    //        //    //  apply all exercises over two weeks
-    //        //    for (int week = 1; week <= numberWeeks; week++)
-    //        //    {
-    //        //        for (int day = 1; day <= numberDays; day++)
-    //        //        {
-    //        //            foreach (var ex in exercises)
-    //        //            {
-    //        //                var re = Design.One<WorkoutRoutineExercise>()
-    //        //                    .With(x => x.Exercise = ex)
-    //        //                    .And(x => x.WeekId = week)
-    //        //                    .And(x => x.DayId = day)
-    //        //                    .And(x => x.Routine = routine)
-    //        //                    .Build();
+            for (int cycle = 1; cycle <= numberOfCycles; cycle++)
+            {
+                plan.Cycles.Add(new WorkoutPlanCycle() { CycleId = cycle });
+            }
 
-    //        //                routine.Exercises.Add(re);
-    //        //            }
-    //        //        }
-    //        //    }
+            //cycle.GenerateExerciseSetup(new WorkoutLog[0]);
 
-    //        //    return routine;
-    //        //}
+            //var pex = cycle.PlanExercises.First();
 
-    //        //public static Plan CompletePlan(int numberOfCycles = 1, int numberWeeks = 4, int numberDays = 3, int numberExercises = 5)
-    //        //{
-    //        //    var routine = CompleteRoutine(numberWeeks, numberDays, numberExercises);
+            return plan;
+        }
 
-    //        //    var plan = new Plan(routine)
-    //        //    {
-    //        //        StartDate = DateTime.Now.GetNextSunday()
-    //        //    };
+        //public static Plan CompletePlan(int numberOfCycles = 1, int numberWeeks = 4, int numberDays = 3, int numberExercises = 5)
+        //{
+        //    var routine = CompleteRoutine(numberWeeks, numberDays, numberExercises);
 
-    //        //    foreach (var cycle in plan.Cycles)
-    //        //    {
-    //        //        cycle.CreateExercisesForCycle();
-    //        //    }
+        //    var plan = new Plan(routine)
+        //    {
+        //        StartDate = DateTime.Now.GetNextSunday()
+        //    };
 
-    //        //    return plan;
-    //        //}
-    //    }
+        //    foreach (var cycle in plan.Cycles)
+        //    {
+        //        cycle.CreateExercisesForCycle();
+        //    }
+
+        //    return plan;
+        //}
+    }
 }
