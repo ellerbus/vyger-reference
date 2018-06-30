@@ -115,7 +115,7 @@ namespace vyger.Models
                 pex = new WorkoutPlanExercise()
                 {
                     Cycle = Cycle,
-                    Exercise = exercise,
+                    ExerciseId = exercise.Id,
                     IsCalculated = requiresOneRepMax
                 };
 

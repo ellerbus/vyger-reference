@@ -82,13 +82,7 @@ namespace vyger.Models
         [Required]
         [DisplayName("Exercise Id")]
         [XmlAttribute("exercise-id")]
-        public string ExerciseId
-        {
-            get { return Exercise == null ? _exerciseId : Exercise.Id; }
-            set { _exerciseId = value; }
-        }
-
-        private string _exerciseId;
+        public string ExerciseId { get; set; }
 
         ///	<summary>
         ///
@@ -131,7 +125,22 @@ namespace vyger.Models
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
         [XmlIgnore]
-        public Exercise Exercise { get; set; }
+        public Exercise Exercise
+        {
+            get
+            {
+                if (Routine == null || Routine.AllExercises == null)
+                {
+                    return null;
+                }
+
+                Exercise ex = null;
+
+                Routine.AllExercises.TryGetByPrimaryKey(ExerciseId, out ex);
+
+                return ex;
+            }
+        }
 
         /// <summary>
         ///

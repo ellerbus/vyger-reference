@@ -1,16 +1,16 @@
 <workout-plans>
   <workout-plan plan-id="4u4nz6nz6x6i" routine-id="A">
     <workout-plan-cycles>
-      <workout-plan-cycle cycle-id="1" status="Active">
+      <workout-plan-cycle cycle-id="1" status="None">
         <workout-plan-exercises>
-          <workout-plan-exercise exercise-id="LB-B-DLF" weight="200" reps="1" is-calculated="True" />
-          <workout-plan-exercise exercise-id="LG-M-LPR" weight="450" reps="1" is-calculated="True" />
-          <workout-plan-exercise exercise-id="CH-D-FBP" weight="50" reps="8" is-calculated="True" />
-          <workout-plan-exercise exercise-id="CH-H-DBP" weight="250" reps="1" is-calculated="True" />
+          <workout-plan-exercise exercise-id="LB-B-DLF" weight="200" reps="1" is-calculated="true" />
+          <workout-plan-exercise exercise-id="LG-M-LPR" weight="450" reps="1" is-calculated="true" />
+          <workout-plan-exercise exercise-id="CH-D-FBP" weight="50" reps="8" is-calculated="true" />
+          <workout-plan-exercise exercise-id="CH-H-DBP" weight="250" reps="1" is-calculated="true" />
           <workout-plan-exercise exercise-id="LG-B-FSQ" />
           <workout-plan-exercise exercise-id="AB-M-CRN" />
-          <workout-plan-exercise exercise-id="TR-H-SHR" weight="250" reps="1" is-calculated="True" />
-          <workout-plan-exercise exercise-id="SH-H-PRS" weight="160" reps="1" is-calculated="True" />
+          <workout-plan-exercise exercise-id="TR-H-SHR" weight="250" reps="1" is-calculated="true" />
+          <workout-plan-exercise exercise-id="SH-H-PRS" weight="160" reps="1" is-calculated="true" />
           <workout-plan-exercise exercise-id="BC-D-CRL" />
           <workout-plan-exercise exercise-id="SH-D-SLR" />
           <workout-plan-exercise exercise-id="SH-D-FLR" />

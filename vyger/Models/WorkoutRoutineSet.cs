@@ -13,6 +13,8 @@ namespace vyger.Models
             Percent = 1.0;
             Reps = 1;
             Sets = 1;
+            WeekId = -1;
+            DayId = -1;
         }
 
         public WorkoutRoutineSet(string workoutRoutine) : this()

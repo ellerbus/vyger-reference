@@ -10,7 +10,7 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
-    [XmlRoot("workout-plan-exercise")]
+    [XmlType("workout-plan-exercise")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlanExercise
     {
@@ -69,13 +69,7 @@ namespace vyger.Models
         [Required]
         [DisplayName("Exercise Id")]
         [XmlAttribute("exercise-id")]
-        public string ExerciseId
-        {
-            get { return Exercise == null ? _exerciseId : Exercise.Id; }
-            set { _exerciseId = value; }
-        }
-
-        private string _exerciseId;
+        public string ExerciseId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'weight'
@@ -135,7 +129,27 @@ namespace vyger.Models
         ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
         [XmlIgnore]
-        public Exercise Exercise { get; set; }
+        public Exercise Exercise
+        {
+            get
+            {
+                if (Cycle == null || Cycle.Plan == null || Cycle.Plan.Routine == null)
+                {
+                    return null;
+                }
+
+                if (Cycle.Plan.Routine.AllExercises == null)
+                {
+                    return null;
+                }
+
+                Exercise ex = null;
+
+                Cycle.Plan.Routine.AllExercises.TryGetByPrimaryKey(ExerciseId, out ex);
+
+                return ex;
+            }
+        }
 
         #endregion
     }

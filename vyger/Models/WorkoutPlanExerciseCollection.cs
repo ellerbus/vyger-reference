@@ -57,18 +57,6 @@ namespace vyger.Models
         private void UpdateReferences(WorkoutPlanExercise item)
         {
             item.Cycle = Cycle;
-
-            if (item.Cycle != null && item.Cycle.Plan != null && item.Cycle.Plan.Routine != null)
-            {
-                WorkoutRoutine routine = item.Cycle.Plan.Routine;
-
-                if (routine.AllExercises != null && item.Exercise == null)
-                {
-                    //  only after the deserializer has finished it's setup
-                    //  to we have the proper handles to the routine and exercises
-                    item.Exercise = routine.AllExercises.GetByPrimaryKey(item.ExerciseId);
-                }
-            }
         }
 
         public void AddRange(IEnumerable<WorkoutPlanExercise> exercises)

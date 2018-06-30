@@ -30,9 +30,15 @@ namespace vyger.Services
         {
             if (Actor.IsAuthenticated)
             {
-                string xml = GetContents();
 
-                return Serializers.FromXml<T>(xml);
+                string fullpath = GetFullPath();
+
+                if (File.Exists(GetFullPath()))
+                {
+                    string xml = File.ReadAllText(fullpath);
+
+                    return Serializers.FromXml<T>(xml);
+                }
             }
 
             return default(T);
@@ -42,21 +48,9 @@ namespace vyger.Services
         {
             string xml = Serializers.ToXml(value);
 
-            PutContents(xml);
-        }
-
-        private string GetContents()
-        {
             string fullpath = GetFullPath();
 
-            return File.ReadAllText(fullpath);
-        }
-
-        private void PutContents(string contents)
-        {
-            string fullpath = GetFullPath();
-
-            File.WriteAllText(fullpath, contents);
+            File.WriteAllText(fullpath, xml);
         }
 
         private string GetFullPath()

@@ -11,7 +11,7 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
-    [XmlRoot("workout-plan")]
+    [XmlType("workout-plan")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlan
     {
@@ -116,7 +116,7 @@ namespace vyger.Models
         /// <summary>
         ///
         /// </summary>
-        [XmlArray("workout-cycles"), XmlArrayItem("workout-cycle")]
+        [XmlArray("workout-plan-cycles"), XmlArrayItem("workout-plan-cycle")]
         public WorkoutPlanCycleCollection Cycles { get; private set; }
 
         #endregion

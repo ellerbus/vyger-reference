@@ -128,11 +128,14 @@ namespace vyger.Services
 
             plan.Cycles.Add(cycle);
 
-            WorkoutCycleGenerator generator = new WorkoutCycleGenerator(plan, cycle);
+            if (logs.Count() > 0)
+            {
+                WorkoutCycleGenerator generator = new WorkoutCycleGenerator(plan, cycle);
 
-            generator.InitializeCycle(logs.ToList());
+                generator.InitializeCycle(logs.ToList());
 
-            GenerateCycle(plan, cycle, logs);
+                GenerateCycle(plan, cycle, logs);
+            }
 
             return cycle;
         }

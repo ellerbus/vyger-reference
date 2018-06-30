@@ -11,7 +11,7 @@ namespace vyger.Models
     ///	<summary>
     ///
     ///	</summary>
-    [XmlRoot("workout-cycle")]
+    [XmlType("workout-plan-cycle")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlanCycle
     {
@@ -68,16 +68,19 @@ namespace vyger.Models
         ///	</summary>
         [Required]
         [DisplayName("Cycle Id")]
+        [XmlAttribute("cycle-id")]
         public int CycleId { get; set; }
 
         /// <summary>
         ///
         /// </summary>
+        [XmlAttribute("status")]
         public StatusTypes Status { get; set; }
 
         /// <summary>
         ///
         /// </summary>
+        [XmlAttribute("created-at")]
         public DateTime CreatedAt { get; set; }
 
         #endregion
@@ -93,13 +96,13 @@ namespace vyger.Models
         ///	<summary>
         ///
         ///	</summary>
-        [XmlArray("workout-plan=exercises"), XmlArrayItem("workout-plan=exercise")]
+        [XmlArray("workout-plan-exercises"), XmlArrayItem("workout-plan-exercise")]
         public WorkoutPlanExerciseCollection PlanExercises { get; private set; }
 
         ///	<summary>
         ///
         ///	</summary>
-        [XmlArray("workout-plan=logs"), XmlArrayItem("workout-plan=log")]
+        [XmlArray("workout-plan-logs"), XmlArrayItem("workout-plan-log")]
         public WorkoutPlanLogCollection PlanLogs { get; private set; }
 
         #endregion
