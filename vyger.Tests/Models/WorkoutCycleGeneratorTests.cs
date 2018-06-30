@@ -76,6 +76,100 @@ namespace vyger.Tests.Models
             logs[2].WorkoutPlan.Should().Be("110x5");
         }
 
+        [TestMethod]
+        public void WorkoutCycleGenerator_GenerateLogItems_Should_CalculateFromLastSet()
+        {
+            //  arrange
+            var routine = BuildA.WorkoutRoutine(numberWeeks: 1, numberDays: 1, numberExercises: 1);
+
+            routine.RoutineExercises[0].WorkoutRoutine = "S!x3, 5RMx5";
+
+            var plan = BuildA.WorkoutPlanFrom(routine, numberOfCycles: 1);
+
+            var cycle = plan.Cycles.First();
+
+            var pex = new WorkoutPlanExercise
+            {
+                ExerciseId = routine.AllExercises.First().Id,
+                Weight = 140,
+                Reps = 5
+            };
+
+            cycle.PlanExercises.Add(pex);
+
+            //  act
+            var gen = new WorkoutCycleGenerator(plan, cycle);
+
+            var logs = gen.GenerateLogItems().ToArray();
+
+            //  assert
+            logs[0].WorkoutPlan.Should().Be("140x3, 140x5");
+        }
+
+        [TestMethod]
+        public void WorkoutCycleGenerator_GenerateLogItems_Should_CalculateFromWeekTwo()
+        {
+            //  arrange
+            var routine = BuildA.WorkoutRoutine(numberWeeks: 2, numberDays: 1, numberExercises: 1);
+
+            routine.RoutineExercises[0].WorkoutRoutine = "W2S!x5";
+            routine.RoutineExercises[1].WorkoutRoutine = "5RMx5";
+
+            var plan = BuildA.WorkoutPlanFrom(routine, numberOfCycles: 1);
+
+            var cycle = plan.Cycles.First();
+
+            var pex = new WorkoutPlanExercise
+            {
+                ExerciseId = routine.AllExercises.First().Id,
+                Weight = 140,
+                Reps = 5
+            };
+
+            cycle.PlanExercises.Add(pex);
+
+            //  act
+            var gen = new WorkoutCycleGenerator(plan, cycle);
+
+            var logs = gen.GenerateLogItems().ToArray();
+
+            //  assert
+            logs[0].WorkoutPlan.Should().Be("140x5");
+            logs[1].WorkoutPlan.Should().Be("140x5");
+        }
+
+        [TestMethod]
+        public void WorkoutCycleGenerator_GenerateLogItems_Should_CalculateFromLastWeek()
+        {
+            //  arrange
+            var routine = BuildA.WorkoutRoutine(numberWeeks: 2, numberDays: 1, numberExercises: 1);
+
+            routine.RoutineExercises[0].WorkoutRoutine = "W!S!x5";
+            routine.RoutineExercises[1].WorkoutRoutine = "5RMx5";
+
+            var plan = BuildA.WorkoutPlanFrom(routine, numberOfCycles: 1);
+
+            var cycle = plan.Cycles.First();
+
+            var pex = new WorkoutPlanExercise
+            {
+                ExerciseId = routine.AllExercises.First().Id,
+                Weight = 140,
+                Reps = 5
+            };
+
+            cycle.PlanExercises.Add(pex);
+
+            //  act
+            var gen = new WorkoutCycleGenerator(plan, cycle);
+
+            var logs = gen.GenerateLogItems().ToArray();
+
+            //  assert
+            logs[0].WorkoutPlan.Should().Be("140x5");
+            logs[1].WorkoutPlan.Should().Be("140x5");
+        }
+
         //[TestMethod]
         //public void WorkoutCycleGenerator_CreateExercisesForCycle_Should_FollowRoutine_WithRepMax()
         //{
