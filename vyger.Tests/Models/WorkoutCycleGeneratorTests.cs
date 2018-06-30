@@ -19,7 +19,7 @@ namespace vyger.Tests.Models
 
             rex.WorkoutRoutine = "5RM";
 
-            var plan = BuildA.WorkoutPlanFrom(routine);
+            var plan = BuildA.WorkoutPlanFrom(routine, numberOfCycles: 1);
 
             var cycle = plan.Cycles.First();
 
@@ -40,6 +40,40 @@ namespace vyger.Tests.Models
 
             pex.Weight.Should().Be(140);
             pex.Reps.Should().Be(5);
+        }
+
+        [TestMethod]
+        public void WorkoutCycleGenerator_GenerateLogItems_Should_CalculateFromOneRepMax()
+        {
+            //  arrange
+            var routine = BuildA.WorkoutRoutine(numberWeeks: 3, numberDays: 1, numberExercises: 1);
+
+            routine.RoutineExercises[0].WorkoutRoutine = "5RMx5";
+            routine.RoutineExercises[1].WorkoutRoutine = "5RM*90%x5";
+            routine.RoutineExercises[2].WorkoutRoutine = "5RM*80%x5";
+
+            var plan = BuildA.WorkoutPlanFrom(routine, numberOfCycles: 1);
+
+            var cycle = plan.Cycles.First();
+
+            var pex = new WorkoutPlanExercise
+            {
+                ExerciseId = routine.AllExercises.First().Id,
+                Weight = 140,
+                Reps = 5
+            };
+
+            cycle.PlanExercises.Add(pex);
+
+            //  act
+            var gen = new WorkoutCycleGenerator(plan, cycle);
+
+            var logs = gen.GenerateLogItems().ToArray();
+
+            //  assert
+            logs[0].WorkoutPlan.Should().Be("140x5");
+            logs[1].WorkoutPlan.Should().Be("125x5");
+            logs[2].WorkoutPlan.Should().Be("110x5");
         }
 
         //[TestMethod]
