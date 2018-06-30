@@ -1,22 +1,81 @@
-<workout-plans>
-  <workout-plan plan-id="4u4nz6nz6x6i" routine-id="A">
+<?xml version="1.0" encoding="utf-16"?>
+<workout-plans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <workout-plan plan-id="4u4nz6nz6x6i" routine-id="A" status="None" created-at="0001-01-01T00:00:00">
     <workout-plan-cycles>
-      <workout-plan-cycle cycle-id="1" status="None">
+      <workout-plan-cycle cycle-id="1" status="None" created-at="0001-01-01T00:00:00">
         <workout-plan-exercises>
-          <workout-plan-exercise exercise-id="LB-B-DLF" weight="200" reps="1" is-calculated="true" />
-          <workout-plan-exercise exercise-id="LG-M-LPR" weight="450" reps="1" is-calculated="true" />
-          <workout-plan-exercise exercise-id="CH-D-FBP" weight="50" reps="8" is-calculated="true" />
-          <workout-plan-exercise exercise-id="CH-H-DBP" weight="250" reps="1" is-calculated="true" />
-          <workout-plan-exercise exercise-id="LG-B-FSQ" />
-          <workout-plan-exercise exercise-id="AB-M-CRN" />
-          <workout-plan-exercise exercise-id="TR-H-SHR" weight="250" reps="1" is-calculated="true" />
-          <workout-plan-exercise exercise-id="SH-H-PRS" weight="160" reps="1" is-calculated="true" />
-          <workout-plan-exercise exercise-id="BC-D-CRL" />
-          <workout-plan-exercise exercise-id="SH-D-SLR" />
-          <workout-plan-exercise exercise-id="SH-D-FLR" />
-          <workout-plan-exercise exercise-id="FA-B-SWC" />
-          <workout-plan-exercise exercise-id="FA-B-RWC" />
+          <workout-plan-exercise exercise-id="LB-B-DLF" weight="200" reps="1" pullback="0" is-calculated="true" />
+          <workout-plan-exercise exercise-id="LG-M-LPR" weight="450" reps="1" pullback="0" is-calculated="true" />
+          <workout-plan-exercise exercise-id="CH-D-FBP" weight="50" reps="8" pullback="0" is-calculated="true" />
+          <workout-plan-exercise exercise-id="CH-H-DBP" weight="250" reps="1" pullback="0" is-calculated="true" />
+          <workout-plan-exercise exercise-id="LG-B-FSQ" weight="0" reps="0" pullback="0" is-calculated="false" />
+          <workout-plan-exercise exercise-id="AB-M-CRN" weight="0" reps="0" pullback="0" is-calculated="false" />
+          <workout-plan-exercise exercise-id="TR-H-SHR" weight="250" reps="1" pullback="0" is-calculated="true" />
+          <workout-plan-exercise exercise-id="SH-H-PRS" weight="160" reps="1" pullback="0" is-calculated="true" />
+          <workout-plan-exercise exercise-id="BC-D-CRL" weight="0" reps="0" pullback="0" is-calculated="false" />
+          <workout-plan-exercise exercise-id="SH-D-SLR" weight="0" reps="0" pullback="0" is-calculated="false" />
+          <workout-plan-exercise exercise-id="SH-D-FLR" weight="0" reps="0" pullback="0" is-calculated="false" />
+          <workout-plan-exercise exercise-id="FA-B-SWC" weight="0" reps="0" pullback="0" is-calculated="false" />
+          <workout-plan-exercise exercise-id="FA-B-RWC" weight="0" reps="0" pullback="0" is-calculated="false" />
         </workout-plan-exercises>
+        <workout-plan-logs>
+          <workout-plan-log week-id="1" day-id="2" exercise-id="LB-B-DLF" sequence-number="1" workout-plan="100x5, 120x5, 135x5, 155x5, 170x5" status="None" />
+          <workout-plan-log week-id="2" day-id="2" exercise-id="LB-B-DLF" sequence-number="1" workout-plan="110x5, 125x5, 145x5, 160x5, 180x3" status="None" />
+          <workout-plan-log week-id="3" day-id="2" exercise-id="LB-B-DLF" sequence-number="1" workout-plan="115x5, 135x5, 150x5, 170x3, 190x1" status="None" />
+          <workout-plan-log week-id="4" day-id="2" exercise-id="LB-B-DLF" sequence-number="1" workout-plan="95x8, 110x8, 120x8" status="None" />
+          <workout-plan-log week-id="1" day-id="1" exercise-id="LG-M-LPR" sequence-number="1" workout-plan="230x5, 270x5, 305x5, 345x5, 380x5" status="None" />
+          <workout-plan-log week-id="2" day-id="1" exercise-id="LG-M-LPR" sequence-number="1" workout-plan="245x5, 285x5, 325x5, 365x5, 405x3" status="None" />
+          <workout-plan-log week-id="3" day-id="1" exercise-id="LG-M-LPR" sequence-number="1" workout-plan="255x5, 300x5, 340x5, 385x3, 430x1" status="None" />
+          <workout-plan-log week-id="4" day-id="1" exercise-id="LG-M-LPR" sequence-number="1" workout-plan="215x8, 245x8, 270x8" status="None" />
+          <workout-plan-log week-id="1" day-id="1" exercise-id="CH-D-FBP" sequence-number="2" workout-plan="30x5, 35x5, 40x5, 45x5, 55x5" status="None" />
+          <workout-plan-log week-id="2" day-id="1" exercise-id="CH-D-FBP" sequence-number="2" workout-plan="35x5, 40x5, 45x5, 50x5, 55x3" status="None" />
+          <workout-plan-log week-id="3" day-id="1" exercise-id="CH-D-FBP" sequence-number="2" workout-plan="35x5, 40x5, 45x5, 55x3, 60x1" status="None" />
+          <workout-plan-log week-id="4" day-id="1" exercise-id="CH-D-FBP" sequence-number="2" workout-plan="30x8, 35x8, 35x8" status="None" />
+          <workout-plan-log week-id="1" day-id="1" exercise-id="CH-H-DBP" sequence-number="3" workout-plan="190x5, 210x5" status="None" />
+          <workout-plan-log week-id="2" day-id="1" exercise-id="CH-H-DBP" sequence-number="3" workout-plan="200x5, 225x3" status="None" />
+          <workout-plan-log week-id="3" day-id="1" exercise-id="CH-H-DBP" sequence-number="3" workout-plan="190x5, 210x5" status="None" />
+          <workout-plan-log week-id="4" day-id="1" exercise-id="CH-H-DBP" sequence-number="3" workout-plan="120x8, 135x8, 150x8" status="None" />
+          <workout-plan-log week-id="1" day-id="1" exercise-id="LG-B-FSQ" sequence-number="4" workout-plan="85x5, 85x5" status="None" />
+          <workout-plan-log week-id="2" day-id="1" exercise-id="LG-B-FSQ" sequence-number="4" workout-plan="85x5, 85x5" status="None" />
+          <workout-plan-log week-id="3" day-id="1" exercise-id="LG-B-FSQ" sequence-number="4" workout-plan="85x5, 85x5" status="None" />
+          <workout-plan-log week-id="4" day-id="1" exercise-id="LG-B-FSQ" sequence-number="4" workout-plan="85x5, 85x5" status="None" />
+          <workout-plan-log week-id="1" day-id="1" exercise-id="AB-M-CRN" sequence-number="6" workout-plan="50x12, 50x12, 50x12" status="None" />
+          <workout-plan-log week-id="1" day-id="2" exercise-id="AB-M-CRN" sequence-number="8" workout-plan="50x12, 50x12, 50x12" status="None" />
+          <workout-plan-log week-id="2" day-id="1" exercise-id="AB-M-CRN" sequence-number="6" workout-plan="50x12, 50x12, 50x12" status="None" />
+          <workout-plan-log week-id="2" day-id="2" exercise-id="AB-M-CRN" sequence-number="8" workout-plan="50x12, 50x12, 50x12" status="None" />
+          <workout-plan-log week-id="3" day-id="1" exercise-id="AB-M-CRN" sequence-number="6" workout-plan="50x12, 50x12, 50x12" status="None" />
+          <workout-plan-log week-id="3" day-id="2" exercise-id="AB-M-CRN" sequence-number="8" workout-plan="50x12, 50x12, 50x12" status="None" />
+          <workout-plan-log week-id="4" day-id="1" exercise-id="AB-M-CRN" sequence-number="6" workout-plan="50x12, 50x12, 50x12" status="None" />
+          <workout-plan-log week-id="4" day-id="2" exercise-id="AB-M-CRN" sequence-number="8" workout-plan="50x12, 50x12, 50x12" status="None" />
+          <workout-plan-log week-id="1" day-id="1" exercise-id="TR-H-SHR" sequence-number="5" workout-plan="170x5, 190x5, 210x5" status="None" />
+          <workout-plan-log week-id="2" day-id="1" exercise-id="TR-H-SHR" sequence-number="5" workout-plan="180x5, 200x5, 225x3" status="None" />
+          <workout-plan-log week-id="3" day-id="1" exercise-id="TR-H-SHR" sequence-number="5" workout-plan="190x5, 215x3, 240x1" status="None" />
+          <workout-plan-log week-id="4" day-id="1" exercise-id="TR-H-SHR" sequence-number="5" workout-plan="120x8, 135x8, 150x8" status="None" />
+          <workout-plan-log week-id="1" day-id="2" exercise-id="SH-H-PRS" sequence-number="2" workout-plan="80x5, 95x5, 110x5, 120x5, 135x5" status="None" />
+          <workout-plan-log week-id="2" day-id="2" exercise-id="SH-H-PRS" sequence-number="2" workout-plan="85x5, 100x5, 115x5, 130x5, 145x3" status="None" />
+          <workout-plan-log week-id="3" day-id="2" exercise-id="SH-H-PRS" sequence-number="2" workout-plan="90x5, 105x5, 120x5, 135x3, 150x1" status="None" />
+          <workout-plan-log week-id="4" day-id="2" exercise-id="SH-H-PRS" sequence-number="2" workout-plan="75x8, 85x8, 95x8" status="None" />
+          <workout-plan-log week-id="1" day-id="2" exercise-id="BC-D-CRL" sequence-number="3" workout-plan="25x8, 30x8" status="None" />
+          <workout-plan-log week-id="2" day-id="2" exercise-id="BC-D-CRL" sequence-number="3" workout-plan="25x8, 30x8" status="None" />
+          <workout-plan-log week-id="3" day-id="2" exercise-id="BC-D-CRL" sequence-number="3" workout-plan="25x8, 30x8" status="None" />
+          <workout-plan-log week-id="4" day-id="2" exercise-id="BC-D-CRL" sequence-number="3" workout-plan="25x8, 30x8" status="None" />
+          <workout-plan-log week-id="1" day-id="2" exercise-id="SH-D-SLR" sequence-number="4" workout-plan="15x8, 15x8" status="None" />
+          <workout-plan-log week-id="2" day-id="2" exercise-id="SH-D-SLR" sequence-number="4" workout-plan="15x8, 15x8" status="None" />
+          <workout-plan-log week-id="3" day-id="2" exercise-id="SH-D-SLR" sequence-number="4" workout-plan="15x8, 15x8" status="None" />
+          <workout-plan-log week-id="4" day-id="2" exercise-id="SH-D-SLR" sequence-number="4" workout-plan="15x8, 15x8" status="None" />
+          <workout-plan-log week-id="1" day-id="2" exercise-id="SH-D-FLR" sequence-number="5" workout-plan="15x8, 15x8" status="None" />
+          <workout-plan-log week-id="2" day-id="2" exercise-id="SH-D-FLR" sequence-number="5" workout-plan="15x8, 15x8" status="None" />
+          <workout-plan-log week-id="3" day-id="2" exercise-id="SH-D-FLR" sequence-number="5" workout-plan="15x8, 15x8" status="None" />
+          <workout-plan-log week-id="4" day-id="2" exercise-id="SH-D-FLR" sequence-number="5" workout-plan="15x8, 15x8" status="None" />
+          <workout-plan-log week-id="1" day-id="2" exercise-id="FA-B-SWC" sequence-number="7" workout-plan="65x8, 85x8" status="None" />
+          <workout-plan-log week-id="2" day-id="2" exercise-id="FA-B-SWC" sequence-number="7" workout-plan="65x8, 85x8" status="None" />
+          <workout-plan-log week-id="3" day-id="2" exercise-id="FA-B-SWC" sequence-number="7" workout-plan="65x8, 85x8" status="None" />
+          <workout-plan-log week-id="4" day-id="2" exercise-id="FA-B-SWC" sequence-number="7" workout-plan="65x8, 85x8" status="None" />
+          <workout-plan-log week-id="1" day-id="2" exercise-id="FA-B-RWC" sequence-number="6" workout-plan="45x8, 55x8" status="None" />
+          <workout-plan-log week-id="2" day-id="2" exercise-id="FA-B-RWC" sequence-number="6" workout-plan="45x8, 55x8" status="None" />
+          <workout-plan-log week-id="3" day-id="2" exercise-id="FA-B-RWC" sequence-number="6" workout-plan="45x8, 55x8" status="None" />
+          <workout-plan-log week-id="4" day-id="2" exercise-id="FA-B-RWC" sequence-number="6" workout-plan="45x8, 55x8" status="None" />
+        </workout-plan-logs>
       </workout-plan-cycle>
     </workout-plan-cycles>
   </workout-plan>
