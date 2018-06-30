@@ -85,8 +85,19 @@
   <ItemGroup>
     <Compile Include="Any.cs" />
     <Compile Include="Builder.cs" />
+    <Compile Include="Models\ExerciseCategoryTests.cs" />
     <Compile Include="Models\ExerciseGroupTests.cs" />
-    <Compile Include="Models\MemberTests.cs" />
+    <Compile Include="Models\ExerciseTests.cs" />
+    <Compile Include="Models\WorkoutCycleGeneratorTests.cs" />
+    <Compile Include="Models\WorkoutLogSetTests.cs" />
+    <Compile Include="Models\WorkoutLogTests.cs" />
+    <Compile Include="Models\WorkoutPlanCycleTests.cs" />
+    <Compile Include="Models\WorkoutPlanLogTests.cs" />
+    <Compile Include="Models\WorkoutPlanSetTests.cs" />
+    <Compile Include="Models\WorkoutPlanTests.cs" />
+    <Compile Include="Models\WorkoutRoutineExerciseTests.cs" />
+    <Compile Include="Models\WorkoutRoutineSetTests.cs" />
+    <Compile Include="Models\WorkoutRoutineTests.cs" />
     <Compile Include="Moxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

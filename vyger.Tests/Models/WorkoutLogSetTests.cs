@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using vyger.Common.Models;
+using vyger.Models;
 
-namespace vyger.Tests.Common.Models
+namespace vyger.Tests.Models
 {
     [TestClass]
     public class WorkoutLogSetTests

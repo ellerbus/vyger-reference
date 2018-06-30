@@ -25,8 +25,6 @@ namespace vyger.Tests
 
         #region Domain Models
 
-        public static Member Member { get { return It.IsAny<Member>(); } }
-
         //public static Exercise Exercise { get { return It.IsAny<Exercise>(); } }
 
         //public static Expression<Func<Member, bool>> MemberPredicate

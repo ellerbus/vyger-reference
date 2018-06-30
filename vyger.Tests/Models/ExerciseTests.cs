@@ -1,52 +1,15 @@
 using System;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using vyger.Common;
-using vyger.Common.Collections;
-using vyger.Common.Models;
+using vyger.Models;
 
-namespace vyger.Tests.Common.Models
+namespace vyger.Tests.Models
 {
     [TestClass]
     public class ExerciseTests
     {
-        #region Constructor Tests
-
-        [TestMethod]
-        public void Exercise_EmptyConstructor_Should_FlagModified()
-        {
-            var exercise = new Exercise()
-            {
-                ExerciseId = 1,
-                OwnerId = 1,
-                ExerciseName = "aa",
-                GroupId = 1,
-                StatusEnum = "aa",
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
-
-            exercise.IsModified.Should().BeTrue();
-        }
-
-        [TestMethod]
-        public void Exercise_FullConstructor_Should_FlagNotModified()
-        {
-            var exercise = new Exercise(
-                exerciseId: 1,
-                ownerId: 1,
-                exerciseName: "aa",
-                groupId: 1,
-                statusEnum: "aa",
-                createdAt: DateTime.Now,
-                updatedAt: DateTime.Now
-                );
-
-            exercise.IsModified.Should().BeFalse();
-        }
-
-        #endregion
-
         #region Methods
 
         [TestMethod]
@@ -57,14 +20,11 @@ namespace vyger.Tests.Common.Models
 
             a.OverlayWith(b);
 
-            a.ExerciseName.Should().Be(b.ExerciseName);
-            a.GroupId.Should().Be(b.GroupId);
-            a.StatusEnum.Should().Be(b.StatusEnum);
+            a.Name.Should().Be(b.Name);
 
-            a.ExerciseId.Should().NotBe(b.ExerciseId);
-            a.OwnerId.Should().NotBe(b.OwnerId);
-            a.CreatedAt.Should().NotBe(b.CreatedAt);
-            a.UpdatedAt.Should().NotBe(b.UpdatedAt.GetValueOrDefault());
+            a.CategoryId.Should().NotBe(b.CategoryId);
+            a.GroupId.Should().NotBe(b.GroupId);
+            a.Id.Should().NotBe(b.Id);
         }
 
         #endregion
@@ -74,9 +34,9 @@ namespace vyger.Tests.Common.Models
         [TestMethod]
         public void Exercise_GroupId_Should_UseBase()
         {
-            var exercise = new Exercise() { GroupId = 1 };
+            var exercise = new Exercise() { GroupId = "1" };
 
-            exercise.GroupId.Should().Be(1);
+            exercise.GroupId.Should().Be("1");
         }
 
         [TestMethod]
@@ -84,19 +44,11 @@ namespace vyger.Tests.Common.Models
         {
             var exercise = new Exercise()
             {
-                GroupId = 1,
+                GroupId = "1",
                 Group = Design.One<ExerciseGroup>().Build()
             };
 
-            exercise.GroupId.Should().Be(exercise.Group.GroupId);
-        }
-
-        [TestMethod]
-        public void Exercise_StatusEnum_Should_Default()
-        {
-            var exercise = new Exercise();
-
-            exercise.Status.Should().Be(StatusTypes.None);
+            exercise.GroupId.Should().Be(exercise.Group.Id);
         }
 
         #endregion
@@ -109,13 +61,40 @@ namespace vyger.Tests.Common.Models
             //  arrange
             var exercise = Design.One<Exercise>().Build();
 
-            var exercises = new ExerciseCollection(new[] { exercise });
+            var exercises = new ExerciseCollection(null, null, new[] { exercise });
 
             //  act
-            var actual = exercises.GetByPrimaryKey(exercise.ExerciseId);
+            var actual = exercises.GetByPrimaryKey(exercise.Id);
 
             //  assert
             actual.Should().BeSameAs(exercise);
+        }
+
+        [TestMethod]
+        public void ExerciseCollection_UpdateReferences_Should_SetGroupAndCategory()
+        {
+            //  arrange
+            var groups = BuildAn.ExerciseGroupCollection(2);
+
+            var categories = BuildAn.ExerciseCategoryCollection(2);
+
+            var exercise = Design.One<Exercise>().Build();
+
+            exercise.GroupId = groups.Last().Id;
+
+            exercise.CategoryId = categories.Last().Id;
+
+            var exercises = new ExerciseCollection(groups, categories, new[] { exercise });
+
+            //  act
+            var actual = exercises.GetByPrimaryKey(exercise.Id);
+
+            //  assert
+            actual.Should().BeSameAs(exercise);
+
+            actual.Group.Should().BeSameAs(groups.Last());
+
+            actual.Category.Should().BeSameAs(categories.Last());
         }
 
         #endregion
