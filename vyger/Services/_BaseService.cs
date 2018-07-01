@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Web.Hosting;
+using Augment;
 using EnsureThat;
 using vyger.Common;
 

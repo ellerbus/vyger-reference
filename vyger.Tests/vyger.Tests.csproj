@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Any.cs" />
     <Compile Include="Builder.cs" />
+    <Compile Include="Common\WorkoutCalculatorTests.cs" />
     <Compile Include="Models\ExerciseCategoryTests.cs" />
     <Compile Include="Models\ExerciseGroupTests.cs" />
     <Compile Include="Models\ExerciseTests.cs" />
@@ -111,9 +112,7 @@
       <Name>vyger</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
