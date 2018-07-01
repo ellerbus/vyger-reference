@@ -63,6 +63,11 @@ namespace vyger.Services
 
             string path = HostingEnvironment.MapPath($"~/App_Data/{folder}");
 
+            if (HostingEnvironment.IsDevelopmentEnvironment)
+            {
+                path += "@local";
+            }
+
             return Path.Combine(path, FileName + ".xml");
         }
 
