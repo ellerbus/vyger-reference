@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-16"?>
+<workout-logs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <WorkoutLog log-date="2018-07-09T00:00:00" exercise-id="LG-M-LPR" workout="230x5, 270x5, 305x5, 345x5, 380x6" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="1" sequence-number="1" />
+  <WorkoutLog log-date="2018-07-09T00:00:00" exercise-id="CH-D-FBP" workout="35x5, 45x5, 50x5, 55x5, 60x6" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="1" sequence-number="2" />
+  <WorkoutLog log-date="2018-07-09T00:00:00" exercise-id="CH-H-DBP" workout="190x5, 210x5" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="1" sequence-number="3" />
+  <WorkoutLog log-date="2018-07-09T00:00:00" exercise-id="TR-H-SHR" workout="170x5, 190x5, 210x5" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="1" sequence-number="5" />
+  <WorkoutLog log-date="2018-07-09T00:00:00" exercise-id="AB-M-CRN" workout="50x12, 50x12, 50x12" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="1" sequence-number="6" />
+  <WorkoutLog log-date="2018-07-12T00:00:00" exercise-id="SH-H-PRS" workout="80x5, 95x5, 110x5, 120x5, 135x6" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="2" sequence-number="2" />
+  <WorkoutLog log-date="2018-07-12T00:00:00" exercise-id="BC-D-CRL" workout="25x8, 30x8" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="2" sequence-number="3" />
+  <WorkoutLog log-date="2018-07-12T00:00:00" exercise-id="SH-D-SLR" workout="15x6, 15x6" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="2" sequence-number="4" />
+  <WorkoutLog log-date="2018-07-12T00:00:00" exercise-id="SH-D-FLR" workout="15x6, 15x6" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="2" sequence-number="5" />
+  <WorkoutLog log-date="2018-07-12T00:00:00" exercise-id="AB-M-CRN" workout="50x12, 50x12, 50x12" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="1" day-id="2" sequence-number="8" />
+  <WorkoutLog log-date="2018-07-16T00:00:00" exercise-id="LG-M-LPR" workout="245x5, 285x5, 325x5, 365x5, 410x4" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="1" sequence-number="1" />
+  <WorkoutLog log-date="2018-07-16T00:00:00" exercise-id="CH-H-DBP" workout="200x5, 225x4" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="1" sequence-number="3" />
+  <WorkoutLog log-date="2018-07-16T00:00:00" exercise-id="LG-B-FSQ" workout="85x5, 85x5" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="1" sequence-number="4" />
+  <WorkoutLog log-date="2018-07-16T00:00:00" exercise-id="TR-H-SHR" workout="180x5, 200x5, 230x5" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="1" sequence-number="5" />
+  <WorkoutLog log-date="2018-07-16T00:00:00" exercise-id="AB-M-CRN" workout="50x12, 50x12, 50x12" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="1" sequence-number="6" />
+  <WorkoutLog log-date="2018-07-20T00:00:00" exercise-id="LB-B-DLF" workout="110x5, 125x5, 145x5, 160x5, 180x4" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="2" sequence-number="1" />
+  <WorkoutLog log-date="2018-07-20T00:00:00" exercise-id="SH-H-PRS" workout="85x5, 100x5, 115x5, 130x5, 145x4" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="2" sequence-number="2" />
+  <WorkoutLog log-date="2018-07-20T00:00:00" exercise-id="BC-D-CRL" workout="25x8, 30x8" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="2" sequence-number="3" />
+  <WorkoutLog log-date="2018-07-20T00:00:00" exercise-id="SH-D-SLR" workout="15x8, 15x6" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="2" sequence-number="4" />
+  <WorkoutLog log-date="2018-07-20T00:00:00" exercise-id="SH-D-FLR" workout="15x6, 15x6" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="2" sequence-number="5" />
+  <WorkoutLog log-date="2018-07-20T00:00:00" exercise-id="FA-B-RWC" workout="45x8, 55x8" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="2" sequence-number="6" />
+  <WorkoutLog log-date="2018-07-20T00:00:00" exercise-id="FA-B-SWC" workout="65x8, 85x8" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="2" sequence-number="7" />
+  <WorkoutLog log-date="2018-07-20T00:00:00" exercise-id="AB-M-CRN" workout="50x12, 50x12, 50x12" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="2" day-id="2" sequence-number="8" />
+  <WorkoutLog log-date="2018-07-23T00:00:00" exercise-id="LG-M-LPR" workout="255x5, 300x5, 340x5, 360x6, 430x3" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="1" sequence-number="1" />
+  <WorkoutLog log-date="2018-07-23T00:00:00" exercise-id="CH-D-FBP" workout="40x5, 50x5, 55x5, 65x3, 70x3" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="1" sequence-number="2" />
+  <WorkoutLog log-date="2018-07-23T00:00:00" exercise-id="TR-H-SHR" workout="190x5, 215x3, 240x5" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="1" sequence-number="5" />
+  <WorkoutLog log-date="2018-07-23T00:00:00" exercise-id="AB-M-CRN" workout="50x12, 50x12, 50x12" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="1" sequence-number="6" />
+  <WorkoutLog log-date="2018-07-27T00:00:00" exercise-id="LB-B-DLF" workout="115x5, 135x5, 150x5, 170x3, 190x3" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="2" sequence-number="1" />
+  <WorkoutLog log-date="2018-07-27T00:00:00" exercise-id="SH-H-PRS" workout="90x5, 105x5, 120x5, 135x3, 150x2" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="2" sequence-number="2" />
+  <WorkoutLog log-date="2018-07-27T00:00:00" exercise-id="BC-D-CRL" workout="25x8, 30x8" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="2" sequence-number="3" />
+  <WorkoutLog log-date="2018-07-27T00:00:00" exercise-id="SH-D-SLR" workout="20x4, 20x4, 15x4" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="2" sequence-number="4" />
+  <WorkoutLog log-date="2018-07-27T00:00:00" exercise-id="SH-D-FLR" workout="20x4, 20x4, 15x4" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="2" sequence-number="5" />
+  <WorkoutLog log-date="2018-07-27T00:00:00" exercise-id="FA-B-RWC" workout="45x8, 55x8" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="2" sequence-number="6" />
+  <WorkoutLog log-date="2018-07-27T00:00:00" exercise-id="FA-B-SWC" workout="65x8, 85x8" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="2" sequence-number="7" />
+  <WorkoutLog log-date="2018-07-27T00:00:00" exercise-id="AB-M-CRN" workout="50x12, 50x12, 50x12" plan-id="4u4nz6nz6x6i" cycle-id="1" week-id="3" day-id="2" sequence-number="8" />
+</workout-logs>
