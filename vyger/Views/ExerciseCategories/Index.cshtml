@@ -9,8 +9,8 @@
     <table class="table">
       <thead>
         <tr>
-          <th>
-            <a href="@Url.Action(MVC.ExerciseCategories.Create())" class="btn btn-sm btn-outline-success float-right">
+          <th colspan="2">
+            <a href="@Url.Action("Create")" class="btn btn-sm btn-outline-success float-right">
               <i class="fa fa-fw fa-plus"></i> Create
             </a>
             Exercise Category
@@ -22,8 +22,13 @@
         {
           <tr>
             <td>
-              <a href="@Url.Action(MVC.ExerciseCategories.Edit(category.Id))" style="display: block;">
+              <a href="@Url.Action("Edit", new { id = category.Id })" style="display: block;">
                 @category.Name
+              </a>
+            </td>
+            <td class="text-right">
+              <a href="@Url.Action("Index", "Exercises", new { categoryId = category.Id })">
+                exercises
               </a>
             </td>
           </tr>

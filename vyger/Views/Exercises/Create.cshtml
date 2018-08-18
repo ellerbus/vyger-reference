@@ -2,19 +2,66 @@
   ViewBag.Title = "Create Exercise ";
 }
 
-@model ExerciseForm
+@model ExerciseViewModel
 
-  <div class="row justify-content-md-center">
-    <div class="col-lg-6 col-md-8">
-      @using (Html.BeginForm())
-      {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary()
-        @Html.Partial("_Details", Model)
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">create</button>
-          <a href="@Url.Action(MVC.Exercises.Index())" class="btn btn-outline-secondary">cancel</a>
-        </div>
-      }
-    </div>
+<div class="row justify-content-md-center">
+  <div class="col-lg-6 col-md-8">
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary()
+      @Html.Partial("_Details", Model)
+      <div class="form-group">
+        @Html.TextBoxFor(m => m.Id, new { @class = "form-control", placeholder = "exercise id" })
+        @Html.ValidationMessageFor(m => m.Id, "", new { @class = "form-text text-danger" })
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">create</button>
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary">cancel</a>
+      </div>
+    }
   </div>
+</div>
+
+@section Scripts {
+  <script type="text/javascript">
+    $(function ()
+    {
+      var $group = $('select[name=GroupId]');
+      var $category = $('select[name=CategoryId]');
+      var $id = $('input[name=Id]');
+      var $name = $('input[name=Name]');
+      var $submit = $('button[type=submit]');
+
+      $name.change(function ()
+      {
+        var name = $(this).val();
+
+        if (name != null && name.length > 0)
+        {
+          var parts = name.split(/ /gi);
+
+          var id = '';
+
+          if (parts.length == 1)
+          {
+            id = name.toUpperCase().substr(0, 3);
+          }
+          else if (parts.length == 2)
+          {
+            id = parts[0].toUpperCase().substr(0, 2) +
+              parts[1].toUpperCase().substr(0, 1);
+          }
+          else
+          {
+            id = parts[0].toUpperCase().substr(0, 1) +
+              parts[1].toUpperCase().substr(0, 1) +
+              parts[2].toUpperCase().substr(0, 1);
+          }
+
+          $id.val($group.val() + '-' + $category.val() + '-' + id);
+        }
+      });
+    });
+  </script>
+}

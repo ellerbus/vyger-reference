@@ -10,7 +10,7 @@
       <thead>
         <tr>
           <th colspan="2">
-            <a href="@Url.Action(MVC.WorkoutRoutines.Create())" class="btn btn-sm btn-outline-success float-right">
+            <a href="@Url.Action("Create")" class="btn btn-sm btn-outline-success float-right">
               <i class="fa fa-fw fa-plus"></i> Create
             </a>
             Routine
@@ -22,12 +22,12 @@
         {
           <tr>
             <td>
-              <a href="@Url.Action(MVC.WorkoutRoutines.Edit(routine.Id))" style="display: block;">
+              <a href="@Url.Action("Edit", new { id = routine.Id })" style="display: block;">
                 @routine.Name
               </a>
             </td>
             <td class="text-right">
-              <a href="@Url.Action(MVC.WorkoutRoutineExercises.Index(routine.Id, 1))">
+              <a href="@Url.Action("Index", "WorkoutRoutineExercises", new { id = routine.Id, week = 1 })">
                 exercises
               </a>
             </td>

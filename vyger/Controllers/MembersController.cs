@@ -4,9 +4,9 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Augment;
 using EnsureThat;
-using vyger.Common;
-using vyger.Models;
-using vyger.Services;
+using vyger.Core;
+using vyger.Core.Models;
+using vyger.Core.Services;
 
 namespace vyger.Controllers
 {
@@ -85,7 +85,7 @@ namespace vyger.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction(MVC.Home.Index());
+            return RedirectToAction("Index");
         }
 
         [HttpGet, Route("AccessDenied"), AllowAnonymous]

@@ -10,8 +10,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Augment;
 using EnsureThat;
-using vyger.Common;
-using vyger.Models;
+using vyger.Core;
+using vyger.Core.Models;
 
 namespace vyger
 {

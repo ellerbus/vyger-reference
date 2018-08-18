@@ -1,9 +1,9 @@
 using System.Security;
 using System.Web.Mvc;
-using vyger.Common;
-using vyger.Forms;
-using vyger.Models;
-using vyger.Services;
+using vyger.Core;
+using vyger.Core.Models;
+using vyger.Core.Services;
+using vyger.ViewModels;
 
 namespace vyger.Controllers
 {
@@ -34,7 +34,7 @@ namespace vyger.Controllers
                 AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
 
                 filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction(MVC.WorkoutRoutines.Index());
+                filterContext.Result = RedirectToAction("Index");
             }
 
             base.OnException(filterContext);
@@ -59,32 +59,32 @@ namespace vyger.Controllers
         [HttpGet, Route("Create")]
         public virtual ActionResult Create()
         {
-            WorkoutRoutineForm form = new WorkoutRoutineForm();
+            WorkoutRoutineViewModel vm = new WorkoutRoutineViewModel();
 
             const string ids = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
             int idx = _service.GetWorkoutRoutines().Count;
 
-            form.Id = ids[idx].ToString();
+            vm.Id = ids[idx].ToString();
 
-            return View(form);
+            return View(vm);
         }
 
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
-        public virtual ActionResult Create(WorkoutRoutineForm post)
+        public virtual ActionResult Create(WorkoutRoutine post)
         {
             if (ModelState.IsValid)
             {
-                WorkoutRoutine routine = new WorkoutRoutine(post);
-
-                _service.AddWorkoutRoutine(routine);
+                _service.AddWorkoutRoutine(post);
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Routine created successfully");
 
-                return RedirectToAction(MVC.WorkoutRoutineExercises.Index(routine.Id, 1));
+                return RedirectToAction("Index", "WorkoutRoutineExercises", new { id = post.Id, week = 1 });
             }
 
-            return View(post);
+            WorkoutRoutineViewModel vm = new WorkoutRoutineViewModel(post);
+
+            return View(vm);
         }
 
         #endregion
@@ -98,12 +98,12 @@ namespace vyger.Controllers
 
             if (routine == null)
             {
-                return RedirectToAction(MVC.WorkoutRoutines.Index());
+                return RedirectToAction("Index");
             }
 
-            WorkoutRoutineForm form = new WorkoutRoutineForm(routine);
+            WorkoutRoutineViewModel vm = new WorkoutRoutineViewModel(routine);
 
-            return View(form);
+            return View(vm);
         }
 
         [HttpPost, Route("Edit/{id}"), ValidateAntiForgeryToken]
@@ -115,10 +115,12 @@ namespace vyger.Controllers
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Routine saved successfully");
 
-                return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, 1));
+                return RedirectToAction("Index", "WorkoutRoutineExercises", new { id = post.Id, week = 1 });
             }
 
-            return View(post);
+            WorkoutRoutineViewModel vm = new WorkoutRoutineViewModel(post);
+
+            return View(vm);
         }
 
         #endregion

@@ -16,7 +16,7 @@
             Category
           </th>
           <th>
-            <a href="@Url.Action(MVC.Exercises.Create())" class="btn btn-sm btn-outline-success float-right">
+            <a href="@Url.Action("Create")" class="btn btn-sm btn-outline-success float-right">
               <i class="fa fa-fw fa-plus"></i> Create
             </a>
             Exercise
@@ -28,13 +28,13 @@
         {
           <tr>
             <td>
-              <a href="@Url.Action(MVC.Exercises.Index(groupId:exercise.GroupId))">@exercise.Group.Name</a>
+              <a href="@Url.Action("Index", new { groupId = exercise.GroupId })">@exercise.Group.Name</a>
             </td>
             <td>
-              <a href="@Url.Action(MVC.Exercises.Index(categoryId:exercise.CategoryId))">@exercise.Category.Name</a>
+              <a href="@Url.Action("Index", new { categoryId = exercise.CategoryId })">@exercise.Category.Name</a>
             </td>
             <td>
-              <a href="@Url.Action(MVC.Exercises.Edit(exercise.Id))" style="display: block;">
+              <a href="@Url.Action("Edit", new { id = exercise.Id })" style="display: block;">
                 @exercise.Name
               </a>
             </td>
@@ -44,7 +44,7 @@
       <tfoot>
         <tr>
           <td colspan="3">
-            <a href="@Url.Action(MVC.Exercises.Index())">(all)</a>
+            <a href="@Url.Action("Index")">(all)</a>
           </td>
         </tr>
       </tfoot>

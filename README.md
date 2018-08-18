@@ -1,102 +1,52 @@
-Converting to XML
-- working serialization / services / models
 
-```cs
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
 
-namespace Yamler
-{
-    internal static class Program
-    {
-        private static void Main(string[] args)
-        {
-            Parent parent = new Parent();
+### Workout Routine Pattern
 
-            for (var x = 0; x < 5; x++)
-            {
-                parent.Children.Add(new Child() { Id = x + 1 });
-            }
+| Reps/Sets | Examples |
+|---|---|
+| reps | /8 |
+| sets | /3 |
 
-            //string yaml = new Serializer().Serialize(parent);
 
-            //Console.WriteLine(yaml);
+| Weight's | Examples |
+|---|---|
+| body weight | BW |
+| static weight | 180 |
+| one-rep-max | 1RM |
+| five-rep-max | 5RM |
+| % of rep-max | 1RM90% |
+| % of rep-max | 1RM90% |
+| reference prevweek sameday sameset | PW |
+| reference % of prevweek sameday sameset | PW90% |
+| reference % of sameweek sameday lastset | LS90% |
 
-            //Parent clone = new Deserializer().Deserialize<Parent>(yaml);
 
-            //string json = JsonConvert.SerializeObject(parent, Formatting.Indented);
+| Referencing | Examples | 
+|---|---|
+| W | Week |
+| D | Day |
+| S | Set |
 
-            //Console.WriteLine(json);
 
-            //Parent clone = JsonConvert.DeserializeObject<Parent>(json);
+| Navigation | Examples | 
+|---|---|
+| F | First |
+| L | Last |
+| P | Prev |
+| N | Next |
+| 0-9 | Index |
 
-            string xml = parent.Serialize();
+references
+---
+same week same day 4th set  [4]90%
+same week same day last set [L]90%
+last week same day last set [L*L]90%
 
-            Console.WriteLine(xml);
+rep maxes
+---
+1RM-90%
 
-            //Parent clone = Deserialize<Parent>(xml);
-        }
+static weight
+---
+180/5/2
 
-        public static T Deserialize<T>(string xml)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-
-            using (StringReader rdr = new StringReader(xml))
-            {
-                T results = (T)serializer.Deserialize(rdr);
-
-                return results;
-            }
-        }
-
-        public static string Serialize<T>(this T value)
-        {
-            if (value == null) return string.Empty;
-
-            var xmlSerializer = new XmlSerializer(typeof(T));
-
-            using (var stringWriter = new StringWriter())
-            {
-                using (var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings { Indent = true }))
-                {
-                    xmlSerializer.Serialize(xmlWriter, value);
-                    return stringWriter.ToString();
-                }
-            }
-        }
-    }
-
-    [XmlRoot("parent")]
-    public class Parent
-    {
-        public Parent()
-        {
-            Children = new ChildCollection(this);
-        }
-
-        [XmlArray("children"), XmlArrayItem("child")]
-        public ChildCollection Children { get; private set; }
-    }
-
-    [XmlRoot("child`")]
-    public class Child
-    {
-        [XmlAttribute("id")]
-        public int Id { get; set; }
-
-        [XmlAttribute("name")]
-        public string Name { get; set; }
-    }
-
-    [XmlRoot("children")]
-    public class ChildCollection : Collection<Child>
-    {
-        public ChildCollection(Parent parent)
-        {
-        }
-    }
-}
-```

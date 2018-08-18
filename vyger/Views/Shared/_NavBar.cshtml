@@ -1,5 +1,5 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary border-bottom">
-  <a class="navbar-brand" href="@Url.Action(MVC.Home.Index())">
+  <a class="navbar-brand" href="@Url.Action("Index", "Home")">
     <img src="@Url.Content("~/Content/NavBar.png")"
          title="@Constants.Title" width="30" height="30"
          class="mr-md-2" alt="@Constants.Title" />
@@ -15,22 +15,22 @@
     <div class="collapse navbar-collapse" id="mainNavBar">
       <ul class="navbar-nav">
         <li class="nav-item mr-2">
-          <a class="nav-link" href="@Url.Action(MVC.WorkoutLogs.Index())">Logs</a>
+          <a class="nav-link" href="@Url.Action("Index", "WorkoutLogs")">Logs</a>
         </li>
         <li class="nav-item mr-2">
-          <a class="nav-link" href="@Url.Action(MVC.WorkoutPlans.Index())">Plans</a>
+          <a class="nav-link" href="@Url.Action("Index", "WorkoutPlans")">Plans</a>
         </li>
         <li class="nav-item mr-2">
-          <a class="nav-link" href="@Url.Action(MVC.WorkoutRoutines.Index())">Routines</a>
+          <a class="nav-link" href="@Url.Action("Index", "WorkoutRoutines")">Routines</a>
         </li>
         <li class="nav-item mr-2">
-          <a class="nav-link" href="@Url.Action(MVC.Exercises.Index())">Exercises</a>
+          <a class="nav-link" href="@Url.Action("Index", "Exercises")">Exercises</a>
         </li>
         <li class="nav-item mr-2">
-          <a class="nav-link" href="@Url.Action(MVC.ExerciseGroups.Index())">Groups</a>
+          <a class="nav-link" href="@Url.Action("Index", "ExerciseGroups")">Groups</a>
         </li>
         <li class="nav-item mr-2">
-          <a class="nav-link" href="@Url.Action(MVC.ExerciseCategories.Index())">CATEGORIES</a>
+          <a class="nav-link" href="@Url.Action("Index", "ExerciseCategories")">CATEGORIES</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">

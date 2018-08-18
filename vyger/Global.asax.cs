@@ -4,16 +4,41 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using FluentValidation;
+using FluentValidation.Mvc;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
-using vyger.Common;
+using vyger.Core;
 
 namespace vyger
 {
     public class Global : HttpApplication
     {
         #region Members
+
+        public class SimpleInjectorValidatorFactory : ValidatorFactoryBase
+        {
+            private readonly Container _container;
+
+            public SimpleInjectorValidatorFactory(Container container)
+                => _container = container;
+
+            public override IValidator CreateInstance(Type validatorType)
+            {
+                try
+                {
+                    object validator = _container.GetInstance(validatorType);
+
+                    return (IValidator)validator;
+                }
+                catch (ActivationException)
+                {
+                    // FluentValidation will handle null properly
+                    return null;
+                }
+            }
+        }
 
         private static readonly Container _container = new Injector(new WebRequestLifestyle());
 
@@ -27,6 +52,8 @@ namespace vyger
 
             // This is an extension method from the integration package.
             _container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
+
+            FluentValidationModelValidatorProvider.Configure(x => x.ValidatorFactory = new SimpleInjectorValidatorFactory(_container));
 
             _container.Verify();
 

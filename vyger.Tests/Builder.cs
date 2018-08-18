@@ -2,7 +2,7 @@
 using System.Linq;
 using FizzWare.NBuilder;
 using FizzWare.NBuilder.PropertyNaming;
-using vyger.Models;
+using vyger.Core.Models;
 
 namespace vyger.Tests
 {

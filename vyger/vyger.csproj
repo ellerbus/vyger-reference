@@ -48,6 +48,12 @@
     <Reference Include="Ensure.That, Version=8.0.0.86, Culture=neutral, PublicKeyToken=d7cf9132176ba30b, processorArchitecture=MSIL">
       <HintPath>..\packages\Ensure.That.8.0.0\lib\net451\Ensure.That.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.7.6.105\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.Mvc, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.Mvc5.7.6.105\lib\net45\FluentValidation.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -64,7 +70,17 @@
     <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=4.3.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.4.3.0\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -99,9 +115,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\T4MVCExtensions.4.2.0\lib\net45\T4MVCExtensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AccessDenied.png" />
@@ -111,11 +124,14 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css.map" />
     <Content Include="Content\Site.less" />
-    <None Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
-    <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Views\ExerciseGroups\Create.cshtml" />
+    <Content Include="Views\ExerciseGroups\Edit.cshtml" />
+    <Content Include="Views\ExerciseGroups\Index.cshtml" />
+    <Content Include="Views\ExerciseGroups\_Details.cshtml" />
+    <Content Include="Views\Exercises\Create.cshtml" />
+    <Content Include="Views\Exercises\Edit.cshtml" />
+    <Content Include="Views\Exercises\Index.cshtml" />
+    <Content Include="Views\Exercises\_Details.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Members\AccessDenied.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
@@ -126,6 +142,15 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\web.config" />
+    <Content Include="Views\WorkoutRoutineExercises\Create.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\Delete.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\Index.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\_Row.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\_Tabs.cshtml" />
+    <Content Include="Views\WorkoutRoutines\Create.cshtml" />
+    <Content Include="Views\WorkoutRoutines\Edit.cshtml" />
+    <Content Include="Views\WorkoutRoutines\Index.cshtml" />
+    <Content Include="Views\WorkoutRoutines\_Details.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -137,150 +162,28 @@
     <Compile Include="App_Start\MvcAuthorizeRolesAttribute.cs" />
     <Compile Include="App_Start\MvcConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Common\Constants.cs" />
-    <Compile Include="Common\DateTimeExtensions.cs" />
-    <Compile Include="Common\Injector.cs" />
-    <Compile Include="Common\SecurityActor.cs" />
-    <Compile Include="Common\Serializers.cs" />
-    <Compile Include="Common\StatusTypes.cs" />
-    <Compile Include="Common\WorkoutCalculator.cs" />
     <Compile Include="Controllers\ExerciseCategoriesController.cs" />
     <Compile Include="Controllers\ExerciseGroupsController.cs" />
     <Compile Include="Controllers\ExercisesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
-    <Compile Include="Controllers\WorkoutLogsController.cs" />
-    <Compile Include="Controllers\WorkoutPlanCyclesController.cs" />
-    <Compile Include="Controllers\WorkoutPlanExercisesController.cs" />
-    <Compile Include="Controllers\WorkoutPlanLogsController.cs" />
-    <Compile Include="Controllers\WorkoutPlansController.cs" />
     <Compile Include="Controllers\WorkoutRoutineExercisesController.cs" />
     <Compile Include="Controllers\WorkoutRoutinesController.cs" />
     <Compile Include="Controllers\_BaseController.cs" />
-    <Compile Include="ExerciseCategoriesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ExerciseGroupsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ExercisesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ExerciseForm.cs" />
-    <Compile Include="Forms\WorkoutLogForm.cs" />
-    <Compile Include="Forms\WorkoutPlanForm.cs" />
-    <Compile Include="Forms\WorkoutRoutineExerciseForm.cs" />
-    <Compile Include="Forms\WorkoutRoutineForm.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HomeController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MembersController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AuthenticationToken.cs" />
-    <Compile Include="Models\Exercise.cs" />
-    <Compile Include="Models\ExerciseCategory.cs" />
-    <Compile Include="Models\ExerciseCollection.cs" />
-    <Compile Include="Models\ExerciseGroup.cs" />
-    <Compile Include="Models\ExerciseCategoryCollection.cs" />
-    <Compile Include="Models\ExerciseGroupCollection.cs" />
-    <Compile Include="Models\WorkoutCycleGenerator.cs" />
-    <Compile Include="Models\WorkoutLog.cs" />
-    <Compile Include="Models\WorkoutLogSet.cs" />
-    <Compile Include="Models\WorkoutLogSetCollection.cs" />
-    <Compile Include="Models\WorkoutPlan.cs" />
-    <Compile Include="Models\WorkoutLogCollection.cs" />
-    <Compile Include="Models\WorkoutPlanLogCollection.cs" />
-    <Compile Include="Models\WorkoutPlanExerciseCollection.cs" />
-    <Compile Include="Models\WorkoutPlanCycleCollection.cs" />
-    <Compile Include="Models\WorkoutPlanCycle.cs" />
-    <Compile Include="Models\WorkoutPlanExercise.cs" />
-    <Compile Include="Models\WorkoutPlanLog.cs" />
-    <Compile Include="Models\WorkoutPlanSet.cs" />
-    <Compile Include="Models\WorkoutPlanSetCollection.cs" />
-    <Compile Include="Models\WorkoutRoutine.cs" />
-    <Compile Include="Models\WorkoutPlanCollection.cs" />
-    <Compile Include="Models\WorkoutRoutineCollection.cs" />
-    <Compile Include="Models\WorkoutRoutineExercise.cs" />
-    <Compile Include="Models\WorkoutRoutineExerciseCollection.cs" />
-    <Compile Include="Models\WorkoutRoutineSet.cs" />
-    <Compile Include="Models\WorkoutRoutineSetCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AuthenticationService.cs" />
-    <Compile Include="Services\ExerciseCategoryService.cs" />
-    <Compile Include="Services\ExerciseGroupService.cs" />
-    <Compile Include="Services\ExerciseService.cs" />
-    <Compile Include="Services\WorkoutLogService.cs" />
-    <Compile Include="Services\WorkoutPlanService.cs" />
-    <Compile Include="Services\WorkoutRoutineService.cs" />
-    <Compile Include="Services\_BaseService.cs" />
-    <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T4MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutLogsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutPlanCyclesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutPlanExercisesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutPlanLogsController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutPlansController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutRoutineExercisesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkoutRoutinesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModels\ExerciseViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutRoutineExerciseViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutRoutineViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="T4MVC.tt.hooks.t4" />
-    <Content Include="Views\ExerciseGroups\Create.cshtml" />
-    <Content Include="Views\ExerciseGroups\Edit.cshtml" />
-    <Content Include="Views\ExerciseGroups\Index.cshtml" />
-    <Content Include="Views\ExerciseGroups\_Details.cshtml" />
     <Content Include="Views\ExerciseCategories\_Details.cshtml" />
     <Content Include="Views\ExerciseCategories\Create.cshtml" />
     <Content Include="Views\ExerciseCategories\Edit.cshtml" />
     <Content Include="Views\ExerciseCategories\Index.cshtml" />
-    <Content Include="Views\Exercises\Create.cshtml" />
-    <Content Include="Views\Exercises\Edit.cshtml" />
-    <Content Include="Views\Exercises\Index.cshtml" />
-    <Content Include="Views\Exercises\_Details.cshtml" />
-    <Content Include="Views\WorkoutRoutines\Create.cshtml" />
-    <Content Include="Views\WorkoutRoutines\Edit.cshtml" />
-    <Content Include="Views\WorkoutRoutines\Index.cshtml" />
-    <Content Include="Views\WorkoutRoutines\_Details.cshtml" />
-    <Content Include="Views\WorkoutRoutineExercises\Index.cshtml" />
-    <Content Include="Views\WorkoutRoutineExercises\_Row.cshtml" />
-    <Content Include="Views\WorkoutRoutineExercises\_Tabs.cshtml" />
-    <Content Include="Views\WorkoutRoutineExercises\Create.cshtml" />
-    <Content Include="Views\WorkoutRoutineExercises\Delete.cshtml" />
-    <Content Include="Views\WorkoutPlans\Index.cshtml" />
-    <Content Include="Views\WorkoutPlans\Create.cshtml" />
-    <Content Include="Views\WorkoutPlanCycles\Index.cshtml" />
-    <Content Include="Views\WorkoutPlanCycles\Create.cshtml" />
-    <Content Include="Views\WorkoutPlanExercises\_Row.cshtml" />
-    <Content Include="Views\WorkoutPlanExercises\Index.cshtml" />
-    <Content Include="Views\WorkoutPlanLogs\Index.cshtml" />
-    <Content Include="Views\WorkoutLogs\Index.cshtml" />
-    <Content Include="Views\WorkoutLogs\Plans.cshtml" />
-    <Content Include="Views\WorkoutLogs\_Row.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -293,6 +196,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vyger.Core\vyger.Core.csproj">
+      <Project>{5BA4CE65-04B2-4CC8-9784-5319B9AE7BB5}</Project>
+      <Name>vyger.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,4 @@
-﻿@model ExerciseForm
+﻿@model ExerciseViewModel
 
 <div class="form-group">
   @Html.DropDownListFor(m => m.GroupId, Model.Groups.ToSelectList(Model), "(exercise group)", new { @class = "form-control" })

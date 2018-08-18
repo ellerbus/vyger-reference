@@ -2,7 +2,7 @@
   ViewBag.Title = "Add Routine Exercise";
 }
 
-@model WorkoutRoutineExerciseForm
+@model WorkoutRoutineExerciseViewModel
 
 <div class="row justify-content-md-center">
   <div class="col-lg-6 col-md-8">
@@ -26,7 +26,7 @@
 
       <div class="form-group">
         <button type="submit" class="btn btn-primary">add</button>
-        <a href="@Url.Action(MVC.WorkoutRoutineExercises.Index(Model.Routine.Id, 1))" class="btn btn-outline-secondary">cancel</a>
+        <a href="@Url.Action("Index", new { id = Model.Routine.Id, week = 1 })" class="btn btn-outline-secondary">cancel</a>
       </div>
     }
   </div>

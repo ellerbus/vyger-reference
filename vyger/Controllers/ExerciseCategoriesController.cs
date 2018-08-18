@@ -1,8 +1,9 @@
 using System.Security;
 using System.Web.Mvc;
-using vyger.Common;
-using vyger.Models;
-using vyger.Services;
+using Augment;
+using vyger.Core;
+using vyger.Core.Models;
+using vyger.Core.Services;
 
 namespace vyger.Controllers
 {
@@ -33,7 +34,7 @@ namespace vyger.Controllers
                 AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
 
                 filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction(MVC.ExerciseCategories.Index());
+                filterContext.Result = RedirectToAction("Index");
             }
 
             base.OnException(filterContext);
@@ -46,9 +47,9 @@ namespace vyger.Controllers
         [HttpGet, Route("Index")]
         public virtual ActionResult Index()
         {
-            ExerciseCategoryCollection groups = _service.GetExerciseCategories();
+            ExerciseCategoryCollection categories = _service.GetExerciseCategories();
 
-            return View(groups);
+            return View(categories);
         }
 
         #endregion
@@ -58,21 +59,31 @@ namespace vyger.Controllers
         [HttpGet, Route("Create")]
         public virtual ActionResult Create()
         {
-            ExerciseCategory group = new ExerciseCategory();
+            ExerciseCategory category = new ExerciseCategory();
 
-            return View(group);
+            return View(category);
         }
 
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
         public virtual ActionResult Create(ExerciseCategory post)
         {
+            if (post.Id.IsNotEmpty())
+            {
+                bool exists = _service.GetExerciseCategories().ContainsPrimaryKey(post.Id);
+
+                if (exists)
+                {
+                    ModelState.AddModelError("Id", $"ID must be unique, {post.Id} already exists");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 _service.AddExerciseCategory(post);
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise Category created successfully");
 
-                return RedirectToAction(MVC.ExerciseCategories.Index());
+                return RedirectToAction("Index");
             }
 
             return View(post);
@@ -85,14 +96,14 @@ namespace vyger.Controllers
         [HttpGet, Route("Edit/{id}")]
         public virtual ActionResult Edit(string id)
         {
-            ExerciseCategory group = _service.GetExerciseCategories().GetByPrimaryKey(id);
+            ExerciseCategory category = _service.GetExerciseCategories().GetByPrimaryKey(id);
 
-            if (group == null)
+            if (category == null)
             {
-                return RedirectToAction(MVC.ExerciseCategories.Index());
+                return RedirectToAction("Index");
             }
 
-            return View(group);
+            return View(category);
         }
 
         [HttpPost, Route("Edit/{id}"), ValidateAntiForgeryToken]
@@ -104,7 +115,7 @@ namespace vyger.Controllers
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise Category saved successfully");
 
-                return RedirectToAction(MVC.ExerciseCategories.Index());
+                return RedirectToAction("Index");
             }
 
             return View(post);

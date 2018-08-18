@@ -1,8 +1,9 @@
 using System.Security;
 using System.Web.Mvc;
-using vyger.Common;
-using vyger.Models;
-using vyger.Services;
+using Augment;
+using vyger.Core;
+using vyger.Core.Models;
+using vyger.Core.Services;
 
 namespace vyger.Controllers
 {
@@ -33,7 +34,7 @@ namespace vyger.Controllers
                 AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
 
                 filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction(MVC.ExerciseGroups.Index());
+                filterContext.Result = RedirectToAction("Index");
             }
 
             base.OnException(filterContext);
@@ -66,13 +67,23 @@ namespace vyger.Controllers
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
         public virtual ActionResult Create(ExerciseGroup post)
         {
+            if (post.Id.IsNotEmpty())
+            {
+                bool exists = _service.GetExerciseGroups().ContainsPrimaryKey(post.Id);
+
+                if (exists)
+                {
+                    ModelState.AddModelError("Id", $"ID must be unique, {post.Id} already exists");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 _service.AddExerciseGroup(post);
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise Group created successfully");
 
-                return RedirectToAction(MVC.ExerciseGroups.Index());
+                return RedirectToAction("Index");
             }
 
             return View(post);
@@ -89,7 +100,7 @@ namespace vyger.Controllers
 
             if (group == null)
             {
-                return RedirectToAction(MVC.ExerciseGroups.Index());
+                return RedirectToAction("Index");
             }
 
             return View(group);
@@ -104,7 +115,7 @@ namespace vyger.Controllers
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise Group saved successfully");
 
-                return RedirectToAction(MVC.ExerciseGroups.Index());
+                return RedirectToAction("Index");
             }
 
             return View(post);

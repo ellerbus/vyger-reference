@@ -3,10 +3,10 @@ using System.Linq;
 using System.Security;
 using System.Web.Mvc;
 using Augment;
-using vyger.Common;
-using vyger.Forms;
-using vyger.Models;
-using vyger.Services;
+using vyger.Core;
+using vyger.Core.Models;
+using vyger.Core.Services;
+using vyger.ViewModels;
 
 namespace vyger.Controllers
 {
@@ -44,7 +44,7 @@ namespace vyger.Controllers
                 AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
 
                 filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction(MVC.Exercises.Index());
+                filterContext.Result = RedirectToAction("Index");
             }
 
             base.OnException(filterContext);
@@ -73,32 +73,34 @@ namespace vyger.Controllers
         [HttpGet, Route("Create")]
         public virtual ActionResult Create()
         {
-            ExerciseForm form = new ExerciseForm();
+            ExerciseViewModel vm = new ExerciseViewModel();
 
-            form.Groups = _groups.GetExerciseGroups();
+            vm.Groups = _groups.GetExerciseGroups();
 
-            form.Categories = _categories.GetExerciseCategories();
+            vm.Categories = _categories.GetExerciseCategories();
 
-            return View(form);
+            return View(vm);
         }
 
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
-        public virtual ActionResult Create(ExerciseForm post)
+        public virtual ActionResult Create(Exercise post)
         {
             if (ModelState.IsValid)
             {
-                _service.AddExercise(new Exercise(post));
+                _service.AddExercise(post);
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise created successfully");
 
-                return RedirectToAction(MVC.Exercises.Index());
+                return RedirectToAction("Index");
             }
 
-            post.Groups = _groups.GetExerciseGroups();
+            ExerciseViewModel vm = new ExerciseViewModel(post);
 
-            post.Categories = _categories.GetExerciseCategories();
+            vm.Groups = _groups.GetExerciseGroups();
 
-            return View(post);
+            vm.Categories = _categories.GetExerciseCategories();
+
+            return View(vm);
         }
 
         #endregion
@@ -112,20 +114,20 @@ namespace vyger.Controllers
 
             if (exercise == null)
             {
-                return RedirectToAction(MVC.Exercises.Index());
+                return RedirectToAction("Index");
             }
 
-            ExerciseForm form = new ExerciseForm(exercise);
+            ExerciseViewModel vm = new ExerciseViewModel(exercise);
 
-            form.Groups = _groups.GetExerciseGroups();
+            vm.Groups = _groups.GetExerciseGroups();
 
-            form.Categories = _categories.GetExerciseCategories();
+            vm.Categories = _categories.GetExerciseCategories();
 
-            return View(form);
+            return View(vm);
         }
 
         [HttpPost, Route("Edit/{id}"), ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(string id, ExerciseForm post)
+        public virtual ActionResult Edit(string id, Exercise post)
         {
             if (ModelState.IsValid)
             {
@@ -133,14 +135,30 @@ namespace vyger.Controllers
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise saved successfully");
 
-                return RedirectToAction(MVC.Exercises.Index());
+                return RedirectToAction("Index");
             }
 
-            post.Groups = _groups.GetExerciseGroups();
+            ExerciseViewModel vm = new ExerciseViewModel(post);
 
-            post.Categories = _categories.GetExerciseCategories();
+            vm.Groups = _groups.GetExerciseGroups();
 
-            return View(post);
+            vm.Categories = _categories.GetExerciseCategories();
+
+            return View(vm);
+        }
+
+        #endregion
+
+        #region Query Methods
+
+        [HttpGet, Route("Query")]
+        public virtual ActionResult Query(string id)
+        {
+            Exercise exercise = null;
+
+            _service.GetExercises().TryGetByPrimaryKey(id, out exercise);
+
+            return Json(exercise ?? new Exercise(), JsonRequestBehavior.AllowGet);
         }
 
         #endregion

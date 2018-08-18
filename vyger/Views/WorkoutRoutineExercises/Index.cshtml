@@ -2,7 +2,7 @@
   ViewBag.Title = "Routine Exercises";
 }
 
-@model WorkoutRoutineExerciseForm
+@model WorkoutRoutineExerciseViewModel
 
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-md-10">
@@ -20,7 +20,7 @@
                 <th style="width: 175px">Week @Model.Week, Day @(d + 1)</th>
                 <th style="width: 24px;"></th>
                 <th class="text-right" colspan="2">
-                  <a href="@Url.Action(MVC.WorkoutRoutineExercises.Create(Model.Routine.Id, d+1))" class="btn btn-sm btn-outline-success">
+                  <a href="@Url.Action("Create", new { id = Model.Routine.Id, day = d + 1 })" class="btn btn-sm btn-outline-success">
                     <i class="fa fa-fw fa-plus"></i> Add to Day @(d + 1)
                   </a>
                 </th>
@@ -37,7 +37,7 @@
             <tr>
               <td colspan="5" class="text-left">
                 <!-- <button type="submit" class="btn btn-primary">save week</button> -->
-                <a href="@Url.Action(MVC.WorkoutRoutines.Index())" class="btn btn-outline-secondary">cancel</a>
+                <a href="@Url.Action("Index", "WorkoutRoutines")" class="btn btn-outline-secondary">cancel</a>
               </td>
             </tr>
           </tfoot>
@@ -54,7 +54,7 @@
     $(function ()
     {
       //  base URL
-      var url = '@Url.Action(MVC.WorkoutRoutineExercises.Index(Model.Routine.Id, Model.Week))';
+      var url = '@Url.Action("Index", new { id = Model.Routine.Id, week = Model.Week })';
 
       function resequence($tbody, day)
       {

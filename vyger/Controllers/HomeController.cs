@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using vyger.Common;
+using vyger.Core;
 
 namespace vyger.Controllers
 {

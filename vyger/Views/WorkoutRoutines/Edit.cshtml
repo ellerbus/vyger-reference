@@ -2,7 +2,7 @@
   ViewBag.Title = "Edit Routine";
 }
 
-@model WorkoutRoutineForm
+@model WorkoutRoutineViewModel
 
 <div class="row justify-content-md-center">
   <div class="col-lg-6 col-md-8">
@@ -12,9 +12,9 @@
       @Html.ValidationSummary()
       @Html.Partial("_Details", Model)
       <div class="form-group">
-        <a href="@Url.Action(MVC.WorkoutRoutineExercises.Index(Model.Id, 1))" class="btn btn-outline-secondary float-right">skip</a>
+        <a href="@Url.Action("Index", "WorkoutRoutineExercises", new { id = Model.Id, week = 1 })" class="btn btn-outline-secondary float-right">skip</a>
         <button type="submit" class="btn btn-primary">update</button>
-        <a href="@Url.Action(MVC.WorkoutRoutines.Index())" class="btn btn-outline-secondary">cancel</a>
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary">cancel</a>
       </div>
     }
   </div>
