@@ -1,9 +1,9 @@
 using System.Security;
 using System.Web.Mvc;
-using vyger.Common;
-using vyger.Forms;
-using vyger.Models;
-using vyger.Services;
+using vyger.Core;
+using vyger.Core.Models;
+using vyger.Core.Services;
+using vyger.ViewModels;
 
 namespace vyger.Controllers
 {
@@ -41,7 +41,7 @@ namespace vyger.Controllers
                 AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
 
                 filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction(MVC.WorkoutPlans.Index());
+                filterContext.Result = RedirectToAction("Index");
             }
 
             base.OnException(filterContext);
@@ -66,16 +66,16 @@ namespace vyger.Controllers
         [HttpGet, Route("Create")]
         public virtual ActionResult Create()
         {
-            WorkoutPlanForm form = new WorkoutPlanForm()
+            WorkoutPlanViewModel vm = new WorkoutPlanViewModel()
             {
                 Routines = _routines.GetWorkoutRoutines()
             };
 
-            return View(form);
+            return View(vm);
         }
 
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
-        public virtual ActionResult Create(WorkoutPlanForm post)
+        public virtual ActionResult Create(WorkoutPlanViewModel post)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace vyger.Controllers
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Plan created successfully");
 
-                return RedirectToAction(MVC.WorkoutPlanExercises.Index(plan.Id, 1));
+                return RedirectToAction("Index", "WorkoutPlanExercises", new { id = plan.Id, cycle = 1 });
             }
 
             post.Routines = _routines.GetWorkoutRoutines();

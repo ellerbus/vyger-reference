@@ -167,6 +167,7 @@
     <Compile Include="Controllers\ExercisesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\WorkoutPlansController.cs" />
     <Compile Include="Controllers\WorkoutRoutineExercisesController.cs" />
     <Compile Include="Controllers\WorkoutRoutinesController.cs" />
     <Compile Include="Controllers\_BaseController.cs" />
@@ -175,6 +176,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ExerciseViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutPlanViewModel.cs" />
     <Compile Include="ViewModels\WorkoutRoutineExerciseViewModel.cs" />
     <Compile Include="ViewModels\WorkoutRoutineViewModel.cs" />
   </ItemGroup>
@@ -184,6 +186,8 @@
     <Content Include="Views\ExerciseCategories\Create.cshtml" />
     <Content Include="Views\ExerciseCategories\Edit.cshtml" />
     <Content Include="Views\ExerciseCategories\Index.cshtml" />
+    <Content Include="Views\WorkoutPlans\Create.cshtml" />
+    <Content Include="Views\WorkoutPlans\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

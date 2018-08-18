@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using Augment;
+using Augment.Caching;
 using vyger.Core;
 using vyger.Core.Models;
+using vyger.Core.Repositories;
 
 namespace vyger.Core.Services
 {
@@ -27,11 +30,14 @@ namespace vyger.Core.Services
     /// <summary>
     /// Service Implementation for WorkoutLog
     /// </summary>
-    public class WorkoutLogService : BaseService, IWorkoutLogService
+    public class WorkoutLogService : IWorkoutLogService
     {
         #region Members
 
-        private WorkoutLogCollection _logs;
+        private IExerciseService _exercises;
+        private ISecurityActor _actor;
+        private IWorkoutLogRepository _repository;
+        private ICacheManager _cache;
 
         #endregion
 
@@ -42,14 +48,14 @@ namespace vyger.Core.Services
         /// </summary>
         public WorkoutLogService(
             IExerciseService exercises,
-            ISecurityActor actor)
-            : base(actor)
+            ISecurityActor actor,
+            IWorkoutLogRepository repository,
+            ICacheManager cache)
         {
-            ExerciseCollection ex = exercises.GetExercises();
-
-            IEnumerable<WorkoutLog> logs = ReadData<WorkoutLogCollection>();
-
-            _logs = new WorkoutLogCollection(ex, logs);
+            _exercises = exercises;
+            _actor = actor;
+            _repository = repository;
+            _cache = cache;
         }
 
         #endregion
@@ -61,24 +67,32 @@ namespace vyger.Core.Services
         /// </summary>
         public WorkoutLogCollection GetWorkoutLogs()
         {
-            return _logs;
+            WorkoutLogCollection routines = _cache
+                .Cache(() => BuildLogCollection())
+                .By("Actor", _actor.Email)
+                .DurationOf(5.Minutes())
+                .CachedObject;
+
+            return routines;
+        }
+
+        /// <summary>
+        /// Creates a new instance
+        /// </summary>
+        public WorkoutLogCollection BuildLogCollection()
+        {
+            ExerciseCollection ex = _exercises.GetExercises();
+
+            IEnumerable<WorkoutLog> logs = _repository.GetWorkoutLogs();
+
+            return new WorkoutLogCollection(ex, logs);
         }
 
         public void SaveWorkoutLogs()
         {
-            SaveData(_logs);
-        }
+            WorkoutLogCollection logs = GetWorkoutLogs();
 
-        #endregion
-
-        #region Properties
-
-        protected override string FileName
-        {
-            get
-            {
-                return typeof(WorkoutLog).Name;
-            }
+            _repository.SaveWorkoutLogs(logs);
         }
 
         #endregion

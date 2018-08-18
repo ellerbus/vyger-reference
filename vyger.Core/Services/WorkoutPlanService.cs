@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Augment;
+using Augment.Caching;
 using vyger.Core;
 using vyger.Core.Models;
+using vyger.Core.Repositories;
 
 namespace vyger.Core.Services
 {
@@ -50,11 +53,14 @@ namespace vyger.Core.Services
     /// <summary>
     /// Service Implementation for WorkoutPlan
     /// </summary>
-    public class WorkoutPlanService : BaseService, IWorkoutPlanService
+    public class WorkoutPlanService : IWorkoutPlanService
     {
         #region Members
 
-        private WorkoutPlanCollection _plans;
+        private IWorkoutRoutineService _routines;
+        private ISecurityActor _actor;
+        private IWorkoutPlanRepository _repository;
+        private ICacheManager _cache;
 
         #endregion
 
@@ -65,14 +71,14 @@ namespace vyger.Core.Services
         /// </summary>
         public WorkoutPlanService(
             IWorkoutRoutineService routines,
-            ISecurityActor actor)
-            : base(actor)
+            ISecurityActor actor,
+            IWorkoutPlanRepository repository,
+            ICacheManager cache)
         {
-            WorkoutRoutineCollection r = routines.GetWorkoutRoutines();
-
-            IEnumerable<WorkoutPlan> plans = ReadData<WorkoutPlanCollection>();
-
-            _plans = new WorkoutPlanCollection(r, plans);
+            _routines = routines;
+            _actor = actor;
+            _repository = repository;
+            _cache = cache;
         }
 
         #endregion
@@ -84,7 +90,25 @@ namespace vyger.Core.Services
         /// </summary>
         public WorkoutPlanCollection GetWorkoutPlans()
         {
-            return _plans;
+            WorkoutPlanCollection plans = _cache
+                .Cache(() => BuildPlanCollection())
+                .By("Actor", _actor.Email)
+                .DurationOf(5.Minutes())
+                .CachedObject;
+
+            return plans;
+        }
+
+        /// <summary>
+        /// Creates a new instance
+        /// </summary>
+        public WorkoutPlanCollection BuildPlanCollection()
+        {
+            WorkoutRoutineCollection r = _routines.GetWorkoutRoutines();
+
+            IEnumerable<WorkoutPlan> plans = _repository.GetWorkoutPlans();
+
+            return new WorkoutPlanCollection(r, plans);
         }
 
         /// <summary>
@@ -92,7 +116,9 @@ namespace vyger.Core.Services
         /// </summary>
         public void AddWorkoutPlan(WorkoutPlan add)
         {
-            _plans.Add(add);
+            WorkoutPlanCollection plans = GetWorkoutPlans();
+
+            plans.Add(add);
 
             SaveWorkoutPlans();
         }
@@ -102,7 +128,9 @@ namespace vyger.Core.Services
         /// </summary>
         public void UpdateWorkoutPlan(string id, WorkoutPlan overlay)
         {
-            WorkoutPlan plan = _plans.GetByPrimaryKey(overlay.Id);
+            WorkoutPlanCollection plans = GetWorkoutPlans();
+
+            WorkoutPlan plan = plans.GetByPrimaryKey(overlay.Id);
 
             plan.OverlayWith(overlay);
 
@@ -111,7 +139,9 @@ namespace vyger.Core.Services
 
         public void SaveWorkoutPlans()
         {
-            SaveData(_plans);
+            WorkoutPlanCollection plans = GetWorkoutPlans();
+
+            _repository.SaveWorkoutPlans(plans);
         }
 
         #endregion
@@ -147,18 +177,6 @@ namespace vyger.Core.Services
             cycle.PlanLogs.Clear();
 
             cycle.PlanLogs.AddRange(generator.GenerateLogItems());
-        }
-
-        #endregion
-
-        #region Properties
-
-        protected override string FileName
-        {
-            get
-            {
-                return typeof(WorkoutPlan).Name;
-            }
         }
 
         #endregion

@@ -104,6 +104,8 @@
     <Compile Include="Models\WorkoutRoutineSet.cs" />
     <Compile Include="Models\WorkoutRoutineSetCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\WorkoutLogRepository.cs" />
+    <Compile Include="Repositories\WorkoutPlanRepository.cs" />
     <Compile Include="Repositories\WorkoutRoutineRepository.cs" />
     <Compile Include="Repositories\ExerciseRepository.cs" />
     <Compile Include="Repositories\ExerciseGroupRepository.cs" />
@@ -115,6 +117,8 @@
     <Compile Include="Services\ExerciseCategoryService.cs" />
     <Compile Include="Services\ExerciseGroupService.cs" />
     <Compile Include="Services\ExerciseService.cs" />
+    <Compile Include="Services\WorkoutLogService.cs" />
+    <Compile Include="Services\WorkoutPlanService.cs" />
     <Compile Include="Services\WorkoutRoutineService.cs" />
     <Compile Include="StatusTypes.cs" />
     <Compile Include="Validators\WorkoutRoutineExerciseValidator.cs" />
