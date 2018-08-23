@@ -2,64 +2,32 @@
   ViewBag.Title = "Workout Logs";
 }
 
-@model WorkoutLogForm
-
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-md-10">
-    @using (Html.BeginForm())
-    {
-      @Html.AntiForgeryToken()
-      @Html.ValidationSummary()
-      <div class="form-group">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <a class="btn btn-outline-secondary"
-               href="@Url.Action(MVC.WorkoutLogs.Index(Model.LogDate.AddDays(-1).Date))">
-              <i class="fa fa-fw fa-angle-left"></i>
-            </a>
-          </div>
-          @Html.TextBoxFor(m => m.LogDate, "{0:dddd M/d/yyyy}", new { @class = "form-control text-center", @readonly = "readonly" })
-          @Html.ValidationMessageFor(m => m.LogDate, "", new { @class = "form-text text-danger" })
-          <div class="input-group-append">
-            <a class="btn btn-outline-secondary"
-               href="@Url.Action(MVC.WorkoutLogs.Index(Model.LogDate.AddDays(1).Date))">
-              <i class="fa fa-fw fa-angle-right"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-      if (Model.Logs.Count() > 0)
-      {
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Exercise</th>
-              <th style="width: 24px;"></th>
-              <th>Workout</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach (var log in Model.Logs.OrderBy(x => x.SequenceNumber).ThenBy(x => x.Exercise.Name))
-            {
-              @Html.Partial("_Row", log)
-            }
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="5" class="text-left">
-                <button type="submit" class="btn btn-primary">save workout</button>
-                <a href="@Url.Action(MVC.WorkoutLogs.Index())" class="btn btn-outline-secondary">cancel</a>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      }
-    }
+    <div id="calendar"></div>
   </div>
 </div>
 
 @section Scripts {
   <script type="text/javascript">
-    $('a.delete-log').hide();
+    $(function ()
+    {
+      $('#calendar').fullCalendar({
+        themeSystem: 'bootstrap4',
+        header: {
+          left: 'prev,next',
+          center: 'title',
+          right: 'today'
+        },
+        events: '@Url.Action("Events")',
+
+        dayClick: function (date, jsEvent, view)
+        {
+          var url = '@Url.Action("Details")?date=' + date.format();
+
+          window.location.href = url;
+        }
+      });
+    });
   </script>
 }

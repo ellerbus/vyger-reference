@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -47,6 +48,13 @@ namespace vyger.Core.Models
 
         #region Methods
 
+        public IEnumerable<Exercise> Filter(string groupId, string categoryId)
+        {
+            return this
+                .Where(x => groupId.IsNullOrEmpty() || x.GroupId.IsSameAs(groupId))
+                .Where(x => categoryId.IsNullOrEmpty() || x.CategoryId.IsSameAs(categoryId));
+        }
+
         protected override string GetPrimaryKey(Exercise item)
         {
             return item.Id;
@@ -90,18 +98,18 @@ namespace vyger.Core.Models
             }
         }
 
-        public IEnumerable<Exercise> NotIncluding(IEnumerable<WorkoutRoutineExercise> routineExercises)
-        {
-            HashSet<string> ids = new HashSet<string>(routineExercises.Select(x => x.ExerciseId));
+        //public IEnumerable<Exercise> NotIncluding(IEnumerable<WorkoutRoutineExercise> routineExercises)
+        //{
+        //    HashSet<string> ids = new HashSet<string>(routineExercises.Select(x => x.ExerciseId));
 
-            foreach (Exercise ex in this)
-            {
-                if (!ids.Contains(ex.Id))
-                {
-                    yield return ex;
-                }
-            }
-        }
+        //    foreach (Exercise ex in this)
+        //    {
+        //        if (!ids.Contains(ex.Id))
+        //        {
+        //            yield return ex;
+        //        }
+        //    }
+        //}
 
         #endregion
 

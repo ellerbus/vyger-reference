@@ -3,14 +3,16 @@ using vyger.Core.Models;
 
 namespace vyger.ViewModels
 {
-    public class ExerciseViewModel : Exercise
+    public class ExerciseDetailViewModel : Exercise
     {
-        public ExerciseViewModel() { }
+        public ExerciseDetailViewModel() { }
 
-        public ExerciseViewModel(Exercise exercise)
+        public ExerciseDetailViewModel(Exercise exercise)
         {
             Id = exercise.Id;
             Name = exercise.Name;
+            Group = exercise.Group;
+            Category = exercise.Category;
             GroupId = exercise.GroupId;
             CategoryId = exercise.CategoryId;
         }

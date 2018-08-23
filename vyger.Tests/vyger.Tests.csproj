@@ -97,21 +97,12 @@
     <Compile Include="Builder.cs" />
     <Compile Include="Core\MoxyTesting.cs" />
     <Compile Include="Core\RegexPatternTests.cs" />
-    <Compile Include="Core\Validators\WorkoutRoutineExerciseValidatorTests.cs" />
     <Compile Include="Core\WorkoutCalculatorTests.cs" />
     <Compile Include="Core\Models\ExerciseCategoryTests.cs" />
     <Compile Include="Core\Models\ExerciseGroupTests.cs" />
     <Compile Include="Core\Models\ExerciseTests.cs" />
-    <Compile Include="Core\Models\WorkoutCycleGeneratorTests.cs" />
     <Compile Include="Core\Models\WorkoutLogSetTests.cs" />
     <Compile Include="Core\Models\WorkoutLogTests.cs" />
-    <Compile Include="Core\Models\WorkoutPlanCycleTests.cs" />
-    <Compile Include="Core\Models\WorkoutPlanLogTests.cs" />
-    <Compile Include="Core\Models\WorkoutPlanSetTests.cs" />
-    <Compile Include="Core\Models\WorkoutPlanTests.cs" />
-    <Compile Include="Core\Models\WorkoutRoutineExerciseTests.cs" />
-    <Compile Include="Core\Models\WorkoutRoutineSetTests.cs" />
-    <Compile Include="Core\Models\WorkoutRoutineTests.cs" />
     <Compile Include="Moxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -129,7 +120,9 @@
       <Name>vyger</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Validators\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

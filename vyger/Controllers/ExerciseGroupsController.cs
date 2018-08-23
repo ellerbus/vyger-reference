@@ -1,4 +1,3 @@
-using System.Security;
 using System.Web.Mvc;
 using Augment;
 using vyger.Core;
@@ -21,23 +20,6 @@ namespace vyger.Controllers
         public ExerciseGroupsController(IExerciseGroupService service)
         {
             _service = service;
-        }
-
-        #endregion
-
-        #region "On" Methods
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext.Exception is SecurityException)
-            {
-                AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
-
-                filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction("Index");
-            }
-
-            base.OnException(filterContext);
         }
 
         #endregion
@@ -79,7 +61,11 @@ namespace vyger.Controllers
 
             if (ModelState.IsValid)
             {
-                _service.AddExerciseGroup(post);
+                ExerciseGroupCollection groups = _service.GetExerciseGroups();
+
+                groups.Add(post);
+
+                _service.SaveExerciseGroups();
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise Group created successfully");
 
@@ -111,7 +97,13 @@ namespace vyger.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.UpdateExerciseGroup(id, post);
+                ExerciseGroupCollection groups = _service.GetExerciseGroups();
+
+                ExerciseGroup group = groups.GetByPrimaryKey(id);
+
+                group.OverlayWith(post);
+
+                _service.SaveExerciseGroups();
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise Group saved successfully");
 

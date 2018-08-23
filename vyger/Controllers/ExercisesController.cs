@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using System.Web.Mvc;
 using Augment;
 using vyger.Core;
@@ -35,23 +34,6 @@ namespace vyger.Controllers
 
         #endregion
 
-        #region "On" Methods
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext.Exception is SecurityException)
-            {
-                AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
-
-                filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction("Index");
-            }
-
-            base.OnException(filterContext);
-        }
-
-        #endregion
-
         #region List Methods
 
         [HttpGet, Route("Index")]
@@ -59,11 +41,17 @@ namespace vyger.Controllers
         {
             IList<Exercise> exercises = _service
                 .GetExercises()
-                .Where(x => groupId.IsNullOrEmpty() || x.GroupId == groupId)
-                .Where(x => categoryId.IsNullOrEmpty() || x.CategoryId == categoryId)
+                .Filter(groupId, categoryId)
                 .ToList();
 
-            return View(exercises);
+            ExerciseIndexViewModel vm = new ExerciseIndexViewModel()
+            {
+                Items = exercises,
+                SelectedCategoryId = categoryId,
+                SelectedGroupId = groupId
+            };
+
+            return View(vm);
         }
 
         #endregion
@@ -71,13 +59,33 @@ namespace vyger.Controllers
         #region Create Methods
 
         [HttpGet, Route("Create")]
-        public virtual ActionResult Create()
+        public virtual ActionResult Create(string groupId = null, string categoryId = null)
         {
-            ExerciseViewModel vm = new ExerciseViewModel();
+            ExerciseDetailViewModel vm = new ExerciseDetailViewModel();
 
             vm.Groups = _groups.GetExerciseGroups();
 
             vm.Categories = _categories.GetExerciseCategories();
+
+            if (groupId.IsNotEmpty())
+            {
+                ExerciseGroup group = null;
+
+                if (_groups.GetExerciseGroups().TryGetByPrimaryKey(groupId, out group))
+                {
+                    vm.Group = group;
+                }
+            }
+
+            if (categoryId.IsNotEmpty())
+            {
+                ExerciseCategory category = null;
+
+                if (_categories.GetExerciseCategories().TryGetByPrimaryKey(categoryId, out category))
+                {
+                    vm.Category = category;
+                }
+            }
 
             return View(vm);
         }
@@ -87,14 +95,18 @@ namespace vyger.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.AddExercise(post);
+                ExerciseCollection exercises = _service.GetExercises();
+
+                exercises.Add(post);
+
+                _service.SaveExercises();
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise created successfully");
 
                 return RedirectToAction("Index");
             }
 
-            ExerciseViewModel vm = new ExerciseViewModel(post);
+            ExerciseDetailViewModel vm = new ExerciseDetailViewModel(post);
 
             vm.Groups = _groups.GetExerciseGroups();
 
@@ -117,7 +129,7 @@ namespace vyger.Controllers
                 return RedirectToAction("Index");
             }
 
-            ExerciseViewModel vm = new ExerciseViewModel(exercise);
+            ExerciseDetailViewModel vm = new ExerciseDetailViewModel(exercise);
 
             vm.Groups = _groups.GetExerciseGroups();
 
@@ -131,14 +143,20 @@ namespace vyger.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.UpdateExercise(id, post);
+                ExerciseCollection exercises = _service.GetExercises();
+
+                Exercise exercise = exercises.GetByPrimaryKey(id);
+
+                exercise.OverlayWith(post);
+
+                _service.SaveExercises();
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise saved successfully");
 
                 return RedirectToAction("Index");
             }
 
-            ExerciseViewModel vm = new ExerciseViewModel(post);
+            ExerciseDetailViewModel vm = new ExerciseDetailViewModel(post);
 
             vm.Groups = _groups.GetExerciseGroups();
 
@@ -149,16 +167,28 @@ namespace vyger.Controllers
 
         #endregion
 
-        #region Query Methods
+        #region Json Query Methods
 
-        [HttpGet, Route("Query")]
-        public virtual ActionResult Query(string id)
+        [HttpGet, Route("Fetch")]
+        public virtual ActionResult Fetch(string id)
         {
             Exercise exercise = null;
 
             _service.GetExercises().TryGetByPrimaryKey(id, out exercise);
 
             return Json(exercise ?? new Exercise(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet, Route("Query")]
+        public virtual ActionResult Query(string groupId = null, string categoryId = null)
+        {
+            IList<Exercise> exercises = _service
+                .GetExercises()
+                .Filter(groupId, categoryId)
+                .OrderBy(x => x.Name)
+                .ToList();
+
+            return Json(exercises, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

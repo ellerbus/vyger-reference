@@ -2,49 +2,51 @@
   ViewBag.Title = "Exercises";
 }
 
-@model IList<Exercise>
+@model ExerciseIndexViewModel
 
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-md-10">
     <table class="table">
       <thead>
         <tr>
+          <th>
+            Exercise
+          </th>
           <th style="width: 175px;">
             Group
           </th>
           <th style="width: 175px;">
             Category
           </th>
-          <th>
-            <a href="@Url.Action("Create")" class="btn btn-sm btn-outline-success float-right">
-              <i class="fa fa-fw fa-plus"></i> Create
-            </a>
-            Exercise
-          </th>
         </tr>
       </thead>
       <tbody>
-        @foreach (var exercise in Model.OrderBy(x => x.Name))
+        @foreach (var exercise in Model.Items.OrderBy(x => x.Name))
         {
           <tr>
+            <td>
+              <a href="@Url.Action("Edit", new { id = exercise.Id })" style="display: block;">
+                @exercise.Name
+              </a>
+            </td>
             <td>
               <a href="@Url.Action("Index", new { groupId = exercise.GroupId })">@exercise.Group.Name</a>
             </td>
             <td>
               <a href="@Url.Action("Index", new { categoryId = exercise.CategoryId })">@exercise.Category.Name</a>
             </td>
-            <td>
-              <a href="@Url.Action("Edit", new { id = exercise.Id })" style="display: block;">
-                @exercise.Name
-              </a>
-            </td>
           </tr>
         }
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="3">
+          <td colspan="2">
             <a href="@Url.Action("Index")">(all)</a>
+          </td>
+          <td>
+            <a href="@Url.Action("Create", new { groupId = Model.SelectedGroupId, categoryId = Model.SelectedCategoryId })" class="btn btn-sm btn-outline-success float-right">
+              <i class="fa fa-fw fa-plus"></i> Create
+            </a>
           </td>
         </tr>
       </tfoot>

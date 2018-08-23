@@ -67,13 +67,13 @@ namespace vyger.Core.Models
             }
         }
 
-        public void AddRange(IEnumerable<WorkoutLog> routines)
+        public void AddRange(IEnumerable<WorkoutLog> logs)
         {
-            if (routines != null)
+            if (logs != null)
             {
-                foreach (WorkoutLog routine in routines)
+                foreach (WorkoutLog log in logs)
                 {
-                    Add(routine);
+                    Add(log);
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace vyger.Core.Models
         /// <summary>
         /// Gets a single WorkoutLog based on the given primary key
         /// </summary>
-        public IEnumerable<WorkoutLog> GetWorkoutLogs(DateTime logDate)
+        public IEnumerable<WorkoutLog> Filter(DateTime logDate)
         {
             return this
                 .Where(x => x.LogDate == logDate)
@@ -92,7 +92,18 @@ namespace vyger.Core.Models
         /// <summary>
         /// Gets a single WorkoutLog based on the given primary key
         /// </summary>
-        public IEnumerable<WorkoutLog> GetRecentWorkoutLogs(string planId, int cycleId)
+        public IEnumerable<WorkoutLog> Filter(DateTime startLogDate, DateTime endLogDate)
+        {
+            return this
+                .Where(x => x.LogDate.IsBetween(startLogDate, endLogDate))
+                .OrderBy(x => x.SequenceNumber)
+                .ThenBy(x => x.Exercise.Name);
+        }
+
+        /// <summary>
+        /// Gets a single WorkoutLog based on the given primary key
+        /// </summary>
+        public IEnumerable<WorkoutLog> Filter(string planId, int cycleId)
         {
             if (cycleId > 1)
             {

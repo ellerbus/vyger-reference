@@ -87,6 +87,15 @@ namespace vyger.Core.Models
         [XmlAttribute("name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [XmlIgnore]
+        public string DetailName
+        {
+            get { return $"{Group?.Name} - {Category?.Name} - {Name}"; }
+        }
+
         ///	<summary>
         ///
         ///	</summary>

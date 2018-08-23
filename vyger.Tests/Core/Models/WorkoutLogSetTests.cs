@@ -8,18 +8,6 @@ namespace vyger.Tests.Core.Models
     public class WorkoutLogSetTests
     {
         [TestMethod]
-        public void WorkoutLogSet_Display_Should_BeStatic()
-        {
-            // arrange
-            var subject = new WorkoutLogSet();
-            // act
-            subject.Weight = 135;
-            subject.Reps = 5;
-            // assert
-            subject.Display.Should().Be("135x5");
-        }
-
-        [TestMethod]
         public void WorkoutLogSet_Constructor_Should_BeStatic()
         {
             // arrange

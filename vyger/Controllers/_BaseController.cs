@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Security;
+using System.Web.Mvc;
 
 namespace vyger.Controllers
 {
@@ -18,6 +20,27 @@ namespace vyger.Controllers
             }
 
             (messages as FlashMessageCollection).Add(new FlashMessage(type, message));
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            if (filterContext.Exception is SecurityException)
+            {
+                AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
+
+                filterContext.ExceptionHandled = true;
+                filterContext.Result = RedirectToAction("Index");
+            }
+
+            if (filterContext.Exception is KeyNotFoundException)
+            {
+                AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
+
+                filterContext.ExceptionHandled = true;
+                filterContext.Result = RedirectToAction("Index");
+            }
+
+            base.OnException(filterContext);
         }
 
         #endregion

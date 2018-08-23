@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Augment;
 using Augment.Caching;
-using vyger.Core;
 using vyger.Core.Models;
 using vyger.Core.Repositories;
 
@@ -22,12 +21,7 @@ namespace vyger.Core.Services
         /// <summary>
         ///
         /// </summary>
-        void AddExercise(Exercise exercise);
-
-        /// <summary>
-        ///
-        /// </summary>
-        void UpdateExercise(string id, Exercise overlay);
+        void SaveExercises();
     }
 
     #endregion
@@ -98,28 +92,9 @@ namespace vyger.Core.Services
             return new ExerciseCollection(groups, categories, exercises);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void AddExercise(Exercise add)
+        public void SaveExercises()
         {
             ExerciseCollection exercises = GetExercises();
-
-            exercises.Add(add);
-
-            _repository.SaveExercises(exercises);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public void UpdateExercise(string id, Exercise overlay)
-        {
-            ExerciseCollection exercises = GetExercises();
-
-            Exercise exercise = exercises.GetByPrimaryKey(overlay.Id);
-
-            exercise.OverlayWith(overlay);
 
             _repository.SaveExercises(exercises);
         }

@@ -108,7 +108,7 @@ namespace vyger.Core.Models
 
             if (Reps > 1)
             {
-                sb.Append("/").Append(Reps);
+                sb.Append("x").Append(Reps);
             }
 
             return sb.ToString();
@@ -258,7 +258,7 @@ namespace vyger.Core.Models
                 }
                 else if (Sets > 1)
                 {
-                    sb.Append("/").Append(Sets);
+                    sb.Append("x").Append(Sets);
                 }
 
                 return sb.ToString();

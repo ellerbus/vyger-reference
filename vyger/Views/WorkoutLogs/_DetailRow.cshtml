@@ -3,6 +3,7 @@
 <tr>
   @using (Html.BeginFieldScope(Model, "Logs"))
   {
+    <td class="drag-handler"></td>
     <td>
       @Html.HiddenFor(m => m.PlanId)
       @Html.HiddenFor(m => m.CycleId)
@@ -10,7 +11,7 @@
       @Html.HiddenFor(m => m.DayId)
       @Html.HiddenFor(m => m.ExerciseId)
       @Html.HiddenFor(m => m.SequenceNumber)
-      @Model.Exercise.Name
+      @Model.Exercise.Category.Name @Model.Exercise.Name
     </td>
     <td class="text-center">
       <a class="pointer delete-log">
@@ -18,7 +19,7 @@
       </a>
     </td>
     <td>
-      @Html.TextBoxFor(m => m.Workout, new { @class = "form-control form-control-sm", style = "font-family: 'Courier New', Courier, monospace" })
+      @Html.TextBoxFor(m => m.Workout, new { @class = "form-control workout-pattern" })
       @Html.ValidationMessageFor(m => m.Workout, "", new { @class = "form-text text-danger" })
     </td>
   }

@@ -21,17 +21,17 @@ namespace vyger.Core.Models
         {
         }
 
-        public WorkoutLog(WorkoutPlanLog planLog) : this()
-        {
-            ExerciseId = planLog.PlanExercise.ExerciseId;
-            Exercise = planLog.PlanExercise.Exercise;
-            Workout = planLog.WorkoutPlan;
-            PlanId = planLog.Cycle.Plan.Id;
-            CycleId = planLog.Cycle.CycleId;
-            WeekId = planLog.WeekId;
-            DayId = planLog.DayId;
-            SequenceNumber = planLog.SequenceNumber;
-        }
+        //public WorkoutLog(WorkoutPlanLog planLog) : this()
+        //{
+        //    ExerciseId = planLog.PlanExercise.ExerciseId;
+        //    Exercise = planLog.PlanExercise.Exercise;
+        //    Workout = planLog.WorkoutPlan;
+        //    PlanId = planLog.Cycle.Plan.Id;
+        //    CycleId = planLog.Cycle.CycleId;
+        //    WeekId = planLog.WeekId;
+        //    DayId = planLog.DayId;
+        //    SequenceNumber = planLog.SequenceNumber;
+        //}
 
         #endregion
 
@@ -83,7 +83,6 @@ namespace vyger.Core.Models
         ///	Gets / Sets database column 'log_date'
         ///	</summary>
         [Key]
-        [Required]
         [DisplayName("Log Date")]
         [XmlAttribute("log-date")]
         public DateTime LogDate { get; set; }
@@ -92,7 +91,6 @@ namespace vyger.Core.Models
         ///	Gets / Sets database column 'exercise_id'
         ///	</summary>
         [Key]
-        [Required]
         [DisplayName("Exercise Id")]
         [XmlAttribute("exercise-id")]
         public string ExerciseId
@@ -106,7 +104,6 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'workout'
         ///	</summary>
-        [Required]
         [DisplayName("Workout")]
         [XmlAttribute("workout")]
         public string Workout
@@ -114,8 +111,11 @@ namespace vyger.Core.Models
             get { return _workout; }
             set
             {
-                _workout = value;
-                _sets = null;
+                string temp = value.AssertNotNull().ToUpper();
+
+                _sets = new WorkoutLogSetCollection(temp);
+
+                _workout = _sets.Display;
             }
         }
 
@@ -124,7 +124,6 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'plan_id'
         ///	</summary>
-        [Required]
         [DisplayName("Plan Id")]
         [XmlAttribute("plan-id")]
         public string PlanId { get; set; }
@@ -132,7 +131,6 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'cycle_id'
         ///	</summary>
-        [Required]
         [DisplayName("Cycle Id")]
         [XmlAttribute("cycle-id")]
         public int CycleId { get; set; }
@@ -140,7 +138,6 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'week_id'
         ///	</summary>
-        [Required]
         [DisplayName("Week Id")]
         [XmlAttribute("week-id")]
         public int WeekId { get; set; }
@@ -148,7 +145,6 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'day_id'
         ///	</summary>
-        [Required]
         [DisplayName("Day Id")]
         [XmlAttribute("day-id")]
         public int DayId { get; set; }
@@ -156,7 +152,6 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'sequence_number'
         ///	</summary>
-        [Required]
         [DisplayName("Sequence Number")]
         [XmlAttribute("sequence-number")]
         public int SequenceNumber { get; set; }
@@ -169,7 +164,7 @@ namespace vyger.Core.Models
         {
             get
             {
-                if (Sets.Count > 0)
+                if (Sets != null && Sets.Count > 0)
                 {
                     return Sets.Max(x => x.OneRepMax);
                 }
@@ -197,7 +192,7 @@ namespace vyger.Core.Models
         {
             get
             {
-                if (_sets == null)
+                if (_sets == null && Workout.IsNotEmpty())
                 {
                     _sets = new WorkoutLogSetCollection(Workout);
                 }

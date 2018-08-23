@@ -20,12 +20,7 @@ namespace vyger.Core.Services
         /// <summary>
         ///
         /// </summary>
-        void AddExerciseGroup(ExerciseGroup group);
-
-        /// <summary>
-        ///
-        /// </summary>
-        void UpdateExerciseGroup(string id, ExerciseGroup overlay);
+        void SaveExerciseGroups();
     }
 
     #endregion
@@ -89,15 +84,11 @@ namespace vyger.Core.Services
         }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
-        public void UpdateExerciseGroup(string id, ExerciseGroup overlay)
+        public void SaveExerciseGroups()
         {
             ExerciseGroupCollection groups = GetExerciseGroups();
-
-            ExerciseGroup group = groups.GetByPrimaryKey(overlay.Id);
-
-            group.OverlayWith(overlay);
 
             _repository.SaveExerciseGroups(groups);
         }

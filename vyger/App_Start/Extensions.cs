@@ -121,6 +121,18 @@ namespace vyger
         #endregion
     }
 
+    public static class StringExtensions
+    {
+        #region Methods
+
+        public static string ToYMD(this DateTime date)
+        {
+            return date.ToString("yyyy-MM-dd");
+        }
+
+        #endregion
+    }
+
     public static class WebExtensions
     {
         public static FormsAuthenticationTicket ToAuthenticationTicket(this ISecurityActor sa)
@@ -172,22 +184,22 @@ namespace vyger
                 yield return new SelectListItem()
                 {
                     Value = exercise.Id.ToString(),
-                    Text = $"{exercise.Group.Name} - {exercise.Category.Name} - {exercise.Name}"
+                    Text = exercise.DetailName
                 };
             }
         }
 
-        public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<WorkoutRoutine> routines)
-        {
-            foreach (WorkoutRoutine routine in routines.OrderBy(x => x.Name))
-            {
-                yield return new SelectListItem()
-                {
-                    Value = routine.Id.ToString(),
-                    Text = routine.Name
-                };
-            }
-        }
+        //public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<WorkoutRoutine> routines)
+        //{
+        //    foreach (WorkoutRoutine routine in routines.OrderBy(x => x.Name))
+        //    {
+        //        yield return new SelectListItem()
+        //        {
+        //            Value = routine.Id.ToString(),
+        //            Text = routine.Name
+        //        };
+        //    }
+        //}
     }
 
     public static class HtmlExtensions

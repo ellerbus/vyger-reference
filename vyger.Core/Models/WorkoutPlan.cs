@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Xml.Serialization;
 using Augment;
-using vyger.Core;
 
 namespace vyger.Core.Models
 {
@@ -75,7 +74,7 @@ namespace vyger.Core.Models
         ///	</summary>
         [DisplayName("Plan Id")]
         [XmlAttribute("plan-id")]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'routine_id'

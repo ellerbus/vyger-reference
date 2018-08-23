@@ -1,4 +1,3 @@
-using System.Security;
 using System.Web.Mvc;
 using Augment;
 using vyger.Core;
@@ -21,23 +20,6 @@ namespace vyger.Controllers
         public ExerciseCategoriesController(IExerciseCategoryService service)
         {
             _service = service;
-        }
-
-        #endregion
-
-        #region "On" Methods
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext.Exception is SecurityException)
-            {
-                AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
-
-                filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction("Index");
-            }
-
-            base.OnException(filterContext);
         }
 
         #endregion
@@ -79,7 +61,11 @@ namespace vyger.Controllers
 
             if (ModelState.IsValid)
             {
-                _service.AddExerciseCategory(post);
+                ExerciseCategoryCollection categories = _service.GetExerciseCategories();
+
+                categories.Add(post);
+
+                _service.SaveExerciseCategories();
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise Category created successfully");
 
@@ -111,7 +97,13 @@ namespace vyger.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.UpdateExerciseCategory(id, post);
+                ExerciseCategoryCollection categories = _service.GetExerciseCategories();
+
+                ExerciseCategory category = categories.GetByPrimaryKey(id);
+
+                category.OverlayWith(post);
+
+                _service.SaveExerciseCategories();
 
                 AddFlashMessage(FlashMessageType.Success, "Exercise Category saved successfully");
 

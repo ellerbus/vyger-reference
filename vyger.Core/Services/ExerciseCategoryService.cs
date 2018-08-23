@@ -1,6 +1,5 @@
 using Augment;
 using Augment.Caching;
-using vyger.Core;
 using vyger.Core.Models;
 using vyger.Core.Repositories;
 
@@ -21,12 +20,7 @@ namespace vyger.Core.Services
         /// <summary>
         ///
         /// </summary>
-        void AddExerciseCategory(ExerciseCategory category);
-
-        /// <summary>
-        ///
-        /// </summary>
-        void UpdateExerciseCategory(string id, ExerciseCategory overlay);
+        void SaveExerciseCategories();
     }
 
     #endregion
@@ -80,25 +74,9 @@ namespace vyger.Core.Services
         /// <summary>
         ///
         /// </summary>
-        public void AddExerciseCategory(ExerciseCategory add)
+        public void SaveExerciseCategories()
         {
             ExerciseCategoryCollection categories = GetExerciseCategories();
-
-            categories.Add(add);
-
-            _repository.SaveExerciseCategories(categories);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public void UpdateExerciseCategory(string id, ExerciseCategory overlay)
-        {
-            ExerciseCategoryCollection categories = GetExerciseCategories();
-
-            ExerciseCategory category = categories.GetByPrimaryKey(overlay.Id);
-
-            category.OverlayWith(overlay);
 
             _repository.SaveExerciseCategories(categories);
         }

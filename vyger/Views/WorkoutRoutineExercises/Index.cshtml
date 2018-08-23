@@ -8,41 +8,41 @@
   <div class="col-lg-8 col-md-10">
     @using (Html.BeginForm())
     {
-      @Html.AntiForgeryToken()
-      @Html.Partial("_Tabs", Model)
-      <div class="form-group">
-        <table class="table table-sortable">
-          @for (var d = 0; d < Model.Routine.Days; d++)
+    @Html.AntiForgeryToken()
+    @Html.Partial("_Tabs", Model)
+    <div class="form-group">
+      <table class="table table-sortable">
+        @for (var d = 0; d < Model.Routine.Days; d++)
+        {
+        <thead>
+          <tr>
+            <th style="width: 16px;"></th>
+            <th style="width: 200px">Week @Model.Week, Day @(d + 1)</th>
+            <th style="width: 24px;"></th>
+            <th class="text-right" colspan="2">
+              <a href="@Url.Action(" Create", new { id=Model.Routine.Id, day=d + 1 })" class="btn btn-sm btn-outline-success">
+                <i class="fa fa-fw fa-plus"></i> Add to Day @(d + 1)
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody day-id="@(d + 1)">
+          @foreach (var exercise in Model.Routine.RoutineExercises.Find(Model.Week, d + 1, ""))
           {
-            <thead>
-              <tr>
-                <th style="width: 16px;"></th>
-                <th style="width: 175px">Week @Model.Week, Day @(d + 1)</th>
-                <th style="width: 24px;"></th>
-                <th class="text-right" colspan="2">
-                  <a href="@Url.Action("Create", new { id = Model.Routine.Id, day = d + 1 })" class="btn btn-sm btn-outline-success">
-                    <i class="fa fa-fw fa-plus"></i> Add to Day @(d + 1)
-                  </a>
-                </th>
-              </tr>
-            </thead>
-            <tbody day-id="@(d + 1)">
-              @foreach (var exercise in Model.Routine.RoutineExercises.Find(Model.Week, d + 1, ""))
-              {
-                @Html.Partial("_Row", exercise)
-              }
-            </tbody>
+          @Html.Partial("_Row", exercise)
           }
-          <tfoot>
-            <tr>
-              <td colspan="5" class="text-left">
-                <!-- <button type="submit" class="btn btn-primary">save week</button> -->
-                <a href="@Url.Action("Index", "WorkoutRoutines")" class="btn btn-outline-secondary">cancel</a>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+        </tbody>
+        }
+        <tfoot>
+          <tr>
+            <td colspan="5" class="text-left">
+              <!-- <button type="submit" class="btn btn-primary">save week</button> -->
+              <a href="@Url.Action(" Index", "WorkoutRoutines" )" class="btn btn-outline-secondary">cancel</a>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
     }
   </div>
 </div>
@@ -50,107 +50,107 @@
 
 
 @section Scripts {
-  <script type="text/javascript">
-    $(function ()
+<script type="text/javascript">
+  $(function ()
+  {
+    //  base URL
+    var url = '@Url.Action("Index", new { id = Model.Routine.Id, week = Model.Week })';
+
+    function resequence($tbody, day)
     {
-      //  base URL
-      var url = '@Url.Action("Index", new { id = Model.Routine.Id, week = Model.Week })';
+      var ids = [];
 
-      function resequence($tbody, day)
+      $tbody.find('tr').each(function (idx)
       {
-        var ids = [];
+        var $exId = $(this).find('input[name$=ExerciseId]');
+        var $seq = $(this).find('input[name$=SequenceNumber]');
 
-        $tbody.find('tr').each(function (idx)
+        $seq.val(idx + 1);
+
+        ids.push($exId.val());
+      });
+
+      var post_url = url.replace('/Index', '/Sequence') + '&day=' + day + '&exercises=' + ids.join(',');
+
+      var data = { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() };
+
+      $.post(post_url, data)
+        .done(function (data)
         {
-          var $exId = $(this).find('input[name$=ExerciseId]');
-          var $seq = $(this).find('input[name$=SequenceNumber]');
+          var msg = 'Successfully Updated Exercise Sequences' +
+            ' (day ' + day + ')';
 
-          $seq.val(idx + 1);
+          $.growl.success(msg);
+        })
+        .fail(function (xhr)
+        {
+          var msg = 'Could Not Update Exercise Sequences' +
+            ' (day ' + day + ')' +
+            ' <br/> ' + xhr.statusText;
 
-          ids.push($exId.val());
+          $.growl.danger(msg);
         });
+    }
 
-        var post_url = url.replace('/Index', '/Sequence') + '&day=' + day + '&exercises=' + ids.join(',');
+    $('input[name$=WorkoutRoutine]').change(function ()
+    {
+      var $tr = $(this).closest('tr');
 
-        var data = { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() };
+      var routine_exercise = {
+        WeekId: $tr.find('input[name$=WeekId]').val(),
+        DayId: $tr.find('input[name$=DayId]').val(),
+        ExerciseId: $tr.find('input[name$=ExerciseId]').val(),
+        WorkoutRoutine: $tr.find('input[name$=WorkoutRoutine]').val(),
+        SequenceNumber: $tr.find('input[name$=SequenceNumber]').val(),
+        __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val()
+      };
 
-        $.post(post_url, data)
-          .done(function (data)
-          {
-            var msg = 'Successfully Updated Exercise Sequences' +
-              ' (day ' + day + ')';
+      routine_exercise.week = routine_exercise.WeekId;
+      routine_exercise.day = routine_exercise.DayId;
+      routine_exercise.exercise = routine_exercise.ExerciseId;
 
-            $.growl.success(msg);
-          })
-          .fail(function (xhr)
-          {
-            var msg = 'Could Not Update Exercise Sequences' +
-              ' (day ' + day + ')' +
-              ' <br/> ' + xhr.statusText;
+      var name = $tr.find('td').eq(1).html();
 
-            $.growl.danger(msg);
-          });
-      }
+      var post_url = url.replace('/Index', '/Edit') + '&day=' + routine_exercise.DayId + '&exercise=' + routine_exercise.ExerciseId;
 
-      $('input[name$=WorkoutRoutine]').change(function ()
-      {
-        var $tr = $(this).closest('tr');
-
-        var routine_exercise = {
-          WeekId: $tr.find('input[name$=WeekId]').val(),
-          DayId: $tr.find('input[name$=DayId]').val(),
-          ExerciseId: $tr.find('input[name$=ExerciseId]').val(),
-          WorkoutRoutine: $tr.find('input[name$=WorkoutRoutine]').val(),
-          SequenceNumber: $tr.find('input[name$=SequenceNumber]').val(),
-          __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val()
-        };
-
-        routine_exercise.week = routine_exercise.WeekId;
-        routine_exercise.day = routine_exercise.DayId;
-        routine_exercise.exercise = routine_exercise.ExerciseId;
-
-        var name = $tr.find('td').eq(1).html();
-
-        var post_url = url.replace('/Index', '/Edit') + '&day=' + routine_exercise.DayId + '&exercise=' + routine_exercise.ExerciseId;
-
-        $.post(post_url, routine_exercise)
-          .done(function (data)
-          {
-            var msg = 'Successfully Updated ' + name +
-              ' (day ' + routine_exercise.DayId + ')';
-
-            $tr.find('input[name$=WorkoutRoutine]').val(data.WorkoutRoutine);
-
-            $.growl.success(msg);
-          })
-          .fail(function (xhr)
-          {
-            var msg = 'Could Not Update ' + name +
-              ' (day ' + routine_exercise.DayId + ')' +
-              ' <br/> ' + xhr.statusText;
-
-            $.growl.danger(msg);
-          });
-      });
-
-      $('.table-sortable').sortable({
-        handle: '.drag-handler',
-        containerSelector: 'table',
-        itemPath: '> tbody',
-        itemSelector: 'tr',
-        placeholder: '<tr class="placeholder"/>',
-        delay: 250,
-        onDrop: function ($item, container, _super)
+      $.post(post_url, routine_exercise)
+        .done(function (data)
         {
-          var $tbody = $item.closest('tbody');
-          var day = $item.find('input[name$=DayId]').val();
+          var msg = 'Successfully Updated ' + name +
+            ' (day ' + routine_exercise.DayId + ')';
 
-          resequence($tbody, day);
+          $tr.find('input[name$=WorkoutRoutine]').val(data.WorkoutRoutine);
 
-          _super($item, container);
-        }
-      });
+          $.growl.success(msg);
+        })
+        .fail(function (xhr)
+        {
+          var msg = 'Could Not Update ' + name +
+            ' (day ' + routine_exercise.DayId + ')' +
+            ' <br/> ' + xhr.statusText;
+
+          $.growl.danger(msg);
+        });
     });
-  </script>
+
+    $('.table-sortable').sortable({
+      handle: '.drag-handler',
+      containerSelector: 'table',
+      itemPath: '> tbody',
+      itemSelector: 'tr',
+      placeholder: '<tr class="placeholder"/>',
+      delay: 250,
+      onDrop: function ($item, container, _super)
+      {
+        var $tbody = $item.closest('tbody');
+        var day = $item.find('input[name$=DayId]').val();
+
+        resequence($tbody, day);
+
+        _super($item, container);
+      }
+    });
+  });
+</script>
 }
 

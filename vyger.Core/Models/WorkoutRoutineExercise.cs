@@ -99,7 +99,7 @@ namespace vyger.Core.Models
             get { return _workoutRoutine; }
             set
             {
-                _workoutRoutine = value;
+                _workoutRoutine = value.AssertNotNull().ToUpper();
 
                 _sets = null;
             }
