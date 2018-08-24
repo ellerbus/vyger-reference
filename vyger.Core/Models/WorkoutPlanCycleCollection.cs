@@ -1,5 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Xml.Serialization;
 using Augment;
 
 namespace vyger.Core.Models
@@ -7,8 +11,9 @@ namespace vyger.Core.Models
     ///	<summary>
     ///
     ///	</summary>
+    [XmlRoot("workout-plan-exercises")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class WorkoutPlanCycleCollection : SingleKeyCollection<WorkoutPlanCycle, int>
+    public class WorkoutPlanCycleCollection : Collection<WorkoutPlanCycle>
     {
         #region Constructors
 
@@ -33,11 +38,6 @@ namespace vyger.Core.Models
 
         #region Methods
 
-        protected override int GetPrimaryKey(WorkoutPlanCycle item)
-        {
-            return item.CycleId;
-        }
-
         protected override void InsertItem(int index, WorkoutPlanCycle item)
         {
             base.InsertItem(index, item);
@@ -55,76 +55,21 @@ namespace vyger.Core.Models
         private void UpdateReferences(WorkoutPlanCycle item)
         {
             item.Plan = Plan;
-
-            //if (item.Routine != null && item.Routine.AllExercises != null && item.Exercise == null)
-            //{
-            //    //  only after the deserializer has finished it's setup
-            //    //  to we have the proper handles to the routine and exercises
-            //    item.Exercise = Routine.AllExercises.GetByPrimaryKey(item.ExerciseId);
-            //}
         }
 
-        public void AddRange(IEnumerable<WorkoutPlanCycle> cycles)
+        public IEnumerable<WorkoutPlanCycle> Filter(int cycleId, string exerciseId)
         {
-            if (cycles != null)
-            {
-                foreach (WorkoutPlanCycle cycle in cycles)
-                {
-                    Add(cycle);
-                }
-            }
+            return this.Where(x => x.CycleId == cycleId && x.ExerciseId == exerciseId);
         }
-
-        //public IEnumerable<WorkoutPlanCycle> Find(int weekId, int dayId, string exerciseId)
-        //{
-        //    return this
-        //        .Where(x => weekId == 0 || x.WeekId == weekId)
-        //        .Where(x => dayId == 0 || x.DayId == dayId)
-        //        .Where(x => exerciseId.IsNullOrEmpty() || x.ExerciseId.IsSameAs(exerciseId))
-        //        .OrderBy(x => x.WeekId)
-        //        .ThenBy(x => x.DayId)
-        //        .ThenBy(x => x.SequenceNumber)
-        //        .ThenBy(x => x.Exercise.Name);
-        //}
-
-        //public void Add(int dayId, string exerciseId, string workoutRoutine)
-        //{
-        //    workoutRoutine = WorkoutRoutineSetCollection.Format(workoutRoutine);
-
-        //    Exercise exercise = Routine.AllExercises.GetByPrimaryKey(exerciseId);
-
-        //    List<WorkoutPlanCycle> routineExercises = new List<WorkoutPlanCycle>();
-
-        //    for (int w = 0; w < Routine.Weeks; w++)
-        //    {
-        //        WorkoutPlanCycle routineExercise = new WorkoutPlanCycle()
-        //        {
-        //            Routine = Routine,
-        //            Exercise = exercise,
-        //            WeekId = w + 1,
-        //            DayId = dayId,
-        //            WorkoutRoutine = workoutRoutine,
-        //            SequenceNumber = 99
-        //        };
-
-        //        Add(routineExercise);
-        //    }
-        //}
-
-        //public void DeleteWorkoutRoutineExercise(int dayId, string exerciseId)
-        //{
-        //    IList<WorkoutPlanCycle> remove = Find(0, dayId, exerciseId).ToList();
-
-        //    foreach (WorkoutPlanCycle ex in remove)
-        //    {
-        //        Remove(ex);
-        //    }
-        //}
 
         #endregion
 
         #region Foreign Key Properties
 
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlIgnore]
         public WorkoutPlan Plan { get; private set; }
 
         #endregion

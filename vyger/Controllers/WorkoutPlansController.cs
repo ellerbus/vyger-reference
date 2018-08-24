@@ -1,50 +1,28 @@
-using System.Security;
 using System.Web.Mvc;
 using vyger.Core;
 using vyger.Core.Models;
 using vyger.Core.Services;
-using vyger.ViewModels;
 
 namespace vyger.Controllers
 {
-    [RoutePrefix("Workouts/Plans"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
+    [RoutePrefix("Workouts/Routines/{id}/Plans"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
     public partial class WorkoutPlansController : BaseController
     {
         #region Members
 
-        private IWorkoutPlanService _service;
-        private IWorkoutRoutineService _routines;
-        private IWorkoutLogService _logs;
+        private IPlanGeneratorService _generator;
+        private IWorkoutRoutineService _service;
 
         #endregion
 
         #region Constructors
 
         public WorkoutPlansController(
-            IWorkoutPlanService service,
-            IWorkoutRoutineService routines,
-            IWorkoutLogService logs)
+            IPlanGeneratorService generator,
+            IWorkoutRoutineService service)
         {
+            _generator = generator;
             _service = service;
-            _routines = routines;
-            _logs = logs;
-        }
-
-        #endregion
-
-        #region "On" Methods
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext.Exception is SecurityException)
-            {
-                AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
-
-                filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction("Index");
-            }
-
-            base.OnException(filterContext);
         }
 
         #endregion
@@ -52,11 +30,16 @@ namespace vyger.Controllers
         #region List Methods
 
         [HttpGet, Route("Index")]
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(string id)
         {
-            WorkoutPlanCollection plans = _service.GetWorkoutPlans();
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            return View(plans);
+            if (routine.Plans.Count == 0)
+            {
+                return RedirectToAction("Create", new { id });
+            }
+
+            return View(routine);
         }
 
         #endregion
@@ -64,39 +47,25 @@ namespace vyger.Controllers
         #region Create Methods
 
         [HttpGet, Route("Create")]
-        public virtual ActionResult Create()
+        public virtual ActionResult Create(string id)
         {
-            WorkoutPlanViewModel vm = new WorkoutPlanViewModel()
-            {
-                Routines = _routines.GetWorkoutRoutines()
-            };
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            return View(vm);
+            return View(routine);
         }
 
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
-        public virtual ActionResult Create(WorkoutPlanViewModel post)
+        public virtual ActionResult CreatePlan(string id)
         {
-            if (ModelState.IsValid)
-            {
-                WorkoutRoutine routine = _routines.GetWorkoutRoutines().GetByPrimaryKey(post.RoutineId);
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-                WorkoutPlan plan = new WorkoutPlan(routine);
+            WorkoutPlan plan = _generator.CreateWorkoutPlan(routine);
 
-                WorkoutLogCollection logs = _logs.GetWorkoutLogs();
+            routine.Plans.Add(plan);
 
-                _service.CreateCycle(plan, logs.GetRecentWorkoutLogs(plan.Id, 1));
+            _service.SaveWorkoutRoutines();
 
-                _service.AddWorkoutPlan(plan);
-
-                AddFlashMessage(FlashMessageType.Success, "Workout Plan created successfully");
-
-                return RedirectToAction("Index", "WorkoutPlanExercises", new { id = plan.Id, cycle = 1 });
-            }
-
-            post.Routines = _routines.GetWorkoutRoutines();
-
-            return View(post);
+            return RedirectToAction("Index", new { id, plan = plan.Id });
         }
 
         #endregion

@@ -56,18 +56,14 @@ namespace vyger.Core.Models
             item.Routine = Routine;
         }
 
-        public void AddRange(IEnumerable<WorkoutRoutineExercise> exercises)
-        {
-            if (exercises != null)
-            {
-                foreach (WorkoutRoutineExercise exercise in exercises)
-                {
-                    Add(exercise);
-                }
-            }
-        }
-
-        public IEnumerable<WorkoutRoutineExercise> Find(int weekId, int dayId, string exerciseId)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="weekId">1-9 or 0 for all</param>
+        /// <param name="dayId">1-7 or 0 for all</param>
+        /// <param name="exerciseId">ID or null for all</param>
+        /// <returns></returns>
+        public IEnumerable<WorkoutRoutineExercise> Filter(int weekId, int dayId, string exerciseId)
         {
             return this
                 .Where(x => weekId == 0 || x.WeekId == weekId)
@@ -76,7 +72,7 @@ namespace vyger.Core.Models
                 .OrderBy(x => x.WeekId)
                 .ThenBy(x => x.DayId)
                 .ThenBy(x => x.SequenceNumber)
-                .ThenBy(x => x.Exercise.Name);
+                .ThenBy(x => x.Exercise?.DetailName);
         }
 
         public void Add(int dayId, string exerciseId, string workoutRoutine)
@@ -105,7 +101,7 @@ namespace vyger.Core.Models
 
         public void DeleteWorkoutRoutineExercise(int dayId, string exerciseId)
         {
-            IList<WorkoutRoutineExercise> remove = Find(0, dayId, exerciseId).ToList();
+            IList<WorkoutRoutineExercise> remove = Filter(0, dayId, exerciseId).ToList();
 
             foreach (WorkoutRoutineExercise ex in remove)
             {

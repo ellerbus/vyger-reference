@@ -13,7 +13,7 @@ namespace vyger.Core.Models
 
         public WorkoutRoutineSetCollection(string workoutRoutine)
         {
-            IEnumerable<WorkoutRoutineSet> sets = workoutRoutine.ToUpper()
+            IEnumerable<WorkoutRoutineSet> sets = workoutRoutine
                 .Replace(" ", "")
                 .Split(',')
                 .Select(x => x.Trim())

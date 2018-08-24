@@ -103,33 +103,18 @@ namespace vyger.Core.Models
         /// <summary>
         /// Gets a single WorkoutLog based on the given primary key
         /// </summary>
-        public IEnumerable<WorkoutLog> Filter(string planId, int cycleId)
+        public IEnumerable<WorkoutLog> Filter(string routineId, int planId, int cycleId)
         {
             if (cycleId > 1)
             {
                 IEnumerable<WorkoutLog> lastCycle = this
-                   .Where(x => x.PlanId == planId && x.CycleId == cycleId)
+                   .Where(x => x.RoutineId == routineId && x.PlanId == planId && x.CycleId == cycleId)
                    .OrderBy(x => x.SequenceNumber)
                    .ThenBy(x => x.Exercise.Name);
 
                 foreach (WorkoutLog item in lastCycle)
                 {
                     yield return item;
-                }
-            }
-
-            HashSet<string> exercises = new HashSet<string>();
-
-            IEnumerable<WorkoutLog> logs = this.OrderByDescending(x => x.LogDate);
-
-            //  workout backwards
-            foreach (WorkoutLog log in logs)
-            {
-                if (!exercises.Contains(log.ExerciseId))
-                {
-                    yield return log;
-
-                    exercises.Add(log.ExerciseId);
                 }
             }
         }

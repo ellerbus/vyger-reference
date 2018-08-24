@@ -2,7 +2,7 @@
   ViewBag.Title = "Plans";
 }
 
-@model IList<WorkoutPlan>
+@model WorkoutRoutine
 
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-md-10">
@@ -10,7 +10,7 @@
       <thead>
         <tr>
           <th colspan="3">
-            <a href="@Url.Action("Create")" class="btn btn-sm btn-outline-success float-right">
+            <a href="@Url.Action("Create", new { id = Model.Id })" class="btn btn-sm btn-outline-success float-right">
               <i class="fa fa-fw fa-plus"></i> Create
             </a>
             Plan
@@ -18,12 +18,12 @@
         </tr>
       </thead>
       <tbody>
-        @foreach (var plan in Model.OrderByDescending(x => x.CreatedAt))
+        @foreach (var plan in Model.Plans.OrderByDescending(x => x.Id))
         {
           <tr>
             <td>
-              <a href="@Url.Action("Index", "WorkoutPlanCycles", new { id = plan.Id })" style="display: block;">
-                @plan.Routine.Name
+              <a href="@Url.Action("Index", "WorkoutPlanCycles", new { id = Model.Id, plan = plan.Id })" style="display: block;">
+                @Model.Name
               </a>
             </td>
             <td style="width: 125px;" class="text-center">

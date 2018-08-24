@@ -4,7 +4,7 @@
   @using (Html.BeginFieldScope(Model, "Logs"))
   {
     <td class="drag-handler"></td>
-    <td>
+    <td style="vertical-align: middle;">
       @Html.HiddenFor(m => m.PlanId)
       @Html.HiddenFor(m => m.CycleId)
       @Html.HiddenFor(m => m.WeekId)
@@ -13,9 +13,9 @@
       @Html.HiddenFor(m => m.SequenceNumber)
       @Model.Exercise.Category.Name @Model.Exercise.Name
     </td>
-    <td class="text-center">
+    <td class="text-center" style="vertical-align: middle;">
       <a class="pointer delete-log">
-        <i class="fa fa-fw fa-times text-muted"></i>
+        <i class="fa fa-fw fa-times text-danger"></i>
       </a>
     </td>
     <td>

@@ -9,7 +9,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th colspan="2">
+          <th colspan="3">
             <a href="@Url.Action("Create")" class="btn btn-sm btn-outline-success float-right">
               <i class="fa fa-fw fa-plus"></i> Create
             </a>
@@ -27,8 +27,13 @@
               </a>
             </td>
             <td class="text-right">
-              <a href="@Url.Action("Index", "WorkoutRoutineExercises", new { id = routine.Id, week = 1 })">
+              <a href="@Url.Action("Index", "WorkoutRoutineExercises" , new { id=routine.Id, week=1 })">
                 exercises
+              </a>
+            </td>
+            <td class="text-right">
+              <a href="@Url.Action("Index", "WorkoutPlans", new { id = routine.Id })">
+                plans
               </a>
             </td>
           </tr>

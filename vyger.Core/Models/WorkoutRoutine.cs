@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Xml.Serialization;
 using Augment;
@@ -17,6 +18,7 @@ namespace vyger.Core.Models
         public WorkoutRoutine()
         {
             RoutineExercises = new WorkoutRoutineExerciseCollection(this);
+            Plans = new WorkoutPlanCollection(this);
         }
 
         public WorkoutRoutine(WorkoutRoutine routine)
@@ -73,6 +75,7 @@ namespace vyger.Core.Models
         ///	<summary>
         ///
         ///	</summary>
+        [Key]
         [DisplayName("ID")]
         [XmlAttribute("id")]
         public string Id
@@ -119,6 +122,12 @@ namespace vyger.Core.Models
         /// </summary>
         [XmlArray("workout-routine-exercises"), XmlArrayItem("workout-routine-exercise")]
         public WorkoutRoutineExerciseCollection RoutineExercises { get; private set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlArray("workout-plans"), XmlArrayItem("workout-plan")]
+        public WorkoutPlanCollection Plans { get; private set; }
 
         #endregion
     }

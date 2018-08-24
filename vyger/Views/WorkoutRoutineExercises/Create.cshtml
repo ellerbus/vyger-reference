@@ -2,16 +2,23 @@
   ViewBag.Title = "Add Routine Exercise";
 }
 
-@model WorkoutRoutineExerciseViewModel
+@model WorkoutRoutineExerciseCreateViewModel
 
 <div class="row justify-content-md-center">
   <div class="col-lg-6 col-md-8">
     @using (Html.BeginForm())
     {
       @Html.AntiForgeryToken()
-      @Html.ValidationSummary();
-      @Html.HiddenFor(m => m.RoutineExercise.WeekId);
-      @Html.HiddenFor(m => m.RoutineExercise.DayId);
+      @Html.ValidationSummary()
+      @Html.HiddenFor(m => m.RoutineExercise.WeekId)
+      @Html.HiddenFor(m => m.RoutineExercise.DayId)
+
+      <div class="form-group">
+        @Html.DropDownList("GroupId", Model.Groups.ToSelectList(null), "(exercise group)", new { @class = "form-control" })
+      </div>
+      <div class="form-group">
+        @Html.DropDownList("CategoryId", Model.Categories.ToSelectList(null), "(exercise category)", new { @class = "form-control" })
+      </div>
       <div class="form-group">
         @Html.DropDownListFor(m => m.RoutineExercise.ExerciseId, Model.Routine.AllExercises.ToSelectList(), "(exercise)", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.RoutineExercise.ExerciseId, "", new { @class = "form-text text-danger" })
@@ -31,3 +38,17 @@
     }
   </div>
 </div>
+
+@section Scripts{
+  <script type="text/javascript">
+    $(function ()
+    {
+      var queryUrl = '@Url.Action("Query", "Exercises")';
+      var $groupId = $('select[name=GroupId]');
+      var $categoryId = $('select[name=CategoryId]');
+      var $exerciseId = $('select[name="RoutineExercise.ExerciseId"]');
+
+      setupExercisePicker(queryUrl, $groupId, $categoryId, $exerciseId);
+    });
+  </script>
+}

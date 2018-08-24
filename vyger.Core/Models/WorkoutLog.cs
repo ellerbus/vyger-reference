@@ -66,13 +66,12 @@ namespace vyger.Core.Models
         /// </summary>
         public void OverlayWith(WorkoutLog other)
         {
-            Workout = other.Workout;
-            PlanId = other.PlanId;
-            CycleId = other.CycleId;
-            WeekId = other.WeekId;
-            DayId = other.DayId;
+            //PlanId = other.PlanId;
+            //CycleId = other.CycleId;
+            //WeekId = other.WeekId;
+            //DayId = other.DayId;
             SequenceNumber = other.SequenceNumber;
-            Workout = other.Workout;
+            Workout = WorkoutLogSetCollection.Format(other.Workout);
         }
 
         #endregion
@@ -111,22 +110,25 @@ namespace vyger.Core.Models
             get { return _workout; }
             set
             {
-                string temp = value.AssertNotNull().ToUpper();
-
-                _sets = new WorkoutLogSetCollection(temp);
-
-                _workout = _sets.Display;
+                _workout = WorkoutLogSetCollection.Format(value.AssertNotNull());
             }
         }
 
         private string _workout;
 
         ///	<summary>
+        ///	Gets / Sets database column 'routine_id'
+        ///	</summary>
+        [DisplayName("Routine Id")]
+        [XmlAttribute("routine-id")]
+        public string RoutineId { get; set; }
+
+        ///	<summary>
         ///	Gets / Sets database column 'plan_id'
         ///	</summary>
         [DisplayName("Plan Id")]
         [XmlAttribute("plan-id")]
-        public string PlanId { get; set; }
+        public int PlanId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'cycle_id'

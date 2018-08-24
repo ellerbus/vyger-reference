@@ -1,4 +1,3 @@
-using System.Security;
 using System.Web.Mvc;
 using vyger.Core;
 using vyger.Core.Models;
@@ -25,23 +24,6 @@ namespace vyger.Controllers
 
         #endregion
 
-        #region "On" Methods
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext.Exception is SecurityException)
-            {
-                AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
-
-                filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction("Index");
-            }
-
-            base.OnException(filterContext);
-        }
-
-        #endregion
-
         #region List Methods
 
         [HttpGet, Route("Index")]
@@ -61,11 +43,7 @@ namespace vyger.Controllers
         {
             WorkoutRoutineViewModel vm = new WorkoutRoutineViewModel();
 
-            const string ids = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-            int idx = _service.GetWorkoutRoutines().Count;
-
-            vm.Id = ids[idx].ToString();
+            vm.Id = Constants.SequenceId(_service.GetWorkoutRoutines().Count);
 
             return View(vm);
         }
@@ -75,7 +53,11 @@ namespace vyger.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.AddWorkoutRoutine(post);
+                WorkoutRoutineCollection routines = _service.GetWorkoutRoutines();
+
+                routines.Add(post);
+
+                _service.SaveWorkoutRoutines();
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Routine created successfully");
 
@@ -111,7 +93,11 @@ namespace vyger.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.UpdateWorkoutRoutine(id, post);
+                WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
+
+                routine.OverlayWith(post);
+
+                _service.SaveWorkoutRoutines();
 
                 AddFlashMessage(FlashMessageType.Success, "Workout Routine saved successfully");
 

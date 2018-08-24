@@ -1,17 +1,15 @@
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Xml.Serialization;
 using Augment;
-using vyger.Core;
 
 namespace vyger.Core.Models
 {
     ///	<summary>
     ///
     ///	</summary>
-    [XmlType("workout-plan-cycle")]
+    [XmlRoot("workout-plan-exercise")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlanCycle
     {
@@ -19,8 +17,6 @@ namespace vyger.Core.Models
 
         public WorkoutPlanCycle()
         {
-            PlanExercises = new WorkoutPlanExerciseCollection(this);
-            PlanLogs = new WorkoutPlanLogCollection(this);
         }
 
         #endregion
@@ -39,11 +35,11 @@ namespace vyger.Core.Models
         {
             get
             {
-                string pk = $"[ {CycleId}]";
+                string id = $"[{CycleId}, {ExerciseId}]";
 
-                string uq = $"[{Plan?.Routine?.Name}]";
+                string nm = $"[{Exercise?.Name}]";
 
-                return "{0}, pk={1}, uq={2}".FormatArgs("WorkoutPlanCycle", pk, uq);
+                return "{0}, id={1}, nm={2}".FormatArgs("WorkoutPlanExercise", id, nm);
             }
         }
 
@@ -56,7 +52,9 @@ namespace vyger.Core.Models
         /// </summary>
         public void OverlayWith(WorkoutPlanCycle other)
         {
-            Status = other.Status;
+            Weight = other.Weight;
+            Reps = other.Reps;
+            Pullback = other.Pullback;
         }
 
         #endregion
@@ -64,24 +62,58 @@ namespace vyger.Core.Models
         #region Properties
 
         ///	<summary>
-        ///	Gets / Sets database column 'cycle_id'
+        ///
         ///	</summary>
-        [Required]
+        [Key]
         [DisplayName("Cycle Id")]
         [XmlAttribute("cycle-id")]
         public int CycleId { get; set; }
 
-        /// <summary>
+        ///	<summary>
         ///
-        /// </summary>
-        [XmlAttribute("status")]
-        public StatusTypes Status { get; set; }
+        ///	</summary>
+        [Key]
+        [DisplayName("Exercise Id")]
+        [XmlAttribute("exercise-id")]
+        public string ExerciseId { get; set; }
+
+        ///	<summary>
+        ///	Gets / Sets database column 'weight'
+        ///	</summary>
+        [DisplayName("Weight")]
+        [XmlAttribute("weight")]
+        public int Weight { get; set; }
+
+        ///	<summary>
+        ///	Gets / Sets database column 'reps'
+        ///	</summary>
+        [DisplayName("Reps")]
+        [XmlAttribute("reps")]
+        public int Reps { get; set; }
+
+        ///	<summary>
+        ///	Gets / Sets database column 'pullback'
+        ///	</summary>
+        [DisplayName("Pullback")]
+        [XmlAttribute("pullback")]
+        public int Pullback { get; set; }
+
+        ///	<summary>
+        ///	Gets / Sets database column 'is_calculated'
+        ///	</summary>
+        [Required]
+        [DisplayName("Is Calculated")]
+        [XmlAttribute("is-calculated")]
+        public bool IsCalculated { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        [XmlAttribute("created-at")]
-        public DateTime CreatedAt { get; set; }
+        [XmlIgnore]
+        public double OneRepMax
+        {
+            get { return WorkoutCalculator.OneRepMax(Weight, Reps); }
+        }
 
         #endregion
 
@@ -94,16 +126,25 @@ namespace vyger.Core.Models
         public WorkoutPlan Plan { get; set; }
 
         ///	<summary>
-        ///
+        ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
-        [XmlArray("workout-plan-exercises"), XmlArrayItem("workout-plan-exercise")]
-        public WorkoutPlanExerciseCollection PlanExercises { get; private set; }
+        [XmlIgnore]
+        public Exercise Exercise
+        {
+            get
+            {
+                if (Plan == null || Plan.Routine == null || Plan.Routine.AllExercises == null)
+                {
+                    return null;
+                }
 
-        ///	<summary>
-        ///
-        ///	</summary>
-        [XmlArray("workout-plan-logs"), XmlArrayItem("workout-plan-log")]
-        public WorkoutPlanLogCollection PlanLogs { get; private set; }
+                Exercise ex = null;
+
+                Plan.Routine.AllExercises.TryGetByPrimaryKey(ExerciseId, out ex);
+
+                return ex;
+            }
+        }
 
         #endregion
     }

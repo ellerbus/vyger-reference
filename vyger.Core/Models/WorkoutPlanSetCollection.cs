@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace vyger.Core.Models
 {
@@ -14,7 +13,7 @@ namespace vyger.Core.Models
 
         public WorkoutPlanSetCollection(string workoutPlan)
         {
-            IEnumerable<WorkoutPlanSet> sets = workoutPlan.ToUpper()
+            IEnumerable<WorkoutPlanSet> sets = workoutPlan
                 .Replace(" ", "")
                 .Split(',')
                 .Select(x => x.Trim())
@@ -28,28 +27,16 @@ namespace vyger.Core.Models
 
         #region Methods
 
-        public static string Format(string logPlan)
+        public static string Format(string workoutPlan)
         {
-            WorkoutPlanSetCollection sets = new WorkoutPlanSetCollection(logPlan);
+            WorkoutPlanSetCollection sets = new WorkoutPlanSetCollection(workoutPlan);
 
             return sets.Display;
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (WorkoutPlanSet set in this)
-            {
-                if (sb.Length > 0)
-                {
-                    sb.Append(", ");
-                }
-
-                sb.Append(set.Display);
-            }
-
-            return sb.ToString();
+            return string.Join(", ", this.Select(x => x.Display));
         }
 
         #endregion

@@ -19,16 +19,6 @@ namespace vyger.Core.Services
         WorkoutRoutineCollection GetWorkoutRoutines();
 
         /// <summary>
-        ///
-        /// </summary>
-        void AddWorkoutRoutine(WorkoutRoutine routine);
-
-        /// <summary>
-        ///
-        /// </summary>
-        void UpdateWorkoutRoutine(string id, WorkoutRoutine overlay);
-
-        /// <summary>
         /// 
         /// </summary>
         void SaveWorkoutRoutines();
@@ -95,32 +85,6 @@ namespace vyger.Core.Services
             IEnumerable<WorkoutRoutine> routines = _repository.GetWorkoutRoutines();
 
             return new WorkoutRoutineCollection(exercises, routines);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public void AddWorkoutRoutine(WorkoutRoutine add)
-        {
-            WorkoutRoutineCollection routines = GetWorkoutRoutines();
-
-            routines.Add(add);
-
-            _repository.SaveWorkoutRoutines(routines);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public void UpdateWorkoutRoutine(string id, WorkoutRoutine overlay)
-        {
-            WorkoutRoutineCollection routines = GetWorkoutRoutines();
-
-            WorkoutRoutine routine = routines.GetByPrimaryKey(overlay.Id);
-
-            routine.OverlayWith(overlay);
-
-            _repository.SaveWorkoutRoutines(routines);
         }
 
         /// <summary>

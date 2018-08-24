@@ -98,19 +98,6 @@ namespace vyger.Core.Models
             }
         }
 
-        //public IEnumerable<Exercise> NotIncluding(IEnumerable<WorkoutRoutineExercise> routineExercises)
-        //{
-        //    HashSet<string> ids = new HashSet<string>(routineExercises.Select(x => x.ExerciseId));
-
-        //    foreach (Exercise ex in this)
-        //    {
-        //        if (!ids.Contains(ex.Id))
-        //        {
-        //            yield return ex;
-        //        }
-        //    }
-        //}
-
         #endregion
 
         #region Foreign Keys

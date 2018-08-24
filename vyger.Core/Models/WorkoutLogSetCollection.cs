@@ -15,7 +15,7 @@ namespace vyger.Core.Models
 
         public WorkoutLogSetCollection(string workoutLog)
         {
-            IEnumerable<WorkoutLogSet> sets = workoutLog.ToUpper()
+            IEnumerable<WorkoutLogSet> sets = workoutLog
                 .Replace(" ", "")
                 .Split(',')
                 .Select(x => x.Trim())

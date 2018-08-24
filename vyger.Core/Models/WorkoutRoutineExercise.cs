@@ -53,7 +53,7 @@ namespace vyger.Core.Models
         public void OverlayWith(WorkoutRoutineExercise other)
         {
             SequenceNumber = other.SequenceNumber;
-            WorkoutRoutine = other.WorkoutRoutine;
+            WorkoutRoutine = WorkoutRoutineSetCollection.Format(other.WorkoutRoutine);
         }
 
         #endregion
@@ -63,6 +63,7 @@ namespace vyger.Core.Models
         ///	<summary>
         ///
         ///	</summary>
+        [Key]
         [DisplayName("Week Id")]
         [XmlAttribute("week-id")]
         public int WeekId { get; set; }
@@ -70,6 +71,7 @@ namespace vyger.Core.Models
         ///	<summary>
         ///
         ///	</summary>
+        [Key]
         [DisplayName("Day Id")]
         [XmlAttribute("day-id")]
         public int DayId { get; set; }
@@ -77,6 +79,7 @@ namespace vyger.Core.Models
         ///	<summary>
         ///
         ///	</summary>
+        [Key]
         [DisplayName("Exercise Id")]
         [XmlAttribute("exercise-id")]
         public string ExerciseId { get; set; }
@@ -84,7 +87,6 @@ namespace vyger.Core.Models
         ///	<summary>
         ///
         ///	</summary>
-        [Required]
         [DisplayName("Sequence Number")]
         [XmlAttribute("sequence-number")]
         public int SequenceNumber { get; set; }
@@ -99,7 +101,7 @@ namespace vyger.Core.Models
             get { return _workoutRoutine; }
             set
             {
-                _workoutRoutine = value.AssertNotNull().ToUpper();
+                _workoutRoutine = WorkoutRoutineSetCollection.Format(value.AssertNotNull());
 
                 _sets = null;
             }

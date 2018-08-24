@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using Augment;
+using EnsureThat;
 
 namespace vyger.Core
 {
@@ -25,6 +24,7 @@ namespace vyger.Core
         {
             public const int First = 10000;
             public const int Previous = -10000;
+            public const int Same = 0;
             public const int Next = -99999;
             public const int Last = 99999;
         }
@@ -132,6 +132,9 @@ namespace vyger.Core
         public const int MinReps = 1;
         public const int MaxReps = 12;
 
+        public const int MinPullback = 0;
+        public const int MaxPullback = 50;
+
         public const int MinWeight = 1;
         public const int MaxWeight = 9999;
 
@@ -157,99 +160,24 @@ namespace vyger.Core
 
         #endregion
 
-        #region Char Generator
+        #region Simple Sequencer
 
-        public static class IdGenerator
+        public static string SequenceId(int id, int len = 2)
         {
-            #region Members
+            Ensure.That(id, nameof(id)).IsGt(0);
 
-            private static RNGCryptoServiceProvider _crypto = new RNGCryptoServiceProvider();
+            const string alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            public const string _alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+            Stack<char> stack = new Stack<char>();
 
-            private static long _lastTick;
-
-            private static readonly Stopwatch _stopwatch = new Stopwatch();
-
-            private static object _lock = new object();
-
-            #endregion
-
-            #region Methods
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="size"></param>
-            /// <returns></returns>
-            public static string Random(int size = 8)
+            while (id > 0)
             {
-                lock (_lock)
-                {
-                    byte[] data = new byte[size];
+                stack.Push(alphabet[id % alphabet.Length]);
 
-                    _crypto.GetNonZeroBytes(data);
-
-                    char[] chars = new char[size];
-
-                    for (int i = 0; i < size; i++)
-                    {
-                        chars[i] = _alphabet[data[i] % (_alphabet.Length - 1)];
-                    }
-
-                    return new string(chars);
-                }
+                id /= alphabet.Length;
             }
 
-            /// <summary>
-            /// Returns a sequential unique id 12 characters in length
-            /// (not intended for distributed ID generation)
-            /// </summary>
-            /// <returns></returns>
-            public static string Next()
-            {
-                lock (_lock)
-                {
-                    if (DateTime.UtcNow.Ticks > _lastTick)
-                    {
-                        _stopwatch.Restart();
-
-                        _lastTick = DateTime.UtcNow.Ticks;
-                    }
-
-                    _lastTick += _stopwatch.ElapsedTicks;
-
-                    return Encode(_lastTick);
-                }
-            }
-
-            /// <summary>
-            /// Encode the given number into a Base36 string
-            /// </summary>
-            /// <param name="input"></param>
-            /// <returns></returns>
-            private static string Encode(long input)
-            {
-                if (input < 0)
-                {
-                    throw new ArgumentOutOfRangeException("input", input, "input cannot be negative");
-                }
-
-                Stack<char> result = new Stack<char>();
-
-                while (input != 0)
-                {
-                    int index = (int)(input % _alphabet.Length);
-
-                    result.Push(_alphabet[index]);
-
-                    input /= _alphabet.Length;
-                }
-
-                return new string(result.ToArray());
-            }
-
-            #endregion
+            return new string(stack.ToArray()).PadLeft(len, '0');
         }
 
         #endregion

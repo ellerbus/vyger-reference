@@ -18,9 +18,9 @@ namespace vyger.Core.Models
         {
         }
 
-        public ExerciseCategoryCollection(IEnumerable<ExerciseCategory> groups) : this()
+        public ExerciseCategoryCollection(IEnumerable<ExerciseCategory> categories) : this()
         {
-            AddRange(groups);
+            AddRange(categories);
         }
 
         #endregion

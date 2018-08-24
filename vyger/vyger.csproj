@@ -119,6 +119,7 @@
   <ItemGroup>
     <Content Include="Content\AccessDenied.png" />
     <Content Include="Content\Growler.js" />
+    <Content Include="Content\Helpers.js" />
     <Content Include="Content\NavBar.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
@@ -158,6 +159,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\WorkoutLogsController.cs" />
+    <Compile Include="Controllers\WorkoutPlansController.cs" />
+    <Compile Include="Controllers\WorkoutRoutineExercisesController.cs" />
+    <Compile Include="Controllers\WorkoutRoutinesController.cs" />
     <Compile Include="Controllers\_BaseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -167,6 +171,10 @@
     <Compile Include="ViewModels\ExerciseIndexViewModel.cs" />
     <Compile Include="ViewModels\ExerciseDetailViewModel.cs" />
     <Compile Include="ViewModels\WorkoutLogDetailViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutRoutineExerciseDeleteViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutRoutineExerciseIndexViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutRoutineExerciseCreateViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutRoutineViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -176,6 +184,17 @@
     <Content Include="Views\WorkoutLogs\Index.cshtml" />
     <Content Include="Views\WorkoutLogs\_DetailRow.cshtml" />
     <Content Include="Views\WorkoutLogs\Details.cshtml" />
+    <Content Include="Views\WorkoutRoutines\Create.cshtml" />
+    <Content Include="Views\WorkoutRoutines\Edit.cshtml" />
+    <Content Include="Views\WorkoutRoutines\Index.cshtml" />
+    <Content Include="Views\WorkoutRoutines\_Details.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\Create.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\Delete.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\Index.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\_IndexRow.cshtml" />
+    <Content Include="Views\WorkoutRoutineExercises\_IndexTabs.cshtml" />
+    <Content Include="Views\WorkoutPlans\Index.cshtml" />
+    <Content Include="Views\WorkoutPlans\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

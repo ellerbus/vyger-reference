@@ -38,6 +38,7 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
   <script src="~/Content/Growler.js"></script>
+  <script src="~/Content/Helpers.js"></script>
   @RenderSection("Scripts", required: false)
 
   <script type="text/javascript">
@@ -45,6 +46,7 @@
     {
       $('.flash-message').fadeOut(7000);
       $('[data-toggle=tooltip]').tooltip();
+      $('.validation-summary-errors').addClass('alert alert-danger');
     });
   </script>
 </body>

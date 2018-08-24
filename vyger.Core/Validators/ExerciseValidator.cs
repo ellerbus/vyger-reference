@@ -16,10 +16,13 @@ namespace vyger.Core.Validators
             IExerciseGroupService groups,
             IExerciseCategoryService categories,
             IExerciseService service)
+
         {
             _groups = groups;
             _categories = categories;
             _service = service;
+
+            CascadeMode = CascadeMode.Continue;
 
             RuleFor(x => x.GroupId)
                 .Cascade(CascadeMode.StopOnFirstFailure)

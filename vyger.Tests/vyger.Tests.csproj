@@ -95,6 +95,9 @@
   <ItemGroup>
     <Compile Include="Any.cs" />
     <Compile Include="Builder.cs" />
+    <Compile Include="Core\Models\WorkoutRoutineExerciseTests.cs" />
+    <Compile Include="Core\Models\WorkoutRoutineSetTests.cs" />
+    <Compile Include="Core\Models\WorkoutRoutineTests.cs" />
     <Compile Include="Core\MoxyTesting.cs" />
     <Compile Include="Core\RegexPatternTests.cs" />
     <Compile Include="Core\WorkoutCalculatorTests.cs" />

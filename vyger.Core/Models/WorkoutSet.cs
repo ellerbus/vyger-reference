@@ -10,7 +10,7 @@ namespace vyger.Core.Models
     {
         #region Members
 
-        private static readonly Regex _regex = new Regex(Constants.Regex.WorkoutPatterns.WorkoutSet, RegexOptions.Compiled);
+        private static readonly Regex _regex = new Regex(Constants.Regex.WorkoutPatterns.WorkoutSet, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace vyger.Core.Models
 
         public WorkoutSet(string workoutSet) : this()
         {
-            Match match = _regex.Match(workoutSet.ToUpper());
+            Match match = _regex.Match(workoutSet);
 
             foreach (Group group in match.Groups.Cast<Group>().Where(x => x.Success))
             {
@@ -39,7 +39,7 @@ namespace vyger.Core.Models
                         break;
                     case "repmax":
                         Weight = 0;
-                        RepMax = int.Parse(group.Value.GetLeftOf("RM"));
+                        RepMax = int.Parse(group.Value.ToUpper().GetLeftOf("RM"));
                         break;
                     case "ref":
                         Reference = group.Value.Substring(1, group.Value.Length - 2);
@@ -137,6 +137,10 @@ namespace vyger.Core.Models
                 case 'n':
                 case 'N':
                     return Constants.Referencing.Next;
+
+                //  same
+                case '*':
+                    return Constants.Referencing.Same;
 
                 case '1':
                     return 1;

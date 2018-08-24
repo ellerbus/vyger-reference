@@ -2,57 +2,72 @@
   ViewBag.Title = "Routine Exercises";
 }
 
-@model WorkoutRoutineExerciseViewModel
+@model WorkoutRoutineExerciseIndexViewModel
 
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-md-10">
     @using (Html.BeginForm())
     {
-    @Html.AntiForgeryToken()
-    @Html.Partial("_Tabs", Model)
-    <div class="form-group">
-      <table class="table table-sortable">
-        @for (var d = 0; d < Model.Routine.Days; d++)
-        {
-        <thead>
-          <tr>
-            <th style="width: 16px;"></th>
-            <th style="width: 200px">Week @Model.Week, Day @(d + 1)</th>
-            <th style="width: 24px;"></th>
-            <th class="text-right" colspan="2">
-              <a href="@Url.Action(" Create", new { id=Model.Routine.Id, day=d + 1 })" class="btn btn-sm btn-outline-success">
-                <i class="fa fa-fw fa-plus"></i> Add to Day @(d + 1)
-              </a>
-            </th>
-          </tr>
-        </thead>
-        <tbody day-id="@(d + 1)">
-          @foreach (var exercise in Model.Routine.RoutineExercises.Find(Model.Week, d + 1, ""))
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary()
+      @Html.Hidden("Name", Model.Routine.Name)
+      @Html.Hidden("Weeks", Model.Routine.Weeks)
+      @Html.Hidden("Days", Model.Routine.Days)
+
+
+      @Html.Partial("_IndexTabs", Model)
+      <div class="form-group">
+        <table class="table table-sortable">
+          @for (var d = 0; d < Model.Routine.Days; d++)
           {
-          @Html.Partial("_Row", exercise)
+            <thead>
+              <tr>
+                <th style="width: 16px;"></th>
+                <th style="width: 200px">Week @Model.Week, Day @(d + 1)</th>
+                <th style="width: 24px;"></th>
+                <th class="text-right" colspan="2">
+                  <a href="@Url.Action("Create", new { id=Model.Routine.Id, day=d + 1 })" class="btn btn-sm btn-outline-success">
+                    <i class="fa fa-fw fa-plus"></i> Day @(d + 1)
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            <tbody day-id="@(d + 1)">
+              @foreach (var exercise in Model.Routine.RoutineExercises.Filter(Model.Week, d + 1, ""))
+              {
+                @Html.Partial("_IndexRow", exercise)
+              }
+            </tbody>
           }
-        </tbody>
-        }
-        <tfoot>
-          <tr>
-            <td colspan="5" class="text-left">
-              <!-- <button type="submit" class="btn btn-primary">save week</button> -->
-              <a href="@Url.Action(" Index", "WorkoutRoutines" )" class="btn btn-outline-secondary">cancel</a>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="text-left">
+                <button type="submit" class="btn btn-primary">save week</button>
+                <a href="@Url.Action("Index", "WorkoutRoutines" )" class="btn btn-outline-secondary">cancel</a>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     }
   </div>
 </div>
 
 
-
 @section Scripts {
-<script type="text/javascript">
-  $(function ()
-  {
+  <script type="text/javascript">
+    $(function ()
+    {
+      $('input.workout-pattern').change(function ()
+      {
+        $(this).closest('tr').find('a.copy-forward').hide();
+      });
+    });
+
+
+
+
+  @*{
     //  base URL
     var url = '@Url.Action("Index", new { id = Model.Routine.Id, week = Model.Week })';
 
@@ -150,7 +165,7 @@
         _super($item, container);
       }
     });
-  });
-</script>
+  });*@
+  </script>
 }
 

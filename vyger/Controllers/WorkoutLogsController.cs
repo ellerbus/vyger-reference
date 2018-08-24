@@ -55,6 +55,8 @@ namespace vyger.Controllers
 
             if (vm.Logs.Count == 0)
             {
+                AddFlashMessage(FlashMessageType.Info, "Add an Exercise to the Workout Log");
+
                 return RedirectToAction("Create", new { date = date.ToYMD() });
             }
 

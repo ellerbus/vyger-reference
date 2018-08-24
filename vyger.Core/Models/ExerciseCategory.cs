@@ -54,6 +54,7 @@ namespace vyger.Core.Models
         ///	<summary>
         ///
         ///	</summary>
+        [Key]
         [DisplayName("ID")]
         [XmlAttribute("id")]
         public string Id

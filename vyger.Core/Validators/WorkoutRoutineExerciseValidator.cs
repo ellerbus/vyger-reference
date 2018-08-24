@@ -8,6 +8,8 @@ namespace vyger.Core.Validators
 
         public WorkoutRoutineExerciseValidator()
         {
+            CascadeMode = CascadeMode.Continue;
+
             RuleFor(x => x.WeekId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty()

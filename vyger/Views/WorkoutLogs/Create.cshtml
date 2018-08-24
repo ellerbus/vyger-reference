@@ -9,7 +9,7 @@
     @using (Html.BeginForm())
     {
       @Html.AntiForgeryToken()
-      @Html.ValidationSummary();
+      @Html.ValidationSummary()
 
       <div class="form-group">
         @Html.DropDownList("GroupId", Model.Groups.ToSelectList(Model.Exercise), "(exercise group)", new { @class = "form-control" })
@@ -38,51 +38,12 @@
   <script type="text/javascript">
     $(function ()
     {
+      var queryUrl = '@Url.Action("Query", "Exercises")';
       var $groupId = $('select[name=GroupId]');
       var $categoryId = $('select[name=CategoryId]');
       var $exerciseId = $('select[name=ExerciseId]');
 
-      $groupId.change(function ()
-      {
-        loadExercises();
-      });
-
-      $categoryId.change(function ()
-      {
-        loadExercises();
-      });
-
-      loadExercises();
-
-      function loadExercises()
-      {
-        var groupId = $groupId.val();
-        var categoryId = $categoryId.val();
-
-        var url = '@Url.Action("Query", "Exercises")' +
-          '?groupId=' + groupId +
-          '&categoryId=' + categoryId;
-
-        if (groupId != '' && categoryId != '')
-        {
-          $.ajax({
-            type: 'GET',
-            url: url,
-            dataType: 'json',
-            success: function (exercises)
-            {
-              $exerciseId.find('option').remove();
-
-              $.each(exercises, function (i, exercise)
-              {
-                var $option = $('<option/>').attr('value', exercise.Id).text(exercise.Name);
-
-                $option.appendTo($exerciseId);
-              });
-            }
-          });
-        }
-      }
+      setupExercisePicker(queryUrl, $groupId, $categoryId, $exerciseId);
     });
   </script>
 }

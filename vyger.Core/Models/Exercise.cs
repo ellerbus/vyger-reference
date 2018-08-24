@@ -70,6 +70,7 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	GROUP(2)-CATEGORY(1)-EXERCISENAME(3)
         ///	</summary>
+        [Key]
         [DisplayName("ID")]
         [XmlAttribute("id")]
         public string Id

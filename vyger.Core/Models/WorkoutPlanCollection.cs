@@ -10,20 +10,13 @@ namespace vyger.Core.Models
     ///	</summary>
     [XmlRoot("workout-plans")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class WorkoutPlanCollection : SingleKeyCollection<WorkoutPlan, string>
+    public class WorkoutPlanCollection : SingleKeyCollection<WorkoutPlan, int>
     {
         #region Constructors
 
-        public WorkoutPlanCollection()
+        public WorkoutPlanCollection(WorkoutRoutine routine)
         {
-        }
-
-        public WorkoutPlanCollection(WorkoutRoutineCollection routines, IEnumerable<WorkoutPlan> plans)
-            : this()
-        {
-            Routines = routines;
-
-            AddRange(plans);
+            Routine = routine;
         }
 
         #endregion
@@ -42,7 +35,7 @@ namespace vyger.Core.Models
 
         #region Methods
 
-        protected override string GetPrimaryKey(WorkoutPlan item)
+        protected override int GetPrimaryKey(WorkoutPlan item)
         {
             return item.Id;
         }
@@ -63,9 +56,9 @@ namespace vyger.Core.Models
 
         private void UpdateReferences(WorkoutPlan item)
         {
-            if (Routines != null)
+            if (Routine != null)
             {
-                item.Routine = Routines.GetByPrimaryKey(item.RoutineId);
+                item.Routine = Routine;
             }
         }
 
@@ -82,13 +75,13 @@ namespace vyger.Core.Models
 
         #endregion
 
-        #region Foreign Keys
+        #region Foreign Key Properties
 
         /// <summary>
         ///
         /// </summary>
         [XmlIgnore]
-        public WorkoutRoutineCollection Routines { get; private set; }
+        public WorkoutRoutine Routine { get; private set; }
 
         #endregion
     }

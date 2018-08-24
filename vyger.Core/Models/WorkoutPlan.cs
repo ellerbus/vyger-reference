@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Linq;
 using System.Xml.Serialization;
 using Augment;
 
@@ -10,7 +11,7 @@ namespace vyger.Core.Models
     ///	<summary>
     ///
     ///	</summary>
-    [XmlType("workout-plan")]
+    [XmlType("routine-plan")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlan
     {
@@ -18,15 +19,7 @@ namespace vyger.Core.Models
 
         public WorkoutPlan()
         {
-            Cycles = new WorkoutPlanCycleCollection(this);
-        }
-
-        public WorkoutPlan(WorkoutRoutine routine)
-            : this()
-        {
-            Id = Constants.IdGenerator.Next();
-            Routine = routine;
-            CreatedAt = DateTime.UtcNow;
+            PlanCycles = new WorkoutPlanCycleCollection(this);
         }
 
         #endregion
@@ -72,23 +65,10 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'plan_id'
         ///	</summary>
+        [Key]
         [DisplayName("Plan Id")]
         [XmlAttribute("plan-id")]
         public int Id { get; set; }
-
-        ///	<summary>
-        ///	Gets / Sets database column 'routine_id'
-        ///	</summary>
-        [Required]
-        [DisplayName("Routine Id")]
-        [XmlAttribute("routine-id")]
-        public string RoutineId
-        {
-            get { return Routine == null ? _routineId : Routine.Id; }
-            set { _routineId = value; }
-        }
-
-        private string _routineId;
 
         /// <summary>
         ///
@@ -115,8 +95,25 @@ namespace vyger.Core.Models
         /// <summary>
         ///
         /// </summary>
-        [XmlArray("workout-plan-cycles"), XmlArrayItem("workout-plan-cycle")]
-        public WorkoutPlanCycleCollection Cycles { get; private set; }
+        [XmlArray("workout-plan-cycle"), XmlArrayItem("workout-plan-cycle")]
+        public WorkoutPlanCycleCollection PlanCycles { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [XmlIgnore]
+        public int CurrentCycleId
+        {
+            get
+            {
+                if (PlanCycles.Count == 0)
+                {
+                    return 0;
+                }
+
+                return PlanCycles.Max(x => x.CycleId);
+            }
+        }
 
         #endregion
     }

@@ -14,6 +14,8 @@ namespace vyger.Core.Validators
         {
             _service = service;
 
+            CascadeMode = CascadeMode.Continue;
+
             RuleFor(x => x.Id)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty()

@@ -185,7 +185,7 @@ namespace vyger.Controllers
             IList<Exercise> exercises = _service
                 .GetExercises()
                 .Filter(groupId, categoryId)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.DetailName)
                 .ToList();
 
             return Json(exercises, JsonRequestBehavior.AllowGet);

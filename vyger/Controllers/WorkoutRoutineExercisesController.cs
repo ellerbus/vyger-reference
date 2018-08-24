@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using System.Web.Mvc;
 using Augment;
 using vyger.Core;
@@ -28,29 +27,12 @@ namespace vyger.Controllers
 
         #endregion
 
-        #region "On" Methods
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext.Exception is SecurityException)
-            {
-                AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
-
-                filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction("Index", "WorkoutRoutines");
-            }
-
-            base.OnException(filterContext);
-        }
-
-        #endregion
-
         #region List Methods
 
         [HttpGet, Route("Index")]
         public virtual ActionResult Index(string id, int week)
         {
-            WorkoutRoutineExerciseViewModel vm = new WorkoutRoutineExerciseViewModel();
+            WorkoutRoutineExerciseIndexViewModel vm = new WorkoutRoutineExerciseIndexViewModel();
 
             vm.Routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
@@ -59,64 +41,42 @@ namespace vyger.Controllers
             return View(vm);
         }
 
-        //[HttpPost, Route("Index")]
-        //public virtual ActionResult Index(string id, int week, WorkoutRoutineExerciseViewModel post)
-        //{
-        //    _service.MergeExercisesWith(id, week, post.Routine.RoutineExercises);
-
-        //    AddFlashMessage(FlashMessageType.Success, $"Saved Exercises for Week {week}");
-
-        //    return RedirectToAction(MVC.WorkoutRoutineExercises.Index(id, week));
-        //}
-
-        #endregion
-
-        #region Edit Methods
-
-        [HttpPost, Route("Edit"), ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(string id, int week, int day, string exercise, WorkoutRoutineExercise post)
+        [HttpPost, Route("Index"), ValidateAntiForgeryToken]
+        public virtual ActionResult Index(string id, int week, WorkoutRoutine post)
         {
-            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
-
-            WorkoutRoutineExercise routineExercise = routine.RoutineExercises.Find(week, day, exercise).FirstOrDefault();
-
-            if (routineExercise != null)
+            if (ModelState.IsValid)
             {
-                routineExercise.WorkoutRoutine = WorkoutRoutineSetCollection.Format(post.WorkoutRoutine);
-                routineExercise.SequenceNumber = post.SequenceNumber;
+                WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
+
+                IList<WorkoutRoutineExercise> exercises = routine
+                    .RoutineExercises
+                    .Filter(week, 0, null)
+                    .ToList();
+
+                foreach (WorkoutRoutineExercise exercise in exercises)
+                {
+                    WorkoutRoutineExercise posted = post
+                        .RoutineExercises
+                        .Filter(0, exercise.DayId, exercise.ExerciseId)
+                        .First();
+
+                    exercise.OverlayWith(posted);
+                }
 
                 _service.SaveWorkoutRoutines();
 
-                return Json(new { routineExercise.WorkoutRoutine });
+                AddFlashMessage(FlashMessageType.Success, $"Exercises Saved for Week {week}");
+
+                return RedirectToAction("Index", new { id, week });
             }
 
-            return Json(new { message = "Cannot Update Routine" });
-        }
+            WorkoutRoutineExerciseIndexViewModel vm = new WorkoutRoutineExerciseIndexViewModel();
 
-        [HttpPost, Route("Sequence"), ValidateAntiForgeryToken]
-        public virtual ActionResult Sequence(string id, int week, int day, string exercises)
-        {
-            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
+            vm.Routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            int seq = 0;
+            vm.Week = week;
 
-            foreach (string exercise in exercises.Split(','))
-            {
-                seq += 1;
-
-                IEnumerable<WorkoutRoutineExercise> routineExercises = routine
-                    .RoutineExercises
-                    .Find(0, day, exercise);
-
-                foreach (WorkoutRoutineExercise rex in routineExercises)
-                {
-                    rex.SequenceNumber = seq;
-                }
-            }
-
-            _service.SaveWorkoutRoutines();
-
-            return Json(new { message = "Saved" });
+            return View(vm);
         }
 
         #endregion
@@ -126,15 +86,15 @@ namespace vyger.Controllers
         [HttpGet, Route("Create")]
         public virtual ActionResult Create(string id, int day)
         {
-            WorkoutRoutineExerciseViewModel vm = GetCreateForm(id, day);
+            WorkoutRoutineExerciseCreateViewModel vm = CreateViewModel(id, day);
 
             return View(vm);
         }
 
         [HttpPost, Route("Create"), ValidateAntiForgeryToken]
-        public virtual ActionResult Create(string id, int day, WorkoutRoutineExerciseViewModel post)
+        public virtual ActionResult Create(string id, int day, WorkoutRoutineExerciseCreateViewModel post)
         {
-            WorkoutRoutineExerciseViewModel vm = GetCreateForm(id, day);
+            WorkoutRoutineExerciseCreateViewModel vm = CreateViewModel(id, day);
 
             if (ModelState.IsValid)
             {
@@ -150,18 +110,22 @@ namespace vyger.Controllers
             return View(vm);
         }
 
-        private WorkoutRoutineExerciseViewModel GetCreateForm(string id, int day)
+        private WorkoutRoutineExerciseCreateViewModel CreateViewModel(string id, int day)
         {
-            WorkoutRoutineExerciseViewModel vm = new WorkoutRoutineExerciseViewModel()
+            WorkoutRoutineExerciseCreateViewModel vm = new WorkoutRoutineExerciseCreateViewModel()
             {
                 Routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id),
-                RoutineExercise = new WorkoutRoutineExercise() { WeekId = 1, DayId = day, WorkoutRoutine = "12RM, 9RM, 6RM" }
+                RoutineExercise = new WorkoutRoutineExercise()
+                {
+                    WeekId = 1,
+                    DayId = day,
+                    WorkoutRoutine = "[L]80%x5, [L]90%x5, 1RM85%x5"
+                }
             };
 
-            vm.Exercises = vm.Routine
-                .AllExercises
-                .NotIncluding(vm.Routine.RoutineExercises.Find(1, day, ""))
-                .ToList();
+            vm.Exercises = vm.Routine.AllExercises.ToList();
+            vm.Groups = vm.Routine.AllExercises.Groups.ToList();
+            vm.Categories = vm.Routine.AllExercises.Categories.ToList();
 
             return vm;
         }
@@ -173,7 +137,7 @@ namespace vyger.Controllers
         [HttpGet, Route("Delete")]
         public virtual ActionResult Delete(string id, int day, string exercise)
         {
-            WorkoutRoutineExerciseViewModel vm = GetDeleteForm(id, day, exercise);
+            WorkoutRoutineExerciseDeleteViewModel vm = DeleteViewModel(id, day, exercise);
 
             return View(vm);
         }
@@ -181,7 +145,7 @@ namespace vyger.Controllers
         [HttpPost, Route("Delete"), ValidateAntiForgeryToken]
         public virtual ActionResult Delete(string id, int day, string exercise, WorkoutRoutineExercise post)
         {
-            WorkoutRoutineExerciseViewModel vm = GetDeleteForm(id, 0, "");
+            WorkoutRoutineExerciseDeleteViewModel vm = DeleteViewModel(id, 0, "");
 
             vm.Routine.RoutineExercises.DeleteWorkoutRoutineExercise(day, exercise);
 
@@ -192,16 +156,16 @@ namespace vyger.Controllers
             return RedirectToAction("Index", new { id, week = 1 });
         }
 
-        private WorkoutRoutineExerciseViewModel GetDeleteForm(string id, int day, string exercise)
+        private WorkoutRoutineExerciseDeleteViewModel DeleteViewModel(string id, int day, string exercise)
         {
-            WorkoutRoutineExerciseViewModel vm = new WorkoutRoutineExerciseViewModel()
+            WorkoutRoutineExerciseDeleteViewModel vm = new WorkoutRoutineExerciseDeleteViewModel()
             {
                 Routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id)
             };
 
             if (day > 0 || exercise.IsNotEmpty())
             {
-                vm.RoutineExercise = vm.Routine.RoutineExercises.Find(1, day, exercise).FirstOrDefault();
+                vm.RoutineExercise = vm.Routine.RoutineExercises.Filter(1, day, exercise).FirstOrDefault();
             }
 
             return vm;
@@ -214,17 +178,17 @@ namespace vyger.Controllers
         [HttpGet, Route("Copy")]
         public virtual ActionResult Copy(string id, int week, int day, string exercise)
         {
-            WorkoutRoutineExerciseViewModel vm = GetCopyForm(id, day, exercise);
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            string workoutRoutine = vm.Routine
+            string workoutRoutine = routine
                 .RoutineExercises
-                .Find(week, day, exercise)
+                .Filter(week, day, exercise)
                 .Select(x => x.WorkoutRoutine)
                 .First();
 
-            IEnumerable<WorkoutRoutineExercise> routineExercises = vm.Routine
+            IEnumerable<WorkoutRoutineExercise> routineExercises = routine
                 .RoutineExercises
-                .Find(0, day, exercise);
+                .Filter(0, day, exercise);
 
             foreach (WorkoutRoutineExercise rex in routineExercises)
             {
@@ -239,16 +203,6 @@ namespace vyger.Controllers
             AddFlashMessage(FlashMessageType.Success, "Copied workout routine forward successfully");
 
             return RedirectToAction("Index", new { id, week });
-        }
-
-        private WorkoutRoutineExerciseViewModel GetCopyForm(string id, int day, string exercise)
-        {
-            WorkoutRoutineExerciseViewModel vm = new WorkoutRoutineExerciseViewModel()
-            {
-                Routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id)
-            };
-
-            return vm;
         }
 
         #endregion
