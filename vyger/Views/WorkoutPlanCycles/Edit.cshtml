@@ -28,7 +28,7 @@
         <tfoot>
           <tr>
             <td colspan="5" class="text-left">
-              <a href="Url.Action(MVC.WorkoutPlanLogs.Cycles(Model.Plan.Id, Model.Cycle.CycleId))" class="btn btn-outline-secondary float-right">skip</a>
+              <a href="@Url.Action("Index", "WorkoutPlanLogs", new { id = Model.Plan.Routine.Id, plan = Model.Plan.Id, cycle = Model.CycleId })" class="btn btn-outline-secondary float-right">skip</a>
               <button type="submit" class="btn btn-primary">generate workout cycle</button>
               <a href="@Url.Action("Index", new { id = Model.Plan.Routine.Id, plan = Model.Plan.Id })" class="btn btn-outline-secondary">cancel</a>
             </td>

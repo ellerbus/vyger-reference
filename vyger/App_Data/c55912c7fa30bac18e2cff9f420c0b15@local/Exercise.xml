@@ -28,4 +28,7 @@
   <exercise id="LG-M-LPR" name="Leg Press" category-id="M" group-id="LG" />
   <exercise id="AB-Y-CRU" name="Crunch" category-id="Y" group-id="AB" />
   <exercise id="TC-Y-DIP" name="Dips" category-id="Y" group-id="TC" />
+  <exercise id="UB-H-LOR" name="Low Rows" category-id="H" group-id="UB" />
+  <exercise id="UB-H-HIR" name="High Rows" category-id="H" group-id="UB" />
+  <exercise id="CH-M-FLY" name="Flyes" category-id="M" group-id="CH" />
 </exercises>

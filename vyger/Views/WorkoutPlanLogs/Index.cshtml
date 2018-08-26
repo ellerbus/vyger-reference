@@ -29,7 +29,9 @@
             @foreach (var log in Model.Plan.PlanLogs.Filter(Model.CycleId, w + 1, d + 1))
             {
               <tr>
-                <td style="padding-left: 32px;">@log.Exercise.Name</td>
+                <td style="padding-left: 32px;">
+                  @log.Exercise.Category.Name @log.Exercise.Name
+                </td>
                 <td class="workout-pattern">@log.WorkoutPlan</td>
               </tr>
             }
