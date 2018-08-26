@@ -1,48 +1,50 @@
 @{
-  ViewBag.Title = "Workout Plan Cycles";
+  ViewBag.Title = "Workout Plan Cycle";
 }
 
 @model WorkoutPlan
 
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-md-10">
-    <table class="table">
-      <thead>
-        <tr>
-          <th colspan="4">
-            <a href="@Url.Action(MVC.WorkoutPlanCycles.Create(Model.Id))" class="btn btn-sm btn-outline-success float-right">
-              <i class="fa fa-fw fa-plus"></i> Create
-            </a>
-            Cycles
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach (var cycle in Model.Cycles.OrderByDescending(x => x.CycleId))
-        {
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary()
+      <table class="table">
+        <thead>
           <tr>
-            <td>
-              <a href="@Url.Action(MVC.WorkoutPlanLogs.Index(Model.Id, cycle.CycleId))" style="display: block;">
-                Cycle #@cycle.CycleId
+            <th colspan="3">
+              <a href="@Url.Action("Create", new { id = Model.Routine.Id, plan = Model.Id })" class="btn btn-sm btn-outline-success float-right">
+                <i class="fa fa-fw fa-plus"></i> Create
               </a>
-            </td>
-            <td style="width: 125px;" class="text-center">
-              @if (cycle.Status == StatusTypes.None)
-              {
-                <a href="@Url.Action(MVC.WorkoutPlanExercises.Index(Model.Id, cycle.CycleId))" style="display: block;">
-                  Setup
-                </a>
-              }
-            </td>
-            <td style="width: 125px;" class="text-center">
-              @(cycle.CycleId + 1 == Model.Cycles.Count ? "Current" : "")
-            </td>
-            <td style="width: 125px;" class="text-right">
-              @cycle.CreatedAt.ToString("d")
-            </td>
+              Cycle
+            </th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (int i = Model.CurrentCycleId; i > 0; i--)
+          {
+            <tr>
+              <td>
+                @i
+              </td>
+              <td class="text-right navigation">
+                <a href="@Url.Action("Index", "WorkoutPlanLogs", new { id = Model.Routine.Id, plan = Model.Id, cycle = i })">
+                  log plan
+                </a>
+              </td>
+              <td class="text-right navigation">
+                @if (Model.CurrentCycleId == i)
+                {
+                  <a href="@Url.Action("Edit", new { id = Model.Routine.Id, plan = Model.Id, cycle = i })">
+                    setup
+                  </a>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
 </div>

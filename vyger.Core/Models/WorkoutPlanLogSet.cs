@@ -1,12 +1,12 @@
 ﻿namespace vyger.Core.Models
 {
-    public class WorkoutPlanSet : WorkoutSet
+    public class WorkoutPlanLogSet : WorkoutSet
     {
         #region Constructors
 
-        public WorkoutPlanSet() : base() { }
+        public WorkoutPlanLogSet() : base() { }
 
-        public WorkoutPlanSet(string workoutPlan) : base(workoutPlan)
+        public WorkoutPlanLogSet(string workoutPlan) : base(workoutPlan)
         {
         }
 

@@ -159,6 +159,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\WorkoutLogsController.cs" />
+    <Compile Include="Controllers\WorkoutPlanCyclesController.cs" />
+    <Compile Include="Controllers\WorkoutPlanLogsController.cs" />
     <Compile Include="Controllers\WorkoutPlansController.cs" />
     <Compile Include="Controllers\WorkoutRoutineExercisesController.cs" />
     <Compile Include="Controllers\WorkoutRoutinesController.cs" />
@@ -171,6 +173,8 @@
     <Compile Include="ViewModels\ExerciseIndexViewModel.cs" />
     <Compile Include="ViewModels\ExerciseDetailViewModel.cs" />
     <Compile Include="ViewModels\WorkoutLogDetailViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutPlanLogIndexViewModel.cs" />
+    <Compile Include="ViewModels\WorkoutPlanCycleEditViewModel.cs" />
     <Compile Include="ViewModels\WorkoutRoutineExerciseDeleteViewModel.cs" />
     <Compile Include="ViewModels\WorkoutRoutineExerciseIndexViewModel.cs" />
     <Compile Include="ViewModels\WorkoutRoutineExerciseCreateViewModel.cs" />
@@ -195,6 +199,12 @@
     <Content Include="Views\WorkoutRoutineExercises\_IndexTabs.cshtml" />
     <Content Include="Views\WorkoutPlans\Index.cshtml" />
     <Content Include="Views\WorkoutPlans\Create.cshtml" />
+    <Content Include="Views\WorkoutPlanCycles\Index.cshtml" />
+    <Content Include="Views\WorkoutPlanCycles\_EditRow.cshtml" />
+    <Content Include="Views\WorkoutPlanCycles\Edit.cshtml" />
+    <Content Include="Views\WorkoutPlanCycles\Create.cshtml" />
+    <Content Include="Views\WorkoutPlanCycles\Display.cshtml" />
+    <Content Include="Views\WorkoutPlanLogs\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

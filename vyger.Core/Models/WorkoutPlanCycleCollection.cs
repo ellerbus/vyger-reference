@@ -57,9 +57,14 @@ namespace vyger.Core.Models
             item.Plan = Plan;
         }
 
-        public IEnumerable<WorkoutPlanCycle> Filter(int cycleId, string exerciseId)
+        public IEnumerable<WorkoutPlanCycle> Filter(int cycleId)
         {
-            return this.Where(x => x.CycleId == cycleId && x.ExerciseId == exerciseId);
+            return this.Where(x => x.CycleId == cycleId);
+        }
+
+        public WorkoutPlanCycle Fetch(int cycleId, string exerciseId)
+        {
+            return this.FirstOrDefault(x => x.CycleId == cycleId && x.ExerciseId == exerciseId);
         }
 
         #endregion

@@ -53,14 +53,25 @@ namespace vyger.Controllers
                     .Filter(week, 0, null)
                     .ToList();
 
-                foreach (WorkoutRoutineExercise exercise in exercises)
+                foreach (WorkoutRoutineExercise posted in post.RoutineExercises)
                 {
-                    WorkoutRoutineExercise posted = post
-                        .RoutineExercises
-                        .Filter(0, exercise.DayId, exercise.ExerciseId)
-                        .First();
+                    foreach (WorkoutRoutineExercise exercise in routine.RoutineExercises)
+                    {
+                        if (posted.ExerciseId == exercise.ExerciseId)
+                        {
+                            if (posted.WeekId == exercise.WeekId && posted.DayId == exercise.DayId)
+                            {
+                                exercise.OverlayWith(posted);
+                            }
 
-                    exercise.OverlayWith(posted);
+                            //  make the sequences match for this exercise/day
+
+                            if (posted.DayId == exercise.DayId)
+                            {
+                                exercise.SequenceNumber = posted.SequenceNumber;
+                            }
+                        }
+                    }
                 }
 
                 _service.SaveWorkoutRoutines();

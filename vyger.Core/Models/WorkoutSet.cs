@@ -173,7 +173,7 @@ namespace vyger.Core.Models
         /// <summary>
         /// The static weight (-1 for bodyweight)
         /// </summary>
-        public virtual int Weight { get; set; }
+        public int Weight { get; set; }
 
         /// <summary>
         /// Is Body Weight

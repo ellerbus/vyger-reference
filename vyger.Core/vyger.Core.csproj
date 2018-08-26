@@ -89,8 +89,10 @@
     <Compile Include="Models\WorkoutPlanCollection.cs" />
     <Compile Include="Models\WorkoutPlanCycle.cs" />
     <Compile Include="Models\WorkoutPlanCycleCollection.cs" />
-    <Compile Include="Models\WorkoutPlanSet.cs" />
-    <Compile Include="Models\WorkoutPlanSetCollection.cs" />
+    <Compile Include="Models\WorkoutPlanLog.cs" />
+    <Compile Include="Models\WorkoutPlanLogCollection.cs" />
+    <Compile Include="Models\WorkoutPlanLogSet.cs" />
+    <Compile Include="Models\WorkoutPlanLogSetCollection.cs" />
     <Compile Include="Models\WorkoutRoutine.cs" />
     <Compile Include="Models\WorkoutRoutineCollection.cs" />
     <Compile Include="Models\WorkoutRoutineExercise.cs" />

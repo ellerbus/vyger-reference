@@ -1,0 +1,24 @@
+@model WorkoutPlanCycle
+
+<tr>
+  @using (Html.BeginFieldScope(Model, "PlanCycles"))
+  {
+    <td style="vertical-align: middle;">
+      @Html.HiddenFor(m => m.CycleId)
+      @Html.HiddenFor(m => m.ExerciseId)
+      @Model.Exercise.DetailName
+    </td>
+    <td>
+      @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+      @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "form-text text-danger" })
+    </td>
+    <td>
+      @Html.TextBoxFor(m => m.Reps, new { @class = "form-control" })
+      @Html.ValidationMessageFor(m => m.Reps, "", new { @class = "form-text text-danger" })
+    </td>
+    <td>
+      @Html.TextBoxFor(m => m.Pullback, new { @class = "form-control" })
+      @Html.ValidationMessageFor(m => m.Pullback, "", new { @class = "form-text text-danger" })
+    </td>
+  }
+</tr>

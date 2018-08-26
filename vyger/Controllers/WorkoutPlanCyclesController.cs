@@ -1,69 +1,46 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Security;
 using System.Web.Mvc;
-using vyger.Common;
-using vyger.Models;
-using vyger.Services;
+using vyger.Core;
+using vyger.Core.Models;
+using vyger.Core.Services;
+using vyger.ViewModels;
 
 namespace vyger.Controllers
 {
-    [RoutePrefix("Workouts/Plans/{id}/Cycles"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
+    [RoutePrefix("Workouts/Routines/{id}/Plans/{plan}/Cycles"), MvcAuthorizeRoles(Constants.Roles.ActiveMember)]
     public partial class WorkoutPlanCyclesController : BaseController
     {
         #region Members
 
-        private IWorkoutPlanService _service;
-        private IWorkoutLogService _logs;
+        private IPlanGeneratorService _generator;
+        private IWorkoutRoutineService _service;
 
         #endregion
 
         #region Constructors
 
         public WorkoutPlanCyclesController(
-            IWorkoutPlanService service,
-            IWorkoutLogService logs)
+            IPlanGeneratorService generator,
+            IWorkoutRoutineService service)
         {
+            _generator = generator;
             _service = service;
-            _logs = logs;
         }
-
-        #endregion
-
-        #region "On" Methods
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext.Exception is SecurityException)
-            {
-                AddFlashMessage(FlashMessageType.Danger, filterContext.Exception.Message);
-
-                filterContext.ExceptionHandled = true;
-                filterContext.Result = RedirectToAction(MVC.WorkoutPlans.Index());
-            }
-
-            base.OnException(filterContext);
-        }
-
-        //private WorkoutPlanCycleDetailForm GetWorkoutPlanCycleDetailForm(int id)
-        //{
-        //    WorkoutPlanCycleDetailForm form = new WorkoutPlanCycleDetailForm()
-        //    {
-        //        Plan = _plans.GetWorkoutPlan(id)
-        //    };
-
-        //    return form;
-        //}
 
         #endregion
 
         #region List Methods
 
         [HttpGet, Route("Index")]
-        public virtual ActionResult Index(string id)
+        public virtual ActionResult Index(string id, int plan)
         {
-            WorkoutPlan plan = _service.GetWorkoutPlans().GetByPrimaryKey(id);
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            return View(plan);
+            WorkoutPlan vm = routine.Plans.GetByPrimaryKey(plan);
+
+            return View(vm);
         }
 
         #endregion
@@ -71,21 +48,115 @@ namespace vyger.Controllers
         #region Create Methods
 
         [HttpGet, Route("Create")]
-        public virtual ActionResult Create(string id)
+        public virtual ActionResult Create(string id, int plan)
         {
-            WorkoutPlan plan = _service.GetWorkoutPlans().GetByPrimaryKey(id);
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            WorkoutLogCollection logs = _logs.GetWorkoutLogs();
+            WorkoutPlan vm = routine.Plans.GetByPrimaryKey(plan);
 
-            IEnumerable<WorkoutLog> lastCycle = logs.GetRecentWorkoutLogs(plan.Id, plan.Cycles.Count);
+            return View(vm);
+        }
 
-            WorkoutPlanCycle cycle = _service.CreateCycle(plan, lastCycle);
+        [HttpPost, Route("Create"), ValidateAntiForgeryToken]
+        public virtual ActionResult CreateCycle(string id, int plan)
+        {
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
 
-            _service.SaveWorkoutPlans();
+            WorkoutPlan vm = routine.Plans.GetByPrimaryKey(plan);
 
-            AddFlashMessage(FlashMessageType.Success, $"Cycle #{cycle.CycleId} created successfully");
+            _generator.CreateWorkoutCycle(vm);
 
-            return RedirectToAction(MVC.WorkoutPlanExercises.Index(id, cycle.CycleId));
+            _service.SaveWorkoutRoutines();
+
+            AddFlashMessage(FlashMessageType.Success, "Workout Cycle Created");
+
+            return RedirectToAction("Edit", new { id, plan, cycle = vm.CurrentCycleId });
+        }
+
+        #endregion
+
+        #region Edit Methods
+
+        [HttpGet, Route("Edit")]
+        public virtual ActionResult Edit(string id, int plan, int cycle)
+        {
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
+
+            WorkoutPlanCycleEditViewModel vm = new WorkoutPlanCycleEditViewModel()
+            {
+                Plan = routine.Plans.GetByPrimaryKey(plan),
+                CycleId = cycle
+            };
+
+            if (vm.Plan.CurrentCycleId != cycle)
+            {
+                return RedirectToAction("Display", new { id, plan, cycle });
+            }
+
+            vm.Cycle = vm.Plan.PlanCycles.Filter(cycle).ToList();
+
+            return View(vm);
+        }
+
+        [HttpPost, Route("Edit"), ValidateAntiForgeryToken]
+        public virtual ActionResult Edit(string id, int plan, int cycle, WorkoutPlan post)
+        {
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
+
+            WorkoutPlanCycleEditViewModel vm = new WorkoutPlanCycleEditViewModel()
+            {
+                Plan = routine.Plans.GetByPrimaryKey(plan),
+                CycleId = cycle
+            };
+
+            post.Routine = routine;
+
+            if (ModelState.IsValid)
+            {
+                foreach (WorkoutPlanCycle posted in post.PlanCycles)
+                {
+                    WorkoutPlanCycle item = vm.Plan.PlanCycles.Fetch(posted.CycleId, posted.ExerciseId);
+
+                    item.OverlayWith(posted);
+                }
+
+                _generator.GenerateCurrentCycle(vm.Plan);
+
+                _service.SaveWorkoutRoutines();
+
+                AddFlashMessage(FlashMessageType.Success, "Cycle Setup Saved");
+
+                return RedirectToAction("Index", "WorkoutPlanLogs", new { id, plan, cycle });
+            }
+
+            if (vm.Plan.CurrentCycleId != cycle)
+            {
+                return RedirectToAction("Display", new { id, plan, cycle });
+            }
+
+            vm.Cycle = post.PlanCycles.ToList();
+
+            return View(vm);
+        }
+
+        #endregion
+
+        #region Display Methods
+
+        [HttpGet, Route("Display")]
+        public virtual ActionResult Display(string id, int plan, int cycle)
+        {
+            WorkoutRoutine routine = _service.GetWorkoutRoutines().GetByPrimaryKey(id);
+
+            WorkoutPlanCycleEditViewModel vm = new WorkoutPlanCycleEditViewModel()
+            {
+                Plan = routine.Plans.GetByPrimaryKey(plan),
+                CycleId = cycle
+            };
+
+            vm.Cycle = vm.Plan.PlanCycles.Filter(cycle).ToList();
+
+            return View(vm);
         }
 
         #endregion

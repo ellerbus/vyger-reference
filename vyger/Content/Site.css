@@ -93,40 +93,8 @@ textarea.workout-pattern {
     font-size: .9em;
 }
 
-table.list-view th.type,
-table.list-view td.type {
-    width: 150px;
-}
-
-table.list-view th.status,
-table.list-view td.status {
-    width: 150px;
-}
-
-table.list-view th.updated,
-table.list-view td.updated {
-    width: 125px;
-}
-
-table.list-view th.group-column,
-table.list-view td.group-column {
-    width: 256px;
-}
-
-table.list-view th.update-column,
-table.list-view td.update-column {
-    width: 128px;
-}
-
-table.list-view th.update-column a,
-table.list-view td.update-column a {
-    display: block;
-    margin: 0px;
-}
-
-table.list-view th.update-column a:hover,
-table.list-view td.update-column a:hover {
-    color: #fff;
+table td.navigation {
+    width: 100px;
 }
 
 .drag-handler {

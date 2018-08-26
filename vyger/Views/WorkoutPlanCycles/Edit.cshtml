@@ -1,13 +1,8 @@
 @{
-  ViewBag.Title = "Workout Plan";
-
-  var exercises = Model.PlanExercises
-      .Where(x => x.IsCalculated)
-      .OrderBy(x => x.Exercise.Group.Name)
-      .ThenBy(x => x.Exercise.Name);
+  ViewBag.Title = "Workout Cycle";
 }
 
-@model WorkoutPlanCycle
+@model WorkoutPlanCycleEditViewModel
 
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-md-10">
@@ -18,7 +13,6 @@
       <table class="table">
         <thead>
           <tr>
-            <th style="width: 150px;">Group</th>
             <th>Exercise</th>
             <th style="width: 100px;">Weight</th>
             <th style="width: 100px;">Reps</th>
@@ -26,17 +20,17 @@
           </tr>
         </thead>
         <tbody>
-          @foreach (var exercise in exercises)
+          @foreach (var exercise in Model.Cycle.Where(x => x.IsCalculated).OrderBy(x => x.Exercise.DetailName))
           {
-            @Html.Partial("_Row", exercise)
+            @Html.Partial("_EditRow", exercise);
           }
         </tbody>
         <tfoot>
           <tr>
             <td colspan="5" class="text-left">
               <a href="Url.Action(MVC.WorkoutPlanLogs.Cycles(Model.Plan.Id, Model.Cycle.CycleId))" class="btn btn-outline-secondary float-right">skip</a>
-              <button type="submit" class="btn btn-primary">generate plan</button>
-              <a href="@Url.Action(MVC.WorkoutPlanCycles.Index(Model.Plan.Id))" class="btn btn-outline-secondary">cancel</a>
+              <button type="submit" class="btn btn-primary">generate workout cycle</button>
+              <a href="@Url.Action("Index", new { id = Model.Plan.Routine.Id, plan = Model.Plan.Id })" class="btn btn-outline-secondary">cancel</a>
             </td>
           </tr>
         </tfoot>

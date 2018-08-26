@@ -20,6 +20,7 @@ namespace vyger.Core.Models
         public WorkoutPlan()
         {
             PlanCycles = new WorkoutPlanCycleCollection(this);
+            PlanLogs = new WorkoutPlanLogCollection(this);
         }
 
         #endregion
@@ -97,6 +98,12 @@ namespace vyger.Core.Models
         /// </summary>
         [XmlArray("workout-plan-cycle"), XmlArrayItem("workout-plan-cycle")]
         public WorkoutPlanCycleCollection PlanCycles { get; private set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [XmlArray("workout-plan-logs"), XmlArrayItem("workout-plan-log")]
+        public WorkoutPlanLogCollection PlanLogs { get; private set; }
 
         /// <summary>
         /// 

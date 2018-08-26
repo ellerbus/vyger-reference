@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Xml.Serialization;
 using Augment;
-using vyger.Core;
 
 namespace vyger.Core.Models
 {
@@ -38,7 +37,7 @@ namespace vyger.Core.Models
             {
                 string pk = $"[{WeekId}, {DayId}, {ExerciseId}]";
 
-                string uq = $"[{PlanExercise?.Exercise?.Name}]";
+                string uq = $"[{Exercise?.Name}]";
 
                 return "{0}, pk={1}, uq={2}".FormatArgs("WorkoutPlanLog", pk, uq);
             }
@@ -63,9 +62,17 @@ namespace vyger.Core.Models
         #region Properties
 
         ///	<summary>
+        ///	Gets / Sets database column 'cycle_id'
+        ///	</summary>
+        [Key]
+        [DisplayName("Cycle Id")]
+        [XmlAttribute("cycle-id")]
+        public int CycleId { get; set; }
+
+        ///	<summary>
         ///	Gets / Sets database column 'week_id'
         ///	</summary>
-        [Required]
+        [Key]
         [DisplayName("Week Id")]
         [XmlAttribute("week-id")]
         public int WeekId { get; set; }
@@ -73,7 +80,7 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'day_id'
         ///	</summary>
-        [Required]
+        [Key]
         [DisplayName("Day Id")]
         [XmlAttribute("day-id")]
         public int DayId { get; set; }
@@ -81,21 +88,14 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'exercise_id'
         ///	</summary>
-        [Required]
+        [Key]
         [DisplayName("Exercise Id")]
         [XmlAttribute("exercise-id")]
-        public string ExerciseId
-        {
-            get { return PlanExercise == null ? _exerciseId : PlanExercise.Exercise.Id; }
-            set { _exerciseId = value; }
-        }
-
-        private string _exerciseId;
+        public string ExerciseId { get; set; }
 
         ///	<summary>
         ///	Gets / Sets database column 'sequence_number'
         ///	</summary>
-        [Required]
         [DisplayName("Sequence Number")]
         [XmlAttribute("sequence-number")]
         public int SequenceNumber { get; set; }
@@ -103,10 +103,20 @@ namespace vyger.Core.Models
         ///	<summary>
         ///	Gets / Sets database column 'workout_plan'
         ///	</summary>
-        [Required]
         [DisplayName("Workout Plan")]
         [XmlAttribute("workout-plan")]
-        public string WorkoutPlan { get; set; }
+        public string WorkoutPlan
+        {
+            get { return _workoutPlan; }
+            set
+            {
+                _workoutPlan = WorkoutPlanLogSetCollection.Format(value.AssertNotNull());
+
+                _sets = null;
+            }
+        }
+
+        private string _workoutPlan;
 
         /// <summary>
         ///
@@ -119,16 +129,50 @@ namespace vyger.Core.Models
         #region Foreign Key Properties
 
         ///	<summary>
-        ///	Gets / Sets the foreign key to 'cycle_id'
+        ///	Gets / Sets the foreign key to 'plan_id'
         ///	</summary>
         [XmlIgnore]
-        public WorkoutPlanCycle Cycle { get; set; }
+        public WorkoutPlan Plan { get; set; }
 
         ///	<summary>
-        ///	Gets / Sets the foreign key to 'cycle_id'
+        ///	Gets / Sets the foreign key to 'exercise_id'
         ///	</summary>
         [XmlIgnore]
-        public WorkoutPlanExercise PlanExercise { get; set; }
+        public Exercise Exercise
+        {
+            get
+            {
+                if (Plan == null || Plan.Routine == null || Plan.Routine.AllExercises == null)
+                {
+                    return null;
+                }
+
+                Exercise ex = null;
+
+                Plan.Routine.AllExercises.TryGetByPrimaryKey(ExerciseId, out ex);
+
+                return ex;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        [XmlIgnore]
+        public WorkoutPlanLogSetCollection Sets
+        {
+            get
+            {
+                if (_sets == null)
+                {
+                    _sets = new WorkoutPlanLogSetCollection(WorkoutPlan);
+                }
+                return _sets;
+            }
+        }
+
+        private WorkoutPlanLogSetCollection _sets;
 
         #endregion
     }

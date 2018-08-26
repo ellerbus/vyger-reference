@@ -3,22 +3,22 @@ using System.Linq;
 
 namespace vyger.Core.Models
 {
-    public class WorkoutPlanSetCollection : List<WorkoutPlanSet>
+    public class WorkoutPlanLogSetCollection : List<WorkoutPlanLogSet>
     {
         #region Constructors
 
-        public WorkoutPlanSetCollection()
+        public WorkoutPlanLogSetCollection()
         {
         }
 
-        public WorkoutPlanSetCollection(string workoutPlan)
+        public WorkoutPlanLogSetCollection(string workoutPlan)
         {
-            IEnumerable<WorkoutPlanSet> sets = workoutPlan
+            IEnumerable<WorkoutPlanLogSet> sets = workoutPlan
                 .Replace(" ", "")
                 .Split(',')
                 .Select(x => x.Trim())
                 .Where(x => !string.IsNullOrEmpty(x))
-                .Select(x => new WorkoutPlanSet(x));
+                .Select(x => new WorkoutPlanLogSet(x));
 
             AddRange(sets);
         }
@@ -29,7 +29,7 @@ namespace vyger.Core.Models
 
         public static string Format(string workoutPlan)
         {
-            WorkoutPlanSetCollection sets = new WorkoutPlanSetCollection(workoutPlan);
+            WorkoutPlanLogSetCollection sets = new WorkoutPlanLogSetCollection(workoutPlan);
 
             return sets.Display;
         }

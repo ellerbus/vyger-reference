@@ -58,9 +58,41 @@
   <script type="text/javascript">
     $(function ()
     {
+      function resequence($tbody)
+      {
+        var ids = [];
+
+        $tbody.find('tr').each(function (idx)
+        {
+          var $exId = $(this).find('input[name$=ExerciseId]');
+          var $seq = $(this).find('input[name$=SequenceNumber]');
+
+          $seq.val(idx + 1);
+
+          ids.push($exId.val());
+        });
+      }
+
       $('input.workout-pattern').change(function ()
       {
         $(this).closest('tr').find('a.copy-forward').hide();
+      });
+
+      $('.table-sortable').sortable({
+        handle: '.drag-handler',
+        containerSelector: 'table',
+        itemPath: '> tbody',
+        itemSelector: 'tr',
+        placeholder: '<tr class="placeholder"/>',
+        delay: 250,
+        onDrop: function ($item, container, _super)
+        {
+          var $tbody = $item.closest('tbody');
+
+          resequence($tbody);
+
+          _super($item, container);
+        }
       });
     });
 
