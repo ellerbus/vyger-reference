@@ -75,12 +75,12 @@ namespace vyger.Core
                 /// <summary>
                 /// Represents the reps portion of a workout pattern
                 /// </summary>
-                public const string Reps = @"[xX/](?<reps>\d?\d)";
+                public const string Reps = @"[xX/](?<reps>[1-9][0-9]?)";
 
                 /// <summary>
                 /// Represents the sets portion of a workout pattern
                 /// </summary>
-                public const string Sets = @"[xX/](?<sets>\d)";
+                public const string Sets = @"[xX/](?<sets>[1-9])";
 
                 /// <summary>
                 /// navigation-week/day/set

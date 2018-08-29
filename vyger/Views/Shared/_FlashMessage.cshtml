@@ -8,16 +8,14 @@
 }
 @if (messages != null && messages.Count > 0)
 {
-  <div class="row align-items-center">
-    @foreach (var message in messages)
-    {
-      <div class="col-lg-12 col-md-12 flash-message alert alert-@(message.Type.ToString().ToLower()) alert-dismissible" role="alert">
-        <button type="button" class="close"
-                data-dismiss="alert" aria-label="Close">
-          <i class="fas fa-fw fa-times-circle"></i>
-        </button>
-        @message.Message
-      </div>
-    }
-  </div>
+  foreach (var message in messages)
+  {
+    <div class="col-lg-12 col-md-12 flash-message alert alert-@(message.Type.ToString().ToLower()) alert-dismissible" role="alert">
+      <button type="button" class="close"
+              data-dismiss="alert" aria-label="Close">
+        <i class="fas fa-fw fa-times-circle"></i>
+      </button>
+      @message.Message
+    </div>
+  }
 }

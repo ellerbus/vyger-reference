@@ -10,13 +10,16 @@
       <thead>
         <tr>
           <th>
-            Exercise
-          </th>
-          <th style="width: 175px;">
             Group
           </th>
-          <th style="width: 175px;">
+          <th>
             Category
+          </th>
+          <th>
+            Exercise
+          </th>
+          <th class="navigation">
+            Edit
           </th>
         </tr>
       </thead>
@@ -25,27 +28,40 @@
         {
           <tr>
             <td>
-              <a href="@Url.Action("Edit", new { id = exercise.Id })" style="display: block;">
-                @exercise.Name
+              <a href="@Url.Action("Index", new { groupId=exercise.GroupId })"
+                 data-toggle="tooltip" title="Filter for @exercise.Group.Name">
+                @exercise.Group.Name
               </a>
             </td>
             <td>
-              <a href="@Url.Action("Index", new { groupId = exercise.GroupId })">@exercise.Group.Name</a>
+              <a href="@Url.Action("Index", new { categoryId=exercise.CategoryId })"
+                 data-toggle="tooltip" title="Filter for @exercise.Category.Name">
+                @exercise.Category.Name
+              </a>
             </td>
             <td>
-              <a href="@Url.Action("Index", new { categoryId = exercise.CategoryId })">@exercise.Category.Name</a>
+              @exercise.Name
+            </td>
+            <td class="navigation">
+              <a href="@Url.Action("Edit", new { id=exercise.Id })"
+                 class="btn btn-sm btn-outline-secondary"
+                 data-toggle="tooltip" title="Edit Exercise">
+                <i class="fa fa-fw fa-edit"></i>
+              </a>
             </td>
           </tr>
         }
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="2">
+          <td colspan="3">
             <a href="@Url.Action("Index")">(all)</a>
           </td>
-          <td>
-            <a href="@Url.Action("Create", new { groupId = Model.SelectedGroupId, categoryId = Model.SelectedCategoryId })" class="btn btn-sm btn-outline-success float-right">
-              <i class="fa fa-fw fa-plus"></i> Create
+          <td class="navigation">
+            <a href="@Url.Action("Create")"
+               class="btn btn-sm btn-outline-success"
+               data-toggle="tooltip" title="Create Exercise">
+              <i class="fa fa-fw fa-plus"></i>
             </a>
           </td>
         </tr>
@@ -53,3 +69,22 @@
     </table>
   </div>
 </div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item active">
+        Exercises
+        @if (Model.SelectedCategory != null)
+        {
+          <i class="fa fa-fw fa-filter text-muted"></i> <span>Category=</span>@Model.SelectedCategory.Name
+        }
+        @if (Model.SelectedGroupId != null)
+        {
+          <i class="fa fa-fw fa-filter text-muted"></i> <span>Group=</span>@Model.SelectedGroup.Name
+        }
+      </li>
+    </ol>
+  </nav>
+}

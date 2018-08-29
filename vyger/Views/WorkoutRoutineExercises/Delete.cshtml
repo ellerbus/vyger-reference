@@ -19,3 +19,17 @@
     }
   </div>
 </div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index", "WorkoutRoutines")">Routines</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Edit", "WorkoutRoutines", new { id=Model.Routine.Id })">@Model.Routine.Name</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index", new { id=Model.Routine.Id, week=1 })">Exercises</a></li>
+      <li class="breadcrumb-item active">
+        Delete Exercise
+      </li>
+    </ol>
+  </nav>
+}

@@ -26,7 +26,9 @@
                 <th style="width: 200px">Week @Model.Week, Day @(d + 1)</th>
                 <th style="width: 24px;"></th>
                 <th class="text-right" colspan="2">
-                  <a href="@Url.Action("Create", new { id=Model.Routine.Id, day=d + 1 })" class="btn btn-sm btn-outline-success">
+                  <a href="@Url.Action("Create", new { id=Model.Routine.Id, day=d + 1 })"
+                     class="btn btn-sm btn-outline-success"
+                     data-toggle="tooltip" title="Add Exerise to Day @(d + 1)">
                     <i class="fa fa-fw fa-plus"></i> Day @(d + 1)
                   </a>
                 </th>
@@ -43,7 +45,7 @@
             <tr>
               <td colspan="5" class="text-left">
                 <button type="submit" class="btn btn-primary">save week</button>
-                <a href="@Url.Action("Index", "WorkoutRoutines" )" class="btn btn-outline-secondary">cancel</a>
+                <a href="@Url.Action("Index", "WorkoutRoutines")" class="btn btn-outline-secondary">cancel</a>
               </td>
             </tr>
           </tfoot>
@@ -52,6 +54,20 @@
     }
   </div>
 </div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index", "WorkoutRoutines")">Routines</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Edit", "WorkoutRoutines", new { id=Model.Routine.Id })">@Model.Routine.Name</a></li>
+      <li class="breadcrumb-item active">
+        Exercises
+        <i class="fa fa-fw fa-filter text-muted"></i> <span>Week=</span>@Model.Week
+      </li>
+    </ol>
+  </nav>
+}
 
 
 @section Scripts {

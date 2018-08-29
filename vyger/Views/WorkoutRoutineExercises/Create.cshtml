@@ -1,4 +1,6 @@
 @{
+  /**/
+
   ViewBag.Title = "Add Routine Exercise";
 }
 
@@ -24,29 +26,44 @@
         @Html.ValidationMessageFor(m => m.RoutineExercise.ExerciseId, "", new { @class = "form-text text-danger" })
       </div>
       <div class="form-group">
+        @Html.TextBoxFor(m => m.RoutineExercise.WorkoutRoutine, new { @class = "form-control form-control-sm workout-pattern", placeholder = "workout routine" })
+        @Html.ValidationMessageFor(m => m.RoutineExercise.WorkoutRoutine, "", new { @class = "form-text text-danger" })
         <span class="form-text text-muted">
           The default workout routine (pattern) for the selected exercise
         </span>
-        @Html.TextBoxFor(m => m.RoutineExercise.WorkoutRoutine, new { @class = "form-control form-control-sm workout-pattern", placeholder = "workout routine" })
-        @Html.ValidationMessageFor(m => m.RoutineExercise.WorkoutRoutine, "", new { @class = "form-text text-danger" })
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">add</button>
-        <a href="@Url.Action("Index", new { id = Model.Routine.Id, week = 1 })" class="btn btn-outline-secondary">cancel</a>
+        <button type="submit" class="btn btn-primary">add exercise</button>
+        <a href="@Url.Action("Index", new { id=Model.Routine.Id, week=1 })" class="btn btn-outline-secondary">cancel</a>
       </div>
     }
   </div>
 </div>
 
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index", "WorkoutRoutines")">Routines</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Edit", "WorkoutRoutines", new { id=Model.Routine.Id })">@Model.Routine.Name</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index", new { id=Model.Routine.Id, week=1 })">Exercises</a></li>
+      <li class="breadcrumb-item active">
+        Add Exercise
+        <i class="fa fa-fw fa-filter text-muted"></i> <span>Day=</span>@Model.RoutineExercise.DayId
+      </li>
+    </ol>
+  </nav>
+}
+
 @section Scripts{
   <script type="text/javascript">
     $(function ()
     {
-      var queryUrl = '@Url.Action("Query", "Exercises")';
-      var $groupId = $('select[name=GroupId]');
-      var $categoryId = $('select[name=CategoryId]');
-      var $exerciseId = $('select[name="RoutineExercise.ExerciseId"]');
+      var queryUrl='@Url.Action("Query", "Exercises")';
+      var $groupId=$('select[name=GroupId]');
+      var $categoryId=$('select[name=CategoryId]');
+      var $exerciseId=$('select[name="RoutineExercise.ExerciseId"]');
 
       setupExercisePicker(queryUrl, $groupId, $categoryId, $exerciseId);
     });

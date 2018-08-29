@@ -31,3 +31,13 @@
     }
   </div>
 </div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index")">Exercises</a></li>
+      <li class="breadcrumb-item active">Edit : @Model.Name</li>
+    </ol>
+  </nav>
+}

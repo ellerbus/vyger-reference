@@ -106,10 +106,7 @@ namespace vyger.Core.Models
                 sb.Append($"{Percent:0.0%}".Replace(".0", ""));
             }
 
-            if (Reps > 1)
-            {
-                sb.Append("x").Append(Reps);
-            }
+            sb.Append("x").Append(Reps);
 
             return sb.ToString();
         }

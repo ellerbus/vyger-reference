@@ -35,6 +35,16 @@
   </div>
 </div>
 
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index")">Exercise</a></li>
+      <li class="breadcrumb-item active">Create Exercise</li>
+    </ol>
+  </nav>
+}
+
 @section Scripts {
   <script type="text/javascript">
     $(function ()

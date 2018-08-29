@@ -1,4 +1,6 @@
 @{
+  /**/
+
   ViewBag.Title = "Workout Logs";
 }
 
@@ -50,6 +52,18 @@
     }
   </div>
 </div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index")">Logs @DateTime.Now.ToString("MMM yyyy")</a></li>
+      <li class="breadcrumb-item active">
+        @Model.LogDate.ToString("dddd MMM d")
+      </li>
+    </ol>
+  </nav>
+}
 
 
 @section Scripts {

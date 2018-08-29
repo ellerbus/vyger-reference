@@ -11,6 +11,10 @@ namespace vyger.ViewModels
 
         public string SelectedCategoryId { get; set; }
 
+        public ExerciseCategory SelectedCategory { get; set; }
+
         public string SelectedGroupId { get; set; }
+
+        public ExerciseGroup SelectedGroup { get; set; }
     }
 }

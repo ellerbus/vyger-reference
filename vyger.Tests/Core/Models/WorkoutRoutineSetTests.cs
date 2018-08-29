@@ -69,6 +69,16 @@ namespace vyger.Tests.Core.Models
         }
 
         [TestMethod]
+        public void WorkoutRoutineSet_Constructor_RepMax_With_Percent_And_OneRep()
+        {
+            // arrange
+            // act
+            var set = new WorkoutRoutineSet("1RM-95%x1");
+            // assert
+            set.Display.Should().Be("1RM-95%x1");
+        }
+
+        [TestMethod]
         public void WorkoutRoutineSet_Constructor_RepMax_With_Percent_And_Reps_Sets()
         {
             // arrange

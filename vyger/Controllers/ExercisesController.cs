@@ -51,6 +51,16 @@ namespace vyger.Controllers
                 SelectedGroupId = groupId
             };
 
+            if (vm.SelectedCategoryId.IsNotEmpty())
+            {
+                vm.SelectedCategory = _categories.GetExerciseCategories().GetByPrimaryKey(vm.SelectedCategoryId);
+            }
+
+            if (vm.SelectedGroupId.IsNotEmpty())
+            {
+                vm.SelectedGroup = _groups.GetExerciseGroups().GetByPrimaryKey(vm.SelectedGroupId);
+            }
+
             return View(vm);
         }
 

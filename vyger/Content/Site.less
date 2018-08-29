@@ -15,6 +15,14 @@ body {
     z-index: 2000;
 }
 
+table.table {
+    & td.navigation,
+    & th.navigation {
+        text-align: center;
+        width: 100px;
+    }
+}
+
 table.table-sortable {
     & tr {
         cursor: pointer;
@@ -92,12 +100,6 @@ a.icon-google {
 input.workout-pattern, textarea.workout-pattern {
     font-family: Roboto, Arial, sans-serif;
     font-size: .9em;
-}
-
-table {
-    & td.navigation {
-        width: 100px;
-    }
 }
 
 .drag-handler {

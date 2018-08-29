@@ -45,7 +45,7 @@
         <tfoot>
           <tr>
             <td colspan="5" class="text-left">
-              <a href="@Url.Action("Index", new { id = Model.Plan.Routine.Id, plan = Model.Plan.Id })" class="btn btn-outline-secondary">back</a>
+              <a href="@Url.Action("Index", new { id=Model.Plan.Routine.Id, plan=Model.Plan.Id })" class="btn btn-outline-secondary">back</a>
             </td>
           </tr>
         </tfoot>
@@ -53,3 +53,18 @@
     }
   </div>
 </div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index", "WorkoutRoutines")">Routines</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Edit", "WorkoutRoutines" , new { id=Model.Plan.Routine.Id })">@Model.Plan.Routine.Name</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index", "WorkoutPlans" , new { id=Model.Plan.Routine.Id })">Plans</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index", new { id=Model.Plan.Routine.Id, plan=Model.Plan.Id })">Plan # @Model.Plan.Id Cycles</a></li>
+      <li class="breadcrumb-item active">
+        Cycle # @Model.CycleId
+      </li>
+    </ol>
+  </nav>
+}

@@ -23,9 +23,25 @@
 
 <body>
   @Html.Partial("_NavBar")
+
   <main role="main">
     <div class="container">
-      @Html.Partial("_FlashMessage")
+      <div class="col-lg-12">
+        @Html.Partial("_FlashMessage")
+      </div>
+    </div>
+  </main>
+
+  <main role="main">
+    <div class="container">
+      <div class="col-lg-12">
+        @RenderSection("Breadcrumbs", required: false)
+      </div>
+    </div>
+  </main>
+
+  <main role="main">
+    <div class="container">
       @RenderBody()
     </div>
   </main>
@@ -44,7 +60,7 @@
   <script type="text/javascript">
     $(function ()
     {
-      $('.flash-message').fadeOut(7000);
+      //$('.flash-message').fadeOut(7000);
       $('[data-toggle=tooltip]').tooltip();
       $('.validation-summary-errors').addClass('alert alert-danger');
     });

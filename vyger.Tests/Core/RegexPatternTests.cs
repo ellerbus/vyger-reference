@@ -56,6 +56,9 @@ namespace vyger.Tests.Core
 
             regex.IsMatch("[123]-102.5%/5").Should().BeTrue();
             regex.IsMatch("[123]-102.5%/5/2").Should().BeTrue();
+
+            regex.IsMatch("1RM-102.5%x1").Should().BeTrue();
+            regex.IsMatch("1RM-102.5%x1x1").Should().BeTrue();
         }
 
         [TestMethod]

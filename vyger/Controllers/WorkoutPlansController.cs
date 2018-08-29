@@ -36,6 +36,8 @@ namespace vyger.Controllers
 
             if (routine.Plans.Count == 0)
             {
+                AddFlashMessage(FlashMessageType.Info, "No Workout Plans currently available for " + routine.Name);
+
                 return RedirectToAction("Create", new { id });
             }
 

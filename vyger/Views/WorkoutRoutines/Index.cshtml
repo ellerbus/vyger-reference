@@ -9,11 +9,17 @@
     <table class="table">
       <thead>
         <tr>
-          <th colspan="3">
-            <a href="@Url.Action("Create")" class="btn btn-sm btn-outline-success float-right">
-              <i class="fa fa-fw fa-plus"></i> Create
-            </a>
+          <th>
             Routine
+          </th>
+          <th class="navigation">
+            Exercises
+          </th>
+          <th class="navigation">
+            Plans
+          </th>
+          <th class="navigation">
+            Edit
           </th>
         </tr>
       </thead>
@@ -22,23 +28,55 @@
         {
           <tr>
             <td>
-              <a href="@Url.Action("Edit", new { id = routine.Id })" style="display: block;">
-                @routine.Name
+              @routine.Name
+            </td>
+            <td class="navigation">
+              <a href="@Url.Action("Index", "WorkoutRoutineExercises" , new { id=routine.Id, week=1 })"
+                 class="btn btn-sm btn-outline-secondary"
+                 data-toggle="tooltip" title="View/Edit Exercises">
+                <i class="fa fa-fw fa-list"></i>
               </a>
             </td>
-            <td class="text-right">
-              <a href="@Url.Action("Index", "WorkoutRoutineExercises" , new { id=routine.Id, week=1 })">
-                exercises
+            <td class="navigation">
+              <a href="@Url.Action("Index", "WorkoutPlans", new { id=routine.Id })"
+                 class="btn btn-sm btn-outline-secondary"
+                 data-toggle="tooltip" title="View/Edit Plans">
+                <i class="fa fa-fw fa-list"></i>
               </a>
             </td>
-            <td class="text-right">
-              <a href="@Url.Action("Index", "WorkoutPlans", new { id = routine.Id })">
-                plans
+            <td class="navigation">
+              <a href="@Url.Action("Edit", new { id=routine.Id })"
+                 class="btn btn-sm btn-outline-secondary"
+                 data-toggle="tooltip" title="Edit Routine">
+                <i class="fa fa-fw fa-edit"></i>
               </a>
             </td>
           </tr>
         }
       </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="navigation">
+            <a href="@Url.Action("Create")"
+               class="btn btn-sm btn-outline-success"
+               data-toggle="tooltip" title="Create Routine">
+              <i class="fa fa-fw fa-plus"></i>
+            </a>
+          </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item active">Routines</li>
+    </ol>
+  </nav>
+}

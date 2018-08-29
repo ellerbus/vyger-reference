@@ -4,18 +4,28 @@
 
 @model WorkoutRoutineViewModel
 
-  <div class="row justify-content-md-center">
-    <div class="col-lg-6 col-md-8">
-      @using (Html.BeginForm())
-      {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary()
-        @Html.Partial("_Details", Model)
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">create</button>
-          <a href="@Url.Action("Index")" class="btn btn-outline-secondary">cancel</a>
-        </div>
-      }
-    </div>
+<div class="row justify-content-md-center">
+  <div class="col-lg-6 col-md-8">
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary()
+      @Html.Partial("_Details", Model)
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">create</button>
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary">cancel</a>
+      </div>
+    }
   </div>
+</div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item"><a href="@Url.Action("Index")">Routines</a></li>
+      <li class="breadcrumb-item active">Create Routine</li>
+    </ol>
+  </nav>
+}
 

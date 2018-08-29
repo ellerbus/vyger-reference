@@ -9,8 +9,14 @@
     <table class="table">
       <thead>
         <tr>
-          <th colspan="2">
+          <th>
             Exercise Category
+          </th>
+          <th class="navigation">
+            Edit
+          </th>
+          <th class="navigation">
+            Exercises
           </th>
         </tr>
       </thead>
@@ -19,13 +25,20 @@
         {
           <tr>
             <td>
-              <a href="@Url.Action("Edit", new { id = category.Id })" style="display: block;">
-                @category.Name
+              @category.Name
+            </td>
+            <td class="navigation">
+              <a href="@Url.Action("Edit", new { id = category.Id })"
+                 class="btn btn-sm btn-outline-secondary"
+                 data-toggle="tooltip" title="Edit Category">
+                <i class="fa fa-fw fa-edit"></i>
               </a>
             </td>
-            <td class="text-right">
-              <a href="@Url.Action("Index", "Exercises", new { categoryId = category.Id })">
-                exercises
+            <td class="navigation">
+              <a href="@Url.Action("Index", "Exercises", new { categoryId = category.Id })"
+                 class="btn btn-sm btn-outline-secondary"
+                 data-toggle="tooltip" title="View Exercises">
+                <i class="fa fa-fw fa-list"></i>
               </a>
             </td>
           </tr>
@@ -33,13 +46,26 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="2">
-            <a href="@Url.Action("Create")" class="btn btn-sm btn-outline-success float-right">
-              <i class="fa fa-fw fa-plus"></i> Create
+          <td></td>
+          <td class="navigation">
+            <a href="@Url.Action("Create")"
+               class="btn btn-sm btn-outline-success"
+               data-toggle="tooltip" title="Create Category">
+              <i class="fa fa-fw fa-plus"></i>
             </a>
           </td>
+          <td></td>
         </tr>
       </tfoot>
     </table>
   </div>
 </div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
+      <li class="breadcrumb-item active">Categories</li>
+    </ol>
+  </nav>
+}

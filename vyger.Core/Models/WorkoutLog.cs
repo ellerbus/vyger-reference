@@ -66,6 +66,7 @@ namespace vyger.Core.Models
         /// </summary>
         public void OverlayWith(WorkoutLog other)
         {
+            //RoutineId = other.RoutineId;
             //PlanId = other.PlanId;
             //CycleId = other.CycleId;
             //WeekId = other.WeekId;
