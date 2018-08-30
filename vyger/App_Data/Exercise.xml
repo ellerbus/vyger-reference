@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-16"?>
+<exercises xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <exercise id="CH-B-FBP" name="Flat Bench Press" category-id="B" group-id="CH" />
+  <exercise id="CH-B-IBP" name="Incline Bench Press" category-id="B" group-id="CH" />
+  <exercise id="CH-B-DBP" name="Decline Bench Press" category-id="B" group-id="CH" />
+  <exercise id="CH-D-FBP" name="Flat Bench Press" category-id="D" group-id="CH" />
+  <exercise id="CH-D-IBP" name="Incline Bench Press" category-id="D" group-id="CH" />
+  <exercise id="CH-D-DBP" name="Decline Bench Press" category-id="D" group-id="CH" />
+  <exercise id="CH-H-FBP" name="Flat Bench Press" category-id="H" group-id="CH" />
+  <exercise id="CH-H-IBP" name="Incline Bench Press" category-id="H" group-id="CH" />
+  <exercise id="CH-H-DBP" name="Decline Bench Press" category-id="H" group-id="CH" />
+  <exercise id="TR-B-SHR" name="Shrugs" category-id="B" group-id="TR" />
+  <exercise id="TR-D-SHR" name="Shrugs" category-id="D" group-id="TR" />
+  <exercise id="TR-H-SHR" name="Shrugs" category-id="H" group-id="TR" />
+  <exercise id="SH-D-SLR" name="Side Lat Raises" category-id="D" group-id="SH" />
+  <exercise id="SH-D-FLR" name="Front Lat Raises" category-id="D" group-id="SH" />
+  <exercise id="SH-D-RLR" name="Rear Lat Raises" category-id="D" group-id="SH" />
+  <exercise id="SH-H-PRS" name="Press" category-id="H" group-id="SH" />
+  <exercise id="FA-B-RWC" name="Reverse Wrist Curls" category-id="B" group-id="FA" />
+  <exercise id="FA-B-SWC" name="Standing Wrist Curls" category-id="B" group-id="FA" />
+  <exercise id="BC-B-CRL" name="Curls" category-id="B" group-id="BC" />
+  <exercise id="BC-D-CRL" name="Curls" category-id="D" group-id="BC" />
+  <exercise id="LB-B-DLF" name="Deadlifts" category-id="B" group-id="LB" />
+  <exercise id="LB-D-DLF" name="Deadlifts" category-id="D" group-id="LB" />
+  <exercise id="AB-M-CRN" name="Crunch" category-id="M" group-id="AB" />
+  <exercise id="LG-B-FSQ" name="Front Squats" category-id="B" group-id="LG" />
+  <exercise id="LG-B-RSQ" name="Rear Squats" category-id="B" group-id="LG" />
+  <exercise id="LG-M-LPR" name="Leg Press" category-id="M" group-id="LG" />
+  <exercise id="AB-Y-CRU" name="Crunch" category-id="Y" group-id="AB" />
+  <exercise id="TC-Y-DIP" name="Dips" category-id="Y" group-id="TC" />
+  <exercise id="UB-H-LOR" name="Low Rows" category-id="H" group-id="UB" />
+  <exercise id="UB-H-HIR" name="High Rows" category-id="H" group-id="UB" />
+  <exercise id="CH-M-FLY" name="Flyes" category-id="M" group-id="CH" />
+</exercises>

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Augment;
 using FluentValidation;
 using FluentValidation.Mvc;
 using SimpleInjector;
@@ -87,9 +89,16 @@ namespace vyger
 
                         string[] roles = decodedTicket.UserData.Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
 
-                        GenericPrincipal principal = new GenericPrincipal(id, roles);
+                        string token = roles.FirstOrDefault(x => x.StartsWith("Token:"));
 
-                        HttpContext.Current.User = principal;
+                        if (token.IsNotEmpty())
+                        {
+                            token = token.GetRightOf("Token:");
+                        }
+
+                        SecurityActor sa = new SecurityActor(id.Name, id.IsAuthenticated, token);
+
+                        HttpContext.Current.User = sa;
                     }
                 }
             }

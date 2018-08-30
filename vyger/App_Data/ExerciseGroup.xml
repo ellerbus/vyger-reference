@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-16"?>
+<exercise-groups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <exercise-group id="AB" name="Abs" />
+  <exercise-group id="CH" name="Chest" />
+  <exercise-group id="CA" name="Calves" />
+  <exercise-group id="LG" name="Legs" />
+  <exercise-group id="UB" name="Upper Back" />
+  <exercise-group id="LB" name="Lower Back" />
+  <exercise-group id="SH" name="Shoulders" />
+  <exercise-group id="BC" name="Biceps" />
+  <exercise-group id="TC" name="Triceps" />
+  <exercise-group id="FA" name="Forearms" />
+  <exercise-group id="TR" name="Traps" />
+</exercise-groups>

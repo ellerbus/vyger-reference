@@ -113,14 +113,14 @@ namespace vyger.Core
 
         public ISecurityActor GetSecurityActor()
         {
-            IPrincipal p = GetPrincipal();
+            ISecurityActor p = GetPrincipal() as SecurityActor;
 
             if (p != null && p.Identity != null)
             {
-                return new SecurityActor(p.Identity);
+                return p;
             }
 
-            return new SecurityActor("", false);
+            return new SecurityActor("", false, "");
         }
 
         private static IPrincipal GetPrincipal()

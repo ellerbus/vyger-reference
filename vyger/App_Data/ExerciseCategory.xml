@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-16"?>
+<exercise-categories xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <exercise-category id="B" name="Barbell" />
+  <exercise-category id="D" name="Dumbbell" />
+  <exercise-category id="H" name="Hammer" />
+  <exercise-category id="M" name="Machine" />
+  <exercise-category id="Y" name="Body" />
+</exercise-categories>
