@@ -19,6 +19,6 @@ namespace vyger.ViewModels
         [DisplayName("Workout Date"), DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime LogDate { get; set; }
 
-        public IList<WorkoutLog> Logs { get; set; } = new WorkoutLog[0];
+        public List<WorkoutLog> Logs { get; set; } = new List<WorkoutLog>();
     }
 }

@@ -1,6 +1,4 @@
 @{
-  /**/
-
   ViewBag.Title = "Workout Logs";
 }
 
@@ -102,9 +100,9 @@
         }
       });
 
-      $('.table-sortable tbody tr').click(function ()
+      $('.table-sortable .delete-log').click(function ()
       {
-        $(this).fadeOut(500, function () { $(this).remove(); });
+        $(this).closest('tr').fadeOut(500, function () { $(this).remove(); });
       });
     });
   </script>
