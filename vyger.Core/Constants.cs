@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
-using Augment;
 using EnsureThat;
 
 namespace vyger.Core
@@ -36,17 +33,7 @@ namespace vyger.Core
                 /// <summary>
                 /// 
                 /// </summary>
-                public const string Exercise = @"[A-Z][A-Z]-[A-Z]-[A-Z][A-Z][A-Z]";
-
-                /// <summary>
-                /// 
-                /// </summary>
-                public const string ExerciseGroup = @"[A-Z][A-Z]";
-
-                /// <summary>
-                /// 
-                /// </summary>
-                public const string ExerciseCategory = @"[A-Z]";
+                public const string Exercise = @"[A-Z]{3}-[A-Z]{2}-[A-Z]{3}";
             }
 
             /// <summary>
@@ -137,26 +124,6 @@ namespace vyger.Core
 
         public const int MinWeight = 1;
         public const int MaxWeight = 9999;
-
-        public static string GetMemberFolder(string email)
-        {
-            StringBuilder hash = new StringBuilder();
-
-            if (email.IsNotEmpty())
-            {
-                using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
-                {
-                    byte[] bytes = md5.ComputeHash(new UTF8Encoding().GetBytes(email));
-
-                    for (int i = 0; i < bytes.Length; i++)
-                    {
-                        hash.Append(bytes[i].ToString("x2"));
-                    }
-                }
-            }
-
-            return hash.ToString();
-        }
 
         #endregion
 

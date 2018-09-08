@@ -151,35 +151,14 @@ namespace vyger
             return ticket;
         }
 
-        public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<ExerciseCategory> categories, Exercise exercise)
-        {
-            foreach (ExerciseCategory category in categories.OrderBy(x => x.Name))
-            {
-                yield return new SelectListItem()
-                {
-                    Value = category.Id,
-                    Text = category.Name,
-                    Selected = exercise == null ? false : exercise.CategoryId == category.Id
-                };
-            }
-        }
-
-        public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<ExerciseGroup> groups, Exercise exercise)
-        {
-            foreach (ExerciseGroup group in groups.OrderBy(x => x.Name))
-            {
-                yield return new SelectListItem()
-                {
-                    Value = group.Id,
-                    Text = group.Name,
-                    Selected = exercise == null ? false : exercise.GroupId == group.Id
-                };
-            }
-        }
-
         public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<Exercise> exercises)
         {
-            foreach (Exercise exercise in exercises.OrderBy(x => x.Group.Name).ThenBy(x => x.Category.Name).ThenBy(x => x.Name))
+            IEnumerable<Exercise> ordered = exercises
+                .OrderBy(x => x.Group)
+                .ThenBy(x => x.Category)
+                .ThenBy(x => x.Name);
+
+            foreach (Exercise exercise in ordered)
             {
                 yield return new SelectListItem()
                 {
@@ -188,18 +167,6 @@ namespace vyger
                 };
             }
         }
-
-        //public static IEnumerable<SelectListItem> ToSelectList(this IEnumerable<WorkoutRoutine> routines)
-        //{
-        //    foreach (WorkoutRoutine routine in routines.OrderBy(x => x.Name))
-        //    {
-        //        yield return new SelectListItem()
-        //        {
-        //            Value = routine.Id.ToString(),
-        //            Text = routine.Name
-        //        };
-        //    }
-        //}
     }
 
     public static class HtmlExtensions

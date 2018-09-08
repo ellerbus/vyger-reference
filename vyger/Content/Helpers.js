@@ -1,11 +1,11 @@
-﻿function setupExercisePicker(queryUrl, $groupId, $categoryId, $exerciseId)
+﻿function setupExercisePicker(queryUrl, $group, $category, $exerciseId)
 {
-    $groupId.change(function ()
+    $group.change(function ()
     {
         loadExercises();
     });
 
-    $categoryId.change(function ()
+    $category.change(function ()
     {
         loadExercises();
     });
@@ -14,10 +14,10 @@
 
     function loadExercises()
     {
-        var groupId = $groupId.val();
-        var categoryId = $categoryId.val();
+        var group = $group.val();
+        var category = $category.val();
 
-        var url = queryUrl + '?groupId=' + groupId + '&categoryId=' + categoryId;
+        var url = queryUrl + '?group=' + group + '&category=' + category;
 
         $.ajax({
             type: 'GET',

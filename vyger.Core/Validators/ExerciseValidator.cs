@@ -8,43 +8,31 @@ namespace vyger.Core.Validators
 {
     public class ExerciseValidator : AbstractValidator<Exercise>
     {
-        private IExerciseGroupService _groups;
-        private IExerciseCategoryService _categories;
         private IExerciseService _service;
 
         public ExerciseValidator(
-            IExerciseGroupService groups,
-            IExerciseCategoryService categories,
             IExerciseService service)
 
         {
-            _groups = groups;
-            _categories = categories;
             _service = service;
 
             CascadeMode = CascadeMode.Continue;
 
-            RuleFor(x => x.GroupId)
+            RuleFor(x => x.Group)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty()
-                .Length(2)
-                .Matches(Constants.Regex.IdPatterns.ExerciseGroup)
-                .Must(BeValidGroup).WithMessage("{PropertyName} {PropertyValue} cannot be found");
+                .NotEqual(ExerciseGroups.None);
 
-            RuleFor(x => x.CategoryId)
+            RuleFor(x => x.Category)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty()
-                .Length(1)
-                .Matches(Constants.Regex.IdPatterns.ExerciseCategory)
-                .Must(BeValidCateogry).WithMessage("{PropertyName} {PropertyValue} cannot be found");
+                .NotEqual(ExerciseCategories.None);
 
             RuleFor(x => x.Id)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty()
-                .Length(8)
+                .Length(10)
                 .Matches(Constants.Regex.IdPatterns.Exercise)
-                .Must(ContainGroupId).WithMessage("{PropertyName} must contain the Group ID")
-                .Must(ContainCategoryId).WithMessage("{PropertyName} must contain the Category ID");
+                .Must(ContainGroup).WithMessage("{PropertyName} must contain the Group")
+                .Must(ContainCategory).WithMessage("{PropertyName} must contain the Category");
 
             RuleFor(x => x.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
@@ -54,49 +42,30 @@ namespace vyger.Core.Validators
                 .Must(BeUnique).WithMessage("{PropertyName} must be unique, {PropertyValue} already in use");
         }
 
-        private bool BeValidGroup(Exercise context, string arg)
+        private bool ContainGroup(Exercise context, string arg)
         {
-            bool exists = _groups.GetExerciseGroups().ContainsPrimaryKey(arg);
+            string id = context.Group.GetIdentifier();
 
-            return exists;
+            return id == arg.Substring(0, 3);
         }
 
-        private bool BeValidCateogry(Exercise context, string arg)
+        private bool ContainCategory(Exercise context, string arg)
         {
-            bool exists = _categories.GetExerciseCategories().ContainsPrimaryKey(arg);
+            string id = context.Category.GetIdentifier();
 
-            return exists;
-        }
-
-        private bool ContainGroupId(Exercise context, string arg)
-        {
-            return context.GroupId == arg.Substring(0, 2);
-        }
-
-        private bool ContainCategoryId(Exercise context, string arg)
-        {
-            return context.CategoryId == arg.Substring(3, 1);
+            return id == arg.Substring(4, 2);
         }
 
         private bool NotContainCategory(Exercise context, string arg)
         {
-            bool exists = _categories.GetExerciseCategories().ContainsPrimaryKey(context.CategoryId);
-
-            if (exists)
-            {
-                ExerciseCategory category = _categories.GetExerciseCategories().GetByPrimaryKey(context.CategoryId);
-
-                return arg.StartsWithNotSameAs(category.Name);
-            }
-
-            return true;
+            return arg.StartsWithNotSameAs(context.Category.ToString());
         }
 
         private bool BeUnique(Exercise context, string arg)
         {
             ExerciseCollection exercises = _service.GetExercises();
 
-            bool exists = exercises.Any(x => x.GroupId == context.GroupId && x.CategoryId == context.CategoryId && x.Id != context.Id && x.Name.IsSameAs(arg));
+            bool exists = exercises.Any(x => x.Group == context.Group && x.Category == context.Category && x.Id != context.Id && x.Name.IsSameAs(arg));
 
             return !exists;
         }

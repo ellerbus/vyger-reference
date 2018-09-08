@@ -5,7 +5,6 @@ namespace vyger.Core.Validators
 {
     public class WorkoutLogValidator : AbstractValidator<WorkoutLog>
     {
-
         public WorkoutLogValidator()
         {
             CascadeMode = CascadeMode.Continue;
@@ -13,7 +12,7 @@ namespace vyger.Core.Validators
             RuleFor(x => x.ExerciseId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty()
-                .Length(8)
+                .Length(10)
                 .Matches(Constants.Regex.IdPatterns.Exercise);
 
             RuleFor(x => x.Workout)

@@ -9,7 +9,7 @@
       @Html.HiddenFor(m => m.DayId)
       @Html.HiddenFor(m => m.ExerciseId)
       @Html.HiddenFor(m => m.SequenceNumber)
-      @Model.Exercise.Category.Name @Model.Exercise.Name
+      @Model.Exercise.Category @Model.Exercise.Name
     </td>
     <td class="text-center" style="vertical-align: middle;">
       <a href="@Url.Action("Delete", new { id=Model.Routine.Id, day=Model.DayId, exercise=Model.ExerciseId })"

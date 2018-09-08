@@ -33,8 +33,6 @@ namespace vyger.Core.Services
     {
         #region Members
 
-        private IExerciseGroupService _groups;
-        private IExerciseCategoryService _categories;
         private ISecurityActor _actor;
         private IExerciseRepository _repository;
         private ICacheManager _cache;
@@ -47,14 +45,10 @@ namespace vyger.Core.Services
         /// Creates a new instance
         /// </summary>
         public ExerciseService(
-            IExerciseGroupService groups,
-            IExerciseCategoryService categories,
             ISecurityActor actor,
             IExerciseRepository repository,
             ICacheManager cache)
         {
-            _groups = groups;
-            _categories = categories;
             _actor = actor;
             _repository = repository;
             _cache = cache;
@@ -70,26 +64,12 @@ namespace vyger.Core.Services
         public ExerciseCollection GetExercises()
         {
             ExerciseCollection exercises = _cache
-                .Cache(() => BuildExerciseCollection())
+                .Cache(() => _repository.GetExercises())
                 .By("Actor", _actor.Email)
                 .DurationOf(5.Minutes())
                 .CachedObject;
 
             return exercises;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        public ExerciseCollection BuildExerciseCollection()
-        {
-            ExerciseGroupCollection groups = _groups.GetExerciseGroups();
-
-            ExerciseCategoryCollection categories = _categories.GetExerciseCategories();
-
-            IEnumerable<Exercise> exercises = _repository.GetExercises();
-
-            return new ExerciseCollection(groups, categories, exercises);
         }
 
         public void SaveExercises()

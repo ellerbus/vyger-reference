@@ -12,10 +12,10 @@
       @Html.ValidationSummary()
 
       <div class="form-group">
-        @Html.DropDownList("GroupId", Model.Groups.ToSelectList(Model.Exercise), "(exercise group)", new { @class = "form-control" })
+        @Html.EnumDropDownListFor(m => m.Group, new { @class = "form-control" })
       </div>
       <div class="form-group">
-        @Html.DropDownList("CategoryId", Model.Categories.ToSelectList(Model.Exercise), "(exercise category)", new { @class = "form-control" })
+        @Html.EnumDropDownListFor(m => m.Category, new { @class = "form-control" })
       </div>
       <div class="form-group">
         @Html.DropDownListFor(m => m.ExerciseId, Model.Exercises.ToSelectList(), "(exercise)", new { @class = "form-control" })
@@ -52,11 +52,11 @@
     $(function ()
     {
       var queryUrl = '@Url.Action("Query", "Exercises")';
-      var $groupId = $('select[name=GroupId]');
-      var $categoryId = $('select[name=CategoryId]');
+      var $group = $('select[name=Group]');
+      var $category = $('select[name=Category]');
       var $exerciseId = $('select[name=ExerciseId]');
 
-      setupExercisePicker(queryUrl, $groupId, $categoryId, $exerciseId);
+      setupExercisePicker(queryUrl, $group, $category, $exerciseId);
     });
   </script>
 }

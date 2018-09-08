@@ -31,29 +31,13 @@ namespace vyger.Tests
 
     static class BuildAn
     {
-        public static ExerciseGroupCollection ExerciseGroupCollection(int size = 5)
-        {
-            return new ExerciseGroupCollection(Design.Many<ExerciseGroup>(size).Build());
-        }
-
-        public static ExerciseCategoryCollection ExerciseCategoryCollection(int size = 5)
-        {
-            return new ExerciseCategoryCollection(Design.Many<ExerciseCategory>(size).Build());
-        }
-
         public static ExerciseCollection ExerciseCollection(int size = 5)
         {
-            var groups = ExerciseGroupCollection(1);
-
-            var categories = ExerciseCategoryCollection(1);
-
             var exercises = Design.Many<Exercise>(size)
                 .All()
-                .With(x => x.GroupId = groups.Last().Id)
-                .With(x => x.CategoryId = categories.Last().Id)
                 .Build();
 
-            return new ExerciseCollection(groups, categories, exercises);
+            return new ExerciseCollection(exercises);
         }
     }
 

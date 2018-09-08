@@ -11,7 +11,7 @@ namespace vyger.Core.Models
     ///	<summary>
     ///
     ///	</summary>
-    [XmlType("routine-plan")]
+    [XmlType("workout-plan")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutPlan
     {

@@ -101,8 +101,6 @@
     <Compile Include="Core\MoxyTesting.cs" />
     <Compile Include="Core\RegexPatternTests.cs" />
     <Compile Include="Core\WorkoutCalculatorTests.cs" />
-    <Compile Include="Core\Models\ExerciseCategoryTests.cs" />
-    <Compile Include="Core\Models\ExerciseGroupTests.cs" />
     <Compile Include="Core\Models\ExerciseTests.cs" />
     <Compile Include="Core\Models\WorkoutLogSetTests.cs" />
     <Compile Include="Core\Models\WorkoutLogTests.cs" />

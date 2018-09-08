@@ -3,9 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Augment;
-using EnsureThat;
 using vyger.Core;
-using vyger.Core.Models;
 using vyger.Core.Services;
 
 namespace vyger.Controllers
@@ -15,29 +13,43 @@ namespace vyger.Controllers
     {
         #region Members
 
-        private IAuthenticationService _authentication;
+        private IGoogleService _google;
 
         #endregion
 
         #region Constructors
 
-        public MembersController(IAuthenticationService authentication)
+        public MembersController(IGoogleService google)
         {
-            _authentication = authentication;
+            _google = google;
         }
 
         #endregion
 
-        #region Authentication
+        #region Google Authentication
+
+        [HttpGet, Route("Login"), AllowAnonymous]
+        public ActionResult GoogleLogin()
+        {
+            string redirectUrl = GetLoginRedirectUrl();
+
+            string scope = GetScope();
+
+            string googleLoginUrl = _google.LoginUrl(redirectUrl, scope);
+
+            return Redirect(googleLoginUrl);
+        }
 
         [HttpGet, Route("Google"), AllowAnonymous]
-        public virtual ActionResult Google(string token)
+        public ActionResult GoogleAuthenticate(string code, string state)
         {
-            AuthenticationToken verified = _authentication.VerifyGoogleAuthentication(token);
+            string authenticatedUrl = GetLoginRedirectUrl();
 
-            Ensure.That(verified, nameof(verified)).IsNotNull();
+            string scope = GetScope();
 
-            FormsAuthenticationTicket ticket = Authenticated(new SecurityActor(verified.Email, true, verified.Token));
+            ISecurityActor sa = _google.Authenticate(authenticatedUrl, code);
+
+            FormsAuthenticationTicket ticket = Authenticated(sa);
 
             string url = TempData["ReturnUrl"] as string;
 
@@ -49,9 +61,32 @@ namespace vyger.Controllers
             return Redirect(url);
         }
 
-        private FormsAuthenticationTicket Authenticated(SecurityActor sa)
+        private string GetLoginRedirectUrl()
         {
-            EnsureDataPath(sa);
+            return Url.Action("GoogleAuthenticate", null, null, Request.Url.Scheme);
+        }
+
+        private string GetScope()
+        {
+            string[] scopes = _google.GetScopesRequired();
+
+            return Url.Encode(scopes.Join(" "));
+        }
+
+        private FormsAuthenticationTicket Authenticated(ISecurityActor sa)
+        {
+            Session["SECURITY_ACTOR"] = sa;
+
+            string memberData = Server.MapPath($"~/App_Data/{sa.ProfileFolder}");
+
+            if (!Directory.Exists(memberData))
+            {
+                Directory.CreateDirectory(memberData);
+            }
+
+            //  find files at google
+            //  there - pull 'em down
+            //  not there - copy them over from baseline
 
             FormsAuthenticationTicket ticket = sa.ToAuthenticationTicket();
 
@@ -64,24 +99,12 @@ namespace vyger.Controllers
             return ticket;
         }
 
-        private void EnsureDataPath(SecurityActor sa)
-        {
-            string folder = Constants.GetMemberFolder(sa.Email);
-
-            string path = Server.MapPath($"~/App_Data/{folder}");
-
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-        }
-
         #endregion
 
         #region Methods
 
         [HttpGet, Route("Logout"), AllowAnonymous]
-        public virtual ActionResult Logout()
+        public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
 
@@ -89,7 +112,7 @@ namespace vyger.Controllers
         }
 
         [HttpGet, Route("AccessDenied"), AllowAnonymous]
-        public virtual ActionResult AccessDenied()
+        public ActionResult AccessDenied()
         {
             TempData["ReturnUrl"] = Request.QueryString["ReturnUrl"];
 
@@ -97,7 +120,7 @@ namespace vyger.Controllers
         }
 
         [HttpGet, Route("Index"), MvcAuthorizeRoles(Constants.Roles.Administrator)]
-        public virtual ActionResult Index()
+        public ActionResult Index()
         {
             return View();
         }

@@ -135,8 +135,6 @@ namespace vyger.Controllers
             };
 
             vm.Exercises = vm.Routine.AllExercises.ToList();
-            vm.Groups = vm.Routine.AllExercises.Groups.ToList();
-            vm.Categories = vm.Routine.AllExercises.Categories.ToList();
 
             return vm;
         }

@@ -1,7 +1,5 @@
 ﻿using System.IO;
 using System.Web.Hosting;
-using Augment;
-using EnsureThat;
 
 namespace vyger.Core.Repositories
 {
@@ -30,10 +28,9 @@ namespace vyger.Core.Repositories
         {
             if (Actor.IsAuthenticated)
             {
+                string fullpath = GetFullPath<T>();
 
-                string fullpath = GetFullPath();
-
-                if (File.Exists(GetFullPath()))
+                if (File.Exists(fullpath))
                 {
                     string xml = File.ReadAllText(fullpath);
 
@@ -44,30 +41,20 @@ namespace vyger.Core.Repositories
             return default(T);
         }
 
-        protected void SaveData(object value)
+        protected void SaveData<T>(T value)
         {
             string xml = Serializers.ToXml(value);
 
-            string fullpath = GetFullPath();
+            string fullpath = GetFullPath<T>();
 
             File.WriteAllText(fullpath, xml);
         }
 
-        private string GetFullPath()
+        private string GetFullPath<T>()
         {
-            Ensure.That(Actor, nameof(Actor)).IsNotNull();
-            Ensure.That(Actor.Email, nameof(Actor.Email)).IsNotEmpty();
+            string path = HostingEnvironment.MapPath($"~/App_Data/{Actor.ProfileFolder}");
 
-            string folder = Constants.GetMemberFolder(Actor.Email);
-
-            string path = HostingEnvironment.MapPath($"~/App_Data/{folder}");
-
-            if (HostingEnvironment.IsDevelopmentEnvironment)
-            {
-                path += "@local";
-            }
-
-            return Path.Combine(path, FileName + ".xml");
+            return Path.Combine(path, typeof(T).Name + ".xml");
         }
 
         #endregion

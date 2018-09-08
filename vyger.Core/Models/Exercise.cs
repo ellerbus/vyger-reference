@@ -23,8 +23,8 @@ namespace vyger.Core.Models
         {
             Id = exercise.Id;
             Name = exercise.Name;
-            GroupId = exercise.GroupId;
-            CategoryId = exercise.CategoryId;
+            Group = exercise.Group;
+            Category = exercise.Category;
         }
 
         #endregion
@@ -94,50 +94,22 @@ namespace vyger.Core.Models
         [XmlIgnore]
         public string DetailName
         {
-            get { return $"{Group?.Name} - {Category?.Name} - {Name}"; }
+            get { return $"{Group} - {Category} - {Name}"; }
         }
 
         ///	<summary>
         ///
         ///	</summary>
-        [DisplayName("Category Id")]
-        [XmlAttribute("category-id")]
-        public string CategoryId
-        {
-            get { return Category == null ? _categoryId : Category.Id; }
-            set { _categoryId = value; }
-        }
-
-        private string _categoryId;
+        [DisplayName("Category")]
+        [XmlAttribute("category")]
+        public ExerciseCategories Category { get; set; }
 
         ///	<summary>
         ///
         ///	</summary>
-        [DisplayName("Group Id")]
-        [XmlAttribute("group-id")]
-        public string GroupId
-        {
-            get { return Group == null ? _groupId : Group.Id; }
-            set { _groupId = value; }
-        }
-
-        private string _groupId;
-
-        #endregion
-
-        #region Foreign Key Properties
-
-        ///	<summary>
-        ///
-        ///	</summary>
-        [XmlIgnore]
-        public ExerciseGroup Group { get; set; }
-
-        ///	<summary>
-        ///
-        ///	</summary>
-        [XmlIgnore]
-        public ExerciseCategory Category { get; set; }
+        [DisplayName("Group")]
+        [XmlAttribute("group")]
+        public ExerciseGroups Group { get; set; }
 
         #endregion
     }

@@ -11,7 +11,7 @@ namespace vyger.Core.Models
     ///	<summary>
     ///
     ///	</summary>
-    [XmlRoot("workout-log")]
+    [XmlType("workout-log")]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class WorkoutLog
     {

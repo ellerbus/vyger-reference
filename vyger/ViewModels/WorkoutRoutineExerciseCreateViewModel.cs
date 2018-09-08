@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using vyger.Core;
 using vyger.Core.Models;
 
 namespace vyger.ViewModels
@@ -11,8 +12,8 @@ namespace vyger.ViewModels
 
         public IList<Exercise> Exercises { get; set; }
 
-        public IList<ExerciseGroup> Groups { get; set; }
+        public ExerciseGroups Group { get; set; }
 
-        public IList<ExerciseCategory> Categories { get; set; }
+        public ExerciseCategories Category { get; set; }
     }
 }

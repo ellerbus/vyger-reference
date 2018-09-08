@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Security;
 using Augment;
@@ -12,6 +14,7 @@ using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
 using vyger.Core;
+using vyger.Core.Services;
 
 namespace vyger
 {
@@ -73,7 +76,7 @@ namespace vyger
         {
         }
 
-        private void Application_AuthenticateRequest(object sender, EventArgs eventArgs)
+        protected void Application_AuthenticateRequest(object sender, EventArgs eventArgs)
         {
             if (HttpContext.Current != null && HttpContext.Current.User != null)
             {
@@ -99,6 +102,38 @@ namespace vyger
                         SecurityActor sa = new SecurityActor(id.Name, id.IsAuthenticated, token);
 
                         HttpContext.Current.User = sa;
+                    }
+                }
+            }
+        }
+
+        protected void Session_OnEnd(object sender, EventArgs e)
+        {
+            ISecurityActor sa = Session["SECURITY_ACTOR"] as ISecurityActor;
+
+            if (sa != null)
+            {
+                GoogleService google = new GoogleService();
+
+                string appData = HostingEnvironment.MapPath($"~/App_Data/{sa.ProfileFolder}");
+
+                DirectoryInfo dir = new DirectoryInfo(appData);
+
+                FileInfo[] files = dir.GetFiles("*.xml");
+
+                foreach (FileInfo file in files)
+                {
+                    string name = file.Name;
+
+                    string xml = File.ReadAllText(file.FullName);
+
+                    try
+                    {
+                        google.UploadContents(sa, name, xml);
+                    }
+                    catch (Exception ex)
+                    {
+                        //  nothing for now
                     }
                 }
             }

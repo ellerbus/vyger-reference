@@ -2,6 +2,15 @@
 
 ### Workout Patterns
 
+#### Google Login / SignUp
+
+- check for user folder
+- check for google files and download to user folder
+- (if no files found) copy root files to user folder and save to google
+- at session end save files to google
+- cache security actor in session
+- google is record of authority
+
 
 #### Body Weight
 

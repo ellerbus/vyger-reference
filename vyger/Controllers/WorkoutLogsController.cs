@@ -16,8 +16,6 @@ namespace vyger.Controllers
 
         private IWorkoutLogService _service;
         private IExerciseService _exercises;
-        private IExerciseGroupService _groups;
-        private IExerciseCategoryService _categories;
 
         #endregion
 
@@ -25,14 +23,10 @@ namespace vyger.Controllers
 
         public WorkoutLogsController(
             IWorkoutLogService service,
-            IExerciseService exercises,
-            IExerciseGroupService groups,
-            IExerciseCategoryService categories)
+            IExerciseService exercises)
         {
             _service = service;
             _exercises = exercises;
-            _groups = groups;
-            _categories = categories;
         }
 
         #endregion
@@ -135,8 +129,6 @@ namespace vyger.Controllers
             WorkoutLogCreateViewModel vm = new WorkoutLogCreateViewModel();
 
             vm.Exercises = _exercises.GetExercises();
-            vm.Groups = _groups.GetExerciseGroups();
-            vm.Categories = _categories.GetExerciseCategories();
             vm.LogDate = date;
 
             return View(vm);
@@ -175,8 +167,6 @@ namespace vyger.Controllers
             WorkoutLogCreateViewModel vm = new WorkoutLogCreateViewModel();
 
             vm.Exercises = _exercises.GetExercises();
-            vm.Groups = _groups.GetExerciseGroups();
-            vm.Categories = _categories.GetExerciseCategories();
             vm.LogDate = date;
             vm.ExerciseId = post.ExerciseId;
             vm.Workout = post.Workout;

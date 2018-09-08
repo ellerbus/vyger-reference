@@ -15,21 +15,14 @@ namespace vyger.Controllers
         #region Members
 
         private IExerciseService _service;
-        private IExerciseGroupService _groups;
-        private IExerciseCategoryService _categories;
 
         #endregion
 
         #region Constructors
 
-        public ExercisesController(
-            IExerciseService service,
-            IExerciseGroupService groups,
-            IExerciseCategoryService categories)
+        public ExercisesController(IExerciseService service)
         {
             _service = service;
-            _groups = groups;
-            _categories = categories;
         }
 
         #endregion
@@ -37,29 +30,19 @@ namespace vyger.Controllers
         #region List Methods
 
         [HttpGet, Route("Index")]
-        public virtual ActionResult Index(string groupId = null, string categoryId = null)
+        public virtual ActionResult Index(ExerciseGroups group = ExerciseGroups.None, ExerciseCategories category = ExerciseCategories.None)
         {
             IList<Exercise> exercises = _service
                 .GetExercises()
-                .Filter(groupId, categoryId)
+                .Filter(group, category)
                 .ToList();
 
             ExerciseIndexViewModel vm = new ExerciseIndexViewModel()
             {
                 Items = exercises,
-                SelectedCategoryId = categoryId,
-                SelectedGroupId = groupId
+                SelectedCategory = category,
+                SelectedGroup = group
             };
-
-            if (vm.SelectedCategoryId.IsNotEmpty())
-            {
-                vm.SelectedCategory = _categories.GetExerciseCategories().GetByPrimaryKey(vm.SelectedCategoryId);
-            }
-
-            if (vm.SelectedGroupId.IsNotEmpty())
-            {
-                vm.SelectedGroup = _groups.GetExerciseGroups().GetByPrimaryKey(vm.SelectedGroupId);
-            }
 
             return View(vm);
         }
@@ -69,33 +52,13 @@ namespace vyger.Controllers
         #region Create Methods
 
         [HttpGet, Route("Create")]
-        public virtual ActionResult Create(string groupId = null, string categoryId = null)
+        public virtual ActionResult Create(ExerciseGroups group = ExerciseGroups.None, ExerciseCategories category = ExerciseCategories.None)
         {
-            ExerciseDetailViewModel vm = new ExerciseDetailViewModel();
+            Exercise vm = new Exercise();
 
-            vm.Groups = _groups.GetExerciseGroups();
+            vm.Group = group;
 
-            vm.Categories = _categories.GetExerciseCategories();
-
-            if (groupId.IsNotEmpty())
-            {
-                ExerciseGroup group = null;
-
-                if (_groups.GetExerciseGroups().TryGetByPrimaryKey(groupId, out group))
-                {
-                    vm.Group = group;
-                }
-            }
-
-            if (categoryId.IsNotEmpty())
-            {
-                ExerciseCategory category = null;
-
-                if (_categories.GetExerciseCategories().TryGetByPrimaryKey(categoryId, out category))
-                {
-                    vm.Category = category;
-                }
-            }
+            vm.Category = category;
 
             return View(vm);
         }
@@ -116,11 +79,7 @@ namespace vyger.Controllers
                 return RedirectToAction("Index");
             }
 
-            ExerciseDetailViewModel vm = new ExerciseDetailViewModel(post);
-
-            vm.Groups = _groups.GetExerciseGroups();
-
-            vm.Categories = _categories.GetExerciseCategories();
+            Exercise vm = new Exercise(post);
 
             return View(vm);
         }
@@ -139,11 +98,7 @@ namespace vyger.Controllers
                 return RedirectToAction("Index");
             }
 
-            ExerciseDetailViewModel vm = new ExerciseDetailViewModel(exercise);
-
-            vm.Groups = _groups.GetExerciseGroups();
-
-            vm.Categories = _categories.GetExerciseCategories();
+            Exercise vm = new Exercise(exercise);
 
             return View(vm);
         }
@@ -166,11 +121,7 @@ namespace vyger.Controllers
                 return RedirectToAction("Index");
             }
 
-            ExerciseDetailViewModel vm = new ExerciseDetailViewModel(post);
-
-            vm.Groups = _groups.GetExerciseGroups();
-
-            vm.Categories = _categories.GetExerciseCategories();
+            Exercise vm = new Exercise(post);
 
             return View(vm);
         }
@@ -190,11 +141,11 @@ namespace vyger.Controllers
         }
 
         [HttpGet, Route("Query")]
-        public virtual ActionResult Query(string groupId = null, string categoryId = null)
+        public virtual ActionResult Query(ExerciseGroups group = ExerciseGroups.None, ExerciseCategories category = ExerciseCategories.None)
         {
             IList<Exercise> exercises = _service
                 .GetExercises()
-                .Filter(groupId, categoryId)
+                .Filter(group, category)
                 .OrderBy(x => x.DetailName)
                 .ToList();
 

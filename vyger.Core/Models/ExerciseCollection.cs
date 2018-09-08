@@ -20,15 +20,9 @@ namespace vyger.Core.Models
         {
         }
 
-        public ExerciseCollection(
-            ExerciseGroupCollection groups,
-            ExerciseCategoryCollection categories,
-            IEnumerable<Exercise> exercises)
+        public ExerciseCollection(IEnumerable<Exercise> exercises)
             : this()
         {
-            Groups = groups;
-            Categories = categories;
-
             AddRange(exercises);
         }
 
@@ -48,11 +42,11 @@ namespace vyger.Core.Models
 
         #region Methods
 
-        public IEnumerable<Exercise> Filter(string groupId, string categoryId)
+        public IEnumerable<Exercise> Filter(ExerciseGroups group, ExerciseCategories category)
         {
             return this
-                .Where(x => groupId.IsNullOrEmpty() || x.GroupId.IsSameAs(groupId))
-                .Where(x => categoryId.IsNullOrEmpty() || x.CategoryId.IsSameAs(categoryId));
+                .Where(x => group == ExerciseGroups.None || x.Group == group)
+                .Where(x => category == ExerciseCategories.None || x.Category == category);
         }
 
         protected override string GetPrimaryKey(Exercise item)
@@ -63,28 +57,11 @@ namespace vyger.Core.Models
         protected override void InsertItem(int index, Exercise item)
         {
             base.InsertItem(index, item);
-
-            UpdateReferences(item);
         }
 
         protected override void SetItem(int index, Exercise item)
         {
             base.SetItem(index, item);
-
-            UpdateReferences(item);
-        }
-
-        private void UpdateReferences(Exercise item)
-        {
-            if (Groups != null)
-            {
-                item.Group = Groups.GetByPrimaryKey(item.GroupId);
-            }
-
-            if (Categories != null)
-            {
-                item.Category = Categories.GetByPrimaryKey(item.CategoryId);
-            }
         }
 
         public void AddRange(IEnumerable<Exercise> exercises)
@@ -97,22 +74,6 @@ namespace vyger.Core.Models
                 }
             }
         }
-
-        #endregion
-
-        #region Foreign Keys
-
-        /// <summary>
-        ///
-        /// </summary>
-        [XmlIgnore]
-        public ExerciseCategoryCollection Categories { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        [XmlIgnore]
-        public ExerciseGroupCollection Groups { get; set; }
 
         #endregion
     }

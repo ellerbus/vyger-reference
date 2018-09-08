@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Principal;
+using System.Text;
 using Augment;
 
 namespace vyger.Core
@@ -13,7 +15,9 @@ namespace vyger.Core
 
         bool IsAuthenticated { get; }
 
-        string AuthenticationToken { get; }
+        string AccessToken { get; }
+
+        string ProfileFolder { get; }
     }
 
     class SecurityIdentity : IIdentity
@@ -29,13 +33,13 @@ namespace vyger.Core
     {
         #region Constructors
 
-        public SecurityActor(string email, bool? isAuthenticated, string token)
+        public SecurityActor(string email, bool? isAuthenticated, string accessToken)
         {
             Email = email.AssertNotNull().ToLower();
 
             IsAuthenticated = isAuthenticated.GetValueOrDefault();
 
-            AuthenticationToken = token;
+            AccessToken = accessToken;
 
             Identity = new SecurityIdentity()
             {
@@ -56,7 +60,7 @@ namespace vyger.Core
             if (Email.IsNotEmpty())
             {
                 roles.Add(Constants.Roles.ActiveMember);
-                roles.Add("Token:" + AuthenticationToken);
+                roles.Add("Token:" + AccessToken);
             }
 
             return roles.ToArray();
@@ -71,13 +75,59 @@ namespace vyger.Core
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IIdentity Identity { get; private set; }
 
-        public string Email { get; private set; }
+        /// <summary>
+        /// Login EMail
+        /// </summary>
+        public string Email
+        {
+            get
+            {
+                return _email.AssertNotNull().ToLower();
+            }
+            private set { _email = value; }
+        }
+        private string _email;
 
+        /// <summary>
+        /// Whether or not we're authenticated
+        /// </summary>
         public bool IsAuthenticated { get; private set; }
 
-        public string AuthenticationToken { get; private set; }
+        /// <summary>
+        /// Current Google Access Token
+        /// </summary>
+        public string AccessToken { get; private set; }
+
+        /// <summary>
+        /// Folder of profile data (local pathing)
+        /// </summary>
+        public string ProfileFolder
+        {
+            get
+            {
+                StringBuilder hash = new StringBuilder();
+
+                if (IsAuthenticated && Email.IsNotEmpty())
+                {
+                    using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+                    {
+                        byte[] bytes = md5.ComputeHash(new UTF8Encoding().GetBytes(Email));
+
+                        for (int i = 0; i < bytes.Length; i++)
+                        {
+                            hash.Append(bytes[i].ToString("x2"));
+                        }
+                    }
+                }
+
+                return hash.ToString();
+            }
+        }
 
         #endregion
     }

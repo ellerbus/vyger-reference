@@ -16,10 +16,10 @@
       @Html.HiddenFor(m => m.RoutineExercise.DayId)
 
       <div class="form-group">
-        @Html.DropDownList("GroupId", Model.Groups.ToSelectList(null), "(exercise group)", new { @class = "form-control" })
+        @Html.EnumDropDownListFor(m => m.Group, new { @class = "form-control" })
       </div>
       <div class="form-group">
-        @Html.DropDownList("CategoryId", Model.Categories.ToSelectList(null), "(exercise category)", new { @class = "form-control" })
+        @Html.EnumDropDownListFor(m => m.Category, new { @class = "form-control" })
       </div>
       <div class="form-group">
         @Html.DropDownListFor(m => m.RoutineExercise.ExerciseId, Model.Routine.AllExercises.ToSelectList(), "(exercise)", new { @class = "form-control" })
@@ -61,11 +61,11 @@
     $(function ()
     {
       var queryUrl='@Url.Action("Query", "Exercises")';
-      var $groupId=$('select[name=GroupId]');
-      var $categoryId=$('select[name=CategoryId]');
+      var $group=$('select[name=GroupId]');
+      var $category=$('select[name=CategoryId]');
       var $exerciseId=$('select[name="RoutineExercise.ExerciseId"]');
 
-      setupExercisePicker(queryUrl, $groupId, $categoryId, $exerciseId);
+      setupExercisePicker(queryUrl, $group, $category, $exerciseId);
     });
   </script>
 }

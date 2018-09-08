@@ -17,22 +17,14 @@
         <li class="nav-item mr-2">
           <a class="nav-link" href="@Url.Action("Index", "WorkoutLogs")">Logs</a>
         </li>
-        @*
-          <li class="nav-item mr-2">
-            <a class="nav-link" href="@Url.Action("Index", "WorkoutPlans")">Plans</a>
-          </li>
-        *@
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="@Url.Action("All", "WorkoutPlans")">Plans</a>
+        </li>
         <li class="nav-item mr-2">
           <a class="nav-link" href="@Url.Action("Index", "WorkoutRoutines")">Routines</a>
         </li>
         <li class="nav-item mr-2">
           <a class="nav-link" href="@Url.Action("Index", "Exercises")">Exercises</a>
-        </li>
-        <li class="nav-item mr-2">
-          <a class="nav-link" href="@Url.Action("Index", "ExerciseGroups")">Groups</a>
-        </li>
-        <li class="nav-item mr-2">
-          <a class="nav-link" href="@Url.Action("Index", "ExerciseCategories")">CATEGORIES</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
@@ -46,12 +38,12 @@
   {
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a href="#" id="google-login" class="nav-link">
+        <a href="@Url.Action("GoogleLogin", "Members")" id="google-login" class="nav-link">
           <i class="fab fa-google pr-1"></i>
           <span class="d-none d-sm-inline"> Login</span>
         </a>
       </li>
     </ul>
-    @Html.Partial("_GoogleLogin")
+    @*Html.Partial("_GoogleLogin")*@
   }
 </nav>

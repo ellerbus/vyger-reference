@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-16"?>
+<workout-logs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <workout-log log-date="2018-07-09T00:00:00" exercise-id="LEG-MA-LPR" workout="230x5, 270x5, 305x5, 345x5, 380x6" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
+  <workout-log log-date="2018-07-09T00:00:00" exercise-id="CHE-DU-FBP" workout="35x5, 45x5, 50x5, 55x5, 60x6" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
+  <workout-log log-date="2018-07-09T00:00:00" exercise-id="CHE-HA-DBP" workout="190x5, 210x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+  <workout-log log-date="2018-07-09T00:00:00" exercise-id="TRA-HA-SHR" workout="170x5, 190x5, 210x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="5" />
+  <workout-log log-date="2018-07-09T00:00:00" exercise-id="ABS-MA-CRN" workout="50x12, 50x12, 50x12" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="6" />
+  <workout-log log-date="2018-07-12T00:00:00" exercise-id="SHO-HA-PRS" workout="80x5, 95x5, 110x5, 120x5, 135x6" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
+  <workout-log log-date="2018-07-12T00:00:00" exercise-id="BIC-DU-CRL" workout="25x8, 30x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+  <workout-log log-date="2018-07-12T00:00:00" exercise-id="SHO-DU-SLR" workout="15x6, 15x6" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="4" />
+  <workout-log log-date="2018-07-12T00:00:00" exercise-id="SHO-DU-FLR" workout="15x6, 15x6" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="5" />
+  <workout-log log-date="2018-07-12T00:00:00" exercise-id="ABS-MA-CRN" workout="50x12, 50x12, 50x12" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="8" />
+  <workout-log log-date="2018-07-16T00:00:00" exercise-id="LEG-MA-LPR" workout="245x5, 285x5, 325x5, 365x5, 410x4" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
+  <workout-log log-date="2018-07-16T00:00:00" exercise-id="CHE-HA-DBP" workout="200x5, 225x4" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+  <workout-log log-date="2018-07-16T00:00:00" exercise-id="LEG-BA-FSQ" workout="85x5, 85x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="4" />
+  <workout-log log-date="2018-07-16T00:00:00" exercise-id="TRA-HA-SHR" workout="180x5, 200x5, 230x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="5" />
+  <workout-log log-date="2018-07-16T00:00:00" exercise-id="ABS-MA-CRN" workout="50x12, 50x12, 50x12" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="6" />
+  <workout-log log-date="2018-07-20T00:00:00" exercise-id="LOW-BA-DLF" workout="110x5, 125x5, 145x5, 160x5, 180x4" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
+  <workout-log log-date="2018-07-20T00:00:00" exercise-id="SHO-HA-PRS" workout="85x5, 100x5, 115x5, 130x5, 145x4" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
+  <workout-log log-date="2018-07-20T00:00:00" exercise-id="BIC-DU-CRL" workout="25x8, 30x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+  <workout-log log-date="2018-07-20T00:00:00" exercise-id="SHO-DU-SLR" workout="15x8, 15x6" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="4" />
+  <workout-log log-date="2018-07-20T00:00:00" exercise-id="SHO-DU-FLR" workout="15x6, 15x6" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="5" />
+  <workout-log log-date="2018-07-20T00:00:00" exercise-id="FOR-BA-RWC" workout="45x8, 55x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="6" />
+  <workout-log log-date="2018-07-20T00:00:00" exercise-id="FOR-BA-SWC" workout="65x8, 85x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="7" />
+  <workout-log log-date="2018-07-20T00:00:00" exercise-id="ABS-MA-CRN" workout="50x12, 50x12, 50x12" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="8" />
+  <workout-log log-date="2018-07-23T00:00:00" exercise-id="LEG-MA-LPR" workout="255x5, 300x5, 340x5, 360x6, 430x3" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
+  <workout-log log-date="2018-07-23T00:00:00" exercise-id="CHE-DU-FBP" workout="40x5, 50x5, 55x5, 65x3, 70x3" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
+  <workout-log log-date="2018-07-23T00:00:00" exercise-id="TRA-HA-SHR" workout="190x5, 215x3, 240x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="5" />
+  <workout-log log-date="2018-07-23T00:00:00" exercise-id="ABS-MA-CRN" workout="50x12, 50x12, 50x12" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="6" />
+  <workout-log log-date="2018-07-27T00:00:00" exercise-id="LOW-BA-DLF" workout="115x5, 135x5, 150x5, 170x3, 190x3" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
+  <workout-log log-date="2018-07-27T00:00:00" exercise-id="SHO-HA-PRS" workout="90x5, 105x5, 120x5, 135x3, 150x2" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
+  <workout-log log-date="2018-07-27T00:00:00" exercise-id="BIC-DU-CRL" workout="25x8, 30x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+  <workout-log log-date="2018-07-27T00:00:00" exercise-id="SHO-DU-SLR" workout="20x4, 20x4, 15x4" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="4" />
+  <workout-log log-date="2018-07-27T00:00:00" exercise-id="SHO-DU-FLR" workout="20x4, 20x4, 15x4" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="5" />
+  <workout-log log-date="2018-07-27T00:00:00" exercise-id="FOR-BA-RWC" workout="45x8, 55x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="6" />
+  <workout-log log-date="2018-07-27T00:00:00" exercise-id="FOR-BA-SWC" workout="65x8, 85x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="7" />
+  <workout-log log-date="2018-07-27T00:00:00" exercise-id="ABS-MA-CRN" workout="50x12, 50x12, 50x12" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="8" />
+  <workout-log log-date="2018-09-02T00:00:00" exercise-id="CHE-DU-IBP" workout="35x5, 40x5, 45x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
+  <workout-log log-date="2018-09-02T00:00:00" exercise-id="LEG-MA-LPR" workout="180x5, 270x5, 320x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
+  <workout-log log-date="2018-09-02T00:00:00" exercise-id="ABS-MA-CRN" workout="50x10, 50x10, 50x10" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="5" />
+  <workout-log log-date="2018-09-02T00:00:00" exercise-id="CHE-MA-FLY" workout="85x8, 100x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+  <workout-log log-date="2018-09-02T00:00:00" exercise-id="UPP-HA-LOR" workout="60x5, 110x5, 120x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="4" />
+  <workout-log log-date="2018-09-04T00:00:00" exercise-id="SHO-HA-PRS" workout="90x5, 110x5, 120x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="0" />
+  <workout-log log-date="2018-09-04T00:00:00" exercise-id="BIC-DU-CRL" workout="25x8, 30x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
+  <workout-log log-date="2018-09-04T00:00:00" exercise-id="SHO-DU-SLR" workout="15x5, 15x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
+  <workout-log log-date="2018-09-04T00:00:00" exercise-id="SHO-DU-FLR" workout="15x5, 15x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+  <workout-log log-date="2018-09-06T00:00:00" exercise-id="CHE-DU-IBP" workout="35x5, 40x5, 45x5, 50x5, 55x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="0" />
+  <workout-log log-date="2018-09-06T00:00:00" exercise-id="CHE-MA-FLY" workout="85x8, 100x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
+  <workout-log log-date="2018-09-06T00:00:00" exercise-id="UPP-HA-LOR" workout="90x5, 110x5, 120x5, 135x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
+  <workout-log log-date="2018-09-06T00:00:00" exercise-id="TRA-HA-SHR" workout="180x5, 200x5, 230x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+</workout-logs>

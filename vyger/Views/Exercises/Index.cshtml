@@ -28,15 +28,15 @@
         {
           <tr>
             <td>
-              <a href="@Url.Action("Index", new { groupId=exercise.GroupId })"
-                 data-toggle="tooltip" title="Filter for @exercise.Group.Name">
-                @exercise.Group.Name
+              <a href="@Url.Action("Index", new { group=exercise.Group })"
+                 data-toggle="tooltip" title="Filter for @exercise.Group">
+                @exercise.Group
               </a>
             </td>
             <td>
-              <a href="@Url.Action("Index", new { categoryId=exercise.CategoryId })"
-                 data-toggle="tooltip" title="Filter for @exercise.Category.Name">
-                @exercise.Category.Name
+              <a href="@Url.Action("Index", new { category=exercise.Category })"
+                 data-toggle="tooltip" title="Filter for @exercise.Category">
+                @exercise.Category
               </a>
             </td>
             <td>
@@ -76,13 +76,13 @@
       <li class="breadcrumb-item"><a href="@Url.Content("~/")">Home</a></li>
       <li class="breadcrumb-item active">
         Exercises
-        @if (Model.SelectedCategory != null)
+        @if (Model.SelectedCategory != ExerciseCategories.None)
         {
-          <i class="fa fa-fw fa-filter text-muted"></i> <span>Category=</span>@Model.SelectedCategory.Name
+          <i class="fa fa-fw fa-filter text-muted"></i> <span>Category=</span>@Model.SelectedCategory
         }
-        @if (Model.SelectedGroupId != null)
+        @if (Model.SelectedGroup != ExerciseGroups.None)
         {
-          <i class="fa fa-fw fa-filter text-muted"></i> <span>Group=</span>@Model.SelectedGroup.Name
+          <i class="fa fa-fw fa-filter text-muted"></i> <span>Group=</span>@Model.SelectedGroup
         }
       </li>
     </ol>
