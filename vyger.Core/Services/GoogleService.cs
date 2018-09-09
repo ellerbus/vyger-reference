@@ -4,7 +4,6 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Net;
 using System.Text;
-using Augment;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Responses;
@@ -45,7 +44,7 @@ namespace vyger.Core.Services
         /// <param name="sa"></param>
         /// <param name="name"></param>
         /// <param name="modified"></param>
-        void DownloadContents(ISecurityActor sa, string name, DateTime modified);
+        void DownloadContents(ISecurityActor sa);
     }
 
     #endregion
@@ -133,16 +132,25 @@ namespace vyger.Core.Services
             }
         }
 
-        public void DownloadContents(ISecurityActor sa, string name, DateTime modified)
+        public void DownloadContents(ISecurityActor sa)
         {
-            File metadata = GetMetaData(name);
-
-            File file = GetStorageMetadata(sa, name);
-
-            if (file != null)
+            if (!io.Directory.Exists(sa.ProfileFolder))
             {
-                if (file.ModifiedTime > modified)
+                io.Directory.CreateDirectory(sa.ProfileFolder);
+            }
+
+            IList<File> files = GetStorageFiles(sa);
+
+            foreach (File file in files)
+            {
+                string path = io.Path.Combine(sa.ProfileFolder, file.Name);
+
+                io.FileInfo fileInfo = new io.FileInfo(path);
+
+                if (!fileInfo.Exists || file.ModifiedTime > fileInfo.LastWriteTimeUtc)
                 {
+                    File metadata = GetMetaData(file.Name);
+
                     //  then we need the latest
                     DownloadStorage(sa, metadata, file.Id);
                 }
@@ -169,6 +177,21 @@ namespace vyger.Core.Services
             }
 
             return null;
+        }
+
+        private IList<File> GetStorageFiles(ISecurityActor sa)
+        {
+            DriveService ds = CreateDriveService(sa);
+
+            FilesResource.ListRequest request = ds.Files.List();
+
+            request.Spaces = "appDataFolder";
+
+            request.Fields = "files(id, modifiedTime, name)";
+
+            FileList files = request.Execute();
+
+            return files.Files;
         }
 
         private void CreateStorage(ISecurityActor sa, File metadata, string name, string xml)
@@ -211,7 +234,9 @@ namespace vyger.Core.Services
             {
                 request.Download(stream);
 
-                System.IO.File.WriteAllBytes(sa.ProfileFolder, stream.ToArray());
+                string path = io.Path.Combine(sa.ProfileFolder, metadata.Name);
+
+                io.File.WriteAllBytes(path, stream.ToArray());
             }
         }
 

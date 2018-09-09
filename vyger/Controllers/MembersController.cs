@@ -79,11 +79,7 @@ namespace vyger.Controllers
         {
             Session["SECURITY_ACTOR"] = sa;
 
-            EnsureData(sa);
-
-            //  find files at google
-            //  there - pull 'em down
-            //  not there - copy them over from baseline
+            _google.DownloadContents(sa);
 
             FormsAuthenticationTicket ticket = sa.ToAuthenticationTicket();
 
@@ -94,34 +90,6 @@ namespace vyger.Controllers
             Response.Cookies.Add(cookie);
 
             return ticket;
-        }
-
-        private void EnsureData(ISecurityActor sa)
-        {
-            if (!Directory.Exists(sa.ProfileFolder))
-            {
-                Directory.CreateDirectory(sa.ProfileFolder);
-            }
-
-            DirectoryInfo dir = new DirectoryInfo(sa.ProfileFolder);
-
-            FileInfo[] files = dir.GetFiles("*.xml");
-
-            foreach (FileInfo file in files)
-            {
-                string name = file.Name;
-
-                DateTime modified = file.LastWriteTimeUtc;
-
-                try
-                {
-                    _google.DownloadContents(sa, name, modified);
-                }
-                catch (Exception ex)
-                {
-                    //  nothing for now
-                }
-            }
         }
 
         #endregion
