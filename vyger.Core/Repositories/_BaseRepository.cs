@@ -52,9 +52,7 @@ namespace vyger.Core.Repositories
 
         private string GetFullPath<T>()
         {
-            string path = HostingEnvironment.MapPath($"~/App_Data/{Actor.ProfileFolder}");
-
-            return Path.Combine(path, typeof(T).Name + ".xml");
+            return Path.Combine(Actor.ProfileFolder, typeof(T).Name + ".xml");
         }
 
         #endregion

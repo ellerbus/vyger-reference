@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
+using System.Web.Hosting;
 using Augment;
 
 namespace vyger.Core
@@ -125,7 +126,7 @@ namespace vyger.Core
                     }
                 }
 
-                return hash.ToString();
+                return HostingEnvironment.MapPath($"~/App_Data/") + hash.ToString();
             }
         }
 

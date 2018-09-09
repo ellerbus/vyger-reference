@@ -38,6 +38,14 @@ namespace vyger.Core.Services
         /// <returns></returns>
         ISecurityActor Authenticate(string redirectUrl, string code);
         string[] GetScopesRequired();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sa"></param>
+        /// <param name="name"></param>
+        /// <param name="modified"></param>
+        void DownloadContents(ISecurityActor sa, string name, DateTime modified);
     }
 
     #endregion
@@ -113,19 +121,35 @@ namespace vyger.Core.Services
         {
             File metadata = GetMetaData(name);
 
-            string id = GetStorageId(sa, name);
+            File file = GetStorageMetadata(sa, name);
 
-            if (id.IsNullOrEmpty())
+            if (file == null)
             {
                 CreateStorage(sa, metadata, name, xml);
             }
             else
             {
-                UpdateStorage(sa, metadata, id, xml);
+                UpdateStorage(sa, metadata, file.Id, xml);
             }
         }
 
-        private string GetStorageId(ISecurityActor sa, string name)
+        public void DownloadContents(ISecurityActor sa, string name, DateTime modified)
+        {
+            File metadata = GetMetaData(name);
+
+            File file = GetStorageMetadata(sa, name);
+
+            if (file != null)
+            {
+                if (file.ModifiedTime > modified)
+                {
+                    //  then we need the latest
+                    DownloadStorage(sa, metadata, file.Id);
+                }
+            }
+        }
+
+        private File GetStorageMetadata(ISecurityActor sa, string name)
         {
             DriveService ds = CreateDriveService(sa);
 
@@ -133,7 +157,7 @@ namespace vyger.Core.Services
 
             request.Spaces = "appDataFolder";
 
-            request.Fields = "files(id)";
+            request.Fields = "files(id, modifiedTime)";
 
             request.Q = $"name = '{name}'";
 
@@ -141,7 +165,7 @@ namespace vyger.Core.Services
 
             if (files.Files.Count == 1)
             {
-                return files.Files[0].Id;
+                return files.Files[0];
             }
 
             return null;
@@ -177,11 +201,25 @@ namespace vyger.Core.Services
             }
         }
 
+        private void DownloadStorage(ISecurityActor sa, File metadata, string id)
+        {
+            DriveService ds = CreateDriveService(sa);
+
+            FilesResource.GetRequest request = ds.Files.Get(id);
+
+            using (io.MemoryStream stream = new io.MemoryStream())
+            {
+                request.Download(stream);
+
+                System.IO.File.WriteAllBytes(sa.ProfileFolder, stream.ToArray());
+            }
+        }
+
         private void Request_ProgressChanged(IUploadProgress prg)
         {
             if (prg.Exception != null)
             {
-                throw new Exception("Upload Failed", prg.Exception);
+                throw new Exception("Drive Interaction Failed", prg.Exception);
             }
         }
 

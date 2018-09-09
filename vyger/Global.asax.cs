@@ -115,9 +115,7 @@ namespace vyger
             {
                 GoogleService google = new GoogleService();
 
-                string appData = HostingEnvironment.MapPath($"~/App_Data/{sa.ProfileFolder}");
-
-                DirectoryInfo dir = new DirectoryInfo(appData);
+                DirectoryInfo dir = new DirectoryInfo(sa.ProfileFolder);
 
                 FileInfo[] files = dir.GetFiles("*.xml");
 

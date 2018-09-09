@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Security;
 using Augment;
@@ -77,12 +79,7 @@ namespace vyger.Controllers
         {
             Session["SECURITY_ACTOR"] = sa;
 
-            string memberData = Server.MapPath($"~/App_Data/{sa.ProfileFolder}");
-
-            if (!Directory.Exists(memberData))
-            {
-                Directory.CreateDirectory(memberData);
-            }
+            EnsureData(sa);
 
             //  find files at google
             //  there - pull 'em down
@@ -97,6 +94,34 @@ namespace vyger.Controllers
             Response.Cookies.Add(cookie);
 
             return ticket;
+        }
+
+        private void EnsureData(ISecurityActor sa)
+        {
+            if (!Directory.Exists(sa.ProfileFolder))
+            {
+                Directory.CreateDirectory(sa.ProfileFolder);
+            }
+
+            DirectoryInfo dir = new DirectoryInfo(sa.ProfileFolder);
+
+            FileInfo[] files = dir.GetFiles("*.xml");
+
+            foreach (FileInfo file in files)
+            {
+                string name = file.Name;
+
+                DateTime modified = file.LastWriteTimeUtc;
+
+                try
+                {
+                    _google.DownloadContents(sa, name, modified);
+                }
+                catch (Exception ex)
+                {
+                    //  nothing for now
+                }
+            }
         }
 
         #endregion
