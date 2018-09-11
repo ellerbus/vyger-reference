@@ -31,7 +31,7 @@ namespace vyger.Controllers
 
         #region List Methods
 
-        [HttpGet, Route("All")]
+        [HttpGet, Route("All/Plans")]
         public virtual ActionResult All()
         {
             List<WorkoutPlan> plans = _service

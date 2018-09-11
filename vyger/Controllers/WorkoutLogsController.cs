@@ -16,6 +16,7 @@ namespace vyger.Controllers
 
         private IWorkoutLogService _service;
         private IExerciseService _exercises;
+        private IWorkoutRoutineService _routines;
 
         #endregion
 
@@ -23,10 +24,12 @@ namespace vyger.Controllers
 
         public WorkoutLogsController(
             IWorkoutLogService service,
-            IExerciseService exercises)
+            IExerciseService exercises,
+            IWorkoutRoutineService routines)
         {
             _service = service;
             _exercises = exercises;
+            _routines = routines;
         }
 
         #endregion
@@ -62,46 +65,7 @@ namespace vyger.Controllers
         {
             if (ModelState.IsValid)
             {
-                WorkoutLogCollection allLogs = _service.GetWorkoutLogs();
-
-                IDictionary<string, WorkoutLog> logs = allLogs.Filter(date).ToDictionary(x => x.ExerciseId, x => x);
-
-                //  add or update logs
-                foreach (WorkoutLog log in post.Logs)
-                {
-                    WorkoutLog target = null;
-
-                    if (logs.TryGetValue(log.ExerciseId, out target))
-                    {
-                        target.OverlayWith(log);
-
-                        logs.Remove(log.ExerciseId);
-                    }
-                    else
-                    {
-                        //  not found
-                        log.LogDate = date;
-
-                        target = log;
-
-                        allLogs.Add(target);
-                    }
-                }
-
-                //  do we have any to remove
-                if (logs.Count > 0)
-                {
-                    foreach (WorkoutLog log in logs.Values)
-                    {
-                        allLogs.Remove(log);
-                    }
-                }
-
-                _service.SaveWorkoutLogs();
-
-                AddFlashMessage(FlashMessageType.Success, $"Workout Log saved for {date:d}");
-
-                return RedirectToAction("Details", new { date = date.ToYMD() });
+                return SaveWorkoutDetails(post, date);
             }
 
             ExerciseCollection exercises = _exercises.GetExercises();
@@ -119,9 +83,53 @@ namespace vyger.Controllers
             return View(vm);
         }
 
+        private ActionResult SaveWorkoutDetails(WorkoutLogDetailViewModel post, DateTime date)
+        {
+            WorkoutLogCollection allLogs = _service.GetWorkoutLogs();
+
+            IDictionary<string, WorkoutLog> logs = allLogs.Filter(date).ToDictionary(x => x.ExerciseId, x => x);
+
+            //  add or update logs
+            foreach (WorkoutLog log in post.Logs)
+            {
+                WorkoutLog target = null;
+
+                if (logs.TryGetValue(log.ExerciseId, out target))
+                {
+                    target.OverlayWith(log);
+
+                    logs.Remove(log.ExerciseId);
+                }
+                else
+                {
+                    //  not found
+                    log.LogDate = date;
+
+                    target = log;
+
+                    allLogs.Add(target);
+                }
+            }
+
+            //  do we have any to remove
+            if (logs.Count > 0)
+            {
+                foreach (WorkoutLog log in logs.Values)
+                {
+                    allLogs.Remove(log);
+                }
+            }
+
+            _service.SaveWorkoutLogs();
+
+            AddFlashMessage(FlashMessageType.Success, $"Workout Log saved for {date:d}");
+
+            return RedirectToAction("Details", new { date = date.ToYMD() });
+        }
+
         #endregion
 
-        #region Create Methods
+        #region Create by Exercise Methods
 
         [HttpGet, Route("Create")]
         public virtual ActionResult Create(DateTime date)
@@ -182,77 +190,79 @@ namespace vyger.Controllers
 
         #endregion
 
-        //#region Create Methods
+        #region Create by Plan Methods
 
-        //[HttpGet, Route("Plans/{plan}")]
-        //public virtual ActionResult Plans(string plan, int cycle, int week, int day)
-        //{
-        //    WorkoutLogForm form = GetWorkoutPlanLogForm(plan, cycle, week, day);
+        [HttpGet, Route("Plans")]
+        public virtual ActionResult Plans(string routine, int plan, int cycle, int week, int day, DateTime? date = null)
+        {
+            WorkoutLogDetailViewModel vm = new WorkoutLogDetailViewModel()
+            {
+                LogDate = date.GetValueOrDefault(DateTime.UtcNow.Date),
+                CanChangeDate = true,
+                RoutineId = routine,
+                PlanId = plan,
+                CycleId = cycle,
+                WeekId = week,
+                DayId = day
+            };
 
-        //    return View(form);
-        //}
+            WorkoutRoutine r = _routines.GetWorkoutRoutines().GetByPrimaryKey(routine);
 
-        //[HttpPost, Route("Plans/{plan}"), ValidateAntiForgeryToken]
-        //public virtual ActionResult Plans(string plan, int cycle, int week, int day, WorkoutLogForm post)
-        //{
-        //    WorkoutLogForm form = GetWorkoutPlanLogForm(plan, cycle, week, day);
+            WorkoutPlan p = r.Plans.GetByPrimaryKey(plan);
 
-        //    form.LogDate = post.LogDate.Date;
+            vm.Logs = p.PlanLogs
+                .Filter(cycle, week, day)
+                .Select(x => x.ToWorkoutLog(vm.LogDate))
+                .OrderBy(x => x.SequenceNumber)
+                .ToList();
 
-        //    form.Cycle.Status = StatusTypes.Active;
+            return View("Details", vm);
+        }
 
-        //    WorkoutLogCollection logs = _service.GetWorkoutLogs();
+        [HttpPost, Route("Plans"), ValidateAntiForgeryToken]
+        public virtual ActionResult Plans(WorkoutLogDetailViewModel post, string routine, int plan, int cycle, int week, int day, DateTime? date = null)
+        {
+            DateTime logDate = date.GetValueOrDefault(DateTime.UtcNow.Date);
 
-        //    logs.RemoveAll(form.LogDate);
+            if (ModelState.IsValid)
+            {
+                WorkoutRoutine r = _routines.GetWorkoutRoutines().GetByPrimaryKey(routine);
 
-        //    foreach (WorkoutLog log in post.Logs)
-        //    {
-        //        log.LogDate = form.LogDate;
-        //        log.Workout = WorkoutLogSetCollection.Format(log.Workout);
+                WorkoutPlan p = r.Plans.GetByPrimaryKey(plan);
 
-        //        logs.Add(log);
-        //    }
+                ActionResult results = SaveWorkoutDetails(post, logDate);
 
-        //    IEnumerable<WorkoutPlanLog> planLogs = form.Cycle.PlanLogs
-        //        .Where(x => x.WeekId == week && x.DayId == day);
+                foreach (var log in p.PlanLogs.Filter(cycle, week, day))
+                {
+                    log.Status = StatusTypes.Logged;
+                }
 
-        //    foreach (WorkoutPlanLog planLog in planLogs)
-        //    {
-        //        planLog.Status = StatusTypes.Complete;
-        //    }
+                _routines.SaveWorkoutRoutines();
 
-        //    _service.SaveWorkoutLogs();
+                return results;
+            }
 
-        //    _plans.SaveWorkoutPlans();
+            ExerciseCollection exercises = _exercises.GetExercises();
 
-        //    AddFlashMessage(FlashMessageType.Success, $"Workout Log saved for {post.LogDate:d}");
+            foreach (var log in post.Logs)
+            {
+                log.Exercise = exercises.GetByPrimaryKey(log.ExerciseId);
+            }
 
-        //    return RedirectToAction(MVC.WorkoutLogs.Index(post.LogDate.Date));
-        //}
+            WorkoutLogDetailViewModel vm = new WorkoutLogDetailViewModel();
 
-        //private WorkoutLogForm GetWorkoutPlanLogForm(string plan, int cycle, int week, int day)
-        //{
-        //    WorkoutLogForm form = new WorkoutLogForm();
+            vm.LogDate = logDate;
+            vm.Logs = post.Logs;
+            vm.RoutineId = routine;
+            vm.PlanId = plan;
+            vm.CycleId = cycle;
+            vm.WeekId = week;
+            vm.DayId = day;
 
-        //    form.LogDate = DateTime.Today;
+            return View(vm);
+        }
 
-        //    form.Cycle = _plans
-        //        .GetWorkoutPlans()
-        //        .GetByPrimaryKey(plan)
-        //        .Cycles
-        //        .GetByPrimaryKey(cycle);
-
-        //    form.Logs = form.Cycle
-        //        .PlanLogs
-        //        .Where(x => x.WeekId == week && x.DayId == day)
-        //        .Select(x => new WorkoutLog(x))
-        //        .OrderBy(x => x.SequenceNumber)
-        //        .ToList();
-
-        //    return form;
-        //}
-
-        //#endregion
+        #endregion
 
         #region Json Query Methods
 

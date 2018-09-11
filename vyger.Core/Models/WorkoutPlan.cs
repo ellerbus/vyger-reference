@@ -56,7 +56,6 @@ namespace vyger.Core.Models
         /// </summary>
         public void OverlayWith(WorkoutPlan other)
         {
-            Status = other.Status;
         }
 
         #endregion
@@ -64,18 +63,12 @@ namespace vyger.Core.Models
         #region Properties
 
         ///	<summary>
-        ///	Gets / Sets database column 'plan_id'
+        ///	
         ///	</summary>
         [Key]
         [DisplayName("Plan Id")]
         [XmlAttribute("plan-id")]
         public int Id { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        [XmlAttribute("status")]
-        public StatusTypes Status { get; set; }
 
         /// <summary>
         ///

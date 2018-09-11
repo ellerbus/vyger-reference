@@ -13,9 +13,6 @@
             Plan
           </th>
           <th class="navigation">
-            Status
-          </th>
-          <th class="navigation">
             Created
           </th>
           <th class="navigation">
@@ -32,9 +29,6 @@
           <tr>
             <td>
               @Model.Name #@plan.Id
-            </td>
-            <td class="navigation">
-              @plan.Status
             </td>
             <td class="navigation text-right">
               @plan.CreatedAt.ToString("d")
@@ -61,7 +55,6 @@
       </tbody>
       <tfoot>
         <tr>
-          <td></td>
           <td></td>
           <td></td>
           <td></td>

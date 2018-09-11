@@ -48,4 +48,10 @@
   <workout-log log-date="2018-09-06T00:00:00" exercise-id="CHE-MA-FLY" workout="85x8, 100x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
   <workout-log log-date="2018-09-06T00:00:00" exercise-id="UPP-HA-LOR" workout="90x5, 110x5, 120x5, 135x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
   <workout-log log-date="2018-09-06T00:00:00" exercise-id="TRA-HA-SHR" workout="180x5, 200x5, 230x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+  <workout-log log-date="2018-09-10T00:00:00Z" exercise-id="CHE-DU-IBP" workout="35x5, 40x5, 45x5, 50x5, 55x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="1" />
+  <workout-log log-date="2018-09-10T00:00:00Z" exercise-id="UPP-HA-LOR" workout="90x5, 110x5, 120x5, 135x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="4" />
+  <workout-log log-date="2018-09-10T00:00:00Z" exercise-id="TRA-HA-SHR" workout="180x5, 200x5, 230x5" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="5" />
+  <workout-log log-date="2018-09-10T00:00:00Z" exercise-id="CHE-MA-FLY" workout="85x8, 100x8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="2" />
+  <workout-log log-date="2018-09-10T00:00:00Z" exercise-id="ABS-MA-CRN" workout="50x12, 50x12, 50x12" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="3" />
+  <workout-log log-date="2018-09-10T00:00:00Z" exercise-id="TRI-BO-DIP" workout="BWx8, BWx8, BWx8" plan-id="0" cycle-id="0" week-id="0" day-id="0" sequence-number="6" />
 </workout-logs>

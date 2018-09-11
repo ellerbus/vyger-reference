@@ -13,6 +13,7 @@
         Successful,
         Failed,
         Errored,
-        Bypassed
+        Bypassed,
+        Logged
     }
 }

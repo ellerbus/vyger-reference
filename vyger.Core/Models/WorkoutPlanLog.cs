@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -55,6 +56,24 @@ namespace vyger.Core.Models
             SequenceNumber = other.SequenceNumber;
             WorkoutPlan = other.WorkoutPlan;
             Status = other.Status;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logDate"></param>
+        /// <returns></returns>
+        public WorkoutLog ToWorkoutLog(DateTime logDate)
+        {
+            WorkoutLog log = new WorkoutLog()
+            {
+                LogDate = logDate,
+                Exercise = Exercise,
+                Workout = WorkoutPlan,
+                SequenceNumber = SequenceNumber
+            };
+
+            return log;
         }
 
         #endregion

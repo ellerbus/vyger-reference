@@ -66,16 +66,10 @@ namespace vyger.Core.Services
         /// </summary>
         public WorkoutPlan CreateWorkoutPlan(WorkoutRoutine routine)
         {
-            foreach (WorkoutPlan p in routine.Plans)
-            {
-                p.Status = StatusTypes.Inactive;
-            }
-
             WorkoutPlan plan = new WorkoutPlan()
             {
                 Id = routine.Plans.Count + 1,
                 Routine = routine,
-                Status = StatusTypes.Active,
                 CreatedAt = DateTime.UtcNow
             };
 
