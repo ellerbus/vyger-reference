@@ -118,16 +118,18 @@ namespace vyger.Core.Services
 
         public void UploadContents(ISecurityActor sa, string name, string xml)
         {
-            File metadata = GetMetaData(name);
-
             File file = GetStorageMetadata(sa, name);
 
             if (file == null)
             {
+                File metadata = GetMetaData(name, true);
+
                 CreateStorage(sa, metadata, name, xml);
             }
             else
             {
+                File metadata = GetMetaData(name, false);
+
                 UpdateStorage(sa, metadata, file.Id, xml);
             }
         }
@@ -149,7 +151,7 @@ namespace vyger.Core.Services
 
                 if (!fileInfo.Exists || file.ModifiedTime > fileInfo.LastWriteTimeUtc)
                 {
-                    File metadata = GetMetaData(file.Name);
+                    File metadata = GetMetaData(file.Name, false);
 
                     //  then we need the latest
                     DownloadStorage(sa, metadata, file.Id);
@@ -255,13 +257,14 @@ namespace vyger.Core.Services
             return new io.MemoryStream(data);
         }
 
-        private File GetMetaData(string name)
+        private File GetMetaData(string name, bool creating)
         {
-            File file = new File()
+            File file = new File() { Name = name };
+
+            if (creating)
             {
-                Name = name,
-                Parents = new List<string>() { "appDataFolder" }
-            };
+                file.Parents = new List<string> { "appDataFolder" };
+            }
 
             return file;
         }
