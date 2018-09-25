@@ -189,7 +189,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Views\WorkoutLogs\Index.cshtml" />
-    <Content Include="Views\WorkoutLogs\_DetailRow.cshtml" />
     <Content Include="Views\WorkoutLogs\Details.cshtml" />
     <Content Include="Views\WorkoutRoutines\Create.cshtml" />
     <Content Include="Views\WorkoutRoutines\Edit.cshtml" />
@@ -210,6 +209,10 @@
     <Content Include="Views\WorkoutPlanLogs\Index.cshtml" />
     <Content Include="Views\WorkoutPlans\All.cshtml" />
     <None Include="Properties\PublishProfiles\strength - Web Deploy.pubxml" />
+    <Content Include="Views\WorkoutLogs\_DetailsWide.cshtml" />
+    <Content Include="Views\WorkoutLogs\_DetailsNarrow.cshtml" />
+    <Content Include="Views\WorkoutPlanLogs\_DetailsNarrow.cshtml" />
+    <Content Include="Views\WorkoutPlanLogs\_DetailsWide.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

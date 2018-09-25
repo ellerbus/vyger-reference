@@ -1,0 +1,37 @@
+﻿@model WorkoutPlanLogIndexViewModel
+
+<table class="table">
+  @for (var w = 0; w < Model.Plan.Routine.Weeks; w++)
+  {
+    for (var d = 0; d < Model.Plan.Routine.Days; d++)
+    {
+      var logs = Model.Plan.PlanLogs.Filter(Model.CycleId, w + 1, d + 1).ToList();
+
+      <thead>
+        <tr>
+          <th style="width: 250px">Cycle @Model.CycleId, Week @(w + 1), Day @(d + 1)</th>
+          <th>
+            @if (logs.Any(x => x.Status == StatusTypes.None))
+            {
+              <a href="@Url.Action("Plans", "WorkoutLogs", new { routine = Model.Plan.Routine.Id, plan = Model.Plan.Id, cycle = Model.CycleId, week = w + 1, day = d + 1 })"
+                 class="d-print-none btn btn-sm btn-outline-success float-right">
+                <i class="fa fa-fw fa-plus"></i> Log It
+              </a>
+            }
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var log in logs)
+        {
+          <tr>
+            <td style="padding-left: 32px;">
+              @log.Exercise.Category @log.Exercise.Name
+            </td>
+            <td class="workout-pattern">@log.WorkoutPlan</td>
+          </tr>
+        }
+      </tbody>
+    }
+  }
+</table>
