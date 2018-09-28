@@ -1,0 +1,13 @@
+{
+    "html.format.wrapAttributes": "force-aligned",
+    "typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
+    "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/src/vyger-app/node_modules/": true
+    }
+}
