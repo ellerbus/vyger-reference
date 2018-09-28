@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-lg-12"
+       *ngIf="files != null">
+    <p [innerHtml]="files.length"></p>
+    <p *ngFor="let f of files"
+       [innerHtml]="f.name"></p>
+  </div>
+</div>

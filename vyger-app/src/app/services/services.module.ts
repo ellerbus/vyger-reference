@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthenticationService } from './authentication.service';
+import { DataService } from './data.service';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { AuthenticationService } from './authentication.service';
     CommonModule
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    DataService
   ],
   exports: []
 })

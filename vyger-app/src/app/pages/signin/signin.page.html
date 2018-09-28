@@ -8,3 +8,10 @@
     </button>
   </div>
 </div>
+
+<div class="row"
+     [hidden]="!getSignedIn()">
+  <div class="col-md-12 alert alert-info">
+    Hello, you're already signed in
+  </div>
+</div>
