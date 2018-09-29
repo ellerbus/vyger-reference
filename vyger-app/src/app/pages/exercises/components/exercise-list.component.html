@@ -1,0 +1,44 @@
+<div class="row justify-content-md-center">
+  <div class="col-lg-12 mb-1">
+    <button class="btn btn-outline-secondary mr-1"
+            *ngIf="filter.group"
+            (click)="toggleGroupFilter(filter)">
+      Group = {{ filter.group }}
+      <span class="fa fa-fw fa-times-circle text-muted ml-2"></span>
+    </button>
+    <button class="btn btn-outline-secondary mr-1"
+            *ngIf="filter.category"
+            (click)="toggleCategoryFilter(filter)">
+      Category = {{ filter.category }}
+      <span class="fa fa-fw fa-times-circle text-muted ml-2"></span>
+    </button>
+  </div>
+  <div class="col-lg-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width: 6rem;">
+            Group
+          </th>
+          <th style="width: 6rem;">
+            Category
+          </th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exercise of getExercises()">
+          <td class="filterable pointer"
+              (click)="toggleGroupFilter(exercise)">
+            {{ exercise.group }}
+          </td>
+          <td class="filterable pointer"
+              (click)="toggleCategoryFilter(exercise)">
+            {{ exercise.category }}
+          </td>
+          <td [innerText]="exercise.name"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

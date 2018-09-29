@@ -1,8 +1,25 @@
-<div class="row">
-  <div class="col-lg-12"
-       *ngIf="files != null">
-    <p [innerHtml]="files.length"></p>
-    <p *ngFor="let f of files"
-       [innerHtml]="f.name"></p>
+<app-heading heading="Gathering Data from Storage"></app-heading>
+
+<div class="row"
+     *ngIf="dataService.files != null">
+  <div class="card col-sm-12">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"
+          *ngFor="let f of dataService.files">
+        <div class="row">
+          <div class="col-sm-4"
+               [innerText]="f.name"></div>
+          <div class="col-sm-5"
+               [innerText]="f.modifiedTime | date:'short'"></div>
+          <div class="col-sm-2">
+            <span [innerText]="f.status"></span>
+            <span class="fa fa-fw fa-check text-success float-right"
+                  *ngIf="f.contents && f.contents.length > 0"></span>
+            <span class="fa fa-fw fa-check-o text-danger float-right"
+                  *ngIf="f.contents == null"></span>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>

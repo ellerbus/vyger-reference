@@ -11,7 +11,7 @@ var SCOPES = 'email https://www.googleapis.com/auth/plus.me https://www.googleap
 })
 export class AuthenticationService {
     googleAuth: gapi.auth2.GoogleAuth;
-    member: User;
+    user: User;
 
     constructor() {
     }
@@ -29,7 +29,7 @@ export class AuthenticationService {
                 return gapi.client
                     .init(options).then(() => {
                         this.googleAuth = gapi.auth2.getAuthInstance();
-                        if (this.getIsSignedIn()) {
+                        if (this.isSignedIn) {
                             this.onsignIn(this.googleAuth.currentUser.get());
                         }
                         resolve();
@@ -52,10 +52,10 @@ export class AuthenticationService {
     }
 
     private onsignIn = (googleUser: gapi.auth2.GoogleUser): void => {
-        this.member = User.fromBasicProfile(googleUser.getBasicProfile());
+        this.user = User.fromBasicProfile(googleUser.getBasicProfile());
     }
 
-    getIsSignedIn(): boolean {
+    isSignedIn(): boolean {
         let signedin = this.googleAuth && this.googleAuth.isSignedIn.get();
 
         return signedin;

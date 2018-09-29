@@ -6,20 +6,81 @@ import { FileInfo, MIME_TYPE_FOLDER } from '../models/file-info';
     providedIn: 'root'
 })
 export class DataService {
+    private names = ['exercises.json', 'logs.json', 'routines.json', 'plans.json'];
+
+    private completed: boolean = false;
+
     files: FileInfo[] = [];
 
     //https://github.com/adrianbota/gdrive-appdata/blob/master/src/js/main.js
-    getFiles(): Promise<FileInfo[]> {
+    loadFiles(): Promise<FileInfo[]> {
         return new Promise((resolve, reject) => {
-            return gapi.client.drive.files.list({
+            let options = {
                 spaces: 'appDataFolder',
-                fields: "files(id, name, modifiedTime)"
-            }).then((res) => {
-                res.result.files.forEach((file) => this.files.push(FileInfo.fromGoogleFile(file)));
-                resolve(this.files);
-            });
+                fields: "files(id, name, size, modifiedTime)"
+            };
+
+            gapi.client.drive.files
+                .list(options)
+                .then((res) => {
+                    this.files = res.result.files
+                        .map(x => FileInfo.fromGoogleFile(x))
+                        .filter(x => this.names.indexOf(x.name) > -1)
+                        .sort((a, b) => a.name.localeCompare(b.name));
+
+                    let p = Promise.all(this.names.map(x => this.loadFile(x)));
+
+                    resolve(p);
+                })
+                .then(() => {
+                    this.completed = true;
+                    resolve();
+                });
         });
     }
+
+    private loadFile = (name: string): Promise<any> => {
+        const files = this.files.filter(x => x.name === name);
+
+        if (files == null || files.length == 0) {
+            return new Promise((resolve, reject) => {
+                //  TODO missing / create
+                this.files.push(new FileInfo(name));
+                resolve();
+            });
+        }
+
+        let file = files[0];
+
+        return new Promise((resolve, reject) => {
+            let options = {
+                alt: 'media',
+                fileId: file.id
+            }
+
+            gapi.client.drive.files
+                .get(options)
+                .then((res) => {
+                    file.contents = res.body;
+                    resolve();
+                });
+        });
+    }
+
+    hasUserData(): boolean {
+        return this.completed;
+    }
+
+    getFile(name: string): FileInfo {
+        let files = this.files.filter(x => x.name === name);
+
+        if (files && files.length == 1) {
+            return files[0];
+        }
+
+        throw 'Missing file: ' + name;
+    }
+
     //     create(parentId: string, folderName: string) {
     //         var folder = {
     //             name: folderName,

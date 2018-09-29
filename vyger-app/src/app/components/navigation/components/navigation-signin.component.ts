@@ -1,14 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
-    selector: 'app-signin',
-    templateUrl: './signin.page.html',
-    styleUrls: ['./signin.page.css']
+    selector: 'app-navigation-signin',
+    templateUrl: './navigation-signin.component.html'
 })
-export class SignInPageComponent implements OnInit, OnDestroy {
+export class NavigationSignInComponent implements OnInit, OnDestroy {
     private returnUrl: string;
     private subscriber: Subscription;
 
@@ -40,8 +39,10 @@ export class SignInPageComponent implements OnInit, OnDestroy {
     }
 
     private redirectHome = (): void => {
-        var url = this.returnUrl || '/';
+        if (this.router.url === '/signin') {
+            var url = this.returnUrl || '/';
 
-        this.router.navigateByUrl(url);
+            this.router.navigateByUrl(url);
+        }
     }
 }

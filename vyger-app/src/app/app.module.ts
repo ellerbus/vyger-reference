@@ -7,32 +7,34 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app-component';
 import { AppRoutingModule } from './app-routine.module';
 import { ServicesModule } from './services/services.module';
+import { GuardsModule } from './guards/guards.module';
 import { ComponentsModule } from './components/components.module';
 import { PagesModule } from './pages/pages.module';
 
 import { AuthenticationService } from './services/authentication.service';
 
 export function initGapi(authenticationService: AuthenticationService) {
-  return () => authenticationService.initClient();
+    return () => authenticationService.initClient();
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    RouterModule,
-    HttpClientModule,
-    AppRoutingModule,
-    ServicesModule,
-    ComponentsModule,
-    PagesModule
-  ],
-  providers: [
-    { provide: APP_INITIALIZER, useFactory: initGapi, deps: [AuthenticationService], multi: true },
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        RouterModule,
+        HttpClientModule,
+        AppRoutingModule,
+        ServicesModule,
+        GuardsModule,
+        ComponentsModule,
+        PagesModule
+    ],
+    providers: [
+        { provide: APP_INITIALIZER, useFactory: initGapi, deps: [AuthenticationService], multi: true },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
