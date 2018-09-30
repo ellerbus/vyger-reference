@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FileInfo, MIME_TYPE_FOLDER } from '../models/file-info';
+import { FileInfo, MIME_TYPE_FOLDER } from 'src/models/file-info';
 // declare var UploaderForGoogleDrive;
 
 @Injectable({

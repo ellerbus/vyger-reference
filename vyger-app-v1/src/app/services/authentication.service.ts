@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user';
+import { User } from 'src/models/user';
 
 const CLIENT_ID = '287029206626-rmffeodje647m9fnb78lanj8arnks303.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyBHWWeW40pg6Pe7tyJDhGt1UqyoWpRkiM0';

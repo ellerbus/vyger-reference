@@ -1,3 +1,5 @@
+import { Utilities } from 'src/utilities';
+
 export enum Groups {
     Abs = 'Abs',
     Biceps = 'Biceps',
@@ -18,17 +20,23 @@ export enum Categories {
     Body = 'Body',
 }
 export class Exercise {
+    id: string;
     group: Groups;
     category: Categories;
     name: string;
+
+    constructor() {
+        this.id = Utilities.generateId('x', 2);
+    }
 
     get display(): string {
         return this.group + ' - ' + this.category + ' - ' + this.name;
     }
 
-    static fromObject(obj: { group: string, category: string, name: string }): Exercise {
+    static fromObject(obj: { id?: string, group: string, category: string, name: string }): Exercise {
         let exercise = new Exercise();
 
+        exercise.id = obj.id || exercise.id;
         exercise.group = Groups[obj.group];
         exercise.category = Categories[obj.category];
         exercise.name = obj.name;

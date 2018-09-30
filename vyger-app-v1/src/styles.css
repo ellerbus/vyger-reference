@@ -1,0 +1,48 @@
+
+@media (min-width: 992px) {
+  td.filterable:hover {
+    text-decoration: underline;
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif;
+  padding-top: 80px;
+  margin-bottom: 60px;
+  background-color: #f7f7f7;
+}
+td.filterable span.fa-filter{
+  display:none;
+}
+.pointer{
+  cursor: pointer;
+}
+button.icon-google {
+  margin-right: 10px;
+  background: #dc4b38 none repeat scroll 0 0;
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 22px;
+  padding: 7px 15px;
+  vertical-align: middle;
+}
+button.icon-google:hover {
+  color: #ccc;
+}
+button.icon-google .fab.fa-google {
+  font-size: 16px;
+  padding-right: 16px;
+  padding-top: 2px;
+  vertical-align: top;
+  display: inline-block;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #007da0;
+  font-family: Montserrat, Lato, Verdana, Geneva, Tahoma, sans-serif;
+}

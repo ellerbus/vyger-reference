@@ -1,8 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Exercise } from '../models/exercise';
-import { DataService } from '../services/data.service';
-import { FileInfo } from '../models/file-info';
+import { Exercise } from 'src/models/exercise';
+import { DataService } from 'src/services/data.service';
+import { FileInfo } from 'src/models/file-info';
 
 @Injectable({
     providedIn: 'root'
