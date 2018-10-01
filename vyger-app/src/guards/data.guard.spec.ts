@@ -1,13 +1,13 @@
 import { TestBed, async } from '@angular/core/testing';
-import { AuthenticationService } from '../services/authentication.service';
-import { AuthenticationGuard } from './authentication.guard';
+import { DataService } from '../services/data.service';
+import { DataGuard } from './data.guard';
 import { RouterStateSnapshot, Router } from '@angular/router';
 
-describe('AuthenticationGuard', () => {
+describe('DataGuard', () => {
 
     function createSpies() {
         let spies = {
-            authenticationService: jasmine.createSpyObj('AuthenticationService', ['isSignedIn']),
+            dataService: jasmine.createSpyObj('DataService', ['hasUserData']),
             router: jasmine.createSpyObj('Router', ['navigateByUrl'])
         };
         return spies;
@@ -17,7 +17,7 @@ describe('AuthenticationGuard', () => {
         const spies = createSpies();
         let options = {
             providers: [
-                { provide: AuthenticationService, useValue: spies.authenticationService },
+                { provide: DataService, useValue: spies.dataService },
                 { provide: Router, useValue: spies.router }
             ]
         };
@@ -26,12 +26,12 @@ describe('AuthenticationGuard', () => {
     }));
 
     describe('constructor', () => {
-        let subject: AuthenticationGuard;
+        let subject: DataGuard;
 
         beforeEach(() => {
             const mockRouter: jasmine.SpyObj<Router> = TestBed.get(Router);
-            const mockAuthenticationService: jasmine.SpyObj<AuthenticationService> = TestBed.get(AuthenticationService);
-            subject = new AuthenticationGuard(mockRouter, mockAuthenticationService);
+            const mockDataService: jasmine.SpyObj<DataService> = TestBed.get(DataService);
+            subject = new DataGuard(mockRouter, mockDataService);
         });
 
         it('should instantiate', () => {
@@ -43,20 +43,20 @@ describe('AuthenticationGuard', () => {
     });
 
     describe('canActivate', () => {
-        let subject: AuthenticationGuard;
+        let subject: DataGuard;
 
         beforeEach(() => {
             const mockRouter: jasmine.SpyObj<Router> = TestBed.get(Router);
-            const mockAuthenticationService: jasmine.SpyObj<AuthenticationService> = TestBed.get(AuthenticationService);
-            subject = new AuthenticationGuard(mockRouter, mockAuthenticationService);
+            const mockDataService: jasmine.SpyObj<DataService> = TestBed.get(DataService);
+            subject = new DataGuard(mockRouter, mockDataService);
         });
 
-        it('should follow authenication service', () => {
+        it('should follow data service', () => {
             //  arrange
             const state: RouterStateSnapshot = <RouterStateSnapshot>{ url: 'x' };
-            const mockAuthenticationService: jasmine.SpyObj<AuthenticationService> = TestBed.get(AuthenticationService);
+            const mockDataService: jasmine.SpyObj<DataService> = TestBed.get(DataService);
 
-            mockAuthenticationService.isSignedIn.and.returnValue(true);
+            mockDataService.hasUserData.and.returnValue(true);
 
             //  act
             const results = subject.canActivate(null, state);
@@ -69,9 +69,9 @@ describe('AuthenticationGuard', () => {
             //  arrange
             const state: RouterStateSnapshot = <RouterStateSnapshot>{ url: 'x' };
             const mockRouter: jasmine.SpyObj<Router> = TestBed.get(Router);
-            const mockAuthenticationService: jasmine.SpyObj<AuthenticationService> = TestBed.get(AuthenticationService);
+            const mockDataService: jasmine.SpyObj<DataService> = TestBed.get(DataService);
 
-            mockAuthenticationService.isSignedIn.and.returnValue(false);
+            mockDataService.hasUserData.and.returnValue(false);
 
             //  act
             const results = subject.canActivate(null, state);
@@ -80,7 +80,7 @@ describe('AuthenticationGuard', () => {
             expect(results).toBeFalsy();
 
             const [url, extras] = mockRouter.navigateByUrl.calls.mostRecent().args;
-            expect(url).toBe('/home/sign-in');
+            expect(url).toBe('/data');
             expect(extras).toBeDefined();
             expect(extras.queryParams).toBeDefined();
             expect(extras.queryParams.returnUrl).toBe('x');

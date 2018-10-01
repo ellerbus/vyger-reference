@@ -1,0 +1,21 @@
+
+button.icon-google {
+  margin-right: 10px;
+  background: #dc4b38 none repeat scroll 0 0;
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 22px;
+  padding: 7px 15px;
+  vertical-align: middle;
+}
+button.icon-google:hover {
+  color: #ccc;
+}
+button.icon-google .fab.fa-google {
+  font-size: 16px;
+  padding-right: 16px;
+  padding-top: 2px;
+  vertical-align: top;
+  display: inline-block;
+}

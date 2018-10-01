@@ -1,16 +1,40 @@
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { AppRouterModule } from './app-router.module';
+import { SideMenuComponent } from '../side-menu/side-menu.component';
+import { PageTitleComponent } from '../page-title/page-title.component';
+import { PageHeaderComponent } from '../page-header/page-header.component';
+
+import { HomeModule } from '../home/home.module';
+import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationGuard } from '../guards/authentication.guard';
+
+export function initializeGoogleApi(authenticationService: AuthenticationService) {
+    return () => authenticationService.initializeClient();
+}
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SideMenuComponent,
+        PageTitleComponent,
+        PageHeaderComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        RouterModule,
+        AppRouterModule,
+        HomeModule
+    ],
+    providers: [
+        { provide: APP_INITIALIZER, useFactory: initializeGoogleApi, deps: [AuthenticationService], multi: true },
+        AuthenticationGuard
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

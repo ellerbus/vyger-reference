@@ -1,0 +1,8 @@
+div.list-group.list-group-flush a.list-group-item span.fa {
+  display: none;
+}
+@media (hover: hover) {
+  div.list-group.list-group-flush a.list-group-item:hover span.fa {
+    display: inline;
+  }
+}
