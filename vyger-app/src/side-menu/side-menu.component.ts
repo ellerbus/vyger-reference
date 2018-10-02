@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { PartialObserver } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-side-menu',
@@ -8,7 +8,7 @@ import { PartialObserver } from 'rxjs';
     styleUrls: ['./side-menu.component.css']
 })
 export class SideMenuComponent implements OnInit, OnDestroy {
-    private subscriber;
+    private routeSubscription: Subscription;
 
     open: boolean;
 
@@ -16,7 +16,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
         private router: Router) { }
 
     ngOnInit() {
-        this.subscriber = this.router
+        this.routeSubscription = this.router
             .events
             .subscribe(x => {
                 if (x instanceof NavigationEnd) {
@@ -26,7 +26,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriber = null;
+        this.routeSubscription.unsubscribe();
     }
 
 }

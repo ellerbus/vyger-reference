@@ -80,6 +80,9 @@ export class DataService {
         throw 'Missing file: ' + name;
     }
 
+    saveFile(file: FileInfo, contents: string): void {
+    }
+
     //     create(parentId: string, folderName: string) {
     //         var folder = {
     //             name: folderName,

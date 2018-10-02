@@ -2,14 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PageTitleComponent } from './page-title.component';
 import { PageTitleService } from './page-title.service';
+import { ExpectedConditions } from 'protractor';
 
 describe('PageTitleComponent', () => {
     let component: PageTitleComponent;
     let fixture: ComponentFixture<PageTitleComponent>;
-    let mockPageTitleService: { title: string };//jasmine.SpyObj<PageTitleService>;
+    let mockPageTitleService: jasmine.SpyObj<PageTitleService>;
 
     beforeEach(async(() => {
-        const pageTitleServiceSpy = { title: "title" };//jasmine.createSpyObj('PageTitleService', ['methods']);
+        const pageTitleServiceSpy = jasmine.createSpyObj('PageTitleService', ['getTitle']);
 
         const options = {
             declarations: [PageTitleComponent],
@@ -29,15 +30,13 @@ describe('PageTitleComponent', () => {
     });
 
     it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
-    it('should follow PageTitleService.title', () => {
         //  arrange
-        mockPageTitleService.title = 'hello';
+        mockPageTitleService.getTitle.and.returnValue('x');
         //  act
         let title = component.getTitle();
         //  assert
-        expect(title).toBe('hello');
+        expect(component).toBeTruthy();
+        expect(mockPageTitleService.getTitle).toHaveBeenCalled();
+        expect(title).toBe('x');
     });
 });

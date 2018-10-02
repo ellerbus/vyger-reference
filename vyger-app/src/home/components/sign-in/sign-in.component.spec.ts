@@ -1,25 +1,34 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { PageTitleService } from 'src/page-title/page-title.service';
 import { SignInComponent } from './sign-in.component';
 
 describe('SignInComponent', () => {
-  let component: SignInComponent;
-  let fixture: ComponentFixture<SignInComponent>;
+    let component: SignInComponent;
+    let fixture: ComponentFixture<SignInComponent>;
+    let mockPageTitleService: jasmine.SpyObj<PageTitleService>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SignInComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        const pageTitleServiceSpy = jasmine.createSpyObj('PageTitleService', ['setTitle']);
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SignInComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        const options = {
+            declarations: [SignInComponent],
+            providers: [
+                { provide: PageTitleService, useValue: pageTitleServiceSpy }
+            ]
+        };
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        TestBed.configureTestingModule(options).compileComponents();
+    }));
+
+    beforeEach(() => {
+        mockPageTitleService = TestBed.get(PageTitleService);
+        fixture = TestBed.createComponent(SignInComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

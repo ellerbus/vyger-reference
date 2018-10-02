@@ -23,3 +23,6 @@ body {
   margin-bottom: 50px;
   line-height: 1.6em;
 }
+.pointer {
+  cursor: pointer;
+}

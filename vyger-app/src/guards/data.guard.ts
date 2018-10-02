@@ -16,7 +16,7 @@ export class DataGuard implements CanActivate {
         }
 
         //  we don't have user data yet
-        this.router.navigateByUrl('/data', { queryParams: { returnUrl: state.url } });
+        this.router.navigateByUrl('/home/data?returnUrl=' + state.url);
 
         return false;
     }

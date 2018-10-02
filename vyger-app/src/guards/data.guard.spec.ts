@@ -80,10 +80,7 @@ describe('DataGuard', () => {
             expect(results).toBeFalsy();
 
             const [url, extras] = mockRouter.navigateByUrl.calls.mostRecent().args;
-            expect(url).toBe('/data');
-            expect(extras).toBeDefined();
-            expect(extras.queryParams).toBeDefined();
-            expect(extras.queryParams.returnUrl).toBe('x');
+            expect(url).toBe('/home/data?returnUrl=x');
         });
     });
 });
