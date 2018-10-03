@@ -1,0 +1,16 @@
+<div class="form-group">
+  <label for="name">Exercise</label>
+  <input id="name"
+         name="name"
+         class="form-control"
+         type="text"
+         required
+         placeholder="exercise name"
+         [(ngModel)]="exercise.name"
+         [class.is-invalid]="name.invalid"
+         #name="ngModel">
+  <div class="invalid-feedback"
+       *ngIf="name.invalid && name.touched">
+    <div *ngIf="name.errors.required">name is required</div>
+  </div>
+</div>

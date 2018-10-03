@@ -1,0 +1,20 @@
+<div class="form-group">
+  <label for="group">Group</label>
+  <select id="group"
+          name="group"
+          class="form-control"
+          required
+          [(ngModel)]="exercise.group"
+          [class.is-invalid]="group.invalid"
+          #group="ngModel">
+    <option [value]="null">(select group)</option>
+    <option *ngFor="let group of groups"
+            [value]="group">
+      {{ group }}
+    </option>
+  </select>
+  <div class="invalid-feedback"
+       *ngIf="group.invalid && group.touched">
+    <div *ngIf="group.errors.required">group is required</div>
+  </div>
+</div>
