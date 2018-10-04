@@ -37,6 +37,16 @@ export class Exercise {
         return this.category + ' ' + this.name;
     }
 
+    matchesName(category: Categories, name: string): boolean {
+        if (this.category == category) {
+            if (this.name != null && name != null) {
+                return this.name.toLowerCase() == name.toLowerCase();
+            }
+        }
+
+        return false;
+    }
+
     static fromObject(obj: { id?: string, group: string, category: string, name: string }): Exercise {
         let exercise = new Exercise();
 

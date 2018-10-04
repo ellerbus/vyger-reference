@@ -1,0 +1,14 @@
+<form #exerciseForm="ngForm">
+  <app-exercise-group [exercise]="exercise"></app-exercise-group>
+  <app-exercise-category [exercise]="exercise"></app-exercise-category>
+  <app-exercise-name [exercise]="exercise"></app-exercise-name>
+
+  <div class="form-group text-right">
+    <button type="button"
+            class="btn btn-outline-secondary"
+            (click)="cancel()">cancel</button>
+    <button type="button"
+            class="btn btn-primary ml-2"
+            [disabled]="!exerciseForm.form.valid">save</button>
+  </div>
+</form>

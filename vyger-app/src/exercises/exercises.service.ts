@@ -33,10 +33,16 @@ export class ExercisesService {
             else {
                 this.exercises = Exercise.defaultList();
 
-                this.dataService.saveFile(this.file, JSON.stringify(this.exercises));
+                this.save();
             }
         }
 
         return of(this.exercises);
+    }
+
+    save(): void {
+        this.file.contents = JSON.stringify(this.exercises);
+
+        this.dataService.saveFile(this.file);
     }
 }

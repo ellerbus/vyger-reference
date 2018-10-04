@@ -3,14 +3,13 @@ import { PageTitleService } from 'src/page-title/page-title.service';
 import { Exercise } from '../../models/exercise';
 
 import { ExercisesService } from '../../exercises.service';
-import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-exercises',
-    templateUrl: './exercises.component.html',
-    styleUrls: ['./exercises.component.css']
+    selector: 'app-exercise-list',
+    templateUrl: './exercise-list.component.html',
+    styleUrls: ['./exercise-list.component.css']
 })
-export class ExercisesComponent implements OnInit {
+export class ExerciseListComponent implements OnInit {
     private exercises: Exercise[];
 
     constructor(

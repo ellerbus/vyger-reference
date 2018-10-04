@@ -34,4 +34,8 @@ export class ExerciseAddComponent implements OnInit {
     cancel(): void {
         this.router.navigateByUrl('/exercises');
     }
+
+    save(): void {
+
+    }
 }

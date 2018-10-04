@@ -8,9 +8,11 @@
          placeholder="exercise name"
          [(ngModel)]="exercise.name"
          [class.is-invalid]="name.invalid"
+         [uniqueExerciseName]="exercise"
          #name="ngModel">
   <div class="invalid-feedback"
-       *ngIf="name.invalid && name.touched">
+       *ngIf="name.invalid && !name.pristine">
     <div *ngIf="name.errors.required">name is required</div>
+    <div *ngIf="name.errors.uniqueExerciseName">name must be unique</div>
   </div>
 </div>

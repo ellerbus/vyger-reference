@@ -1,10 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
 
 import { Exercise, Groups } from '../../models/exercise';
 
 @Component({
     selector: 'app-exercise-group',
-    templateUrl: './exercise-group.component.html'
+    templateUrl: './exercise-group.component.html',
+    viewProviders: [
+        { provide: ControlContainer, useExisting: NgForm }
+    ]
 })
 export class ExerciseGroupComponent implements OnInit {
     groups: string[];

@@ -16,7 +16,7 @@ export class DataService {
         return new Promise((resolve, reject) => {
             let options = {
                 spaces: 'appDataFolder',
-                fields: "files(id, name, size, modifiedTime)"
+                fields: 'files(id, name, size, modifiedTime)'
             };
 
             gapi.client.drive.files
@@ -80,8 +80,48 @@ export class DataService {
         throw 'Missing file: ' + name;
     }
 
-    saveFile(file: FileInfo, contents: string): void {
+    saveFile(file: FileInfo): Promise<any> {
+        if (file.id) {
+            return this.updateFile(file);
+        }
+
+        return this.createFile(file);
     }
+
+    private updateFile = (file: FileInfo): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            const options = {};
+
+            return gapi.client.request({
+                path: '/upload/drive/v3/files/' + file.id,
+                method: 'PATCH',
+                params: {
+                    uploadType: 'media'
+                },
+                body: file.contents
+            });
+        });
+    };
+
+    private createFile = (file: FileInfo): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            const options = {
+                fields: 'id',
+                resource: {
+                    name: file.name,
+                    parents: ['appDataFolder'],
+                    mimeType: 'text/plain',
+                }
+            };
+
+            return gapi.client.drive.files
+                .create(options)
+                .then((res) => {
+                    file.id = res.result.id;
+                    resolve();
+                });
+        });
+    };
 
     //     create(parentId: string, folderName: string) {
     //         var folder = {

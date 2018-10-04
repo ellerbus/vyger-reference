@@ -1,12 +1,5 @@
 export const MIME_TYPE_FOLDER = "application/vnd.google-apps.folder";
 
-export enum FileStatus {
-    None = 'None',
-    Creating = 'Creating',
-    Downloading = 'Downloading',
-    Downloaded = 'Downloaded'
-}
-
 export class FileInfo {
     id: string;
     mimeType: string;
@@ -15,11 +8,9 @@ export class FileInfo {
     progress: number;
     size: string;
     contents: string;
-    status: FileStatus;
 
     constructor(name?: string) {
         this.name = name;
-        this.status = FileStatus.None;
     }
 
     static fromGoogleFile(file: gapi.client.drive.File): FileInfo {
