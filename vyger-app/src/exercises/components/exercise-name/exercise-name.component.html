@@ -11,7 +11,7 @@
          [uniqueExerciseName]="exercise"
          #name="ngModel">
   <div class="invalid-feedback"
-       *ngIf="name.invalid && !name.pristine">
+       *ngIf="name.invalid ">
     <div *ngIf="name.errors.required">name is required</div>
     <div *ngIf="name.errors.uniqueExerciseName">name must be unique</div>
   </div>

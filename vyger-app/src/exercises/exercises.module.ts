@@ -16,7 +16,8 @@ import { ExerciseNameValidatorDirective } from './directives/exercise-name-valid
 
 const routes: Routes = [
     {
-        path: 'exercises', canActivate: [AuthenticationGuard, DataGuard],
+        path: 'exercises',
+        canActivate: [AuthenticationGuard],
         children: [
             { path: '', component: ExerciseListComponent },
             { path: 'add', component: ExerciseAddComponent },

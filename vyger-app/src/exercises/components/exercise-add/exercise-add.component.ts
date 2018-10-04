@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Exercise, Categories } from '../../models/exercise';
 import { PageTitleService } from 'src/page-title/page-title.service';
-import { ExercisesService } from '../../exercises.service';
+import { ExercisesRepository } from '../../exercises.repository';
 
 @Component({
     selector: 'app-exercise-add',
@@ -17,7 +17,7 @@ export class ExerciseAddComponent implements OnInit {
     constructor(
         private router: Router,
         private pageTitleService: PageTitleService,
-        private exercisesService: ExercisesService) { }
+        private exercisesRepository: ExercisesRepository) { }
 
     ngOnInit() {
         this.pageTitleService.setTitle('Add Exercise');

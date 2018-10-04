@@ -37,10 +37,10 @@ export class Exercise {
         return this.category + ' ' + this.name;
     }
 
-    matchesName(category: Categories, name: string): boolean {
-        if (this.category == category) {
-            if (this.name != null && name != null) {
-                return this.name.toLowerCase() == name.toLowerCase();
+    static matches(e: Exercise, category: Categories, name: string): boolean {
+        if (e.category == category) {
+            if (e.name != null && name != null) {
+                return e.name.toLowerCase() == name.toLowerCase();
             }
         }
 

@@ -1,28 +1,21 @@
-export const MIME_TYPE_FOLDER = "application/vnd.google-apps.folder";
-
 export class FileInfo {
-    id: string;
-    mimeType: string;
-    modifiedTime: Date;
-    name: string;
-    progress: number;
-    size: string;
     contents: string;
 
-    constructor(name?: string) {
-        this.name = name;
+    constructor(
+        public id: string,
+        public name: string) {
     }
 
-    static fromGoogleFile(file: gapi.client.drive.File): FileInfo {
-        let fileInfo = new FileInfo(file.name);
+    // static fromGoogleFile(file: gapi.client.drive.File): FileInfo {
+    //     let fileInfo = new FileInfo(file.name);
 
-        fileInfo.id = file.id;
-        fileInfo.mimeType = file.mimeType;
-        fileInfo.modifiedTime = new Date(file.modifiedTime);
-        fileInfo.size = file.size;
+    //     fileInfo.id = file.id;
+    //     fileInfo.mimeType = file.mimeType;
+    //     fileInfo.modifiedTime = new Date(file.modifiedTime);
+    //     fileInfo.size = file.size;
 
-        return fileInfo;
-    }
+    //     return fileInfo;
+    // }
 
     // public get ModifiedTimeText(): string {
     //     return this.ModifiedTime.getDate() + "." + (this.ModifiedTime.getMonth() + 1) + "." + this.ModifiedTime.getFullYear();

@@ -1,10 +1,10 @@
 import { Directive, Input } from '@angular/core';
 import { FormControl, ValidationErrors, NG_ASYNC_VALIDATORS, AsyncValidator } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import 'rxjs/add/operator/map';
 
 import { Exercise } from '../models/exercise';
-import { ExercisesService } from '../exercises.service';
+import { ExercisesRepository } from '../exercises.repository';
 
 @Directive({
     selector: '[uniqueExerciseName][ngModel]',
@@ -16,16 +16,16 @@ export class ExerciseNameValidatorDirective implements AsyncValidator {
     @Input('uniqueExerciseName') exercise: Exercise;
 
     constructor(
-        private exercisesService: ExercisesService) { }
+        private exercisesRepository: ExercisesRepository) { }
 
     validate(c: FormControl): Observable<ValidationErrors> {
-        return this.exercisesService
+        let p = this.exercisesRepository
             .getExercises()
-            .map(exercises => {
+            .then(exercises => {
                 for (let i = 0; i < exercises.length; i++) {
                     let ex: Exercise = exercises[i];
                     if (this.exercise.id != ex.id) {
-                        if (ex.matchesName(this.exercise.category, c.value)) {
+                        if (Exercise.matches(ex, this.exercise.category, c.value)) {
                             return true;
                         }
                     }
@@ -33,6 +33,8 @@ export class ExerciseNameValidatorDirective implements AsyncValidator {
 
                 return false;
             })
-            .map(exists => exists ? { uniqueExerciseName: 'x' } : null);
+            .then(exists => exists ? { uniqueExerciseName: 'x' } : null);
+
+        return from(p);
     }
 }

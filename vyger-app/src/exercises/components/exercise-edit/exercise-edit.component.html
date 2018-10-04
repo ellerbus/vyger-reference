@@ -1,7 +1,8 @@
-<form #exerciseForm="ngForm">
-  <app-exercise-group [exercise]="exercise"></app-exercise-group>
-  <app-exercise-category [exercise]="exercise"></app-exercise-category>
-  <app-exercise-name [exercise]="exercise"></app-exercise-name>
+<form #exerciseForm="ngForm"
+      *ngIf="clone != null">
+  <app-exercise-group [exercise]="clone"></app-exercise-group>
+  <app-exercise-category [exercise]="clone"></app-exercise-category>
+  <app-exercise-name [exercise]="clone"></app-exercise-name>
 
   <div class="form-group text-right">
     <button type="button"
@@ -9,6 +10,7 @@
             (click)="cancel()">cancel</button>
     <button type="button"
             class="btn btn-primary ml-2"
+            (click)="save()"
             [disabled]="!exerciseForm.form.valid">save</button>
   </div>
 </form>

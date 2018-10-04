@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageTitleService } from 'src/page-title/page-title.service';
 import { Exercise } from '../../models/exercise';
 
-import { ExercisesService } from '../../exercises.service';
+import { ExercisesRepository } from '../../exercises.repository';
 
 @Component({
     selector: 'app-exercise-list',
@@ -14,14 +14,14 @@ export class ExerciseListComponent implements OnInit {
 
     constructor(
         private pageTitleService: PageTitleService,
-        private exercisesService: ExercisesService) { }
+        private exercisesRepository: ExercisesRepository) { }
 
     ngOnInit() {
         this.pageTitleService.setTitle('Exercises');
 
-        this.exercisesService
+        this.exercisesRepository
             .getExercises()
-            .subscribe(this.onloadingExercises);
+            .then(this.onloadingExercises);
     }
 
     private onloadingExercises = (data: Exercise[]) => {
