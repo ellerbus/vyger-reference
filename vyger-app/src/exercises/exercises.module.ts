@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { AuthenticationGuard } from 'src/guards/authentication.guard';
-import { DataGuard } from 'src/guards/data.guard';
 
 import { ExerciseListComponent } from './components/exercise-list/exercise-list.component';
 import { ExerciseAddComponent } from './components/exercise-add/exercise-add.component';
@@ -13,6 +12,7 @@ import { ExerciseGroupComponent } from './components/exercise-group/exercise-gro
 import { ExerciseCategoryComponent } from './components/exercise-category/exercise-category.component';
 import { ExerciseNameComponent } from './components/exercise-name/exercise-name.component';
 import { ExerciseNameValidatorDirective } from './directives/exercise-name-validator.directive';
+import { LoadingModule } from '../loading/loading.module';
 
 const routes: Routes = [
     {
@@ -40,6 +40,7 @@ const routes: Routes = [
         BrowserModule,
         FormsModule,
         RouterModule,
+        LoadingModule,
         RouterModule.forRoot(routes, { useHash: true })
     ]
 })

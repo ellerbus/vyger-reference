@@ -2,16 +2,16 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { ExerciseNameComponent } from './exercise-name.component';
-import { Exercise } from '../../../models/exercise';
+import { RoutineNameComponent } from './routine-name.component';
+import { Routine } from '../../../models/routine';
 
-describe('ExerciseNameComponent', () => {
-    let component: ExerciseNameComponent;
-    let fixture: ComponentFixture<ExerciseNameComponent>;
+describe('RoutineNameComponent', () => {
+    let component: RoutineNameComponent;
+    let fixture: ComponentFixture<RoutineNameComponent>;
 
     beforeEach(async(() => {
         const options = {
-            declarations: [ExerciseNameComponent],
+            declarations: [RoutineNameComponent],
             imports: [FormsModule],
             providers: [NgForm],
             schemas: [NO_ERRORS_SCHEMA]
@@ -20,9 +20,9 @@ describe('ExerciseNameComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ExerciseNameComponent);
+        fixture = TestBed.createComponent(RoutineNameComponent);
         component = fixture.componentInstance;
-        component.exercise = new Exercise();
+        component.routine = new Routine();
         fixture.detectChanges();
     });
 

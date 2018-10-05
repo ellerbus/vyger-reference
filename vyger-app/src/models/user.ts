@@ -1,4 +1,5 @@
-export class User {
+export class User
+{
 
     id: string;
     email: string;
@@ -7,7 +8,8 @@ export class User {
     familyName: string;
     imageUrl: string;
 
-    static fromBasicProfile(profile: gapi.auth2.BasicProfile): User {
+    static fromBasicProfile(profile: gapi.auth2.BasicProfile): User
+    {
         const user = new User();
         user.id = profile.getId();
         user.email = profile.getEmail();

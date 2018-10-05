@@ -13,7 +13,8 @@ import { HomeModule } from '../home/home.module';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthenticationGuard } from '../guards/authentication.guard';
 import { ExercisesModule } from '../exercises/exercises.module';
-import { DataGuard } from '../guards/data.guard';
+import { RoutinesModule } from '../routines/routines.module';
+import { LoadingModule } from '../loading/loading.module';
 
 export function initializeGoogleApi(authenticationService: AuthenticationService) {
     return () => authenticationService.initializeClient();
@@ -24,7 +25,7 @@ export function initializeGoogleApi(authenticationService: AuthenticationService
         AppComponent,
         SideMenuComponent,
         PageTitleComponent,
-        PageHeaderComponent
+        PageHeaderComponent,
     ],
     imports: [
         BrowserModule,
@@ -32,12 +33,13 @@ export function initializeGoogleApi(authenticationService: AuthenticationService
         RouterModule,
         AppRouterModule,
         HomeModule,
-        ExercisesModule
+        ExercisesModule,
+        RoutinesModule,
+        LoadingModule,
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: initializeGoogleApi, deps: [AuthenticationService], multi: true },
         AuthenticationGuard,
-        DataGuard
     ],
     bootstrap: [AppComponent]
 })

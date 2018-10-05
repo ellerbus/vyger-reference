@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Exercise, Categories } from '../../models/exercise';
+import { Exercise } from '../../../models/exercise';
 import { PageTitleService } from 'src/page-title/page-title.service';
 import { ExercisesRepository } from '../../exercises.repository';
 
@@ -11,8 +11,8 @@ import { ExercisesRepository } from '../../exercises.repository';
     styleUrls: ['./exercise-add.component.css']
 })
 export class ExerciseAddComponent implements OnInit {
-    categories: string[];
     exercise: Exercise;
+    saving: boolean;
 
     constructor(
         private router: Router,
@@ -36,6 +36,15 @@ export class ExerciseAddComponent implements OnInit {
     }
 
     save(): void {
+        this.saving = true;
 
+        this.exercisesRepository
+            .add(this.exercise)
+            .then(() => {
+                this.router.navigateByUrl('/exercises');
+            })
+            .then(() => {
+                this.saving = false;
+            });
     }
 }

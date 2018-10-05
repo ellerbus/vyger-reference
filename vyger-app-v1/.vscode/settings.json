@@ -1,7 +1,0 @@
-{
-  "editor.formatOnSave": true,
-  "html.format.wrapAttributes": "force-aligned",
-  "typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
-  "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
-  "typescript.format.enable": true,
-}

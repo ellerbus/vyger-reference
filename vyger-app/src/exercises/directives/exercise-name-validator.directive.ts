@@ -3,7 +3,7 @@ import { FormControl, ValidationErrors, NG_ASYNC_VALIDATORS, AsyncValidator } fr
 import { Observable, from } from 'rxjs';
 import 'rxjs/add/operator/map';
 
-import { Exercise } from '../models/exercise';
+import { Exercise } from '../../models/exercise';
 import { ExercisesRepository } from '../exercises.repository';
 
 @Directive({

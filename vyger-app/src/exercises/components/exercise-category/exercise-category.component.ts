@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { Exercise, Categories } from '../../models/exercise';
+import { Exercise, Categories } from '../../../models/exercise';
 
 @Component({
     selector: 'app-exercise-category',

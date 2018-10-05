@@ -35,7 +35,10 @@ export class DataRepository {
                         resolve(file);
                     }
                     else {
-                        return this.createFile(name);
+                        return this.createFile(name)
+                            .then(x => {
+                                resolve(x);
+                            });
                     }
                 });
         });

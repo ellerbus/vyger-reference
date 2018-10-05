@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { Exercise } from '../../../models/exercise';
+import { Routine } from '../../../models/routine';
 
 @Component({
-    selector: 'app-exercise-name',
-    templateUrl: './exercise-name.component.html',
+    selector: 'app-routine-name',
+    templateUrl: './routine-name.component.html',
     viewProviders: [
         { provide: ControlContainer, useExisting: NgForm }
     ]
 })
-export class ExerciseNameComponent implements OnInit {
-    @Input() exercise: Exercise;
+export class RoutineNameComponent implements OnInit {
+    @Input() routine: Routine;
 
     constructor() { }
 

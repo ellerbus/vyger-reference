@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { ExerciseGroupComponent } from './exercise-group.component';
-import { Exercise } from '../../models/exercise';
+import { Exercise } from '../../../models/exercise';
 
 describe('ExerciseGroupComponent', () => {
     let component: ExerciseGroupComponent;
