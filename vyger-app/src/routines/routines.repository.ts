@@ -40,6 +40,23 @@ export class RoutinesRepository
         return Promise.resolve(this.routines);
     }
 
+    async getRoutine(id: string): Promise<Routine>
+    {
+        return this
+            .getRoutines()
+            .then(routines =>
+            {
+                let subset = routines.filter(x => x.id == id);
+
+                if (subset && subset.length == 1)
+                {
+                    return subset[0];
+                }
+
+                return null;
+            });
+    }
+
     add(routine: Routine): Promise<any>
     {
         this.routines.push(routine);

@@ -1,3 +1,5 @@
 <div class="title-header">
-  <h2 [innerText]="getTitle()"></h2>
+  <h1 [innerText]="getTitle()"></h1>
+  <h2 *ngIf="getSubTitle()"
+      [innerText]="getSubTitle()"></h2>
 </div>

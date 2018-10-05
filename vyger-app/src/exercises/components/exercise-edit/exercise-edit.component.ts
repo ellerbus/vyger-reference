@@ -26,30 +26,24 @@ export class ExerciseEditComponent implements OnInit
     {
         this.pageTitleService.setTitle('Edit Exercise');
 
+        const id = this.activatedRoute.snapshot.paramMap.get('id');
+
         this.exercisesRepository
-            .getExercises()
+            .getExercise(id)
             .then(this.onloadingExercise);
     }
 
-    private onloadingExercise = (exercises: Exercise[]): void =>
+    private onloadingExercise = (exercise: Exercise): void =>
     {
-        const id = this.activatedRoute.snapshot.paramMap.get('id');
-
-        for (let i = 0; i < exercises.length; i++)
-        {
-            if (exercises[i].id == id)
-            {
-                this.exercise = exercises[i];
-                break;
-            }
-        }
-
-        if (this.exercise == null)
+        if (exercise == null)
         {
             this.router.navigateByUrl('/exercises');
-        } else
+        }
+        else
         {
-            this.clone = { ...this.exercise };
+            this.exercise = exercise;
+
+            this.clone = <Exercise>{ ...this.exercise };
         }
     }
 
@@ -70,11 +64,8 @@ export class ExerciseEditComponent implements OnInit
             .save()
             .then(() =>
             {
-                this.router.navigateByUrl('/exercises');
-            })
-            .then(() =>
-            {
                 this.saving = false;
+                this.router.navigateByUrl('/exercises');
             });
     }
 }

@@ -4,13 +4,15 @@ import { PageTitleComponent } from './page-title.component';
 import { PageTitleService } from './page-title.service';
 import { ExpectedConditions } from 'protractor';
 
-describe('PageTitleComponent', () => {
+describe('PageTitleComponent', () =>
+{
     let component: PageTitleComponent;
     let fixture: ComponentFixture<PageTitleComponent>;
     let mockPageTitleService: jasmine.SpyObj<PageTitleService>;
 
-    beforeEach(async(() => {
-        const pageTitleServiceSpy = jasmine.createSpyObj('PageTitleService', ['getTitle']);
+    beforeEach(async(() =>
+    {
+        const pageTitleServiceSpy = jasmine.createSpyObj('PageTitleService', ['getTitle', 'getSubTitle']);
 
         const options = {
             declarations: [PageTitleComponent],
@@ -22,14 +24,16 @@ describe('PageTitleComponent', () => {
         TestBed.configureTestingModule(options).compileComponents();
     }));
 
-    beforeEach(() => {
+    beforeEach(() =>
+    {
         mockPageTitleService = TestBed.get(PageTitleService);
         fixture = TestBed.createComponent(PageTitleComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    it('should create', () =>
+    {
         //  arrange
         mockPageTitleService.getTitle.and.returnValue('x');
         //  act

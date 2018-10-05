@@ -26,29 +26,23 @@ export class RoutineEditComponent implements OnInit
     {
         this.pageTitleService.setTitle('Edit Routine');
 
+        const id = this.activatedRoute.snapshot.paramMap.get('id');
+
         this.routinesRepository
-            .getRoutines()
+            .getRoutine(id)
             .then(this.onloadingRoutine);
     }
 
-    private onloadingRoutine = (routines: Routine[]): void =>
+    private onloadingRoutine = (routine: Routine): void =>
     {
-        const id = this.activatedRoute.snapshot.paramMap.get('id');
-
-        for (let i = 0; i < routines.length; i++)
-        {
-            if (routines[i].id == id)
-            {
-                this.routine = routines[i];
-                break;
-            }
-        }
-
-        if (this.routine == null)
+        if (routine == null)
         {
             this.router.navigateByUrl('/routines');
-        } else
+        }
+        else
         {
+            this.routine = routine;
+
             this.clone = { ...this.routine };
         }
     }
@@ -70,11 +64,8 @@ export class RoutineEditComponent implements OnInit
             .save()
             .then(() =>
             {
-                this.router.navigateByUrl('/routines');
-            })
-            .then(() =>
-            {
                 this.saving = false;
+                this.router.navigateByUrl('/routines/exercises/' + this.routine.id);
             });
     }
 }

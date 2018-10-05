@@ -6,16 +6,25 @@ import { PageTitleService } from './page-title.service';
     templateUrl: './page-title.component.html',
     styleUrls: ['./page-title.component.css']
 })
-export class PageTitleComponent implements OnInit {
+export class PageTitleComponent implements OnInit
+{
 
     constructor(
-        private pageTitleService: PageTitleService) {
+        private pageTitleService: PageTitleService)
+    {
     }
 
-    ngOnInit() {
+    ngOnInit()
+    {
     }
 
-    getTitle(): string {
+    getTitle(): string
+    {
         return this.pageTitleService.getTitle();
+    }
+
+    getSubTitle(): string
+    {
+        return this.pageTitleService.getSubTitle();
     }
 }

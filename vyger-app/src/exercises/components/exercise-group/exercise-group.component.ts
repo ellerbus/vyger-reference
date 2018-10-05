@@ -10,19 +10,21 @@ import { Exercise, Groups } from '../../../models/exercise';
         { provide: ControlContainer, useExisting: NgForm }
     ]
 })
-export class ExerciseGroupComponent implements OnInit {
+export class ExerciseGroupComponent implements OnInit
+{
     groups: string[];
     @Input() exercise: Exercise;
 
-    constructor() { }
-
-    ngOnInit() {
+    ngOnInit()
+    {
         this.loadGroups();
     }
 
-    loadGroups(): void {
+    loadGroups(): void
+    {
         this.groups = [];
-        for (let x in Groups) {
+        for (let x in Groups)
+        {
             this.groups.push(x);
         }
     }

@@ -1,0 +1,18 @@
+<div class="form-group">
+  <div class="input-group">
+    <input type="text"
+           class="form-control"
+           [(ngModel)]="set.pattern" />
+    <div class="input-group-append">
+      <button type="button"
+              class="btn btn-outline-success">
+        <span class="fa fa-fw fa-cog"></span>
+      </button>
+      <button type="button"
+              class="btn btn-outline-success"
+              (click)="add()">
+        <span class="fa fa-fw fa-plus"></span>
+      </button>
+    </div>
+  </div>
+</div>

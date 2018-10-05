@@ -1,0 +1,7 @@
+<div class="form-group">
+  <label>Default Workout Sets</label>
+</div>
+<app-routine-exercise-set *ngFor="let set of exercise.sets"
+                          [routine]="routine"
+                          [exercise]="exercise"
+                          [pattern]="set"></app-routine-exercise-set>

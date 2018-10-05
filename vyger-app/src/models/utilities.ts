@@ -24,7 +24,10 @@ export namespace utilities
         {
             for (let i = 0; i < keys.length; i++)
             {
-                target[keys[i]] = source[keys[i]];
+                if (source[keys[i]])
+                {
+                    target[keys[i]] = source[keys[i]];
+                }
             }
         }
     }

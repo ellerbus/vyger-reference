@@ -1,16 +1,18 @@
+<app-loading [loading]="clone == null"
+             [title]="'Routine'"></app-loading>
 <form #routineForm="ngForm"
       *ngIf="clone != null">
-  <app-routine-name [routine]="clone"></app-routine-name>
-  <app-routine-weeks [routine]="clone"></app-routine-weeks>
-  <app-routine-days [routine]="clone"></app-routine-days>
+        <app-routine-name [routine]="clone"></app-routine-name>
+        <app-routine-weeks [routine]="clone"></app-routine-weeks>
+        <app-routine-days [routine]="clone"></app-routine-days>
 
-  <div class="form-group text-right">
-    <button type="button"
-            class="btn btn-outline-secondary"
-            (click)="cancel()">cancel</button>
-    <button type="button"
-            class="btn btn-primary ml-2"
-            (click)="save()"
-            [disabled]="!routineForm.form.valid || saving">save</button>
-  </div>
+        <div class="form-group text-right">
+                <button type="button"
+                        secondaryButton
+                        (click)="cancel()">cancel</button>
+                <button type="button"
+                        primaryButton
+                        (click)="save()"
+                        [disabled]="!routineForm.form.valid || saving">next</button>
+        </div>
 </form>

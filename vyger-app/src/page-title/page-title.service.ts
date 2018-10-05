@@ -4,26 +4,44 @@ import { Title } from '@angular/platform-browser';
 @Injectable({
     providedIn: 'root'
 })
-export class PageTitleService {
+export class PageTitleService
+{
     private title: string = "Vyger";
+    private subtitle: string = "Vyger";
 
     constructor(
-        private titleService: Title) {
+        private titleService: Title)
+    {
         this.titleService.setTitle(this.title);
     }
 
-    getTitle(): string {
+    getTitle(): string
+    {
         return this.title;
     }
 
-    setTitle(title: string): void {
+    setTitle(title: string): void
+    {
         this.title = title;
 
         let display = this.title;
-        if (this.title != "Vyger") {
+        if (this.title != "Vyger")
+        {
             display = "Vyger - " + display;
         }
 
         this.titleService.setTitle(display);
+
+        this.subtitle = null;
+    }
+
+    getSubTitle(): string
+    {
+        return this.subtitle;
+    }
+
+    setSubTitle(subtitle: string): void
+    {
+        this.subtitle = subtitle;
     }
 }

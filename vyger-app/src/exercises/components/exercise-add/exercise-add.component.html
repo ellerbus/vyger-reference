@@ -5,10 +5,10 @@
 
   <div class="form-group text-right">
     <button type="button"
-            class="btn btn-outline-secondary"
+            secondaryButton
             (click)="cancel()">cancel</button>
     <button type="button"
-            class="btn btn-primary ml-2"
+            primaryButton
             (click)="save()"
             [disabled]="!exerciseForm.form.valid || saving">add</button>
   </div>

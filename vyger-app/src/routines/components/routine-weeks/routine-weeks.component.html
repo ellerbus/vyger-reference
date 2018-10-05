@@ -9,7 +9,7 @@
           #weeks="ngModel">
     <option [value]="null">(select weeks)</option>
     <option *ngFor="let week of totalWeeks"
-            [value]="week">
+            [ngValue]="week">
       {{ week }} Weeks
     </option>
   </select>

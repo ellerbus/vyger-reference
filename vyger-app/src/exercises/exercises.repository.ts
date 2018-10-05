@@ -40,6 +40,23 @@ export class ExercisesRepository
         return Promise.resolve(this.exercises);
     }
 
+    async getExercise(id: string): Promise<Exercise>
+    {
+        return this
+            .getExercises()
+            .then(exercises =>
+            {
+                let subset = exercises.filter(x => x.id == id);
+
+                if (subset && subset.length == 1)
+                {
+                    return subset[0];
+                }
+
+                return null;
+            });
+    }
+
     add(exercise: Exercise): Promise<any>
     {
         this.exercises.push(exercise);

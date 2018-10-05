@@ -3,10 +3,9 @@
 <div class="row">
   <div class="col-lg-12 list-group list-group-flush"
        [hidden]="routines == null">
-    <a class="list-group-item list-group-item-action text-success"
+    <a addListGroupItem
        routerLink="/routines/add">
-      <span class="fa fa-fw fa-plus"></span>
-      Add Routine
+      add routine
     </a>
     <a class="list-group-item list-group-item-action"
        *ngFor="let routine of routines"

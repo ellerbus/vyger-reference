@@ -1,0 +1,20 @@
+<app-loading [loading]="routine == null"
+             [title]="'Routine'"></app-loading>
+<app-routine-weeks-picker [routine]="routine"></app-routine-weeks-picker>
+<app-routine-days-picker [routine]="routine"></app-routine-days-picker>
+<div class="row"
+     *ngIf="routine != null">
+  <div class="col-lg-12 list-group list-group-flush">
+    <a class="list-group-item list-group-item-action"
+       *ngFor="let exercise of getExercises()"
+       routerLink="/routines/exercises/{{ routine.id }}">
+      <div class="col-6">{{ exercise.shortDisplay() }}</div>
+      <div class="col-6">{{ exercise.sets.join(', ') }}</div>
+    </a>
+    <a addListGroupItem
+       routerLink="/routines/exercises/{{ routine.id }}/add"
+       [queryParams]="{ week: week, day: day }">
+      add exercise
+    </a>
+  </div>
+</div>

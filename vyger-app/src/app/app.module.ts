@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, Directive } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -15,8 +15,10 @@ import { AuthenticationGuard } from '../guards/authentication.guard';
 import { ExercisesModule } from '../exercises/exercises.module';
 import { RoutinesModule } from '../routines/routines.module';
 import { LoadingModule } from '../loading/loading.module';
+import { DirectivesModule } from '../directives/directives.module';
 
-export function initializeGoogleApi(authenticationService: AuthenticationService) {
+export function initializeGoogleApi(authenticationService: AuthenticationService)
+{
     return () => authenticationService.initializeClient();
 }
 
@@ -36,6 +38,7 @@ export function initializeGoogleApi(authenticationService: AuthenticationService
         ExercisesModule,
         RoutinesModule,
         LoadingModule,
+        DirectivesModule
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: initializeGoogleApi, deps: [AuthenticationService], multi: true },

@@ -10,7 +10,8 @@ import { RoutinesRepository } from '../../routines.repository';
     templateUrl: './routine-add.component.html',
     styleUrls: ['./routine-add.component.css']
 })
-export class RoutineAddComponent implements OnInit {
+export class RoutineAddComponent implements OnInit
+{
     categories: string[];
     routine: Routine;
     saving: boolean;
@@ -18,31 +19,31 @@ export class RoutineAddComponent implements OnInit {
     constructor(
         private router: Router,
         private pageTitleService: PageTitleService,
-        private routinesRepository: RoutinesRepository) { }
-
-    ngOnInit() {
-        this.pageTitleService.setTitle('Add Routine');
-        this.loadRoutine();
-    }
-
-    loadRoutine(): void {
+        private routinesRepository: RoutinesRepository)
+    {
         this.routine = new Routine();
     }
 
-    cancel(): void {
-        this.router.navigateByUrl('/routines');
+    ngOnInit()
+    {
+        this.pageTitleService.setTitle('Add Routine');
     }
 
-    save(): void {
+    cancel(): void
+    {
+        this.router.navigateByUrl('/routines/exercises/' + this.routine.id);
+    }
+
+    save(): void
+    {
         this.saving = true;
 
         this.routinesRepository
             .add(this.routine)
-            .then(() => {
-                this.router.navigateByUrl('/routines');
-            })
-            .then(() => {
+            .then(() =>
+            {
                 this.saving = false;
+                this.router.navigateByUrl('/routines/exercises/' + this.routine.id);
             });
     }
 }

@@ -45,6 +45,34 @@ export class Exercise implements IExercise
         utilities.extend(this, source, keys);
     }
 
+    smartDisplay(group: Groups, category: Categories): string
+    {
+        if (group && category)
+        {
+            return this.name;
+        }
+        if (group)
+        {
+            return this.shortDisplay();
+        }
+        if (category)
+        {
+            return this.group + ' - ' + this.name;
+        }
+
+        return this.fullDisplay();
+    }
+
+    fullDisplay(): string
+    {
+        return this.group + ' - ' + this.category + ' - ' + this.name;
+    }
+
+    shortDisplay(): string
+    {
+        return this.category + ' - ' + this.name;
+    }
+
     static matches(e: Exercise, category: Categories, name: string): boolean
     {
         if (e.category == category)
@@ -106,14 +134,14 @@ export class Exercise implements IExercise
 
     static compare(a: Exercise, b: Exercise): number
     {
-        var group = a.group.localeCompare(b.group);
+        const group = a.group.localeCompare(b.group);
 
         if (group != 0)
         {
             return group;
         }
 
-        var category = a.category.localeCompare(b.category);
+        const category = a.category.localeCompare(b.category);
 
         if (category != 0)
         {

@@ -10,7 +10,8 @@ import { ExercisesRepository } from '../../exercises.repository';
     templateUrl: './exercise-add.component.html',
     styleUrls: ['./exercise-add.component.css']
 })
-export class ExerciseAddComponent implements OnInit {
+export class ExerciseAddComponent implements OnInit
+{
     exercise: Exercise;
     saving: boolean;
 
@@ -19,32 +20,30 @@ export class ExerciseAddComponent implements OnInit {
         private pageTitleService: PageTitleService,
         private exercisesRepository: ExercisesRepository) { }
 
-    ngOnInit() {
+    ngOnInit()
+    {
         this.pageTitleService.setTitle('Add Exercise');
-        this.loadExercise();
-    }
 
-    loadExercise(): void {
         this.exercise = new Exercise();
-
         this.exercise.group = null;
         this.exercise.category = null;
     }
 
-    cancel(): void {
+    cancel(): void
+    {
         this.router.navigateByUrl('/exercises');
     }
 
-    save(): void {
+    save(): void
+    {
         this.saving = true;
 
         this.exercisesRepository
             .add(this.exercise)
-            .then(() => {
-                this.router.navigateByUrl('/exercises');
-            })
-            .then(() => {
+            .then(() =>
+            {
                 this.saving = false;
+                this.router.navigateByUrl('/exercises');
             });
     }
 }

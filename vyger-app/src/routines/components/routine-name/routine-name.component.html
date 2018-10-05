@@ -5,6 +5,7 @@
          class="form-control"
          type="text"
          required
+         maxlength="30"
          placeholder="routine name"
          [(ngModel)]="routine.name"
          [class.is-invalid]="name.invalid"
@@ -13,6 +14,7 @@
   <div class="invalid-feedback"
        *ngIf="name.invalid ">
     <div *ngIf="name.errors.required">name is required</div>
+    <div *ngIf="name.errors.maxlength">name is limited to 30 chars</div>
     <div *ngIf="name.errors.uniqueRoutineName">name must be unique</div>
   </div>
 </div>
