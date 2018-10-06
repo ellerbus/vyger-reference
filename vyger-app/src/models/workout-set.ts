@@ -109,8 +109,9 @@ export class WorkoutSet
 
         if (this.type != WorkoutSetTypes.Static && this.percent > 0)
         {
-            //this.percent.toFixed(0);
+            let p = (this.percent * 100).toFixed(2).replace('.00', '');
 
+            patterns.push('-' + p + '%');
         }
 
         patterns.push('x' + this.reps);

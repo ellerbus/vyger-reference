@@ -1,18 +1,24 @@
 <div class="form-group">
   <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">
+        #1
+      </span>
+    </div>
     <input type="text"
            class="form-control"
            [(ngModel)]="set.pattern" />
     <div class="input-group-append">
       <button type="button"
-              class="btn btn-outline-success">
-        <span class="fa fa-fw fa-cog"></span>
+              class="btn btn-secondary">
+        <span class="fa fa-fw fa-bars"></span>
       </button>
       <button type="button"
-              class="btn btn-outline-success"
+              class="btn btn-secondary"
               (click)="add()">
         <span class="fa fa-fw fa-plus"></span>
       </button>
+      <!-- fa-minus for removing -->
     </div>
   </div>
 </div>
