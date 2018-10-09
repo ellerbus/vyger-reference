@@ -10,23 +10,31 @@ import { WorkoutSet } from 'src/models/workout-set';
 })
 export class RoutineExerciseSetsComponent implements OnInit, OnChanges
 {
-    sets: WorkoutSet[];
+    expanded: number;
 
     @Input() routine: Routine;
     @Input() exercise: RoutineExercise;
 
-    constructor() { }
+    constructor()
+    {
+        this.expanded = 0;
+    }
 
     ngOnChanges(change: SimpleChanges)
     {
-        if (change.exercise.currentValue && change.exercise.previousValue == null)
-        {
-            this.sets = this.exercise.sets.map(x => new WorkoutSet(x));
-        }
     }
 
     ngOnInit()
     {
     }
 
+    add()
+    {
+        this.exercise.sets.push('5RM-90%x5');
+    }
+
+    trackByIndex(index: number, item: string)
+    {
+        return index;
+    }
 }

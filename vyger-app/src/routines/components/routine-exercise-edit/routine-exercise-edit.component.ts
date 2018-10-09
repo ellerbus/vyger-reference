@@ -4,20 +4,22 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { PageTitleService } from 'src/page-title/page-title.service';
 import { RoutineExercise } from 'src/models/routine-exercise';
-import { Exercise } from 'src/models/exercise';
 import { ExercisesRepository } from 'src/exercises/exercises.repository';
 import { RoutinesRepository } from '../../routines.repository';
 
 @Component({
-    selector: 'app-routine-exercise-add',
-    templateUrl: './routine-exercise-add.component.html',
-    styleUrls: ['./routine-exercise-add.component.css']
+    selector: 'app-routine-exercise-edit',
+    templateUrl: './routine-exercise-edit.component.html',
+    styleUrls: ['./routine-exercise-edit.component.css']
 })
-export class RoutineExerciseAddComponent implements OnInit
+export class RoutineExerciseEditComponent implements OnInit
 {
     routine: Routine;
     exercise: RoutineExercise;
+    clone: RoutineExercise;
     saving: boolean;
+    week: number;
+    day: number;
 
     constructor(
         private router: Router,
@@ -26,27 +28,20 @@ export class RoutineExerciseAddComponent implements OnInit
         private routinesRepository: RoutinesRepository,
         private exercisesRepository: ExercisesRepository)
     {
-        this.exercise = new RoutineExercise();
-        this.exercise.id = null;
-        this.exercise.group = null;
-        this.exercise.category = null;
-        this.exercise.week = 1;
-        this.exercise.day = 1;
-        this.exercise.sets = ['5RM90%x5', '5RM90%x5'];
     }
 
     ngOnInit()
     {
         const id = this.activatedRoute.snapshot.paramMap.get('id');
 
-        if (this.activatedRoute.snapshot.queryParamMap.has('day'))
-        {
-            this.exercise.day = +this.activatedRoute.snapshot.queryParamMap.get('day');
-        }
-
         if (this.activatedRoute.snapshot.queryParamMap.has('week'))
         {
-            this.exercise.week = +this.activatedRoute.snapshot.queryParamMap.get('week');
+            this.week = +this.activatedRoute.snapshot.queryParamMap.get('week');
+        }
+
+        if (this.activatedRoute.snapshot.queryParamMap.has('day'))
+        {
+            this.day = +this.activatedRoute.snapshot.queryParamMap.get('day');
         }
 
         this.routinesRepository
@@ -66,6 +61,21 @@ export class RoutineExerciseAddComponent implements OnInit
 
             this.pageTitleService.setTitle(this.routine.name);
             this.pageTitleService.setSubTitle('adding exercise');
+
+            const exerciseId = this.activatedRoute.snapshot.paramMap.get('exercise');
+
+            const list = this.routine.exercises.filter(x => x.id == exerciseId && x.week == this.week && x.day == this.day);
+
+            if (list && list.length == 1)
+            {
+                this.exercise = list[0];
+
+                this.clone = <RoutineExercise>{ ...this.exercise };
+            }
+            else
+            {
+                this.router.navigateByUrl('/routines/exercises/' + this.routine.id);
+            }
         }
     }
 
@@ -82,34 +92,14 @@ export class RoutineExerciseAddComponent implements OnInit
     {
         this.saving = true;
 
-        this.exercisesRepository
-            .getExercise(this.exercise.id)
-            .then(this.onsavingRoutineExercise)
+        this.exercise.sets = this.clone.sets;
+
+        this.routinesRepository
+            .save()
             .then(() =>
             {
                 this.cancel();
             });
-    }
-
-    private onsavingRoutineExercise = (exercise: Exercise): Promise<any> =>
-    {
-        const day = this.exercise.day;
-
-        for (let week = 0; week < this.routine.weeks; week++)
-        {
-            const clone = {
-                ...this.exercise,
-                ...exercise,
-                week: week + 1,
-                day
-            };
-
-            let re = new RoutineExercise(clone);
-
-            this.routine.exercises.push(re);
-        }
-
-        return this.routinesRepository.save();
     }
 }
 

@@ -1,8 +1,8 @@
 export enum WorkoutSetTypes
 {
-    Static,
-    Reference,
-    RepMax
+    Static = 'Static',
+    RepMax = 'RepMax',
+    Reference = 'Reference'
 }
 
 export class WorkoutSet
@@ -17,6 +17,13 @@ export class WorkoutSet
 
     constructor(public set: string)
     {
+        this.reference = 'L';
+        this.weight = 0;
+        this.repmax = 1;
+        this.percent = 100;
+        this.reps = 1;
+        this.repeat = 1;
+
         this.parse(set);
     }
 
@@ -43,6 +50,10 @@ export class WorkoutSet
             {
                 this.loadRepMax(word);
             }
+            else if (word.match(/^\[[0-9L]\].*$/))
+            {
+                this.loadReference(word);
+            }
         }
     }
 
@@ -61,11 +72,33 @@ export class WorkoutSet
 
         this.repmax = +items[0];
 
-        if (items.length > 1 && items[1].match(/^-?[0-9]+(.[0-9]+)?%$/g))
+        if (items.length > 1)
         {
-            let p = items[1].replace('-', '').replace('%', '');
+            this.loadPercent(items[1]);
+        }
+    }
 
-            this.percent = (+p / 100.0);
+    private loadReference = (word: string): void =>
+    {
+        this.type = WorkoutSetTypes.Reference;
+
+        const pos = word.indexOf(']');
+
+        this.reference = word.substr(1, pos - 1);
+
+        if (word.length > pos + 1)
+        {
+            this.loadPercent(word.substr(pos + 1));
+        }
+    }
+
+    private loadPercent = (word: string): void =>
+    {
+        if (word.match(/^-?[0-9]+(.[0-9]+)?%$/g))
+        {
+            let p = word.replace('-', '').replace('%', '');
+
+            this.percent = +p;
         }
     }
 
@@ -105,11 +138,14 @@ export class WorkoutSet
             case WorkoutSetTypes.RepMax:
                 patterns.push(this.repmax + 'RM');
                 break;
+            case WorkoutSetTypes.Reference:
+                patterns.push('[' + this.reference + ']');
+                break;
         }
 
         if (this.type != WorkoutSetTypes.Static && this.percent > 0)
         {
-            let p = (this.percent * 100).toFixed(2).replace('.00', '');
+            let p = (this.percent * 1.0).toFixed(2).replace('.00', '');
 
             patterns.push('-' + p + '%');
         }

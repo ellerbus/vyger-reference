@@ -1,24 +1,110 @@
-<div class="form-group">
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text">
-        #1
-      </span>
+<div class="form-group row">
+  <div class="col-10"
+       (click)="toggleExpanded()">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          #{{ index+1 }}
+        </span>
+      </div>
+      <input type="text"
+             class="form-control pointer"
+             [ngModel]="set.pattern"
+             [disabled]="true" />
     </div>
-    <input type="text"
-           class="form-control"
-           [(ngModel)]="set.pattern" />
-    <div class="input-group-append">
-      <button type="button"
-              class="btn btn-secondary">
-        <span class="fa fa-fw fa-bars"></span>
-      </button>
-      <button type="button"
-              class="btn btn-secondary"
-              (click)="add()">
-        <span class="fa fa-fw fa-plus"></span>
-      </button>
-      <!-- fa-minus for removing -->
-    </div>
+  </div>
+  <div class="col-2">
+    <button type="button"
+            class="btn btn-danger"
+            (click)="remove()">
+      <span class="fa fa-fw fa-minus"></span>
+    </button>
+  </div>
+</div>
+
+<div class="form-group row"
+     *ngIf="expanded == index">
+  <div class="col-4">
+    <label for="type">Set Type</label>
+    <select class="form-control"
+            [(ngModel)]="set.type">
+      <option *ngFor="let type of getTypes()"
+              [value]="type">
+        {{ type }}
+      </option>
+    </select>
+  </div>
+  <div class="col-4"
+       *ngIf="set.type == 'Static'">
+    <label for="type">Weight</label>
+    <input class="form-control"
+           [(ngModel)]="set.weight"
+           (blur)="update()" />
+  </div>
+  <div class="col-4"
+       *ngIf="set.type == 'RepMax'">
+    <label for="type">Rep Max</label>
+    <select class="form-control"
+            [(ngModel)]="set.repmax"
+            (change)="update()">
+      <option *ngFor="let repmax of repmaxes"
+              [value]="repmax">
+        {{ repmax }}RM
+      </option>
+    </select>
+  </div>
+  <div class="col-4"
+       *ngIf="set.type == 'Reference'">
+    <label for="type">Reference</label>
+    <select class="form-control"
+            [(ngModel)]="set.reference"
+            (change)="update()">
+      <option *ngFor="let x of getReferences()"
+              [value]="x.key">
+        {{ x.value }}
+      </option>
+    </select>
+  </div>
+  <div class="col-4">
+    <label for="type">Reps</label>
+    <select class="form-control"
+            [(ngModel)]="set.reps"
+            (change)="update()">
+      <option *ngFor="let rep of reps"
+              [value]="rep">
+        x{{ rep }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<div class="form-group row"
+     *ngIf="expanded == index">
+  <div class="col-4"
+       *ngIf="set.type != 'Static'"></div>
+  <div class="col-8"
+       *ngIf="set.type == 'Static'"></div>
+  <div class="col-4"
+       *ngIf="set.type != 'Static'">
+    <label for="type">Percent</label>
+    <select class="form-control"
+            [(ngModel)]="set.percent"
+            (change)="update()">
+      <option *ngFor="let percent of percents"
+              [value]="percent">
+        {{ percent }}%
+      </option>
+    </select>
+  </div>
+  <div class="col-4">
+    <label for="type">Repeats</label>
+    <select class="form-control"
+            [(ngModel)]="set.repeat"
+            (change)="update()">
+      <option *ngFor="let repeat of [1,2,3,4,5]"
+              [value]="repeat">
+        x{{ repeat }}
+      </option>
+    </select>
   </div>
 </div>

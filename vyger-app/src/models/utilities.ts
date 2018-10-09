@@ -1,9 +1,10 @@
 export namespace utilities
 {
+    export const cycles = 8;
     export const weeks = 8;
     export const days = 7;
     export const reps = 12;
-    export const cycles = 8;
+    export const repmaxes = 8;
 
     export function generateId(prefix: string, length: number): string
     {

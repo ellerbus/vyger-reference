@@ -22,6 +22,7 @@ import { RoutineExerciseWeeksPickerComponent } from './components/routine-exerci
 import { RoutineExerciseDaysPickerComponent } from './components/routine-exercise-days-picker/routine-exercise-days-picker.component';
 import { RoutineExerciseSetComponent } from './components/routine-exercise-set/routine-exercise-set.component';
 import { RoutineExerciseSetsComponent } from './components/routine-exercise-sets/routine-exercise-sets.component';
+import { RoutineExerciseEditComponent } from './components/routine-exercise-edit/routine-exercise-edit.component';
 
 const routes: Routes = [
     {
@@ -33,6 +34,7 @@ const routes: Routes = [
             { path: 'edit/:id', component: RoutineEditComponent },
             { path: 'exercises/:id', component: RoutineExerciseListComponent },
             { path: 'exercises/:id/add', component: RoutineExerciseAddComponent },
+            { path: 'exercises/:id/edit/:exercise', component: RoutineExerciseEditComponent },
         ]
     },
 ];
@@ -54,6 +56,7 @@ const routes: Routes = [
         RoutineExerciseDaysPickerComponent,
         RoutineExerciseSetComponent,
         RoutineExerciseSetsComponent,
+        RoutineExerciseEditComponent,
     ],
     imports: [
         BrowserModule,

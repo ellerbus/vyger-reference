@@ -7,9 +7,18 @@
   <div class="col-lg-12 list-group list-group-flush">
     <a class="list-group-item list-group-item-action"
        *ngFor="let exercise of getExercises()"
-       routerLink="/routines/exercises/{{ routine.id }}">
-      <div class="col-6">{{ exercise.shortDisplay() }}</div>
-      <div class="col-6">{{ exercise.sets.join(', ') }}</div>
+       routerLink="/routines/exercises/{{ routine.id }}/edit/{{ exercise.id }}"
+       [queryParams]="{ week: week, day: day }">
+      <div class="row">
+        <div class="col-12">
+          <span class="fa fa-fw fa-bars mr-2"></span>
+          {{ exercise.shortDisplay() }}
+        </div>
+        <div class="col-12 text-right"
+             style="white-space: pre-wrap; font-size: smaller"
+             [innerText]="exercise.sets.join('\n')">
+        </div>
+      </div>
     </a>
     <a addListGroupItem
        routerLink="/routines/exercises/{{ routine.id }}/add"
