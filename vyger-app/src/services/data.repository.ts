@@ -6,37 +6,46 @@ import { reject } from 'q';
 @Injectable({
     providedIn: 'root'
 })
-export class DataRepository {
-    constructor() {
+export class DataRepository
+{
+    constructor()
+    {
     }
 
-    async getFile(name: string): Promise<FileInfo> {
+    async getFile(name: string): Promise<FileInfo>
+    {
         return this
             .getMetaData(name)
             .then(this.loadContents);
     }
 
-    private getMetaData = (name: string): Promise<FileInfo> => {
+    private getMetaData = (name: string): Promise<FileInfo> =>
+    {
         const options = {
             spaces: 'appDataFolder',
             fields: 'files(id, name, size, modifiedTime)',
             q: `name='${name}'`
         };
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) =>
+        {
             gapi.client.drive.files
                 .list(options)
-                .then((res) => {
+                .then((res) =>
+                {
                     let results = res.result.files;
 
-                    if (results && results.length == 1) {
+                    if (results && results.length > 0)
+                    {
                         let file = new FileInfo(results[0].id, name);
 
                         resolve(file);
                     }
-                    else {
+                    else
+                    {
                         return this.createFile(name)
-                            .then(x => {
+                            .then(x =>
+                            {
                                 resolve(x);
                             });
                     }
@@ -44,8 +53,10 @@ export class DataRepository {
         });
     }
 
-    private loadContents = (file: FileInfo): Promise<FileInfo> => {
-        return new Promise((resolve, reject) => {
+    private loadContents = (file: FileInfo): Promise<FileInfo> =>
+    {
+        return new Promise((resolve, reject) =>
+        {
             let options = {
                 alt: 'media',
                 fileId: file.id
@@ -53,15 +64,18 @@ export class DataRepository {
 
             return gapi.client.drive.files
                 .get(options)
-                .then((res) => {
+                .then((res) =>
+                {
                     file.contents = res.body;
                     resolve(file);
                 });
         });
     };
 
-    private createFile = (name: string): Promise<FileInfo> => {
-        return new Promise((resolve, reject) => {
+    private createFile = (name: string): Promise<FileInfo> =>
+    {
+        return new Promise((resolve, reject) =>
+        {
             const options = {
                 fields: 'id',
                 resource: {
@@ -73,7 +87,8 @@ export class DataRepository {
 
             return gapi.client.drive.files
                 .create(options)
-                .then((res) => {
+                .then((res) =>
+                {
                     let file = new FileInfo(res.result.id, name);
 
                     resolve(file);
@@ -81,8 +96,10 @@ export class DataRepository {
         });
     };
 
-    saveFile(file: FileInfo): Promise<FileInfo> {
-        return new Promise((resolve, reject) => {
+    saveFile(file: FileInfo): Promise<FileInfo>
+    {
+        return new Promise((resolve, reject) =>
+        {
             const options = {
                 path: '/upload/drive/v3/files/' + file.id,
                 method: 'PATCH',

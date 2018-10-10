@@ -24,9 +24,11 @@
     "@types/gapi.auth2": "0.0.47",
     "@types/gapi.client": "^1.0.0",
     "@types/gapi.client.drive": "^3.0.1",
+    "angular-sortablejs": "^2.6.0",
     "core-js": "^2.5.4",
     "rxjs": "~6.2.0",
     "rxjs-compat": "^6.3.3",
+    "sortablejs": "^1.7.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

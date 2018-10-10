@@ -1,0 +1,21 @@
+<app-loading [loading]="exercise == null"
+             [title]="'Log'"></app-loading>
+<form #routineForm="ngForm"
+      *ngIf="exercise != null">
+  <app-log-exercise-picker [exercise]="exercise"></app-log-exercise-picker>
+  <app-log-exercise-sets [exercise]="exercise"></app-log-exercise-sets>
+
+  <div class="form-group pt-3 text-right">
+    <button type="button"
+            secondaryButton
+            (click)="cancel()">cancel</button>
+    <button type="button"
+            primaryButton
+            (click)="save(true)"
+            [disabled]="!routineForm.form.valid || saving">save / add another</button>
+    <button type="button"
+            primaryButton
+            (click)="save(false)"
+            [disabled]="!routineForm.form.valid || saving">add</button>
+  </div>
+</form>

@@ -15,14 +15,18 @@ export class RoutineExerciseListComponent implements OnInit
 {
     routine: Routine;
     exercises: RoutineExercise[];
-    week: number = 1;
-    day: number = 1;
+    week: number;
+    day: number;
 
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private routinesRepository: RoutinesRepository) { }
+        private routinesRepository: RoutinesRepository)
+    {
+        this.week = 1;
+        this.day = 1;
+    }
 
     ngOnInit()
     {
@@ -32,7 +36,7 @@ export class RoutineExerciseListComponent implements OnInit
         {
             if (x.week)
             {
-                this.week = + x.week;
+                this.week = +x.week;
             }
             if (x.day)
             {
@@ -40,6 +44,8 @@ export class RoutineExerciseListComponent implements OnInit
             }
 
             this.updateTitle();
+
+            this.updateExercises();
         });
 
         this.routinesRepository
@@ -60,6 +66,8 @@ export class RoutineExerciseListComponent implements OnInit
             this.pageTitleService.setTitle(this.routine.name);
 
             this.updateTitle();
+
+            this.updateExercises();
         }
     }
 
@@ -70,15 +78,49 @@ export class RoutineExerciseListComponent implements OnInit
         this.pageTitleService.setSubTitle(title);
     }
 
-    getExercises(): RoutineExercise[]
+    private updateExercises = (): void =>
     {
         if (this.routine)
         {
-            return this.routine.exercises
+            this.exercises = this.routine.exercises
                 .filter(x => x.week == this.week && x.day == this.day)
                 .sort(RoutineExercise.compare);
         }
+    }
 
-        return [];
+    //  crutch for sortablejs callback
+    resequence = (): void =>
+    {
+        if (this.exercises)
+        {
+            const keys = this.getSequenceKeys();
+
+            const sequencing = this.routine.exercises.filter(x => x.day == this.day);
+
+            for (let i = 0; i < sequencing.length; i++)
+            {
+                const ex = sequencing[i];
+
+                const seq = keys.indexOf(ex.id);
+
+                ex.sequence = seq + 1;
+            }
+
+            this.routinesRepository.save();
+        }
+    }
+
+    private getSequenceKeys = (): string[] =>
+    {
+        let keys = [];
+
+        for (let i = 0; i < this.exercises.length; i++)
+        {
+            const ex = this.exercises[i];
+
+            keys.push(ex.id);
+        }
+
+        return keys;
     }
 }

@@ -60,7 +60,7 @@ export class RoutineExerciseEditComponent implements OnInit
             this.routine = routine;
 
             this.pageTitleService.setTitle(this.routine.name);
-            this.pageTitleService.setSubTitle('adding exercise');
+            this.pageTitleService.setSubTitle('editing exercise');
 
             const exerciseId = this.activatedRoute.snapshot.paramMap.get('exercise');
 
@@ -86,6 +86,28 @@ export class RoutineExerciseEditComponent implements OnInit
         let url = this.router.createUrlTree(['/routines/exercises/', this.routine.id], { queryParams });
 
         this.router.navigateByUrl(url);
+    }
+
+    remove()
+    {
+        let i = this.routine.exercises.length;
+
+        while (i--)
+        {
+            let e = this.routine.exercises[i];
+
+            if (this.exercise.id == e.id && this.day == e.day)
+            {
+                this.routine.exercises.splice(i, 1);
+            }
+        }
+
+        this.routinesRepository
+            .save()
+            .then(() =>
+            {
+                this.cancel();
+            });
     }
 
     save()

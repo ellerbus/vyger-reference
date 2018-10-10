@@ -10,7 +10,6 @@ import { Routine } from '../models/routine';
 })
 export class RoutinesRepository
 {
-
     private file: FileInfo;
     private routines: Routine[];
 
@@ -60,8 +59,6 @@ export class RoutinesRepository
     add(routine: Routine): Promise<any>
     {
         this.routines.push(routine);
-
-        this.file.contents = JSON.stringify(this.routines);
 
         return this.save();
     }

@@ -31,6 +31,8 @@ export class RoutineExerciseSetsComponent implements OnInit, OnChanges
     add()
     {
         this.exercise.sets.push('5RM-90%x5');
+
+        this.expanded = this.exercise.sets.length - 1;
     }
 
     trackByIndex(index: number, item: string)

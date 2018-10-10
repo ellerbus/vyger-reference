@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs nav-fill mb-3">
+  <li class="nav-item"
+      *ngFor="let day of logdate.days; let i = index">
+    <a class="nav-link"
+       routerLink="/logs"
+       [queryParams]="{ date: day.ymd }"
+       [class.active]="day.active">
+      <span class="d-none d-md-block">{{ day.full }}</span>
+      <span class="d-sm-none">{{ day.short }}</span>
+    </a>
+  </li>
+</ul>

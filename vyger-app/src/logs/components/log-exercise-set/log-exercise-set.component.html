@@ -1,0 +1,57 @@
+<div class="form-group row">
+  <div class="col-10"
+       (click)="toggleExpanded()">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          #{{ index+1 }}
+        </span>
+      </div>
+      <input type="text"
+             class="form-control pointer"
+             [ngModel]="set.pattern"
+             [disabled]="true" />
+    </div>
+  </div>
+  <div class="col-2">
+    <button type="button"
+            class="btn btn-danger"
+            (click)="remove()">
+      <span class="fa fa-fw fa-minus"></span>
+    </button>
+  </div>
+</div>
+
+<div class="form-group row"
+     *ngIf="expanded == index">
+  <div class="col-4">
+    <label for="type">Weight</label>
+    <input type="number"
+           step="5"
+           class="form-control"
+           [(ngModel)]="set.weight"
+           (blur)="update()" />
+  </div>
+  <div class="col-4">
+    <label for="type">Reps</label>
+    <select class="form-control"
+            [(ngModel)]="set.reps"
+            (change)="update()">
+      <option *ngFor="let rep of reps"
+              [value]="rep">
+        x{{ rep }}
+      </option>
+    </select>
+  </div>
+  <div class="col-4">
+    <label for="type">Repeats</label>
+    <select class="form-control"
+            [(ngModel)]="set.repeat"
+            (change)="update()">
+      <option *ngFor="let repeat of [1,2,3,4,5]"
+              [value]="repeat">
+        x{{ repeat }}
+      </option>
+    </select>
+  </div>
+</div>

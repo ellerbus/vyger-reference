@@ -2,6 +2,7 @@ import { NgModule, Directive } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { SortablejsModule } from 'angular-sortablejs';
 
 import { AuthenticationGuard } from 'src/guards/authentication.guard';
 import { LoadingModule } from 'src/loading/loading.module';
@@ -64,6 +65,7 @@ const routes: Routes = [
         RouterModule,
         LoadingModule,
         DirectivesModule,
+        SortablejsModule,
         RouterModule.forRoot(routes, { useHash: true })
     ]
 })

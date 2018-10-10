@@ -2,6 +2,7 @@ import { NgModule, APP_INITIALIZER, Directive } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { SortablejsModule } from 'angular-sortablejs';
 
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app-router.module';
@@ -14,6 +15,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { AuthenticationGuard } from '../guards/authentication.guard';
 import { ExercisesModule } from '../exercises/exercises.module';
 import { RoutinesModule } from '../routines/routines.module';
+import { LogsModule } from '../logs/logs.module';
 import { LoadingModule } from '../loading/loading.module';
 import { DirectivesModule } from '../directives/directives.module';
 
@@ -37,8 +39,10 @@ export function initializeGoogleApi(authenticationService: AuthenticationService
         HomeModule,
         ExercisesModule,
         RoutinesModule,
+        LogsModule,
         LoadingModule,
-        DirectivesModule
+        DirectivesModule,
+        SortablejsModule.forRoot({ animation: 150 })
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: initializeGoogleApi, deps: [AuthenticationService], multi: true },

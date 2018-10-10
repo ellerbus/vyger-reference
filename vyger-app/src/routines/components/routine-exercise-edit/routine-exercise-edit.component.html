@@ -30,13 +30,21 @@
   <app-routine-exercise-sets [routine]="routine"
                              [exercise]="clone"></app-routine-exercise-sets>
 
-  <div class="form-group pt-3 text-right">
-    <button type="button"
-            secondaryButton
-            (click)="cancel()">cancel</button>
-    <button type="button"
-            primaryButton
-            (click)="save()"
-            [disabled]="saving">save</button>
+  <div class="form-group row pt-3">
+    <div class="col-6">
+      <button type="button"
+              class="btn btn-danger"
+              (click)="remove()"
+              [disabled]="saving">remove</button>
+    </div>
+    <div class="col-6 text-right">
+      <button type="button"
+              secondaryButton
+              (click)="cancel()">cancel</button>
+      <button type="button"
+              primaryButton
+              (click)="save()"
+              [disabled]="saving">save</button>
+    </div>
   </div>
 </form>
