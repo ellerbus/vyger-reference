@@ -142,7 +142,7 @@ export class RoutineExerciseSetComponent implements OnInit, OnChanges
         }
         else
         {
-        this.expanded = this.index;
+            this.expanded = this.index;
         }
 
         this.expandedChange.emit(this.index);

@@ -1,15 +1,6 @@
 import { utilities } from 'src/models/utilities';
 import { RoutineExercise } from './routine-exercise';
 
-export interface IRoutine
-{
-    id?: string;
-    name: string;
-    weeks?: number;
-    days?: number;
-    exercises?: RoutineExercise[];
-}
-
 export class Routine
 {
     id: string = utilities.generateId('r', 2);
@@ -17,10 +8,11 @@ export class Routine
     weeks: number = 4;
     days: number = 3;
     exercises: RoutineExercise[] = [];
+    sets: string[] = [];
 
-    constructor(source?: IRoutine)
+    constructor(source?: any)
     {
-        const keys = ['id', 'name', 'weeks', 'days'];
+        const keys = ['id', 'name', 'weeks', 'days', 'sets'];
 
         utilities.extend(this, source, keys);
 

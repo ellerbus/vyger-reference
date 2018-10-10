@@ -35,6 +35,10 @@ export class LogListComponent implements OnInit
 
                 this.loadExercises();
             }
+            else
+            {
+                this.loadExercises();
+            }
         });
     }
 

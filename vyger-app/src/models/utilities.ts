@@ -74,4 +74,21 @@ export namespace utilities
 
         return dt;
     }
+
+    export function round(weight: number, increment: number = 5): number
+    {
+        return Math.round(weight / increment) * increment;
+    }
+
+    /// <remarks>https://www.exrx.net/Calculators/OneRepMax</remarks>
+    export function oneRepMax(weight: number, reps: number): number
+    {
+        return weight / (1.0278 - 0.0278 * reps);
+    }
+
+    /// <remarks>https://www.exrx.net/Calculators/OneRepMax</remarks>
+    export function prediction(oneRepMax: number, reps: number): number
+    {
+        return oneRepMax * (1.0278 - 0.0278 * reps);
+    }
 }

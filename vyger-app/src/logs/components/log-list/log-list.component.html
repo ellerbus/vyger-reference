@@ -5,6 +5,13 @@
 
 <div class="row"
      *ngIf="exercises != null">
+  <div class="col-lg-12 list-group list-group-flush">
+    <a addListGroupItem
+       routerLink="/logs/add"
+       [queryParams]="{ date: ymd }">
+      add exercise
+    </a>
+  </div>
   <div class="col-lg-12 list-group list-group-flush"
        [sortablejs]="exercises"
        [sortablejsOptions]="{ handle: '.sortablejs-handle', onUpdate: resequence }">
@@ -22,13 +29,6 @@
              [innerText]="exercise.sets.join(',')">
         </div>
       </div>
-    </a>
-  </div>
-  <div class="col-lg-12 list-group list-group-flush">
-    <a addListGroupItem
-       routerLink="/logs/add"
-       [queryParams]="{ date: ymd }">
-      add exercise
     </a>
   </div>
 </div>

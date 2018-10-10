@@ -1,27 +1,45 @@
-import { Exercise, IExercise } from './exercise';
+import { Exercise } from './exercise';
 import { utilities } from './utilities';
+import { WorkoutSet } from './workout-set';
 
-export interface ILogExercise extends IExercise
+export class LogExercise extends Exercise
 {
-    ymd: string;
-    sets?: string[];
-    oneRepMax: number;
-}
+    private max: number;
 
-export class LogExercise extends Exercise implements ILogExercise
-{
     ymd: string;
     sets: string[];
-    oneRepMax: number;
     sequence: number = 1;
 
-    constructor(source?: ILogExercise)
+    maxset: number;
+
+    constructor(source?: any)
     {
         super(source);
 
-        const keys = ['ymd', 'sets', 'oneRepMax', 'sequence'];
+        const keys = ['ymd', 'sets', 'sequence'];
 
         utilities.extend(this, source, keys);
+    }
+
+    get oneRepMax(): number
+    {
+        if (this.max)
+        {
+            return this.max;
+        }
+
+        for (let i = 0; i < this.sets.length; i++)
+        {
+            const set = new WorkoutSet(this.sets[i]);
+
+            if (this.max == null || this.max < set.oneRepMax)
+            {
+                this.maxset = i;
+                this.max = set.oneRepMax;
+            }
+        }
+
+        return this.max;
     }
 
     static compare(a: LogExercise, b: LogExercise): number

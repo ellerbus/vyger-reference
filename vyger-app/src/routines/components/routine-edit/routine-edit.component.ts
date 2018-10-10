@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Routine } from '../../../models/routine';
+import { Routine } from 'src/models/routine';
 import { RoutinesRepository } from '../../routines.repository';
 import { PageTitleService } from '../../../page-title/page-title.service';
-import { utilities } from '../../../models/utilities';
+import { utilities } from 'src/models/utilities';
+import { RoutineExercise } from 'src/models/routine-exercise';
 
 @Component({
     selector: 'app-routine-edit',
@@ -14,13 +15,19 @@ export class RoutineEditComponent implements OnInit
 {
     routine: Routine;
     clone: Routine;
+    exercise: RoutineExercise;
     saving: boolean;
 
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private routinesRepository: RoutinesRepository) { }
+        private routinesRepository: RoutinesRepository)
+    {
+        this.exercise = new RoutineExercise();
+
+        this.exercise.sets = ['5RM-90%x5'];
+    }
 
     ngOnInit()
     {
@@ -44,6 +51,8 @@ export class RoutineEditComponent implements OnInit
             this.routine = routine;
 
             this.clone = { ...this.routine };
+
+            this.exercise.sets = this.routine.sets;
         }
     }
 
@@ -59,6 +68,8 @@ export class RoutineEditComponent implements OnInit
         utilities.extend(this.routine, this.clone, keys);
 
         this.saving = true;
+
+        this.routine.sets = this.exercise.sets;
 
         this.routinesRepository
             .save()

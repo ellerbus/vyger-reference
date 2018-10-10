@@ -36,6 +36,7 @@
           required
           [(ngModel)]="exercise.id"
           [class.is-invalid]="exerciseId.invalid"
+          (change)="loadMostRecent()"
           #exerciseId="ngModel">
     <option [value]="null">(select exercise)</option>
     <option *ngFor="let x of getExercises()"

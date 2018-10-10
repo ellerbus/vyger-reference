@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Exercise } from '../../../models/exercise';
+import { Exercise } from 'src/models/exercise';
 import { ExercisesRepository } from '../../exercises.repository';
 import { PageTitleService } from '../../../page-title/page-title.service';
-import { utilities } from '../../../models/utilities';
+import { utilities } from 'src/models/utilities';
 
 @Component({
     selector: 'app-exercise-edit',

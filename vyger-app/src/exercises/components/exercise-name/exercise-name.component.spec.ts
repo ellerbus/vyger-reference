@@ -3,13 +3,15 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ExerciseNameComponent } from './exercise-name.component';
-import { Exercise } from '../../../models/exercise';
+import { Exercise } from 'src/models/exercise';
 
-describe('ExerciseNameComponent', () => {
+describe('ExerciseNameComponent', () =>
+{
     let component: ExerciseNameComponent;
     let fixture: ComponentFixture<ExerciseNameComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(async(() =>
+    {
         const options = {
             declarations: [ExerciseNameComponent],
             imports: [FormsModule],
@@ -19,14 +21,16 @@ describe('ExerciseNameComponent', () => {
         TestBed.configureTestingModule(options).compileComponents();
     }));
 
-    beforeEach(() => {
+    beforeEach(() =>
+    {
         fixture = TestBed.createComponent(ExerciseNameComponent);
         component = fixture.componentInstance;
         component.exercise = new Exercise();
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    it('should create', () =>
+    {
         expect(component).toBeTruthy();
     });
 });

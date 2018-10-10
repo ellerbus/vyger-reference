@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Routine } from '../../../models/routine';
+import { Routine } from 'src/models/routine';
 import { PageTitleService } from 'src/page-title/page-title.service';
 import { RoutinesRepository } from '../../routines.repository';
+import { RoutineExercise } from 'src/models/routine-exercise';
 
 @Component({
     selector: 'app-routine-add',
@@ -14,6 +15,7 @@ export class RoutineAddComponent implements OnInit
 {
     categories: string[];
     routine: Routine;
+    exercise: RoutineExercise;
     saving: boolean;
 
     constructor(
@@ -22,6 +24,9 @@ export class RoutineAddComponent implements OnInit
         private routinesRepository: RoutinesRepository)
     {
         this.routine = new Routine();
+        this.exercise = new RoutineExercise();
+
+        this.exercise.sets = ['5RM-90%x5'];
     }
 
     ngOnInit()
@@ -37,6 +42,8 @@ export class RoutineAddComponent implements OnInit
     save(): void
     {
         this.saving = true;
+
+        this.routine.sets = this.exercise.sets;
 
         this.routinesRepository
             .add(this.routine)

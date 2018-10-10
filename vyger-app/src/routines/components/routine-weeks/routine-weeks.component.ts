@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Routine } from '../../../models/routine';
+import { Routine } from 'src/models/routine';
 import { utilities } from 'src/models/utilities';
 import { ControlContainer, NgForm } from '@angular/forms';
 

@@ -23,22 +23,14 @@ export enum Categories
     Body = 'Body',
 }
 
-export interface IExercise
-{
-    id?: string;
-    group: Groups | string;
-    category: Categories | string;
-    name: string;
-}
-
-export class Exercise implements IExercise
+export class Exercise
 {
     id: string = utilities.generateId('x', 2);
     group: Groups;
     category: Categories;
     name: string;
 
-    constructor(source?: IExercise)
+    constructor(source?: any)
     {
         const keys = ['id', 'group', 'category', 'name'];
 

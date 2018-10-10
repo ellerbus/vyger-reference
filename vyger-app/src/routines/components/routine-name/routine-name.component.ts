@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { Routine } from '../../../models/routine';
+import { Routine } from 'src/models/routine';
 
 @Component({
     selector: 'app-routine-name',
@@ -10,11 +10,13 @@ import { Routine } from '../../../models/routine';
         { provide: ControlContainer, useExisting: NgForm }
     ]
 })
-export class RoutineNameComponent implements OnInit {
+export class RoutineNameComponent implements OnInit
+{
     @Input() routine: Routine;
 
     constructor() { }
 
-    ngOnInit() {
+    ngOnInit()
+    {
     }
 }

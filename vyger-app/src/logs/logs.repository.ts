@@ -66,6 +66,55 @@ export class LogsRepository
             });
     }
 
+    async getMostRecent(id: string): Promise<LogExercise>
+    {
+        return this
+            .getLogs()
+            .then(logs =>
+            {
+                let exercise: LogExercise = null;
+                let max: string = null;
+
+                for (let i = 0; i < logs.length; i++)
+                {
+                    let e = logs[i];
+
+                    if (e.id == id)
+                    {
+                        if (max == null || max.localeCompare(e.ymd) < 0)
+                        {
+                            max = e.ymd;
+                            exercise = e;
+                        }
+                    }
+                }
+
+                return exercise;
+            });
+    }
+
+    async getMaxes(): Promise<{ [key: string]: LogExercise }>
+    {
+        return this
+            .getLogs()
+            .then(logs =>
+            {
+                let maxes: { [key: string]: LogExercise } = {};
+
+                for (let i = 0; i < logs.length; i++)
+                {
+                    let e = logs[i];
+
+                    if (maxes[e.id] == null || maxes[e.id].oneRepMax < e.oneRepMax)
+                    {
+                        maxes[e.id] = e;
+                    }
+                }
+
+                return maxes;
+            });
+    }
+
     add(log: LogExercise): Promise<any>
     {
         this.logs.push(log);

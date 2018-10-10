@@ -3,7 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ExerciseGroupComponent } from './exercise-group.component';
-import { Exercise } from '../../../models/exercise';
+import { Exercise } from 'src/models/exercise';
 
 describe('ExerciseGroupComponent', () =>
 {

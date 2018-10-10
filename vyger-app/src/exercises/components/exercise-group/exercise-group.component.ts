@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { Exercise, Groups } from '../../../models/exercise';
+import { Exercise, Groups } from 'src/models/exercise';
 
 @Component({
     selector: 'app-exercise-group',

@@ -1,3 +1,5 @@
+import { utilities } from "./utilities";
+
 export enum WorkoutSetTypes
 {
     Static = 'Static',
@@ -25,6 +27,11 @@ export class WorkoutSet
         this.repeat = 1;
 
         this.parse(set);
+    }
+
+    get oneRepMax(): number
+    {
+        return utilities.oneRepMax(this.weight, this.reps);
     }
 
     private parse = (set: string): void =>

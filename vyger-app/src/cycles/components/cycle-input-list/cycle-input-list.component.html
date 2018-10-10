@@ -1,0 +1,57 @@
+<app-loading [loading]="cycle == null"
+             [title]="'Cycle'"></app-loading>
+
+<form *ngIf="cycle">
+  <div class="form-group row"
+       *ngFor="let input of cycle.inputs">
+    <div class="col-12 mb-2">
+      <label>Exercise</label>
+      <input name="exercise"
+             class="form-control"
+             [disabled]="true"
+             [ngModel]="input.smartDisplay()" />
+    </div>
+    <div class="col-4">
+      <label>Weight</label>
+      <input name="weight"
+             type="number"
+             step="5"
+             class="form-control"
+             [(ngModel)]="input.weight" />
+    </div>
+    <div class="col-4">
+      <label>Reps</label>
+      <select name="reps"
+              class="form-control"
+              [(ngModel)]="input.reps"
+              (change)="update()">
+        <option *ngFor="let rep of reps"
+                [value]="rep">
+          x{{ rep }}
+        </option>
+      </select>
+    </div>
+    <div class="col-4">
+      <label>Pullback %</label>
+      <select name="pullback"
+              class="form-control"
+              [(ngModel)]="input.percent"
+              (change)="update()">
+        <option *ngFor="let percent of percents"
+                [value]="percent">
+          {{ percent }}%
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group pt-3 text-right">
+    <button type="button"
+            secondaryButton
+            (click)="cancel()">cancel</button>
+    <button type="button"
+            primaryButton
+            (click)="save()"
+            [disabled]="saving">next</button>
+  </div>
+</form>

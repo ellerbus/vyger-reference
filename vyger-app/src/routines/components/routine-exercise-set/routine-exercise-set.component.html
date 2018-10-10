@@ -27,7 +27,8 @@
   <div class="col-4">
     <label for="type">Set Type</label>
     <select class="form-control"
-            [(ngModel)]="set.type">
+            [(ngModel)]="set.type"
+            (change)="update()">
       <option *ngFor="let type of getTypes()"
               [value]="type">
         {{ type }}

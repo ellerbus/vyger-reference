@@ -97,4 +97,22 @@ export class LogExercisePickerComponent implements OnInit, OnChanges
 
         return [];
     }
+
+    loadMostRecent()
+    {
+        if (this.exercise.sets.length == 0 && this.exercise.id)
+        {
+            this.logRepository
+                .getMostRecent(this.exercise.id)
+                .then(this.onloadingMostRecent);
+        }
+    }
+
+    private onloadingMostRecent = (mostrecent: LogExercise) =>
+    {
+        if (mostrecent)
+        {
+            this.exercise.sets = mostrecent.sets;
+        }
+    }
 }

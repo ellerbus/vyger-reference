@@ -30,7 +30,7 @@ export class LogExerciseAddComponent implements OnInit
         this.exercise.group = null;
         this.exercise.category = null;
         this.exercise.ymd = utilities.getYMD(new Date());
-        this.exercise.sets = ['100x5']; //  search most recent
+        this.exercise.sets = [];
     }
 
     ngOnInit()

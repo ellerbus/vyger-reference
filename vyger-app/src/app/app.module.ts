@@ -15,6 +15,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { AuthenticationGuard } from '../guards/authentication.guard';
 import { ExercisesModule } from '../exercises/exercises.module';
 import { RoutinesModule } from '../routines/routines.module';
+import { CyclesModule } from '../cycles/cycles.module';
 import { LogsModule } from '../logs/logs.module';
 import { LoadingModule } from '../loading/loading.module';
 import { DirectivesModule } from '../directives/directives.module';
@@ -40,6 +41,7 @@ export function initializeGoogleApi(authenticationService: AuthenticationService
         ExercisesModule,
         RoutinesModule,
         LogsModule,
+        CyclesModule,
         LoadingModule,
         DirectivesModule,
         SortablejsModule.forRoot({ animation: 150 })

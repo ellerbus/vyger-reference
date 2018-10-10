@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { Exercise } from '../../../models/exercise';
+import { Exercise } from 'src/models/exercise';
 
 @Component({
     selector: 'app-exercise-name',
@@ -10,11 +10,13 @@ import { Exercise } from '../../../models/exercise';
         { provide: ControlContainer, useExisting: NgForm }
     ]
 })
-export class ExerciseNameComponent implements OnInit {
+export class ExerciseNameComponent implements OnInit
+{
     @Input() exercise: Exercise;
 
     constructor() { }
 
-    ngOnInit() {
+    ngOnInit()
+    {
     }
 }

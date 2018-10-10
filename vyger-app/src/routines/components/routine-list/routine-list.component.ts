@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageTitleService } from 'src/page-title/page-title.service';
-import { Routine } from '../../../models/routine';
+import { Routine } from 'src/models/routine';
 
 import { RoutinesRepository } from '../../routines.repository';
 
@@ -9,14 +9,16 @@ import { RoutinesRepository } from '../../routines.repository';
     templateUrl: './routine-list.component.html',
     styleUrls: ['./routine-list.component.css']
 })
-export class RoutineListComponent implements OnInit {
+export class RoutineListComponent implements OnInit
+{
     routines: Routine[];
 
     constructor(
         private pageTitleService: PageTitleService,
         private routinesRepository: RoutinesRepository) { }
 
-    ngOnInit() {
+    ngOnInit()
+    {
         this.pageTitleService.setTitle('Routines');
 
         this.routinesRepository
@@ -24,7 +26,8 @@ export class RoutineListComponent implements OnInit {
             .then(this.onloadingRoutines);
     }
 
-    private onloadingRoutines = (data: Routine[]) => {
+    private onloadingRoutines = (data: Routine[]) =>
+    {
         this.routines = data.sort(Routine.compare);
     };
 }

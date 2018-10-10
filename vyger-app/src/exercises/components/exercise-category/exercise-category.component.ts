@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { Exercise, Categories } from '../../../models/exercise';
+import { Exercise, Categories } from 'src/models/exercise';
 
 @Component({
     selector: 'app-exercise-category',
@@ -10,19 +10,23 @@ import { Exercise, Categories } from '../../../models/exercise';
         { provide: ControlContainer, useExisting: NgForm }
     ]
 })
-export class ExerciseCategoryComponent implements OnInit {
+export class ExerciseCategoryComponent implements OnInit
+{
     categories: string[];
     @Input() exercise: Exercise;
 
     constructor() { }
 
-    ngOnInit() {
+    ngOnInit()
+    {
         this.loadCategories();
     }
 
-    loadCategories(): void {
+    loadCategories(): void
+    {
         this.categories = [];
-        for (let x in Categories) {
+        for (let x in Categories)
+        {
             this.categories.push(x);
         }
     }

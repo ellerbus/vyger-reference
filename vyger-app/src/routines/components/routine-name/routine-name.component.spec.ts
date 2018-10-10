@@ -3,13 +3,15 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { RoutineNameComponent } from './routine-name.component';
-import { Routine } from '../../../models/routine';
+import { Routine } from 'src/models/routine';
 
-describe('RoutineNameComponent', () => {
+describe('RoutineNameComponent', () =>
+{
     let component: RoutineNameComponent;
     let fixture: ComponentFixture<RoutineNameComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(async(() =>
+    {
         const options = {
             declarations: [RoutineNameComponent],
             imports: [FormsModule],
@@ -19,14 +21,16 @@ describe('RoutineNameComponent', () => {
         TestBed.configureTestingModule(options).compileComponents();
     }));
 
-    beforeEach(() => {
+    beforeEach(() =>
+    {
         fixture = TestBed.createComponent(RoutineNameComponent);
         component = fixture.componentInstance;
         component.routine = new Routine();
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    it('should create', () =>
+    {
         expect(component).toBeTruthy();
     });
 });

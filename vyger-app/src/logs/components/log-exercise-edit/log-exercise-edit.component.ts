@@ -53,6 +53,31 @@ export class LogExerciseEditComponent implements OnInit
         }
     }
 
+    remove(): void
+    {
+        this.logsRepository.getLogs()
+            .then((logs) =>
+            {
+                let i = logs.length;
+
+                while (i--)
+                {
+                    let log = logs[i];
+
+                    if (log.ymd == this.exercise.ymd && log.id == this.exercise.id)
+                    {
+                        logs.splice(i, 1);
+                        break;
+                    }
+                }
+            })
+            .then(() =>
+            {
+                this.logsRepository.save();
+                this.cancel();
+            });
+    }
+
     cancel(): void
     {
         const queryParams = { date: this.exercise.ymd };

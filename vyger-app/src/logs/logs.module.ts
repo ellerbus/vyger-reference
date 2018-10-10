@@ -23,9 +23,6 @@ const routes: Routes = [
             { path: '', component: LogListComponent },
             { path: 'add', component: LogExerciseAddComponent },
             { path: 'edit/:id', component: LogExerciseEditComponent },
-            // { path: 'exercises/:id', component: LogExerciseListComponent },
-            // { path: 'exercises/:id/add', component: LogExerciseAddComponent },
-            // { path: 'exercises/:id/edit/:exercise', component: LogExerciseEditComponent },
         ]
     },
 ];
