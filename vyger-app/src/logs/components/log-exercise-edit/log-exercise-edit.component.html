@@ -1,0 +1,32 @@
+<app-loading [loading]="exercise == null"
+             [title]="'Log'"></app-loading>
+<form #routineForm="ngForm"
+      *ngIf="exercise != null">
+  <div class="form-group">
+    <label>Exercise</label>
+    <input name="exercise"
+           class="form-control"
+           [disabled]="true"
+           [ngModel]="exercise.smartDisplay()" />
+  </div>
+
+  <app-log-exercise-sets [exercise]="exercise"></app-log-exercise-sets>
+
+  <div class="form-group row pt-3">
+    <div class="col-6">
+      <button type="button"
+              class="btn btn-danger"
+              (click)="remove()"
+              [disabled]="saving">remove</button>
+    </div>
+    <div class="col-6 text-right">
+      <button type="button"
+              secondaryButton
+              (click)="cancel()">cancel</button>
+      <button type="button"
+              primaryButton
+              (click)="save()"
+              [disabled]="saving">save</button>
+    </div>
+  </div>
+</form>

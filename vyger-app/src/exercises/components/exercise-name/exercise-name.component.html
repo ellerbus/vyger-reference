@@ -1,0 +1,20 @@
+<div class="form-group">
+  <label for="name">Exercise</label>
+  <input id="name"
+         name="name"
+         class="form-control"
+         type="text"
+         required
+         maxlength="30"
+         placeholder="exercise name"
+         [(ngModel)]="exercise.name"
+         [class.is-invalid]="name.invalid"
+         [uniqueExerciseName]="exercise"
+         #name="ngModel">
+  <div class="invalid-feedback"
+       *ngIf="name.invalid ">
+    <div *ngIf="name.errors.required">name is required</div>
+    <div *ngIf="name.errors.maxlength">name is limited to 30 chars</div>
+    <div *ngIf="name.errors.uniqueExerciseName">name must be unique</div>
+  </div>
+</div>

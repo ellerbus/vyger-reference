@@ -1,0 +1,50 @@
+<app-loading [loading]="routine == null"
+             [title]="'Routine'"></app-loading>
+<form #routineForm="ngForm"
+      *ngIf="routine != null">
+  <div class="form-group row">
+    <div class="col-6">
+      <label>Week</label>
+      <input type="text"
+             name="week"
+             class="form-control"
+             [disabled]="true"
+             [ngModel]="week" />
+    </div>
+    <div class="col-6">
+      <label>Day</label>
+      <input type="text"
+             name="day"
+             class="form-control"
+             [disabled]="true"
+             [ngModel]="day" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Exercise</label>
+    <input name="exercise"
+           class="form-control"
+           [disabled]="true"
+           [ngModel]="exercise.smartDisplay()" />
+  </div>
+  <app-routine-exercise-sets [routine]="routine"
+                             [exercise]="clone"></app-routine-exercise-sets>
+
+  <div class="form-group row pt-3">
+    <div class="col-6">
+      <button type="button"
+              class="btn btn-danger"
+              (click)="remove()"
+              [disabled]="saving">remove</button>
+    </div>
+    <div class="col-6 text-right">
+      <button type="button"
+              secondaryButton
+              (click)="cancel()">cancel</button>
+      <button type="button"
+              primaryButton
+              (click)="save()"
+              [disabled]="saving">save</button>
+    </div>
+  </div>
+</form>

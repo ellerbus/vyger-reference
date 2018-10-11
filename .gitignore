@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+/vyger/App_Data/Configs/appSettings.config
+
 # User-specific files
 *.suo
 *.user

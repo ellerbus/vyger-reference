@@ -1,0 +1,18 @@
+<div class="form-group">
+  <label> Workout Sets </label>
+</div>
+<div class="form-group">
+  <app-routine-exercise-set *ngFor="let set of exercise.sets; trackBy:trackByIndex; let index = index; let isfirst = first; let islast = last;"
+                            [(expanded)]="expanded"
+                            [(pattern)]="exercise.sets[index]"
+                            [exercise]="exercise"
+                            [index]="index"
+                            [first]="isfirst"
+                            [last]="islast"></app-routine-exercise-set>
+</div>
+<div class="list-group list-group-flush pointer">
+  <a addListGroupItem
+     (click)="add()">
+    add set
+  </a>
+</div>

@@ -1,0 +1,35 @@
+<app-loading [loading]="routine == null"
+             [title]="'Routine'"></app-loading>
+<app-routine-weeks-picker [routine]="routine"></app-routine-weeks-picker>
+<app-routine-days-picker [routine]="routine"></app-routine-days-picker>
+<div class="row"
+     *ngIf="routine != null">
+  <div class="col-lg-12 list-group list-group-flush"
+       [sortablejs]="exercises"
+       [sortablejsOptions]="{ handle: '.sortablejs-handle', onUpdate: resequence }">
+    <a class="list-group-item list-group-item-action"
+       *ngFor="let exercise of exercises"
+       routerLink="/routines/exercises/{{ routine.id }}/edit/{{ exercise.id }}"
+       [queryParams]="{ week: week, day: day }">
+      <div class="row">
+        <div class="col-1">
+          <span class="fa fa-fw fa-bars mr-2 sortablejs-handle"></span>
+        </div>
+        <div class="col-6">
+          {{ exercise.shortDisplay() }}
+        </div>
+        <div class="col-4 text-right"
+             style="white-space: pre-wrap; font-size: smaller"
+             [innerText]="exercise.sets.join('\n')">
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-lg-12 list-group list-group-flush">
+    <a addListGroupItem
+       routerLink="/routines/exercises/{{ routine.id }}/add"
+       [queryParams]="{ week: week, day: day }">
+      add exercise
+    </a>
+  </div>
+</div>

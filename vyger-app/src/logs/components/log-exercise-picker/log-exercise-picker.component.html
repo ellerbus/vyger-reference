@@ -1,0 +1,51 @@
+<div class="form-row"
+     *ngIf="exercise">
+  <div class="col-6">
+    <label for="group">Group Filter</label>
+    <select id="group"
+            name="group"
+            class="form-control"
+            [(ngModel)]="exercise.group">
+      <option [value]="null">(group filter)</option>
+      <option *ngFor="let group of groups"
+              [value]="group">
+        {{ group }}
+      </option>
+    </select>
+  </div>
+  <div class="col-6">
+    <label for="category">Category Filter</label>
+    <select id="category"
+            name="category"
+            class="form-control"
+            [(ngModel)]="exercise.category">
+      <option [value]="null">(category filter)</option>
+      <option *ngFor="let category of categories"
+              [value]="category">
+        {{ category }}
+      </option>
+    </select>
+  </div>
+</div>
+<div class="form-group"
+     *ngIf="exercise">
+  <label for="exerciseId">Select Exercise</label>
+  <select id="exerciseId"
+          name="exerciseId"
+          class="form-control"
+          required
+          [(ngModel)]="exercise.id"
+          [class.is-invalid]="exerciseId.invalid"
+          (change)="loadMostRecent()"
+          #exerciseId="ngModel">
+    <option [value]="null">(select exercise)</option>
+    <option *ngFor="let x of getExercises()"
+            [value]="x.id">
+      {{ x.smartDisplay(exercise.group, exercise.category) }}
+    </option>
+  </select>
+  <div class="invalid-feedback"
+       *ngIf="exerciseId.invalid && exerciseId.touched">
+    <div *ngIf="exerciseId.errors.required">exercise is required</div>
+  </div>
+</div>

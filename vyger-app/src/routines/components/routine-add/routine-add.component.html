@@ -1,0 +1,17 @@
+<form #routineForm="ngForm">
+  <app-routine-name [routine]="routine"></app-routine-name>
+  <app-routine-weeks [routine]="routine"></app-routine-weeks>
+  <app-routine-days [routine]="routine"></app-routine-days>
+  <app-routine-exercise-sets [routine]="routine"
+                             [exercise]="exercise"></app-routine-exercise-sets>
+
+  <div class="form-group pt-3 text-right">
+    <button type="button"
+            secondaryButton
+            (click)="cancel()">cancel</button>
+    <button type="button"
+            primaryButton
+            (click)="save()"
+            [disabled]="!routineForm.form.valid || saving">next</button>
+  </div>
+</form>

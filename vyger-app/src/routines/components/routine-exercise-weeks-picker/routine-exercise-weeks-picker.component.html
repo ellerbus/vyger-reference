@@ -1,0 +1,25 @@
+<div class="d-none d-sm-block"
+     *ngIf="routine != null">
+  <ul class="nav nav-tabs">
+    <li class="nav-item"
+        *ngFor="let w of weeks">
+      <a class="nav-link"
+         routerLink="/routines/exercises/{{ routine.id }}"
+         [queryParams]="{ week: w, day: day }"
+         [class.active]="week == w">
+        Week {{ w }}
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="d-block d-sm-none"
+     *ngIf="routine != null">
+  <select class="form-control"
+          (change)="updateParam()"
+          [(ngModel)]="week">
+    <option *ngFor="let w of weeks"
+            [ngValue]="w">
+      Week {{ w }}
+    </option>
+  </select>
+</div>
