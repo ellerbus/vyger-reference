@@ -2,8 +2,10 @@
              [title]="'Cycle'"></app-loading>
 
 <div *ngIf="cycle">
+  <app-loading [loading]="inputs == null"
+               [title]="'Inputs'"></app-loading>
   <div class="form-group row"
-       *ngFor="let input of cycle.inputs">
+       *ngFor="let input of inputs">
     <div class="col-12 mb-2">
       <label>Exercise</label>
       <input name="exercise"
@@ -52,6 +54,6 @@
     <button type="button"
             primaryButton
             (click)="save()"
-            [disabled]="saving">next</button>
+            [disabled]="inputs == null || saving">next</button>
   </div>
 </div>

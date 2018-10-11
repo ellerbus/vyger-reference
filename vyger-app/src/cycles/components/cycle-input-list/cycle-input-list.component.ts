@@ -8,6 +8,8 @@ import { utilities } from 'src/models/utilities';
 import { LogsRepository } from 'src/logs/logs.repository';
 import { LogExercise } from 'src/models/log-exercise';
 import { WorkoutSet } from 'src/models/workout-set';
+import { CycleInput } from 'src/models/cycle-input';
+import { CycleGenerator } from 'src/page-header/cycle-generator';
 
 @Component({
     selector: 'app-cycle-input-list',
@@ -18,6 +20,7 @@ export class CycleInputListComponent implements OnInit
 {
     saving: boolean;
     cycle: Cycle;
+    inputs: CycleInput[];
     reps: number[];
     percents: number[];
 
@@ -67,6 +70,10 @@ export class CycleInputListComponent implements OnInit
         {
             this.router.navigateByUrl('/cycles');
         }
+        else if (cycle.lastLogged != null)
+        {
+            this.router.navigateByUrl('/cycles/exercises/' + cycle.id);
+        }
         else
         {
             this.cycle = cycle;
@@ -100,6 +107,10 @@ export class CycleInputListComponent implements OnInit
                 }
             }
         }
+
+        this.inputs = this.cycle.inputs
+            .filter(x => x.requiresInput)
+            .sort(CycleInput.compare);
     }
 
     cancel()
@@ -110,6 +121,10 @@ export class CycleInputListComponent implements OnInit
     save()
     {
         this.saving = true;
+
+        let cg = new CycleGenerator(this.cycle);
+
+        cg.generate();
 
         this.cyclesRepository
             .save()

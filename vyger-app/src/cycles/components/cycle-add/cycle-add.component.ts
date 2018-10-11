@@ -76,7 +76,7 @@ export class CycleAddComponent implements OnInit
 
             if (picked.indexOf(e.id) == -1)
             {
-                const requiresInput = e.containsRepMax;
+                const requiresInput = e.sets.join(',').indexOf('RM') > -1;
 
                 inputs.push(new CycleInput({ ...e, requiresInput }));
 

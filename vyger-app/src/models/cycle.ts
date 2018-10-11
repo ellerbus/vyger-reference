@@ -11,12 +11,13 @@ export class Cycle
     sequence: number;
     weeks: number;
     days: number;
+    lastLogged: string; // week:day
     inputs: CycleInput[] = [];
     exercises: CycleExercise[] = [];
 
     constructor(source?: any)
     {
-        const keys = ['id', 'name', 'sequence', 'weeks', 'days'];
+        const keys = ['id', 'name', 'sequence', 'weeks', 'days', 'lastLogged'];
 
         utilities.extend(this, source, keys);
 

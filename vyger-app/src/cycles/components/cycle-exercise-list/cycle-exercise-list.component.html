@@ -10,14 +10,26 @@
          routerLink="/logs/edit/{{ exercise.id }}"
          [queryParams]="{ date: ymd }">
       <div class="row">
-        <div class="col-12">
+        <div class="col">
           {{ exercise.fullDisplay() }}
         </div>
-        <div class="col-12 text-right"
+        <div class="col-3 text-right"
              style="white-space: pre-wrap; font-size: smaller"
-             [innerText]="exercise.sets.join(', ')">
+             [innerText]="exercise.plan.join('\n')">
+        </div>
+        <div class="col-3 text-right d-none d-sm-block"
+             style="white-space: pre-wrap; font-size: smaller"
+             [innerText]="exercise.sets.join('\n')">
         </div>
       </div>
     </div>
+  </div>
+  <div class="col-lg-12 list-group list-group-flush"
+       *ngIf="exercises && exercises.length > 0">
+    <a addListGroupItem
+       routerLink="/routines/exercises/add"
+       [queryParams]="{ week: week, day: day }">
+      Log Workout W{{ week }}:D{{ day }}
+    </a>
   </div>
 </div>
