@@ -10,6 +10,9 @@ import { DirectivesModule } from 'src/directives/directives.module';
 import { CycleListComponent } from './components/cycle-list/cycle-list.component';
 import { CycleAddComponent } from './components/cycle-add/cycle-add.component';
 import { CycleInputListComponent } from './components/cycle-input-list/cycle-input-list.component';
+import { CycleExerciseListComponent } from './components/cycle-exercise-list/cycle-exercise-list.component';
+import { CycleExerciseDaysPickerComponent } from './components/cycle-exercise-days-picker/cycle-exercise-days-picker.component';
+import { CycleExerciseWeeksPickerComponent } from './components/cycle-exercise-weeks-picker/cycle-exercise-weeks-picker.component';
 
 const routes: Routes = [
     {
@@ -19,6 +22,7 @@ const routes: Routes = [
             { path: '', component: CycleListComponent },
             { path: 'add', component: CycleAddComponent },
             { path: 'inputs/:id', component: CycleInputListComponent },
+            { path: 'exercises/:id', component: CycleExerciseListComponent },
         ]
     },
 ];
@@ -27,7 +31,10 @@ const routes: Routes = [
     declarations: [
         CycleListComponent,
         CycleAddComponent,
-        CycleInputListComponent
+        CycleInputListComponent,
+        CycleExerciseListComponent,
+        CycleExerciseWeeksPickerComponent,
+        CycleExerciseDaysPickerComponent
     ],
     imports: [
         BrowserModule,

@@ -12,11 +12,13 @@
        routerLink="/routines/exercises/{{ routine.id }}/edit/{{ exercise.id }}"
        [queryParams]="{ week: week, day: day }">
       <div class="row">
-        <div class="col-12">
+        <div class="col-1">
           <span class="fa fa-fw fa-bars mr-2 sortablejs-handle"></span>
+        </div>
+        <div class="col-6">
           {{ exercise.shortDisplay() }}
         </div>
-        <div class="col-12 text-right"
+        <div class="col-4 text-right"
              style="white-space: pre-wrap; font-size: smaller"
              [innerText]="exercise.sets.join('\n')">
         </div>

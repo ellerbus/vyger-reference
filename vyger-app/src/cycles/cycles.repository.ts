@@ -22,13 +22,13 @@ export class CyclesRepository
         {
             this.file = await this.dataRepository.getFile('cycles.json');
 
-            if (this.file.contents && this.file.contents.length > 0)
-            {
-                let parsed = <Cycle[]>JSON.parse(this.file.contents);
+            // if (this.file.contents && this.file.contents.length > 0)
+            // {
+            //     let parsed = <Cycle[]>JSON.parse(this.file.contents);
 
-                this.cycles = parsed.map(x => new Cycle(x));
-            }
-            else
+            //     this.cycles = parsed.map(x => new Cycle(x));
+            // }
+            // else
             {
                 this.cycles = [];
 

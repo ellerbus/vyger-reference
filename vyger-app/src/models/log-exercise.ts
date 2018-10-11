@@ -4,42 +4,38 @@ import { WorkoutSet } from './workout-set';
 
 export class LogExercise extends Exercise
 {
-    private max: number;
-
     ymd: string;
     sets: string[];
     sequence: number = 1;
 
-    maxset: number;
+    oneRepMaxSet: number;
+    oneRepMax: number;
 
     constructor(source?: any)
     {
         super(source);
 
-        const keys = ['ymd', 'sets', 'sequence'];
+        const keys = ['ymd', 'sets', 'sequence', 'oneRepMaxSet', 'oneRepMax'];
 
         utilities.extend(this, source, keys);
+
+        this.oneRepMaxSet = this.oneRepMaxSet || 0;
     }
 
-    get oneRepMax(): number
+    updateOneRepMax()
     {
-        if (this.max)
-        {
-            return this.max;
-        }
+        this.oneRepMax = null;
 
         for (let i = 0; i < this.sets.length; i++)
         {
             const set = new WorkoutSet(this.sets[i]);
 
-            if (this.max == null || this.max < set.oneRepMax)
+            if (this.oneRepMax == null || this.oneRepMax < set.oneRepMax)
             {
-                this.maxset = i;
-                this.max = set.oneRepMax;
+                this.oneRepMaxSet = i;
+                this.oneRepMax = set.oneRepMax;
             }
         }
-
-        return this.max;
     }
 
     static compare(a: LogExercise, b: LogExercise): number

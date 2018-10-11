@@ -1,7 +1,7 @@
 <app-loading [loading]="cycle == null"
              [title]="'Cycle'"></app-loading>
 
-<form *ngIf="cycle">
+<div *ngIf="cycle">
   <div class="form-group row"
        *ngFor="let input of cycle.inputs">
     <div class="col-12 mb-2">
@@ -35,7 +35,7 @@
       <label>Pullback %</label>
       <select name="pullback"
               class="form-control"
-              [(ngModel)]="input.percent"
+              [(ngModel)]="input.pullback"
               (change)="update()">
         <option *ngFor="let percent of percents"
                 [value]="percent">
@@ -54,4 +54,4 @@
             (click)="save()"
             [disabled]="saving">next</button>
   </div>
-</form>
+</div>

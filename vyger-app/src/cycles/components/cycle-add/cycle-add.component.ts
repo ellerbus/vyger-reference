@@ -74,9 +74,11 @@ export class CycleAddComponent implements OnInit
         {
             let e = cycle.exercises[i];
 
-            if (e.containsRepMax && picked.indexOf(e.id) == -1)
+            if (picked.indexOf(e.id) == -1)
             {
-                inputs.push(new CycleInput({ ...e }));
+                const requiresInput = e.containsRepMax;
+
+                inputs.push(new CycleInput({ ...e, requiresInput }));
 
                 picked.push(e.id);
             }

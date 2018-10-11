@@ -93,7 +93,7 @@ export class CycleInputListComponent implements OnInit
 
                 if (max)
                 {
-                    const set = new WorkoutSet(max.sets[max.maxset]);
+                    const set = new WorkoutSet(max.sets[max.oneRepMaxSet]);
 
                     input.weight = set.weight;
                     input.reps = set.reps;
@@ -115,7 +115,7 @@ export class CycleInputListComponent implements OnInit
             .save()
             .then(() =>
             {
-                this.router.navigateByUrl('/cycles');
+                this.router.navigateByUrl('/cycles/exercises/' + this.cycle.id);
             });
     }
 }

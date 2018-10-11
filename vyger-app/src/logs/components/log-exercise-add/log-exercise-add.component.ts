@@ -73,6 +73,8 @@ export class LogExerciseAddComponent implements OnInit
 
         let ex = new LogExercise(clone);
 
+        ex.updateOneRepMax();
+
         return this.logsRepository.add(ex);
     }
 }

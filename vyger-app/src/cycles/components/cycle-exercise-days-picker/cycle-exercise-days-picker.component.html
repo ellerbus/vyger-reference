@@ -1,0 +1,25 @@
+<div class="d-none d-sm-block pt-2 mb-2"
+     *ngIf="cycle != null">
+  <ul class="nav nav-pills">
+    <li class="nav-item mr-1"
+        *ngFor="let d of days">
+      <a class="nav-link"
+         routerLink="/cycles/exercises/{{ cycle.id }}"
+         [queryParams]="{ week: week, day: d }"
+         [class.active]="day == d">
+        Day {{ d }}
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="d-block d-sm-none mt-1"
+     *ngIf="cycle != null">
+  <select class="form-control"
+          (change)="updateParam()"
+          [(ngModel)]="day">
+    <option *ngFor="let d of days"
+            [ngValue]="d">
+      Day {{ d }}
+    </option>
+  </select>
+</div>

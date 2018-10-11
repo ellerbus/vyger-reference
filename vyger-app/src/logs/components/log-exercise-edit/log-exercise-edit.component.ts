@@ -93,6 +93,8 @@ export class LogExerciseEditComponent implements OnInit
 
         this.exercise.sets = this.clone.sets;
 
+        this.exercise.updateOneRepMax();
+
         this.logsRepository
             .save()
             .then(() =>
