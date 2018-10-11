@@ -12,7 +12,7 @@ export class RoutineExercise extends Exercise
     {
         super(source);
 
-        const keys = ['week', 'day', 'sets'];
+        const keys = ['week', 'day', 'sequence', 'sets'];
 
         utilities.extend(this, source, keys);
     }

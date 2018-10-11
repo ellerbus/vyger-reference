@@ -14,6 +14,8 @@ import { LogExercisePickerComponent } from './components/log-exercise-picker/log
 import { LogExerciseSetsComponent } from './components/log-exercise-sets/log-exercise-sets.component';
 import { LogExerciseSetComponent } from './components/log-exercise-set/log-exercise-set.component';
 import { LogExerciseEditComponent } from './components/log-exercise-edit/log-exercise-edit.component';
+import { LogImportComponent } from './components/log-import/log-import.component';
+import { LogHistoryComponent } from './components/log-history/log-history.component';
 
 const routes: Routes = [
     {
@@ -23,6 +25,8 @@ const routes: Routes = [
             { path: '', component: LogListComponent },
             { path: 'add', component: LogExerciseAddComponent },
             { path: 'edit/:id', component: LogExerciseEditComponent },
+            { path: 'import', component: LogImportComponent },
+            { path: 'history', component: LogHistoryComponent },
         ]
     },
 ];
@@ -36,7 +40,9 @@ const routes: Routes = [
         LogExercisePickerComponent,
         LogExerciseSetsComponent,
         LogExerciseSetComponent,
-        LogExerciseEditComponent],
+        LogExerciseEditComponent,
+        LogImportComponent,
+        LogHistoryComponent],
     imports: [
         BrowserModule,
         FormsModule,

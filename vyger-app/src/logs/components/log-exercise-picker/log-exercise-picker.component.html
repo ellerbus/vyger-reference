@@ -27,7 +27,7 @@
     </select>
   </div>
 </div>
-<div class="form-group"
+<div class="form-group mt-2"
      *ngIf="exercise">
   <label for="exerciseId">Select Exercise</label>
   <select id="exerciseId"
@@ -36,7 +36,7 @@
           required
           [(ngModel)]="exercise.id"
           [class.is-invalid]="exerciseId.invalid"
-          (change)="loadMostRecent()"
+          (change)="update()"
           #exerciseId="ngModel">
     <option [value]="null">(select exercise)</option>
     <option *ngFor="let x of getExercises()"

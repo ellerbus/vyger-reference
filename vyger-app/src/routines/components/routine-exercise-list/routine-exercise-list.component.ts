@@ -99,9 +99,9 @@ export class RoutineExerciseListComponent implements OnInit
 
             for (let i = 0; i < sequencing.length; i++)
             {
-                const ex = sequencing[i];
+                let ex = sequencing[i];
 
-                const seq = keys.indexOf(ex.id);
+                let seq = keys.indexOf(ex.id);
 
                 ex.sequence = seq + 1;
             }

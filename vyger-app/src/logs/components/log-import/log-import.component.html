@@ -1,0 +1,43 @@
+<div class="form-group row"
+     *ngFor="let log of logs">
+  <div class="col-3">
+    <input type="text"
+           class="form-control form-control-sm"
+           [(ngModel)]="log.ymd" />
+  </div>
+  <div class="col-4">
+    <select id="exerciseId"
+            name="exerciseId"
+            class="form-control form-control-sm"
+            required
+            [(ngModel)]="log.id">
+      <option [value]="null">(select exercise)</option>
+      <option *ngFor="let x of exercises"
+              [value]="x.id">
+        {{ x.smartDisplay() }}
+      </option>
+    </select>
+  </div>
+  <div class="col-5">
+    <input type="text"
+           class="form-control form-control-sm"
+           [(ngModel)]="log.temp"
+           (change)="updateSets(log, log.temp)" />
+  </div>
+</div>
+<div class="list-group list-group-flush pointer">
+  <a addListGroupItem
+     (click)="add()">
+    add
+  </a>
+</div>
+
+<div class="form-group pt-3 text-right">
+  <button type="button"
+          secondaryButton
+          (click)="cancel()">cancel</button>
+  <button type="button"
+          primaryButton
+          (click)="save()"
+          [disabled]="saving">save</button>
+</div>

@@ -10,7 +10,7 @@ export class User
 
     static fromBasicProfile(profile: gapi.auth2.BasicProfile): User
     {
-        const user = new User();
+        let user = new User();
         user.id = profile.getId();
         user.email = profile.getEmail();
         user.name = profile.getName();

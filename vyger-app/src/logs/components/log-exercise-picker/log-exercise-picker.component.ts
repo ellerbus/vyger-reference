@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { Groups, Exercise, Categories } from 'src/models/exercise';
@@ -21,6 +21,7 @@ export class LogExercisePickerComponent implements OnInit, OnChanges
     exercises: Exercise[];
 
     @Input() exercise: LogExercise;
+    @Output() exerciseChange = new EventEmitter<LogExercise>();
 
     constructor(
         private logRepository: LogsRepository,
@@ -78,7 +79,7 @@ export class LogExercisePickerComponent implements OnInit, OnChanges
             .getLogsFor(this.exercise.ymd)
             .then((logged: LogExercise[]) =>
             {
-                const picked = logged.map(x => x.id);
+                let picked = logged.map(x => x.id);
 
                 this.exercises = exercises
                     .filter(x => !picked.includes(x.id))
@@ -98,21 +99,26 @@ export class LogExercisePickerComponent implements OnInit, OnChanges
         return [];
     }
 
-    loadMostRecent()
+    update()
     {
-        if (this.exercise.sets.length == 0 && this.exercise.id)
-        {
-            this.logRepository
-                .getMostRecent(this.exercise.id)
-                .then(this.onloadingMostRecent);
-        }
+        this.exerciseChange.emit(this.exercise);
     }
 
-    private onloadingMostRecent = (mostrecent: LogExercise) =>
-    {
-        if (mostrecent)
-        {
-            this.exercise.sets = mostrecent.sets;
-        }
-    }
+    // loadMostRecent()
+    // {
+    //     if (this.exercise.sets.length == 0 && this.exercise.id)
+    //     {
+    //         this.logRepository
+    //             .getMostRecent(this.exercise.id)
+    //             .then(this.onloadingMostRecent);
+    //     }
+    // }
+
+    // private onloadingMostRecent = (mostrecent: LogExercise) =>
+    // {
+    //     if (mostrecent)
+    //     {
+    //         this.exercise.sets = mostrecent.sets;
+    //     }
+    // }
 }

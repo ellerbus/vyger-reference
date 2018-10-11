@@ -21,7 +21,7 @@ export class DataRepository
 
     private getMetaData = (name: string): Promise<FileInfo> =>
     {
-        const options = {
+        let options = {
             spaces: 'appDataFolder',
             fields: 'files(id, name, size, modifiedTime)',
             q: `name='${name}'`
@@ -76,7 +76,7 @@ export class DataRepository
     {
         return new Promise((resolve, reject) =>
         {
-            const options = {
+            let options = {
                 fields: 'id',
                 resource: {
                     name: name,
@@ -100,7 +100,7 @@ export class DataRepository
     {
         return new Promise((resolve, reject) =>
         {
-            const options = {
+            let options = {
                 path: '/upload/drive/v3/files/' + file.id,
                 method: 'PATCH',
                 params: {

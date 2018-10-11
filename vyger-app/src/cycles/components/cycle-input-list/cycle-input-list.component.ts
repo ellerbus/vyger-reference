@@ -100,7 +100,7 @@ export class CycleInputListComponent implements OnInit
 
                 if (max)
                 {
-                    const set = new WorkoutSet(max.sets[max.oneRepMaxSet]);
+                    let set = new WorkoutSet(max.sets[max.oneRepMaxSet]);
 
                     input.weight = set.weight;
                     input.reps = set.reps;

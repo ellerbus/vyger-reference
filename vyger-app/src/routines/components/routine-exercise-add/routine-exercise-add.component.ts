@@ -64,7 +64,7 @@ export class RoutineExerciseAddComponent implements OnInit
         {
             this.routine = routine;
 
-            this.exercise.sets = this.routine.sets;
+            this.exercise.sets = [...this.routine.sets];
 
             this.pageTitleService.setTitle(this.routine.name);
             this.pageTitleService.setSubTitle('adding exercise');
@@ -99,7 +99,7 @@ export class RoutineExerciseAddComponent implements OnInit
 
         for (let week = 0; week < this.routine.weeks; week++)
         {
-            const clone = {
+            let clone = {
                 ...this.exercise,
                 ...exercise,
                 week: week + 1,
@@ -107,6 +107,8 @@ export class RoutineExerciseAddComponent implements OnInit
             };
 
             let re = new RoutineExercise(clone);
+
+            re.sets = [...this.exercise.sets];
 
             this.routine.exercises.push(re);
         }

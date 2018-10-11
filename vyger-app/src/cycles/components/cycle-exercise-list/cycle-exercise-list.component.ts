@@ -87,40 +87,4 @@ export class CycleExerciseListComponent implements OnInit
                 .sort(CycleExercise.compare);
         }
     }
-
-    //  crutch for sortablejs callback
-    resequence = (): void =>
-    {
-        if (this.exercises)
-        {
-            const keys = this.getSequenceKeys();
-
-            const sequencing = this.cycle.exercises.filter(x => x.day == this.day);
-
-            for (let i = 0; i < sequencing.length; i++)
-            {
-                const ex = sequencing[i];
-
-                const seq = keys.indexOf(ex.id);
-
-                ex.sequence = seq + 1;
-            }
-
-            this.cyclesRepository.save();
-        }
-    }
-
-    private getSequenceKeys = (): string[] =>
-    {
-        let keys = [];
-
-        for (let i = 0; i < this.exercises.length; i++)
-        {
-            const ex = this.exercises[i];
-
-            keys.push(ex.id);
-        }
-
-        return keys;
-    }
 }

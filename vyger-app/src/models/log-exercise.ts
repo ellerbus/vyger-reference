@@ -28,7 +28,7 @@ export class LogExercise extends Exercise
 
         for (let i = 0; i < this.sets.length; i++)
         {
-            const set = new WorkoutSet(this.sets[i]);
+            let set = new WorkoutSet(this.sets[i]);
 
             if (this.oneRepMax == null || this.oneRepMax < set.oneRepMax)
             {
