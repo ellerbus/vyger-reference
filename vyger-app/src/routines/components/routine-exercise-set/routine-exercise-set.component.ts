@@ -34,11 +34,11 @@ export class RoutineExerciseSetComponent implements OnInit, OnChanges
 
     ngOnChanges(change: SimpleChanges)
     {
-        if (change.pattern)
+        if (change.pattern && change.pattern.currentValue)
         {
-            if (change.pattern.currentValue && change.pattern.previousValue == null)
+            if (this.set == null || this.set.pattern != change.pattern.currentValue)
             {
-                this.set = new WorkoutSet(this.pattern);
+                this.set = new WorkoutSet(change.pattern.currentValue);
             }
         }
     }

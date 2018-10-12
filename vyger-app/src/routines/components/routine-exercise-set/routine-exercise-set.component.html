@@ -1,7 +1,7 @@
 <div class="form-group row">
   <div class="col-10"
        (click)="toggleExpanded()">
-    <div class="input-group">
+    <div class="input-group pointer">
       <div class="input-group-prepend">
         <span class="input-group-text">
           #{{ index+1 }}
@@ -11,6 +11,14 @@
              class="form-control pointer"
              [ngModel]="set.pattern"
              [disabled]="true" />
+      <div class="input-group-append">
+        <span class="input-group-text text-muted">
+          <span class="fa fa-fw fa-caret-down"
+                *ngIf="expanded == index"></span>
+          <span class="fa fa-fw fa-caret-left"
+                *ngIf="expanded != index"></span>
+        </span>
+      </div>
     </div>
   </div>
   <div class="col-2">

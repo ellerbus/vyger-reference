@@ -1,6 +1,7 @@
 import { } from 'jasmine';
 import { CycleInput } from './cycle-input';
 import { Groups, Categories } from './exercise';
+import { utilities } from './utilities';
 
 describe('CycleInput', () =>
 {
@@ -47,6 +48,29 @@ describe('CycleInput', () =>
             expect(subject.reps).toBe(source.reps);
             expect(subject.pullback).toBe(source.pullback);
             expect(subject.requiresInput).toBe(source.requiresInput);
+        });
+    });
+    describe('oneRepMax', () =>
+    {
+        it('should not use pullback', () =>
+        {
+            //  arrange
+            let source = { weight: 150, reps: 5 };
+            let orm = utilities.oneRepMax(150, 5);
+            //  act
+            let subject = new CycleInput(source);
+            //  assert
+            expect(subject.oneRepMax).toBeCloseTo(orm, 1);
+        });
+        it('should use pullback', () =>
+        {
+            //  arrange
+            let source = { weight: 150, reps: 5, pullback: 10 };
+            let orm = utilities.oneRepMax(150, 5) * 0.9;
+            //  act
+            let subject = new CycleInput(source);
+            //  assert
+            expect(subject.oneRepMax).toBeCloseTo(orm, 1);
         });
     });
 });

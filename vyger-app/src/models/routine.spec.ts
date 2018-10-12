@@ -18,7 +18,7 @@ describe('Routine', () =>
             expect(subject.name).toBeUndefined();
             expect(subject.weeks).toBe(4);
             expect(subject.days).toBe(3);
-            expect(subject.exercises).toBeDefined();
+            expect(subject.exercises).toEqual([]);
             expect(subject.sets).toEqual([]);
         });
         it('should extend source', () =>
@@ -30,7 +30,7 @@ describe('Routine', () =>
                 weeks: 9,
                 days: 99,
                 sets: ['abc'],
-                exercises: [new RoutineExercise()]
+                exercises: [{}]
             };
             //  act
             let subject = new Routine(source);
@@ -41,6 +41,7 @@ describe('Routine', () =>
             expect(subject.days).toBe(source.days);
             expect(subject.exercises).toBeDefined();
             expect(subject.exercises.length).toBe(1);
+            expect(subject.exercises[0]).toEqual(jasmine.any(RoutineExercise));
             expect(subject.sets).toEqual(source.sets);
         });
     });

@@ -9,7 +9,7 @@ import { LogsRepository } from 'src/logs/logs.repository';
 import { LogExercise } from 'src/models/log-exercise';
 import { WorkoutSet } from 'src/models/workout-set';
 import { CycleInput } from 'src/models/cycle-input';
-import { CycleGenerator } from 'src/page-header/cycle-generator';
+import { CycleGenerator } from 'src/models/cycle-generator';
 
 @Component({
     selector: 'app-cycle-input-list',

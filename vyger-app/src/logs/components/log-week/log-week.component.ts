@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { PageTitleService } from 'src/page-title/page-title.service';
 import { utilities } from 'src/models/utilities';
 import { LogExercise } from 'src/models/log-exercise';
 import { LogsRepository } from 'src/logs/logs.repository';
 
 @Component({
-    selector: 'app-log-list',
-    templateUrl: './log-list.component.html',
-    styleUrls: ['./log-list.component.css']
+    selector: 'app-log-week',
+    templateUrl: './log-week.component.html',
+    styleUrls: ['./log-week.component.css']
 })
-export class LogListComponent implements OnInit
+export class LogWeekComponent implements OnInit
 {
     ymd: string;
     exercises: LogExercise[];

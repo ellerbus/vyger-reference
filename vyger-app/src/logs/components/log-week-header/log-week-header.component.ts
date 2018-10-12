@@ -6,11 +6,11 @@ import { utilities } from 'src/models/utilities';
 import { LogDate } from 'src/models/log-date';
 
 @Component({
-    selector: 'app-log-list-header',
-    templateUrl: './log-list-header.component.html',
-    styleUrls: ['./log-list-header.component.css']
+    selector: 'app-log-week-header',
+    templateUrl: './log-week-header.component.html',
+    styleUrls: ['./log-week-header.component.css']
 })
-export class LogListHeaderComponent implements OnInit
+export class LogWeekHeaderComponent implements OnInit
 {
     logdate: LogDate;
 

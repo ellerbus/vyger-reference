@@ -67,7 +67,7 @@ export class RoutineExerciseAddComponent implements OnInit
             this.exercise.sets = [...this.routine.sets];
 
             this.pageTitleService.setTitle(this.routine.name);
-            this.pageTitleService.setSubTitle('adding exercise');
+            this.pageTitleService.setSubTitle('adding exercise to day ' + this.exercise.day);
         }
     }
 

@@ -12,9 +12,9 @@ describe('PageTitleComponent', () =>
 
     beforeEach(async(() =>
     {
-        const pageTitleServiceSpy = jasmine.createSpyObj('PageTitleService', ['getTitle', 'getSubTitle']);
+        let pageTitleServiceSpy = jasmine.createSpyObj('PageTitleService', ['getTitle', 'getSubTitle']);
 
-        const options = {
+        let options = {
             declarations: [PageTitleComponent],
             providers: [
                 { provide: PageTitleService, useValue: pageTitleServiceSpy }
@@ -24,23 +24,49 @@ describe('PageTitleComponent', () =>
         TestBed.configureTestingModule(options).compileComponents();
     }));
 
-    beforeEach(() =>
+    describe('constructor', () =>
     {
-        mockPageTitleService = TestBed.get(PageTitleService);
-        fixture = TestBed.createComponent(PageTitleComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+        it('should create title only', () =>
+        {
+            //  arrange
+            mockPageTitleService = TestBed.get(PageTitleService);
+            mockPageTitleService.getTitle.and.returnValue('x');
+            fixture = TestBed.createComponent(PageTitleComponent);
+            component = fixture.componentInstance;
+            fixture.detectChanges();
 
-    it('should create', () =>
-    {
-        //  arrange
-        mockPageTitleService.getTitle.and.returnValue('x');
-        //  act
-        let title = component.getTitle();
-        //  assert
-        expect(component).toBeTruthy();
-        expect(mockPageTitleService.getTitle).toHaveBeenCalled();
-        expect(title).toBe('x');
+            let root: HTMLElement = fixture.nativeElement;
+            let h1 = root.querySelector('h1');
+            let h2 = root.querySelector('h2');
+            //  act
+            //  assert
+            expect(component).toBeTruthy();
+            expect(mockPageTitleService.getTitle).toHaveBeenCalled();
+            expect(h1).toBeTruthy();
+            expect(h1.textContent).toContain('x');
+            expect(h2).toBeFalsy();
+        });
+        it('should create title with sub-title', () =>
+        {
+            //  arrange
+            mockPageTitleService = TestBed.get(PageTitleService);
+            mockPageTitleService.getTitle.and.returnValue('x');
+            mockPageTitleService.getSubTitle.and.returnValue('y');
+            fixture = TestBed.createComponent(PageTitleComponent);
+            component = fixture.componentInstance;
+            fixture.detectChanges();
+
+            let root: HTMLElement = fixture.nativeElement;
+            let h1 = root.querySelector('h1');
+            let h2 = root.querySelector('h2');
+            //  act
+            //  assert
+            expect(component).toBeTruthy();
+            expect(mockPageTitleService.getTitle).toHaveBeenCalled();
+            expect(h1).toBeTruthy();
+            expect(h1.textContent).toContain('x');
+            expect(h2).toBeTruthy();
+            expect(h2.textContent).toContain('y');
+        });
     });
 });

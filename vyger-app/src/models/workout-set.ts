@@ -2,6 +2,7 @@ import { utilities } from "./utilities";
 
 export enum WorkoutSetTypes
 {
+    BodyWeight = 'BodyWeight',
     Static = 'Static',
     RepMax = 'RepMax',
     Reference = 'Reference'
@@ -52,6 +53,10 @@ export class WorkoutSet
             if (word.match(/^[0-9]+$/))
             {
                 this.loadStaticWeight(word);
+            }
+            else if (word.match(/^BW$/))
+            {
+                this.type = WorkoutSetTypes.BodyWeight;
             }
             else if (word.match(/^[0-9]RM.*$/))
             {
@@ -139,6 +144,9 @@ export class WorkoutSet
 
         switch (this.type)
         {
+            case WorkoutSetTypes.BodyWeight:
+                patterns.push('BW');
+                break;
             case WorkoutSetTypes.Static:
                 patterns.push('' + this.weight);
                 break;
@@ -150,11 +158,20 @@ export class WorkoutSet
                 break;
         }
 
-        if (this.type != WorkoutSetTypes.Static && this.percent > 0)
+        switch (this.type)
         {
-            let p = (this.percent * 1.0).toFixed(2).replace('.00', '');
+            case WorkoutSetTypes.RepMax:
+            case WorkoutSetTypes.Reference:
+                if (this.percent > 0)
+                {
+                    let p = (this.percent * 1.0).toFixed(2).replace('.00', '');
 
-            patterns.push('-' + p + '%');
+                    if (p != '100')
+                    {
+                        patterns.push('-' + p + '%');
+                    }
+                }
+                break;
         }
 
         patterns.push('x' + this.reps);

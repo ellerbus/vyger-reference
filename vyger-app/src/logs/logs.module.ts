@@ -7,8 +7,8 @@ import { SortablejsModule } from 'angular-sortablejs';
 import { AuthenticationGuard } from 'src/guards/authentication.guard';
 import { LoadingModule } from 'src/loading/loading.module';
 import { DirectivesModule } from 'src/directives/directives.module';
-import { LogListComponent } from './components/log-list/log-list.component';
-import { LogListHeaderComponent } from './components/log-list-header/log-list-header.component';
+import { LogWeekComponent } from './components/log-week/log-week.component';
+import { LogWeekHeaderComponent } from './components/log-week-header/log-week-header.component';
 import { LogExerciseAddComponent } from './components/log-exercise-add/log-exercise-add.component';
 import { LogExercisePickerComponent } from './components/log-exercise-picker/log-exercise-picker.component';
 import { LogExerciseSetsComponent } from './components/log-exercise-sets/log-exercise-sets.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
         path: 'logs',
         canActivate: [AuthenticationGuard],
         children: [
-            { path: '', component: LogListComponent },
+            { path: '', component: LogWeekComponent },
             { path: 'add', component: LogExerciseAddComponent },
             { path: 'edit/:id', component: LogExerciseEditComponent },
             { path: 'import', component: LogImportComponent },
@@ -33,9 +33,8 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-        LogListComponent,
-        LogListComponent,
-        LogListHeaderComponent,
+        LogWeekComponent,
+        LogWeekHeaderComponent,
         LogExerciseAddComponent,
         LogExercisePickerComponent,
         LogExerciseSetsComponent,

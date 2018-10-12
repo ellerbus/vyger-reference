@@ -35,7 +35,19 @@ export class RoutineExerciseSetsComponent implements OnInit, OnChanges
         this.expanded = this.exercise.sets.length - 1;
     }
 
-    trackByIndex(index: number, item: string)
+    remove(index: number)
+    {
+        this.exercise.sets.splice(index, 1);
+
+        this.exercise.sets = [...this.exercise.sets];
+    }
+
+    update(index: number, value: string)
+    {
+        this.exercise.sets[index] = value;
+    }
+
+    trackByIndex(index: number)
     {
         return index;
     }

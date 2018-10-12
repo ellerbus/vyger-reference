@@ -5,11 +5,8 @@ import { Component, Input } from '@angular/core';
     templateUrl: './loading.component.html',
     styleUrls: ['./loading.component.css']
 })
-export class LoadingComponent {
-
+export class LoadingComponent
+{
     @Input() loading: boolean;
     @Input() title: string;
-
-    constructor() { }
-
 }
