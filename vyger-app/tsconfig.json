@@ -16,7 +16,8 @@
     "types": [
       "gapi",
       "gapi.auth2",
-      "gapi.client.drive"
+      "gapi.client.drive",
+      "jasmine"
     ],
     "lib": [
       "es2017",

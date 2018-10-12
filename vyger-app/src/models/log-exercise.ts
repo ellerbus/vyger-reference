@@ -5,7 +5,7 @@ import { WorkoutSet } from './workout-set';
 export class LogExercise extends Exercise
 {
     ymd: string;
-    sets: string[];
+    sets: string[] = [];
     sequence: number = 1;
 
     oneRepMaxSet: number;

@@ -13,7 +13,7 @@ export class CycleExercise extends Exercise
     {
         super(source);
 
-        const keys = ['week', 'day', 'sets', 'plan'];
+        const keys = ['week', 'day', 'sequence', 'sets', 'plan'];
 
         utilities.extend(this, source, keys);
     }

@@ -1,3 +1,4 @@
+import { } from 'jasmine';
 import { WorkoutSet, WorkoutSetTypes } from './workout-set';
 
 describe('WorkoutSet', () =>
@@ -10,6 +11,12 @@ describe('WorkoutSet', () =>
             //  act
             let subject = new WorkoutSet('');
             //  assert
+            expect(subject.reference).toBe('L');
+            expect(subject.weight).toBe(0);
+            expect(subject.repmax).toBe(1);
+            expect(subject.percent).toBe(100);
+            expect(subject.reps).toBe(1);
+            expect(subject.repeat).toBe(1);
         });
     });
 
@@ -61,7 +68,7 @@ describe('WorkoutSet', () =>
             let subject = new WorkoutSet('[L]');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
-            expect(subject.repmax).toBe(3);
+            expect(subject.reference).toBe('L');
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
         });
@@ -73,7 +80,7 @@ describe('WorkoutSet', () =>
             let subject = new WorkoutSet('[L]x5');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
-            expect(subject.repmax).toBe(3);
+            expect(subject.reference).toBe('L');
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
         });
@@ -85,7 +92,7 @@ describe('WorkoutSet', () =>
             let subject = new WorkoutSet('[L]x5x3');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
-            expect(subject.repmax).toBe(3);
+            expect(subject.reference).toBe('L');
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
         });
@@ -100,8 +107,8 @@ describe('WorkoutSet', () =>
             let subject = new WorkoutSet('[L]95%');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
-            expect(subject.repmax).toBe(3);
-            expect(subject.percent).toBe(0.95);
+            expect(subject.reference).toBe('L');
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
         });
@@ -113,8 +120,8 @@ describe('WorkoutSet', () =>
             let subject = new WorkoutSet('[L]95%x5');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
-            expect(subject.repmax).toBe(3);
-            expect(subject.percent).toBe(0.95);
+            expect(subject.reference).toBe('L');
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
         });
@@ -126,8 +133,8 @@ describe('WorkoutSet', () =>
             let subject = new WorkoutSet('[L]95%x5x3');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
-            expect(subject.repmax).toBe(3);
-            expect(subject.percent).toBe(0.95);
+            expect(subject.reference).toBe('L');
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
         });
@@ -142,8 +149,8 @@ describe('WorkoutSet', () =>
             let subject = new WorkoutSet('[L]-95%');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
-            expect(subject.repmax).toBe(3);
-            expect(subject.percent).toBe(0.95);
+            expect(subject.reference).toBe('L');
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
         });
@@ -155,8 +162,8 @@ describe('WorkoutSet', () =>
             let subject = new WorkoutSet('[L]-95%x5');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
-            expect(subject.repmax).toBe(3);
-            expect(subject.percent).toBe(0.95);
+            expect(subject.reference).toBe('L');
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
         });
@@ -168,8 +175,8 @@ describe('WorkoutSet', () =>
             let subject = new WorkoutSet('[L]-95%x5x3');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
-            expect(subject.repmax).toBe(3);
-            expect(subject.percent).toBe(0.95);
+            expect(subject.reference).toBe('L');
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
         });
@@ -224,7 +231,7 @@ describe('WorkoutSet', () =>
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
-            expect(subject.percent).toBe(0.95);
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
         });
@@ -237,7 +244,7 @@ describe('WorkoutSet', () =>
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
-            expect(subject.percent).toBe(0.95);
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
         });
@@ -250,7 +257,7 @@ describe('WorkoutSet', () =>
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
-            expect(subject.percent).toBe(0.95);
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
         });
@@ -266,7 +273,7 @@ describe('WorkoutSet', () =>
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
-            expect(subject.percent).toBe(0.95);
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
         });
@@ -279,7 +286,7 @@ describe('WorkoutSet', () =>
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
-            expect(subject.percent).toBe(0.95);
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
         });
@@ -292,7 +299,7 @@ describe('WorkoutSet', () =>
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
-            expect(subject.percent).toBe(0.95);
+            expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
         });
