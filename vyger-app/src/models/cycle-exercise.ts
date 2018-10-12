@@ -13,9 +13,19 @@ export class CycleExercise extends Exercise
     {
         super(source);
 
-        const keys = ['week', 'day', 'sequence', 'sets', 'plan'];
+        const keys = ['week', 'day', 'sequence'];
 
         utilities.extend(this, source, keys);
+
+        if (source.sets)
+        {
+            this.sets = [...source.sets];
+        }
+
+        if (source.plan)
+        {
+            this.plan = [...source.plan];
+        }
     }
 
     static compare(a: CycleExercise, b: CycleExercise): number

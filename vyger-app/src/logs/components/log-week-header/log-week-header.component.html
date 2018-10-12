@@ -1,3 +1,27 @@
+<div class="row mb-2">
+  <div class="col-3">
+    <a class="btn btn-sm btn-light text-muted"
+       routerLink="/logs"
+       [queryParams]="{ date: prev }">
+      <span class="fa fa-fw fa-caret-left"></span>
+    </a>
+  </div>
+  <div class="col-6 text-center">
+    <a class="btn btn-sm btn-light"
+       *ngIf="today"
+       routerLink="/logs"
+       [queryParams]="{ date: today }">
+      <span class="text-muted">today</span>
+    </a>
+  </div>
+  <div class="col-3 text-right">
+    <a class="btn btn-sm btn-light"
+       routerLink="/logs"
+       [queryParams]="{ date: next }">
+      <span class="fa fa-fw fa-caret-right text-muted"></span>
+    </a>
+  </div>
+</div>
 <ul class="nav nav-tabs nav-fill mb-3">
   <li class="nav-item"
       *ngFor="let day of logdate.days; let i = index">

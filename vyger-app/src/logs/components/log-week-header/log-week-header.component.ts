@@ -13,6 +13,9 @@ import { LogDate } from 'src/models/log-date';
 export class LogWeekHeaderComponent implements OnInit
 {
     logdate: LogDate;
+    today: string;
+    prev: string;
+    next: string;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -32,13 +35,24 @@ export class LogWeekHeaderComponent implements OnInit
                 this.logdate = new LogDate(dt);
             }
 
-            this.updateTitle();
+            this.updateHeader();
         });
     }
 
-    private updateTitle = (): void =>
+    private updateHeader = (): void =>
     {
         let ymd = utilities.getYMD(this.logdate.date);
+
+        this.today = utilities.getYMD(new Date());
+
+        this.prev = utilities.getYMD(utilities.addDays(this.logdate.date, -7));
+
+        this.next = utilities.getYMD(utilities.addDays(this.logdate.date, 7));
+
+        if (this.today == ymd)
+        {
+            this.today = null;
+        }
 
         this.pageTitleService.setTitle(ymd);
     }

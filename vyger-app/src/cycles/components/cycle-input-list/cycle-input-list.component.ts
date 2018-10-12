@@ -61,7 +61,6 @@ export class CycleInputListComponent implements OnInit
         {
             this.percents.push(x);
         }
-        this.percents.push(102.5);
     }
 
     private onloadingCycle = (cycle: Cycle): void =>

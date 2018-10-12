@@ -16,6 +16,7 @@ import { LogExerciseSetComponent } from './components/log-exercise-set/log-exerc
 import { LogExerciseEditComponent } from './components/log-exercise-edit/log-exercise-edit.component';
 import { LogImportComponent } from './components/log-import/log-import.component';
 import { LogHistoryComponent } from './components/log-history/log-history.component';
+import { LogCycleComponent } from './components/log-cycle/log-cycle.component';
 
 const routes: Routes = [
     {
@@ -25,6 +26,7 @@ const routes: Routes = [
             { path: '', component: LogWeekComponent },
             { path: 'add', component: LogExerciseAddComponent },
             { path: 'edit/:id', component: LogExerciseEditComponent },
+            { path: 'cycle/:id', component: LogCycleComponent },
             { path: 'import', component: LogImportComponent },
             { path: 'history', component: LogHistoryComponent },
         ]
@@ -41,7 +43,8 @@ const routes: Routes = [
         LogExerciseSetComponent,
         LogExerciseEditComponent,
         LogImportComponent,
-        LogHistoryComponent],
+        LogHistoryComponent,
+        LogCycleComponent],
     imports: [
         BrowserModule,
         FormsModule,

@@ -66,6 +66,15 @@ export namespace utilities
         return [y, m, d].join('-');
     }
 
+    export function addDays(date: Date, days: number): Date
+    {
+        let dt = new Date(date);
+
+        dt.setDate(dt.getDate() + days);
+
+        return dt;
+    }
+
     export function toDate(ymd: string): Date
     {
         const [y, m, d] = [...ymd.split('-')];
