@@ -63,8 +63,6 @@ export class CycleExerciseListComponent implements OnInit
         {
             this.cycle = cycle;
 
-            this.pageTitleService.setTitle(this.cycle.name);
-
             this.updateTitle();
 
             this.updateExercises();
@@ -73,9 +71,12 @@ export class CycleExerciseListComponent implements OnInit
 
     private updateTitle = (): void =>
     {
-        const title = 'exercises week=' + this.week + ' day=' + this.day;
+        if (this.cycle)
+        {
+            const subtitle = 'exercises week=' + this.week + ' day=' + this.day;
 
-        this.pageTitleService.setSubTitle(title);
+            this.pageTitleService.setTitle(this.cycle.name, subtitle);
+        }
     }
 
     private updateExercises = (): void =>

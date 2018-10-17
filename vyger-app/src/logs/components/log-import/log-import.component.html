@@ -21,8 +21,8 @@
   <div class="col-5">
     <input type="text"
            class="form-control form-control-sm"
-           [(ngModel)]="log.temp"
-           (change)="updateSets(log, log.temp)" />
+           [ngModel]="log.sets.join(', ')"
+           (ngModelChange)="updateSets(log, $event)" />
   </div>
 </div>
 <div class="list-group list-group-flush pointer">

@@ -59,8 +59,7 @@ export class RoutineExerciseEditComponent implements OnInit
         {
             this.routine = routine;
 
-            this.pageTitleService.setTitle(this.routine.name);
-            this.pageTitleService.setSubTitle('editing exercise');
+            this.pageTitleService.setTitle(this.routine.name, 'editing exercise');
 
             const exerciseId = this.activatedRoute.snapshot.paramMap.get('exercise');
 

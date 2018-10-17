@@ -15,9 +15,14 @@ export class LogExercise extends Exercise
     {
         super(source);
 
-        const keys = ['ymd', 'sets', 'sequence', 'oneRepMaxSet', 'oneRepMax'];
+        const keys = ['ymd', 'sequence', 'oneRepMaxSet', 'oneRepMax'];
 
         utilities.extend(this, source, keys);
+
+        if (source && source.sets)
+        {
+            this.sets = [...source.sets];
+        }
 
         this.oneRepMaxSet = this.oneRepMaxSet || 0;
     }

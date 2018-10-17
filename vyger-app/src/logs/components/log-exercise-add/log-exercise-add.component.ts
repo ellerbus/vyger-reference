@@ -37,9 +37,7 @@ export class LogExerciseAddComponent implements OnInit
     {
         this.exercise.ymd = this.activatedRoute.snapshot.queryParamMap.get('date');
 
-        this.pageTitleService.setTitle(this.exercise.ymd);
-
-        this.pageTitleService.setSubTitle('adding exercises');
+        this.pageTitleService.setTitle(this.exercise.ymd, 'adding exercises');
     }
 
     cancel(): void

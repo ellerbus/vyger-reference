@@ -6,8 +6,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class PageTitleService
 {
-    private title: string = "Vyger";
-    private subtitle: string = "Vyger";
+    private title: string = 'Vyger';
+    private subtitle: string = null;
 
     constructor(
         private titleService: Title)
@@ -20,19 +20,19 @@ export class PageTitleService
         return this.title;
     }
 
-    setTitle(title: string): void
+    setTitle(title: string, subtitle: string = null): void
     {
         this.title = title;
 
         let display = this.title;
-        if (this.title != "Vyger")
+        if (this.title != 'Vyger')
         {
-            display = "Vyger - " + display;
+            display = 'Vyger - ' + display;
         }
 
         this.titleService.setTitle(display);
 
-        this.subtitle = null;
+        this.subtitle = subtitle;
     }
 
     getSubTitle(): string
@@ -42,6 +42,6 @@ export class PageTitleService
 
     setSubTitle(subtitle: string): void
     {
-        this.subtitle = subtitle;
+        this.subtitle = 'm';
     }
 }

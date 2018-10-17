@@ -71,15 +71,19 @@ export class CycleInputListComponent implements OnInit
         }
         else if (cycle.lastLogged != null)
         {
-            this.router.navigateByUrl('/cycles/exercises/' + cycle.id);
+            let [week, day] = cycle.lastLogged.split(':');
+
+            const queryParams = { week: week, day: day };
+
+            let url = this.router.createUrlTree(['/cycles/exercises/' + cycle.id], { queryParams });
+
+            this.router.navigateByUrl(url);
         }
         else
         {
             this.cycle = cycle;
 
-            this.pageTitleService.setTitle(this.cycle.name);
-
-            this.pageTitleService.setSubTitle('cycle inputs');
+            this.pageTitleService.setTitle(this.cycle.name, 'cycle inputs');
 
             this.logRepository
                 .getMaxes()

@@ -46,8 +46,7 @@ export class LogExerciseEditComponent implements OnInit
         {
             this.exercise = log;
 
-            this.pageTitleService.setTitle(this.exercise.ymd);
-            this.pageTitleService.setSubTitle('adding exercise');
+            this.pageTitleService.setTitle(this.exercise.ymd, 'adding exercise');
 
             this.clone = <LogExercise>{ ...this.exercise };
         }

@@ -33,9 +33,7 @@ export class LogHistoryComponent implements OnInit, OnChanges
 
     ngOnInit()
     {
-        this.pageTitleService.setTitle('Log History');
-
-        this.pageTitleService.setSubTitle('by exercise');
+        this.pageTitleService.setTitle('Log History', 'by exercise');
 
         this.logsRepository
             .getLogs()
