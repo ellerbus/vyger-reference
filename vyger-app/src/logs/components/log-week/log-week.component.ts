@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { utilities } from 'src/models/utilities';
-import { LogExercise } from 'src/models/log-exercise';
+import { LogExercise, LogEvaluation } from 'src/models/log-exercise';
 import { LogsRepository } from 'src/logs/logs.repository';
 
 @Component({

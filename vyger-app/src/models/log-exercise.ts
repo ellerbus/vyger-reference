@@ -2,6 +2,13 @@ import { Exercise } from './exercise';
 import { utilities } from './utilities';
 import { WorkoutSet } from './workout-set';
 
+export enum LogEvaluation
+{
+    None = 0,
+    FellShort = -1,
+    Matched = 1,
+    Exceeded = 2
+}
 export class LogExercise extends Exercise
 {
     ymd: string;
@@ -11,11 +18,13 @@ export class LogExercise extends Exercise
     oneRepMaxSet: number;
     oneRepMax: number;
 
+    evaluation: LogEvaluation;
+
     constructor(source?: any)
     {
         super(source);
 
-        const keys = ['ymd', 'sequence', 'oneRepMaxSet', 'oneRepMax'];
+        const keys = ['ymd', 'sequence', 'oneRepMaxSet', 'oneRepMax', 'evaluation'];
 
         utilities.extend(this, source, keys);
 

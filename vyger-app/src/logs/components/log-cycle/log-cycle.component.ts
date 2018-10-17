@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { LogsRepository } from 'src/logs/logs.repository';
 import { CyclesRepository } from 'src/cycles/cycles.repository';
-import { LogExercise } from 'src/models/log-exercise';
+import { LogExercise, LogEvaluation } from 'src/models/log-exercise';
 import { utilities } from 'src/models/utilities';
 import { Cycle } from 'src/models/cycle';
 import { PageTitleService } from 'src/page-title/page-title.service';
@@ -166,7 +166,21 @@ export class LogCycleComponent implements OnInit
 
                 let copy = new LogExercise({ ...ex, ...log, ymd: this.ymd });
 
+                log.updateOneRepMax();
                 copy.updateOneRepMax();
+
+                if (copy.oneRepMax < log.oneRepMax)
+                {
+                    copy.evaluation = LogEvaluation.FellShort;
+                }
+                else if (copy.oneRepMax == log.oneRepMax)
+                {
+                    copy.evaluation = LogEvaluation.Matched;
+                }
+                else if (copy.oneRepMax > log.oneRepMax)
+                {
+                    copy.evaluation = LogEvaluation.Exceeded;
+                }
 
                 all.push(copy);
             }
