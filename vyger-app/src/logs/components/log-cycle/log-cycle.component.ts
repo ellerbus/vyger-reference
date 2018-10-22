@@ -10,6 +10,7 @@ import { PageTitleService } from 'src/page-title/page-title.service';
 import { LogDate } from 'src/models/log-date';
 import { ExercisesRepository } from 'src/exercises/exercises.repository';
 import { Exercise } from 'src/models/exercise';
+import { WorkoutSet } from 'src/models/workout-set';
 
 
 @Component({
@@ -166,20 +167,28 @@ export class LogCycleComponent implements OnInit
 
                 let copy = new LogExercise({ ...ex, ...log, ymd: this.ymd });
 
-                log.updateOneRepMax();
+                copy.sets = WorkoutSet.format(copy.sets.join(','));
+
                 copy.updateOneRepMax();
 
-                if (copy.oneRepMax < log.oneRepMax)
+                let plan = this.cycle.exercises.filter(x => x.id == log.id && x.week == this.week && x.day == this.day).pop();
+
+                if (plan)
                 {
-                    copy.evaluation = LogEvaluation.FellShort;
-                }
-                else if (copy.oneRepMax == log.oneRepMax)
-                {
-                    copy.evaluation = LogEvaluation.Matched;
-                }
-                else if (copy.oneRepMax > log.oneRepMax)
-                {
-                    copy.evaluation = LogEvaluation.Exceeded;
+                    let orm = plan.plannedOneRepMax();
+
+                    if (copy.oneRepMax < orm)
+                    {
+                        copy.evaluation = LogEvaluation.FellShort;
+                    }
+                    else if (copy.oneRepMax == orm)
+                    {
+                        copy.evaluation = LogEvaluation.Matched;
+                    }
+                    else if (copy.oneRepMax > orm)
+                    {
+                        copy.evaluation = LogEvaluation.Exceeded;
+                    }
                 }
 
                 all.push(copy);

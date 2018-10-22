@@ -10,8 +10,11 @@
     <a class="list-group-item list-group-item-action"
        *ngFor="let cycle of cycles"
        routerLink="/cycles/inputs/{{ cycle.id }}">
-      <span class="float-right"># {{ cycle.sequence }}</span>
-      {{ cycle.name }}
+      <div class="row">
+        <div class="col">{{ cycle.name }}</div>
+        <div class="col-1">{{ cycle.lastLogged }}</div>
+        <div class="col-1"># {{ cycle.sequence }}</div>
+      </div>
     </a>
   </div>
 </div>

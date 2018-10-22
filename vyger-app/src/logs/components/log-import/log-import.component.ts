@@ -6,6 +6,7 @@ import { LogsRepository } from '../../logs.repository';
 import { LogExercise } from 'src/models/log-exercise';
 import { Exercise } from 'src/models/exercise';
 import { utilities } from 'src/models/utilities';
+import { WorkoutSet } from 'src/models/workout-set';
 
 @Component({
     selector: 'app-log-import',
@@ -85,6 +86,8 @@ export class LogImportComponent implements OnInit
                 let ex = lookup[log.id];
 
                 let copy = new LogExercise({ ...ex, ...log });
+
+                copy.sets = WorkoutSet.format(copy.sets.join(','));
 
                 copy.updateOneRepMax();
 

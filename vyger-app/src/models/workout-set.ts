@@ -188,4 +188,9 @@ export class WorkoutSet
     {
         this.parse(value);
     }
+
+    static format(pattern: string): string[]
+    {
+        return pattern.split(/, */).map(x => new WorkoutSet(x).pattern);
+    }
 }

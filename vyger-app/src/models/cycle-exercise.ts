@@ -1,5 +1,6 @@
 import { Exercise } from './exercise';
 import { utilities } from './utilities';
+import { WorkoutSet } from './workout-set';
 
 export class CycleExercise extends Exercise
 {
@@ -26,6 +27,23 @@ export class CycleExercise extends Exercise
         {
             this.plan = [...source.plan];
         }
+    }
+
+    plannedOneRepMax(): number
+    {
+        let oneRepMax = null;
+
+        for (let i = 0; i < this.sets.length; i++)
+        {
+            let set = new WorkoutSet(this.sets[i]);
+
+            if (oneRepMax == null || oneRepMax < set.oneRepMax)
+            {
+                oneRepMax = set.oneRepMax;
+            }
+        }
+
+        return oneRepMax;
     }
 
     static compare(a: CycleExercise, b: CycleExercise): number
