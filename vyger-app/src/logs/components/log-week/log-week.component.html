@@ -25,7 +25,6 @@
         </div>
         <div class="col-6">
           {{ exercise.shortDisplay() }}
-          {{ exercise.evaluation }}
           <span class="fa fa-fw fa-check"
                 *ngIf="exercise.evaluation"
                 [class.text-success]="exercise.evaluation == 2"
