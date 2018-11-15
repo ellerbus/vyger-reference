@@ -1,0 +1,18 @@
+<div class="row"
+     *ngIf="flashMessageService.messages && flashMessageService.messages.length > 0">
+  <div class="col-12 alert alert-dismissible alert-info"
+       role="alert"
+       *ngFor="let msg of flashMessageService.messages"
+       [class.alert-info]="msg.severity == 'Information'"
+       [class.alert-warning]="msg.severity == 'Warning'"
+       [class.alert-danger]="msg.severity == 'Danger'">
+    <button type="button"
+            class="close"
+            data-dismiss="alert"
+            (click)="flashMessageService.remove(msg)">
+      <i class="fas fa-fw fa-times-circle"></i>
+    </button>
+    <p *ngIf="msg.label">{{ msg.label }}</p>
+    {{ msg.message }}
+  </div>
+</div>
