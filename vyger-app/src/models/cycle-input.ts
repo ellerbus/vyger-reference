@@ -23,7 +23,7 @@ export class CycleInput extends Exercise
 
         if (this.pullback != 0)
         {
-            orm = orm * (1.0 - (this.pullback / 100));
+            orm = orm * (1.0 - (this.pullback / 100.0));
         }
 
         return orm;

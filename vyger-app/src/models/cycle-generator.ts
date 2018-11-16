@@ -2,28 +2,7 @@ import { Cycle } from './cycle';
 import { CycleInput } from './cycle-input';
 import { WorkoutSet, WorkoutSetTypes } from './workout-set';
 import { utilities } from './utilities';
-import { CycleExercise } from './cycle-exercise';
-
-class CycleCalculation
-{
-    exercise: CycleExercise;
-    sets: WorkoutSet[];
-
-    finalize()
-    {
-        for (let j = 0; j < this.sets.length; j++)
-        {
-            let set = this.sets[j];
-
-            if (set.type == WorkoutSetTypes.Static)
-            {
-                set.weight = utilities.round(set.weight, 5);
-            }
-        }
-
-        this.exercise.plan = this.sets.map(x => x.pattern);
-    }
-}
+import { CycleCalculation } from './cycle-calculation';
 
 export class CycleGenerator
 {
@@ -37,12 +16,12 @@ export class CycleGenerator
 
     generate()
     {
-        this.loadInputs();
+        this.loadInputMap();
         this.loadCalculations();
         this.finalizeCalculations();
     }
 
-    loadInputs()
+    private loadInputMap = () =>
     {
         this.inputs = {};
 
@@ -54,7 +33,7 @@ export class CycleGenerator
         }
     }
 
-    loadCalculations()
+    private loadCalculations = () =>
     {
         this.calculations = [];
 
@@ -76,7 +55,7 @@ export class CycleGenerator
         }
     }
 
-    replaceRepMaxes(calculation: CycleCalculation)
+    private replaceRepMaxes = (calculation: CycleCalculation) =>
     {
         for (let i = 0; i < calculation.sets.length; i++)
         {
@@ -93,7 +72,7 @@ export class CycleGenerator
         }
     }
 
-    replaceLookUps(calculation: CycleCalculation)
+    private replaceLookUps = (calculation: CycleCalculation) =>
     {
         for (let i = 0; i < calculation.sets.length; i++)
         {
@@ -113,7 +92,7 @@ export class CycleGenerator
         }
     }
 
-    finalizeCalculations()
+    private finalizeCalculations = () =>
     {
         for (let i = 0; i < this.calculations.length; i++)
         {
@@ -121,7 +100,7 @@ export class CycleGenerator
         }
     }
 
-    lookupOneRepMax(id: string): number
+    private lookupOneRepMax = (id: string): number =>
     {
         if (this.inputs[id])
         {
