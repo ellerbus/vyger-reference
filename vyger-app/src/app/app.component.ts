@@ -21,6 +21,8 @@ export class AppComponent implements OnInit
             .subscribe(event =>
             {
                 this.flashMessageService.messages = [];
+
+                window.scrollTo(0, 0);
             });
     }
 }
