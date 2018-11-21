@@ -20,7 +20,7 @@ export class AppComponent implements OnInit
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(event =>
             {
-                this.flashMessageService.messages = [];
+                this.flashMessageService.clean();
 
                 window.scrollTo(0, 0);
             });

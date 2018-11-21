@@ -21,15 +21,9 @@ export class HttpErrorInterceptorService implements HttpInterceptor
     {
         if (err instanceof HttpErrorResponse)
         {
-            let options = {
-                severity: FlashMessageSeverity.Danger,
-                label: err.statusText,
-                message: err.message
-            };
+            let msg = err.statusText + " : " + err.message;
 
-            let msg = new FlashMessage(options);
-
-            this.flashMessageService.messages.push(msg);
+            this.flashMessageService.info(msg);
         }
         return of(err);
     }
