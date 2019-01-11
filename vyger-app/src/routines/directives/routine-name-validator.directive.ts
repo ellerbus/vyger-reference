@@ -1,7 +1,7 @@
 import { Directive, Input } from '@angular/core';
 import { FormControl, ValidationErrors, NG_ASYNC_VALIDATORS, AsyncValidator } from '@angular/forms';
 import { Observable, from } from 'rxjs';
-import 'rxjs/add/operator/map';
+
 
 import { Routine } from '../../models/routine';
 import { RoutinesRepository } from '../routines.repository';
