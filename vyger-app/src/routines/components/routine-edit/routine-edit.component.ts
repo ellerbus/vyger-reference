@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Routine } from 'src/models/routine';
-import { RoutinesRepository } from '../../routines.repository';
+import { RoutineService } from 'src/services/routine.service';
 import { PageTitleService } from 'src/services/page-title.service';
 import { utilities } from 'src/models/utilities';
 import { RoutineExercise } from 'src/models/routine-exercise';
@@ -22,7 +22,7 @@ export class RoutineEditComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private routinesRepository: RoutinesRepository)
+        private RoutineService: RoutineService)
     {
         this.exercise = new RoutineExercise();
 
@@ -35,7 +35,7 @@ export class RoutineEditComponent implements OnInit
 
         const id = this.activatedRoute.snapshot.paramMap.get('id');
 
-        this.routinesRepository
+        this.RoutineService
             .getRoutine(id)
             .then(this.onloadingRoutine);
     }
@@ -71,7 +71,7 @@ export class RoutineEditComponent implements OnInit
 
         this.routine.sets = this.exercise.sets;
 
-        this.routinesRepository
+        this.RoutineService
             .save()
             .then(() =>
             {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageTitleService } from 'src/services/page-title.service';
-import { ExercisesRepository } from 'src/exercises/exercises.repository';
-import { LogsRepository } from '../../logs.repository';
+import { ExerciseService } from 'src/services/exercise.service';
+import { ExerciseLogService } from 'src/services/exercise-log.service';
 import { LogExercise } from 'src/models/log-exercise';
 import { Exercise } from 'src/models/exercise';
 import { utilities } from 'src/models/utilities';
@@ -22,8 +22,8 @@ export class LogImportComponent implements OnInit
     constructor(
         private router: Router,
         private pageTitleService: PageTitleService,
-        private logsRepository: LogsRepository,
-        private exercisesRepository: ExercisesRepository) { }
+        private ExerciseLogService: ExerciseLogService,
+        private ExerciseService: ExerciseService) { }
 
     ngOnInit()
     {
@@ -31,7 +31,7 @@ export class LogImportComponent implements OnInit
 
         this.logs = [];
 
-        this.exercisesRepository
+        this.ExerciseService
             .getExercises()
             .then(x => this.exercises = x.sort(Exercise.compare));
     }
@@ -68,7 +68,7 @@ export class LogImportComponent implements OnInit
     {
         this.saving = true;
 
-        this.logsRepository.getLogs().then(this.savingLogs);
+        this.ExerciseLogService.getLogs().then(this.savingLogs);
     }
 
     private savingLogs = (all: LogExercise[]) =>
@@ -95,7 +95,7 @@ export class LogImportComponent implements OnInit
             }
         }
 
-        this.logsRepository.save().then(() => this.cancel());
+        this.ExerciseLogService.save().then(() => this.cancel());
     }
 
     private getExerciseLookup = (): { [key: string]: Exercise } =>

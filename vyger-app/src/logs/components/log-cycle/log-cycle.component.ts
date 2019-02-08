@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-
-import { LogsRepository } from 'src/logs/logs.repository';
-import { CyclesRepository } from 'src/cycles/cycles.repository';
-import { LogExercise, LogEvaluation } from 'src/models/log-exercise';
-import { utilities } from 'src/models/utilities';
+import { ExerciseLogService } from 'src/services/exercise-log.service';
 import { Cycle } from 'src/models/cycle';
-import { PageTitleService } from 'src/services/page-title.service';
-import { LogDate } from 'src/models/log-date';
-import { ExercisesRepository } from 'src/exercises/exercises.repository';
 import { Exercise } from 'src/models/exercise';
+import { LogDate } from 'src/models/log-date';
+import { LogEvaluation, LogExercise } from 'src/models/log-exercise';
+import { utilities } from 'src/models/utilities';
 import { WorkoutSet } from 'src/models/workout-set';
-
+import { CycleService } from 'src/services/cycle.service';
+import { ExerciseService } from 'src/services/exercise.service';
+import { PageTitleService } from 'src/services/page-title.service';
 
 @Component({
     selector: 'app-log-cycle',
@@ -35,9 +33,9 @@ export class LogCycleComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private cyclesRepository: CyclesRepository,
-        private logsRepository: LogsRepository,
-        private exercisesRepository: ExercisesRepository)
+        private CycleService: CycleService,
+        private ExerciseLogService: ExerciseLogService,
+        private ExerciseService: ExerciseService)
     {
         this.logdate = new LogDate(new Date());
 
@@ -56,7 +54,7 @@ export class LogCycleComponent implements OnInit
 
         this.day = +this.activatedRoute.snapshot.queryParamMap.get('day');
 
-        this.cyclesRepository
+        this.CycleService
             .getCycle(id)
             .then(this.onloadingCycle);
 
@@ -148,7 +146,7 @@ export class LogCycleComponent implements OnInit
     {
         this.saving = true;
 
-        this.logsRepository.getLogs().then(this.savingLogs);
+        this.ExerciseLogService.getLogs().then(this.savingLogs);
     }
 
     private savingLogs = (all: LogExercise[]) =>
@@ -195,14 +193,14 @@ export class LogCycleComponent implements OnInit
             }
         }
 
-        this.logsRepository.save().then(this.onsavingCycle);
+        this.ExerciseLogService.save().then(this.onsavingCycle);
     }
 
     private onsavingCycle = () =>
     {
         this.cycle.lastLogged = this.week + ":" + this.day;
 
-        this.cyclesRepository
+        this.CycleService
             .save()
             .then(() =>
             {

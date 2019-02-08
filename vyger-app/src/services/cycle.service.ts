@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-
 import { DataRepository } from 'src/services/data.repository';
 import { FileInfo } from 'src/models/file-info';
-
-import { Cycle } from '../models/cycle';
+import { Cycle } from 'src/models/cycle';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CyclesRepository
+export class CycleService
 {
     private file: FileInfo;
     private cycles: Cycle[];

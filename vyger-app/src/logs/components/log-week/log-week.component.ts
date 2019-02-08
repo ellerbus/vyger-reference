@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { utilities } from 'src/models/utilities';
 import { LogExercise, LogEvaluation } from 'src/models/log-exercise';
-import { LogsRepository } from 'src/logs/logs.repository';
+import { ExerciseLogService } from 'src/services/exercise-log.service';
 
 @Component({
     selector: 'app-log-week',
@@ -17,7 +17,7 @@ export class LogWeekComponent implements OnInit
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private logRepository: LogsRepository)
+        private logRepository: ExerciseLogService)
     {
         this.ymd = utilities.getYMD(new Date());
     }

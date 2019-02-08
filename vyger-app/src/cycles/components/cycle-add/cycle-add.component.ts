@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 import { PageTitleService } from 'src/services/page-title.service';
 import { Cycle } from 'src/models/cycle';
-import { RoutinesRepository } from 'src/routines/routines.repository';
-import { CyclesRepository } from '../../cycles.repository';
+import { RoutineService } from 'src/services/routine.service';
+import { CycleService } from 'src/services/cycle.service';
 import { Routine } from 'src/models/routine';
 import { CycleInput } from 'src/models/cycle-input';
 import { utilities } from 'src/models/utilities';
@@ -23,14 +23,14 @@ export class CycleAddComponent implements OnInit
     constructor(
         private router: Router,
         private pageTitleService: PageTitleService,
-        private cyclesRepository: CyclesRepository,
-        private routinesRepository: RoutinesRepository) { }
+        private CycleService: CycleService,
+        private RoutineService: RoutineService) { }
 
     ngOnInit()
     {
         this.pageTitleService.setTitle('Add Cycle');
 
-        this.routinesRepository
+        this.RoutineService
             .getRoutines()
             .then(this.onloadingRoutines);
     }
@@ -55,7 +55,7 @@ export class CycleAddComponent implements OnInit
 
         cycle.inputs = this.getUniqueInputs(cycle);
 
-        this.cyclesRepository
+        this.CycleService
             .add(cycle)
             .then(() =>
             {

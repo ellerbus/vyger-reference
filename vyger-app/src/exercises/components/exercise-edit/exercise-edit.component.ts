@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/models/exercise';
-import { ExercisesRepository } from '../../exercises.repository';
+import { ExerciseService } from 'src/services/exercise.service';
 import { PageTitleService } from 'src/services/page-title.service';
 import { utilities } from 'src/models/utilities';
 
@@ -20,7 +20,7 @@ export class ExerciseEditComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private exercisesRepository: ExercisesRepository) { }
+        private ExerciseService: ExerciseService) { }
 
     ngOnInit()
     {
@@ -28,7 +28,7 @@ export class ExerciseEditComponent implements OnInit
 
         const id = this.activatedRoute.snapshot.paramMap.get('id');
 
-        this.exercisesRepository
+        this.ExerciseService
             .getExercise(id)
             .then(this.onloadingExercise);
     }
@@ -60,7 +60,7 @@ export class ExerciseEditComponent implements OnInit
 
         this.saving = true;
 
-        this.exercisesRepository
+        this.ExerciseService
             .save()
             .then(() =>
             {

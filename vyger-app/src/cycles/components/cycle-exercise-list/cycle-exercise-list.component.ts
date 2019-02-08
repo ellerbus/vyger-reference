@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { PageTitleService } from 'src/services/page-title.service';
 import { CycleExercise } from 'src/models/cycle-exercise';
-import { CyclesRepository } from '../../cycles.repository';
+import { CycleService } from 'src/services/cycle.service';
 
 @Component({
     selector: 'app-cycle-exercise-list',
@@ -22,7 +22,7 @@ export class CycleExerciseListComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private cyclesRepository: CyclesRepository)
+        private CycleService: CycleService)
     {
         this.week = 1;
         this.day = 1;
@@ -48,7 +48,7 @@ export class CycleExerciseListComponent implements OnInit
             this.updateExercises();
         });
 
-        this.cyclesRepository
+        this.CycleService
             .getCycle(id)
             .then(this.onloadingCycle);
     }

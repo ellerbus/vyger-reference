@@ -4,7 +4,7 @@ import { ControlContainer, NgForm } from '@angular/forms';
 import { Groups, Exercise, Categories } from 'src/models/exercise';
 import { Routine } from 'src/models/routine';
 import { RoutineExercise } from 'src/models/routine-exercise';
-import { ExercisesRepository } from '../../../exercises/exercises.repository';
+import { ExerciseService } from 'src/services/exercise.service';
 
 @Component({
     selector: 'app-routine-exercise-picker',
@@ -24,7 +24,7 @@ export class RoutineExercisePickerComponent implements OnInit, OnChanges
     @Input() exercise: RoutineExercise;
 
     constructor(
-        private exercisesRepository: ExercisesRepository) { }
+        private ExerciseService: ExerciseService) { }
 
     ngOnInit()
     {
@@ -62,7 +62,7 @@ export class RoutineExercisePickerComponent implements OnInit, OnChanges
 
     loadExercises(): void
     {
-        this.exercisesRepository
+        this.ExerciseService
             .getExercises()
             .then(this.onloadingExercises);
     }

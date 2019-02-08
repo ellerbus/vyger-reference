@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { PageTitleService } from 'src/services/page-title.service';
 import { LogExercise } from 'src/models/log-exercise';
-import { ExercisesRepository } from 'src/exercises/exercises.repository';
-import { LogsRepository } from '../../logs.repository';
+import { ExerciseService } from 'src/services/exercise.service';
+import { ExerciseLogService } from 'src/services/exercise-log.service';
 
 @Component({
     selector: 'app-log-exercise-edit',
@@ -21,7 +21,7 @@ export class LogExerciseEditComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private logsRepository: LogsRepository)
+        private ExerciseLogService: ExerciseLogService)
     {
     }
 
@@ -31,7 +31,7 @@ export class LogExerciseEditComponent implements OnInit
 
         const ymd = this.activatedRoute.snapshot.queryParamMap.get('date');
 
-        this.logsRepository
+        this.ExerciseLogService
             .getLogFor(ymd, id)
             .then(this.onloadingLog);
     }
@@ -54,7 +54,7 @@ export class LogExerciseEditComponent implements OnInit
 
     remove(): void
     {
-        this.logsRepository.getLogs()
+        this.ExerciseLogService.getLogs()
             .then((logs) =>
             {
                 let i = logs.length;
@@ -72,7 +72,7 @@ export class LogExerciseEditComponent implements OnInit
             })
             .then(() =>
             {
-                this.logsRepository.save();
+                this.ExerciseLogService.save();
                 this.cancel();
             });
     }
@@ -94,7 +94,7 @@ export class LogExerciseEditComponent implements OnInit
 
         this.exercise.updateOneRepMax();
 
-        this.logsRepository
+        this.ExerciseLogService
             .save()
             .then(() =>
             {

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Routine } from 'src/models/routine';
 import { PageTitleService } from 'src/services/page-title.service';
-import { RoutinesRepository } from '../../routines.repository';
+import { RoutineService } from 'src/services/routine.service';
 import { RoutineExercise } from 'src/models/routine-exercise';
 
 @Component({
@@ -21,7 +21,7 @@ export class RoutineAddComponent implements OnInit
     constructor(
         private router: Router,
         private pageTitleService: PageTitleService,
-        private routinesRepository: RoutinesRepository)
+        private RoutineService: RoutineService)
     {
         this.routine = new Routine();
         this.exercise = new RoutineExercise();
@@ -45,7 +45,7 @@ export class RoutineAddComponent implements OnInit
 
         this.routine.sets = this.exercise.sets;
 
-        this.routinesRepository
+        this.RoutineService
             .add(this.routine)
             .then(() =>
             {

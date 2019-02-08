@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { PageTitleService } from 'src/services/page-title.service';
 import { RoutineExercise } from 'src/models/routine-exercise';
-import { RoutinesRepository } from '../../routines.repository';
+import { RoutineService } from 'src/services/routine.service';
 
 @Component({
     selector: 'app-routine-exercise-list',
@@ -22,7 +22,7 @@ export class RoutineExerciseListComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private routinesRepository: RoutinesRepository)
+        private RoutineService: RoutineService)
     {
         this.week = 1;
         this.day = 1;
@@ -48,7 +48,7 @@ export class RoutineExerciseListComponent implements OnInit
             this.updateExercises();
         });
 
-        this.routinesRepository
+        this.RoutineService
             .getRoutine(id)
             .then(this.onloadingRoutine);
     }
@@ -107,7 +107,7 @@ export class RoutineExerciseListComponent implements OnInit
                 ex.sequence = seq + 1;
             }
 
-            this.routinesRepository.save();
+            this.RoutineService.save();
         }
     }
 

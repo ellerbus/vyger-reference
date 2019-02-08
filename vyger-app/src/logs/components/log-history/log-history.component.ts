@@ -2,8 +2,8 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Exercise } from 'src/models/exercise';
 import { Router } from '@angular/router';
 import { PageTitleService } from 'src/services/page-title.service';
-import { LogsRepository } from 'src/logs/logs.repository';
-import { ExercisesRepository } from 'src/exercises/exercises.repository';
+import { ExerciseLogService } from 'src/services/exercise-log.service';
+import { ExerciseService } from 'src/services/exercise.service';
 import { LogExercise } from 'src/models/log-exercise';
 
 @Component({
@@ -20,8 +20,8 @@ export class LogHistoryComponent implements OnInit, OnChanges
     constructor(
         private router: Router,
         private pageTitleService: PageTitleService,
-        private logsRepository: LogsRepository,
-        private exercisesRepository: ExercisesRepository)
+        private ExerciseLogService: ExerciseLogService,
+        private ExerciseService: ExerciseService)
     {
         this.history = [];
 
@@ -35,7 +35,7 @@ export class LogHistoryComponent implements OnInit, OnChanges
     {
         this.pageTitleService.setTitle('Log History', 'by exercise');
 
-        this.logsRepository
+        this.ExerciseLogService
             .getLogs()
             .then(this.onloadingLogs);
     }

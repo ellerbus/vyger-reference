@@ -3,8 +3,8 @@ import { ControlContainer, NgForm } from '@angular/forms';
 
 import { Groups, Exercise, Categories } from 'src/models/exercise';
 import { LogExercise } from 'src/models/log-exercise';
-import { ExercisesRepository } from 'src/exercises/exercises.repository';
-import { LogsRepository } from 'src/logs/logs.repository';
+import { ExerciseService } from 'src/services/exercise.service';
+import { ExerciseLogService } from 'src/services/exercise-log.service';
 
 @Component({
     selector: 'app-log-exercise-picker',
@@ -24,8 +24,8 @@ export class LogExercisePickerComponent implements OnInit, OnChanges
     @Output() exerciseChange = new EventEmitter<LogExercise>();
 
     constructor(
-        private logRepository: LogsRepository,
-        private exercisesRepository: ExercisesRepository) { }
+        private logRepository: ExerciseLogService,
+        private ExerciseService: ExerciseService) { }
 
     ngOnInit()
     {
@@ -63,7 +63,7 @@ export class LogExercisePickerComponent implements OnInit, OnChanges
 
     loadExercises(): void
     {
-        this.exercisesRepository
+        this.ExerciseService
             .getExercises()
             .then(this.onloadingExercises);
     }

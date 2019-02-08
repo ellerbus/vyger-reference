@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PageTitleService } from 'src/services/page-title.service';
 import { LogExercise } from 'src/models/log-exercise';
 import { Exercise } from 'src/models/exercise';
-import { ExercisesRepository } from 'src/exercises/exercises.repository';
-import { LogsRepository } from '../../logs.repository';
+import { ExerciseService } from 'src/services/exercise.service';
+import { ExerciseLogService } from 'src/services/exercise-log.service';
 import { utilities } from 'src/models/utilities';
 
 @Component({
@@ -22,8 +22,8 @@ export class LogExerciseAddComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private logsRepository: LogsRepository,
-        private exercisesRepository: ExercisesRepository)
+        private ExerciseLogService: ExerciseLogService,
+        private ExerciseService: ExerciseService)
     {
         this.exercise = new LogExercise();
         this.exercise.id = null;
@@ -53,7 +53,7 @@ export class LogExerciseAddComponent implements OnInit
     {
         this.saving = true;
 
-        this.exercisesRepository
+        this.ExerciseService
             .getExercise(this.exercise.id)
             .then(this.onsavingLogExercise)
             .then(() =>
@@ -73,7 +73,7 @@ export class LogExerciseAddComponent implements OnInit
 
         ex.updateOneRepMax();
 
-        return this.logsRepository.add(ex);
+        return this.ExerciseLogService.add(ex);
     }
 }
 

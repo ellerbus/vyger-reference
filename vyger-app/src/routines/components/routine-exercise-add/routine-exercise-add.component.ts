@@ -5,8 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PageTitleService } from 'src/services/page-title.service';
 import { RoutineExercise } from 'src/models/routine-exercise';
 import { Exercise } from 'src/models/exercise';
-import { ExercisesRepository } from 'src/exercises/exercises.repository';
-import { RoutinesRepository } from '../../routines.repository';
+import { ExerciseService } from 'src/services/exercise.service';
+import { RoutineService } from 'src/services/routine.service';
 
 @Component({
     selector: 'app-routine-exercise-add',
@@ -23,8 +23,8 @@ export class RoutineExerciseAddComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private routinesRepository: RoutinesRepository,
-        private exercisesRepository: ExercisesRepository)
+        private RoutineService: RoutineService,
+        private ExerciseService: ExerciseService)
     {
         this.exercise = new RoutineExercise();
         this.exercise.id = null;
@@ -49,7 +49,7 @@ export class RoutineExerciseAddComponent implements OnInit
             this.exercise.week = +this.activatedRoute.snapshot.queryParamMap.get('week');
         }
 
-        this.routinesRepository
+        this.RoutineService
             .getRoutine(id)
             .then(this.onloadingRoutine);
     }
@@ -85,7 +85,7 @@ export class RoutineExerciseAddComponent implements OnInit
     {
         this.saving = true;
 
-        this.exercisesRepository
+        this.ExerciseService
             .getExercise(this.exercise.id)
             .then(this.onsavingRoutineExercise)
             .then(() =>
@@ -114,7 +114,7 @@ export class RoutineExerciseAddComponent implements OnInit
             this.routine.exercises.push(re);
         }
 
-        return this.routinesRepository.save();
+        return this.RoutineService.save();
     }
 }
 

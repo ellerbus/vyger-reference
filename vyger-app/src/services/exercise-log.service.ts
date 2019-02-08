@@ -7,7 +7,7 @@ import { LogExercise } from 'src/models/log-exercise';
 @Injectable({
     providedIn: 'root'
 })
-export class LogsRepository
+export class ExerciseLogService
 {
     private file: FileInfo;
     private logs: LogExercise[];

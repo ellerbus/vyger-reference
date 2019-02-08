@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Exercise } from 'src/models/exercise';
 import { PageTitleService } from 'src/services/page-title.service';
-import { ExercisesRepository } from '../../exercises.repository';
+import { ExerciseService } from 'src/services/exercise.service';
 
 @Component({
     selector: 'app-exercise-add',
@@ -18,7 +18,7 @@ export class ExerciseAddComponent implements OnInit
     constructor(
         private router: Router,
         private pageTitleService: PageTitleService,
-        private exercisesRepository: ExercisesRepository) { }
+        private ExerciseService: ExerciseService) { }
 
     ngOnInit()
     {
@@ -38,7 +38,7 @@ export class ExerciseAddComponent implements OnInit
     {
         this.saving = true;
 
-        this.exercisesRepository
+        this.ExerciseService
             .add(this.exercise)
             .then(() =>
             {

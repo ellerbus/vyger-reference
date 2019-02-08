@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageTitleService } from 'src/services/page-title.service';
-
 import { Cycle } from 'src/models/cycle';
-import { CyclesRepository } from 'src/cycles/cycles.repository';
+import { CycleService } from 'src/services/cycle.service';
 
 @Component({
     selector: 'app-cycle-list',
@@ -15,13 +14,13 @@ export class CycleListComponent implements OnInit
 
     constructor(
         private pageTitleService: PageTitleService,
-        private cyclesRepository: CyclesRepository) { }
+        private CycleService: CycleService) { }
 
     ngOnInit()
     {
         this.pageTitleService.setTitle('Cycles');
 
-        this.cyclesRepository
+        this.CycleService
             .getCycles()
             .then(this.onloadingCycles);
     }

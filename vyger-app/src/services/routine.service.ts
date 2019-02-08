@@ -3,50 +3,49 @@ import { Injectable } from '@angular/core';
 import { DataRepository } from 'src/services/data.repository';
 import { FileInfo } from 'src/models/file-info';
 
-import { Exercise } from '../models/exercise';
+import { Routine } from '../models/routine';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ExercisesRepository
+export class RoutineService
 {
-
     private file: FileInfo;
-    private exercises: Exercise[];
+    private routines: Routine[];
 
     constructor(
         private dataRepository: DataRepository) { }
 
-    async getExercises(): Promise<Exercise[]>
+    async getRoutines(): Promise<Routine[]>
     {
-        if (this.exercises == null)
+        if (this.routines == null)
         {
-            this.file = await this.dataRepository.getFile('exercises.json');
+            this.file = await this.dataRepository.getFile('routines.json');
 
             if (this.file.contents && this.file.contents.length > 0)
             {
-                let parsed = <Exercise[]>JSON.parse(this.file.contents);
+                let parsed = <Routine[]>JSON.parse(this.file.contents);
 
-                this.exercises = parsed.map(x => new Exercise(x));
+                this.routines = parsed.map(x => new Routine(x));
             }
             else
             {
-                this.exercises = Exercise.defaultList();
+                this.routines = Routine.defaultList();
 
                 await this.save();
             }
         }
 
-        return Promise.resolve(this.exercises);
+        return Promise.resolve(this.routines);
     }
 
-    async getExercise(id: string): Promise<Exercise>
+    async getRoutine(id: string): Promise<Routine>
     {
         return this
-            .getExercises()
-            .then(exercises =>
+            .getRoutines()
+            .then(routines =>
             {
-                let subset = exercises.filter(x => x.id == id);
+                let subset = routines.filter(x => x.id == id);
 
                 if (subset && subset.length == 1)
                 {
@@ -57,16 +56,16 @@ export class ExercisesRepository
             });
     }
 
-    add(exercise: Exercise): Promise<any>
+    add(routine: Routine): Promise<any>
     {
-        this.exercises.push(exercise);
+        this.routines.push(routine);
 
         return this.save();
     }
 
     async save(): Promise<any>
     {
-        this.file.contents = JSON.stringify(this.exercises);
+        this.file.contents = JSON.stringify(this.routines);
 
         return this.dataRepository.saveFile(this.file);
     }

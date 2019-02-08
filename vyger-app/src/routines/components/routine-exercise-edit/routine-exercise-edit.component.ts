@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { PageTitleService } from 'src/services/page-title.service';
 import { RoutineExercise } from 'src/models/routine-exercise';
-import { ExercisesRepository } from 'src/exercises/exercises.repository';
-import { RoutinesRepository } from '../../routines.repository';
+import { ExerciseService } from 'src/services/exercise.service';
+import { RoutineService } from 'src/services/routine.service';
 
 @Component({
     selector: 'app-routine-exercise-edit',
@@ -25,8 +25,8 @@ export class RoutineExerciseEditComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private routinesRepository: RoutinesRepository,
-        private exercisesRepository: ExercisesRepository)
+        private RoutineService: RoutineService,
+        private ExerciseService: ExerciseService)
     {
     }
 
@@ -44,7 +44,7 @@ export class RoutineExerciseEditComponent implements OnInit
             this.day = +this.activatedRoute.snapshot.queryParamMap.get('day');
         }
 
-        this.routinesRepository
+        this.RoutineService
             .getRoutine(id)
             .then(this.onloadingRoutine);
     }
@@ -101,7 +101,7 @@ export class RoutineExerciseEditComponent implements OnInit
             }
         }
 
-        this.routinesRepository
+        this.RoutineService
             .save()
             .then(() =>
             {
@@ -115,7 +115,7 @@ export class RoutineExerciseEditComponent implements OnInit
 
         this.exercise.sets = this.clone.sets;
 
-        this.routinesRepository
+        this.RoutineService
             .save()
             .then(() =>
             {

@@ -3,9 +3,9 @@ import { Cycle } from 'src/models/cycle';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { PageTitleService } from 'src/services/page-title.service';
-import { CyclesRepository } from '../../cycles.repository';
+import { CycleService } from 'src/services/cycle.service';
 import { utilities } from 'src/models/utilities';
-import { LogsRepository } from 'src/logs/logs.repository';
+import { ExerciseLogService } from 'src/services/exercise-log.service';
 import { LogExercise } from 'src/models/log-exercise';
 import { WorkoutSet } from 'src/models/workout-set';
 import { CycleInput } from 'src/models/cycle-input';
@@ -28,8 +28,8 @@ export class CycleInputListComponent implements OnInit
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private pageTitleService: PageTitleService,
-        private cyclesRepository: CyclesRepository,
-        private logRepository: LogsRepository)
+        private CycleService: CycleService,
+        private logRepository: ExerciseLogService)
     {
     }
 
@@ -40,7 +40,7 @@ export class CycleInputListComponent implements OnInit
 
         const id = this.activatedRoute.snapshot.paramMap.get('id');
 
-        this.cyclesRepository
+        this.CycleService
             .getCycle(id)
             .then(this.onloadingCycle);
     }
@@ -129,7 +129,7 @@ export class CycleInputListComponent implements OnInit
 
         cg.generate();
 
-        this.cyclesRepository
+        this.CycleService
             .save()
             .then(() =>
             {

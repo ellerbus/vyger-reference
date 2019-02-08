@@ -4,7 +4,7 @@ import { Observable, from } from 'rxjs';
 
 
 import { Exercise } from '../../models/exercise';
-import { ExercisesRepository } from '../exercises.repository';
+import { ExerciseService } from 'src/services/exercise.service';
 
 @Directive({
     selector: '[uniqueExerciseName][ngModel]',
@@ -12,20 +12,26 @@ import { ExercisesRepository } from '../exercises.repository';
         { provide: NG_ASYNC_VALIDATORS, useExisting: ExerciseNameValidatorDirective, multi: true }
     ]
 })
-export class ExerciseNameValidatorDirective implements AsyncValidator {
+export class ExerciseNameValidatorDirective implements AsyncValidator
+{
     @Input('uniqueExerciseName') exercise: Exercise;
 
     constructor(
-        private exercisesRepository: ExercisesRepository) { }
+        private ExerciseService: ExerciseService) { }
 
-    validate(c: FormControl): Observable<ValidationErrors> {
-        let p = this.exercisesRepository
+    validate(c: FormControl): Observable<ValidationErrors>
+    {
+        let p = this.ExerciseService
             .getExercises()
-            .then(exercises => {
-                for (let i = 0; i < exercises.length; i++) {
+            .then(exercises =>
+            {
+                for (let i = 0; i < exercises.length; i++)
+                {
                     let ex: Exercise = exercises[i];
-                    if (this.exercise.id != ex.id) {
-                        if (Exercise.matches(ex, this.exercise.category, c.value)) {
+                    if (this.exercise.id != ex.id)
+                    {
+                        if (Exercise.matches(ex, this.exercise.category, c.value))
+                        {
                             return true;
                         }
                     }

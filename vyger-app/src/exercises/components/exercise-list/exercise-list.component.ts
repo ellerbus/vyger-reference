@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageTitleService } from 'src/services/page-title.service';
 import { Exercise } from 'src/models/exercise';
 
-import { ExercisesRepository } from '../../exercises.repository';
+import { ExerciseService } from 'src/services/exercise.service';
 
 @Component({
     selector: 'app-exercise-list',
@@ -15,13 +15,13 @@ export class ExerciseListComponent implements OnInit
 
     constructor(
         private pageTitleService: PageTitleService,
-        private exercisesRepository: ExercisesRepository) { }
+        private ExerciseService: ExerciseService) { }
 
     ngOnInit()
     {
         this.pageTitleService.setTitle('Exercises');
 
-        this.exercisesRepository
+        this.ExerciseService
             .getExercises()
             .then(this.onloadingExercises);
     }

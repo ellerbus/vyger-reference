@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageTitleService } from 'src/services/page-title.service';
 import { Routine } from 'src/models/routine';
 
-import { RoutinesRepository } from '../../routines.repository';
+import { RoutineService } from 'src/services/routine.service';
 
 @Component({
     selector: 'app-routine-list',
@@ -15,13 +15,13 @@ export class RoutineListComponent implements OnInit
 
     constructor(
         private pageTitleService: PageTitleService,
-        private routinesRepository: RoutinesRepository) { }
+        private RoutineService: RoutineService) { }
 
     ngOnInit()
     {
         this.pageTitleService.setTitle('Routines');
 
-        this.routinesRepository
+        this.RoutineService
             .getRoutines()
             .then(this.onloadingRoutines);
     }
