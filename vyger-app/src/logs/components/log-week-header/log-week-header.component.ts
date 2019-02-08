@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { PageTitleService } from 'src/page-title/page-title.service';
+import { PageTitleService } from 'src/services/page-title.service';
 import { utilities } from 'src/models/utilities';
 import { LogDate } from 'src/models/log-date';
 

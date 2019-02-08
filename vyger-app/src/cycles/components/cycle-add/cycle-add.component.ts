@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PageTitleService } from 'src/page-title/page-title.service';
+import { PageTitleService } from 'src/services/page-title.service';
 import { Cycle } from 'src/models/cycle';
 import { RoutinesRepository } from 'src/routines/routines.repository';
 import { CyclesRepository } from '../../cycles.repository';

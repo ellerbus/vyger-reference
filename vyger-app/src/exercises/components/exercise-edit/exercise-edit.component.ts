@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/models/exercise';
 import { ExercisesRepository } from '../../exercises.repository';
-import { PageTitleService } from '../../../page-title/page-title.service';
+import { PageTitleService } from 'src/services/page-title.service';
 import { utilities } from 'src/models/utilities';
 
 @Component({

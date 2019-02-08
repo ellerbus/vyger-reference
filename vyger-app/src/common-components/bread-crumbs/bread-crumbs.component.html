@@ -1,0 +1,15 @@
+<nav *ngIf="breadCrumbsService.crumbs && breadCrumbsService.crumbs.length > 0">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"
+        *ngFor="let crumb of breadCrumbsService.crumbs"
+        [class.active]="crumb.active">
+      <a [routerLink]="crumb.path"
+         *ngIf="!crumb.active">
+        {{ crumb.title }}
+      </a>
+      <span *ngIf="crumb.active">
+        {{ crumb.title }}
+      </span>
+    </li>
+  </ol>
+</nav>

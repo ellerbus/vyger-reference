@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { LoadingComponent } from './loading.component';
+import { LoadingComponent } from 'src/common-components/loading/loading.component';
 
 @NgModule({
     imports: [BrowserModule],

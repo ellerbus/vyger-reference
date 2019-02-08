@@ -1,10 +1,15 @@
 <app-page-header></app-page-header>
 <app-side-menu></app-side-menu>
 
-<div class="main">
-  <app-flash-messages></app-flash-messages>
-  <app-page-title></app-page-title>
-  <div class="content">
+<div class="container"
+     style="margin-top: 75px;">
+  <div role="main"
+       class="pb-1">
+    <app-bread-crumbs></app-bread-crumbs>
+  </div>
+  <div role="main"
+       class="pb-3">
+    <app-flash-messages></app-flash-messages>
     <router-outlet></router-outlet>
   </div>
 </div>

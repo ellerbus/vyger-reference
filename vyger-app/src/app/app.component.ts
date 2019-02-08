@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { FlashMessageService } from 'src/services/flash-message.service';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
+import { FlashMessageService } from 'src/services/flash-message.service';
 
 @Component({
     selector: 'app-root',
@@ -12,7 +13,8 @@ export class AppComponent implements OnInit
 {
     constructor(
         private router: Router,
-        private flashMessageService: FlashMessageService) { }
+        private flashMessageService: FlashMessageService,
+        private breadCrumbsService: BreadCrumbsService) { }
 
     ngOnInit()
     {
@@ -20,7 +22,8 @@ export class AppComponent implements OnInit
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(event =>
             {
-                this.flashMessageService.clean();
+                this.flashMessageService.clear();
+                this.breadCrumbsService.clear();
 
                 window.scrollTo(0, 0);
             });

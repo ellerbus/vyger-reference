@@ -2,32 +2,42 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { SortablejsModule } from 'angular-sortablejs';
+import { AppComponent } from 'src/app/app.component';
+import { BreadCrumbsComponent } from 'src/common-components/bread-crumbs/bread-crumbs.component';
+import { CyclesModule } from 'src/cycles/cycles.module';
+import { DirectivesModule } from 'src/directives/directives.module';
+import { ExercisesModule } from 'src/exercises/exercises.module';
+import { FlashMessagesComponent } from 'src/common-components/flash-messages/flash-messages.component';
+import { AuthenticationGuard } from 'src/guards/authentication.guard';
+import { LoadingComponent } from 'src/common-components/loading/loading.component';
+import { LogsModule } from 'src/logs/logs.module';
+import { PageHeaderComponent } from 'src/common-components/page-header/page-header.component';
+import { PageTitleComponent } from 'src/common-components/page-title/page-title.component';
+import { RoutinesModule } from 'src/routines/routines.module';
+import { AuthenticationService } from 'src/services/authentication.service';
 import { FlashMessageService } from 'src/services/flash-message.service';
 import { HttpErrorInterceptorService } from 'src/services/http-error-interceptor.service';
-import { CyclesModule } from '../cycles/cycles.module';
-import { DirectivesModule } from '../directives/directives.module';
-import { ExercisesModule } from '../exercises/exercises.module';
-import { FlashMessagesComponent } from '../flash-messages/flash-messages.component';
-import { AuthenticationGuard } from '../guards/authentication.guard';
-import { HomeModule } from '../home/home.module';
-import { LoadingModule } from '../loading/loading.module';
-import { LogsModule } from '../logs/logs.module';
-import { PageHeaderComponent } from '../page-header/page-header.component';
-import { PageTitleComponent } from '../page-title/page-title.component';
-import { RoutinesModule } from '../routines/routines.module';
-import { AuthenticationService } from '../services/authentication.service';
-import { SideMenuComponent } from '../side-menu/side-menu.component';
-import { AppRouterModule } from './app-router.module';
-import { AppComponent } from './app.component';
-
-
+import { SideMenuComponent } from 'src/side-menu/side-menu.component';
+import { HomeComponent } from 'src/pages/home/home.component';
+import { SignInComponent } from 'src/pages/sign-in/sign-in.component';
 
 export function initializeGoogleApi(authenticationService: AuthenticationService)
 {
     return () => authenticationService.initializeClient();
 }
+
+const routes: Routes = [
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    {
+        path: 'home',
+        children: [
+            { path: '', component: HomeComponent, canActivate: [AuthenticationGuard] },
+            { path: 'sign-in', component: SignInComponent }
+        ]
+    },
+];
 
 @NgModule({
     declarations: [
@@ -36,20 +46,22 @@ export function initializeGoogleApi(authenticationService: AuthenticationService
         PageTitleComponent,
         PageHeaderComponent,
         FlashMessagesComponent,
+        BreadCrumbsComponent,
+        HomeComponent,
+        SignInComponent
+        //LoadingComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         RouterModule,
-        AppRouterModule,
-        HomeModule,
         ExercisesModule,
         RoutinesModule,
         LogsModule,
         CyclesModule,
-        LoadingModule,
         DirectivesModule,
-        SortablejsModule.forRoot({ animation: 150 })
+        SortablejsModule.forRoot({ animation: 150 }),
+        RouterModule.forRoot(routes, { useHash: true })
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: initializeGoogleApi, multi: true, deps: [AuthenticationService] },

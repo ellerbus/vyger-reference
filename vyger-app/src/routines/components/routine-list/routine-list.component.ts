@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PageTitleService } from 'src/page-title/page-title.service';
+import { PageTitleService } from 'src/services/page-title.service';
 import { Routine } from 'src/models/routine';
 
 import { RoutinesRepository } from '../../routines.repository';

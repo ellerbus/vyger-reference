@@ -6,7 +6,7 @@ import { CyclesRepository } from 'src/cycles/cycles.repository';
 import { LogExercise, LogEvaluation } from 'src/models/log-exercise';
 import { utilities } from 'src/models/utilities';
 import { Cycle } from 'src/models/cycle';
-import { PageTitleService } from 'src/page-title/page-title.service';
+import { PageTitleService } from 'src/services/page-title.service';
 import { LogDate } from 'src/models/log-date';
 import { ExercisesRepository } from 'src/exercises/exercises.repository';
 import { Exercise } from 'src/models/exercise';

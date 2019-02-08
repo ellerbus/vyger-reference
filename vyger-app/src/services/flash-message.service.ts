@@ -13,7 +13,7 @@ export class FlashMessageService
         this.messages = [];
     }
 
-    clean()
+    clear()
     {
         this.messages = this.messages.filter(x => x.growl);
     }

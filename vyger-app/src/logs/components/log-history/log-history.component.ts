@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Exercise } from 'src/models/exercise';
 import { Router } from '@angular/router';
-import { PageTitleService } from 'src/page-title/page-title.service';
+import { PageTitleService } from 'src/services/page-title.service';
 import { LogsRepository } from 'src/logs/logs.repository';
 import { ExercisesRepository } from 'src/exercises/exercises.repository';
 import { LogExercise } from 'src/models/log-exercise';

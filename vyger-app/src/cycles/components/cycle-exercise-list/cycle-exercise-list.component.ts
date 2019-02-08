@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cycle } from 'src/models/cycle';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { PageTitleService } from 'src/page-title/page-title.service';
+import { PageTitleService } from 'src/services/page-title.service';
 import { CycleExercise } from 'src/models/cycle-exercise';
 import { CyclesRepository } from '../../cycles.repository';
 
