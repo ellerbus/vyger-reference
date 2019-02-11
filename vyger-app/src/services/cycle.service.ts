@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataRepository } from 'src/services/data.repository';
+import { GoogleDriveService } from 'src/services/google-drive.service';
 import { FileInfo } from 'src/models/file-info';
 import { Cycle } from 'src/models/cycle';
 
@@ -12,13 +12,13 @@ export class CycleService
     private cycles: Cycle[];
 
     constructor(
-        private dataRepository: DataRepository) { }
+        private googleDriveService: GoogleDriveService) { }
 
     async getCycles(): Promise<Cycle[]>
     {
         if (this.cycles == null)
         {
-            this.file = await this.dataRepository.getFile('cycles.json');
+            this.file = await this.googleDriveService.getFile('cycles.json');
 
             if (this.file.contents && this.file.contents.length > 0)
             {
@@ -71,6 +71,6 @@ export class CycleService
     {
         this.file.contents = JSON.stringify(this.cycles);
 
-        return this.dataRepository.saveFile(this.file);
+        return this.googleDriveService.saveFile(this.file);
     }
 }

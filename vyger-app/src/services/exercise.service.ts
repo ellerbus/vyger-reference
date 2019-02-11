@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Exercise } from 'src/models/exercise';
 import { FileInfo } from 'src/models/file-info';
-import { DataRepository } from 'src/services/data.repository';
+import { GoogleDriveService } from 'src/services/google-drive.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,13 +12,13 @@ export class ExerciseService
     private exercises: Exercise[];
 
     constructor(
-        private dataRepository: DataRepository) { }
+        private googleDriveService: GoogleDriveService) { }
 
     async getExercises(): Promise<Exercise[]>
     {
         if (this.exercises == null)
         {
-            this.file = await this.dataRepository.getFile('exercises.json');
+            this.file = await this.googleDriveService.getFile('exercises.json');
 
             if (this.file.contents && this.file.contents.length > 0)
             {
@@ -65,6 +65,6 @@ export class ExerciseService
     {
         this.file.contents = JSON.stringify(this.exercises);
 
-        return this.dataRepository.saveFile(this.file);
+        return this.googleDriveService.saveFile(this.file);
     }
 }

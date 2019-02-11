@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { DataRepository } from 'src/services/data.repository';
+import { GoogleDriveService } from 'src/services/google-drive.service';
 import { FileInfo } from 'src/models/file-info';
 import { LogExercise } from 'src/models/log-exercise';
 
@@ -13,13 +13,13 @@ export class ExerciseLogService
     private logs: LogExercise[];
 
     constructor(
-        private dataRepository: DataRepository) { }
+        private googleDriveService: GoogleDriveService) { }
 
     async getLogs(): Promise<LogExercise[]>
     {
         if (this.logs == null)
         {
-            this.file = await this.dataRepository.getFile('logs.json');
+            this.file = await this.googleDriveService.getFile('logs.json');
 
             if (this.file.contents && this.file.contents.length > 0)
             {
@@ -126,6 +126,6 @@ export class ExerciseLogService
     {
         this.file.contents = JSON.stringify(this.logs);
 
-        return this.dataRepository.saveFile(this.file);
+        return this.googleDriveService.saveFile(this.file);
     }
 }

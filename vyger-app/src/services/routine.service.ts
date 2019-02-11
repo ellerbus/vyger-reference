@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { DataRepository } from 'src/services/data.repository';
+import { GoogleDriveService } from 'src/services/google-drive.service';
 import { FileInfo } from 'src/models/file-info';
 
 import { Routine } from '../models/routine';
@@ -14,13 +14,13 @@ export class RoutineService
     private routines: Routine[];
 
     constructor(
-        private dataRepository: DataRepository) { }
+        private googleDriveService: GoogleDriveService) { }
 
     async getRoutines(): Promise<Routine[]>
     {
         if (this.routines == null)
         {
-            this.file = await this.dataRepository.getFile('routines.json');
+            this.file = await this.googleDriveService.getFile('routines.json');
 
             if (this.file.contents && this.file.contents.length > 0)
             {
@@ -67,6 +67,6 @@ export class RoutineService
     {
         this.file.contents = JSON.stringify(this.routines);
 
-        return this.dataRepository.saveFile(this.file);
+        return this.googleDriveService.saveFile(this.file);
     }
 }

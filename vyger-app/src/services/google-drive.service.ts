@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FileInfo } from 'src/models/file-info';
-import { Observable, of } from 'rxjs';
-import { reject } from 'q';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DataRepository
+export class GoogleDriveService
 {
     constructor()
     {
