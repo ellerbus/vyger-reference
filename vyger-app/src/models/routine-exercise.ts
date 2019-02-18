@@ -1,5 +1,6 @@
 import { Exercise } from './exercise';
 import { utilities } from './utilities';
+import { WorkoutSet } from './workout-set';
 
 export class RoutineExercise extends Exercise
 {
@@ -15,6 +16,23 @@ export class RoutineExercise extends Exercise
         const keys = ['week', 'day', 'sequence', 'sets'];
 
         utilities.extend(this, source, keys);
+
+        if (this.sets)
+        {
+            let x = this.sets.join(', ');
+
+            this.sets = WorkoutSet.format(x);
+        }
+    }
+
+    get pattern(): string
+    {
+        return this.sets.join(', ');
+    }
+
+    set pattern(value: string)
+    {
+        this.sets = WorkoutSet.format(value);
     }
 
     static compare(a: RoutineExercise, b: RoutineExercise): number

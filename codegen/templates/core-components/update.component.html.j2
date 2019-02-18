@@ -1,0 +1,24 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+<app-loading [loading]="clone == null"
+             [title]="'{{ names.base_class() | label_case }}'"></app-loading>
+
+<form class="col-lg-6 col-md-6 mx-auto"
+      #{{ names.base_class() | camel_case }}Form="ngForm"
+      *ngIf="clone != null">
+  <div>TODO inputs</div>
+
+  <div class="form-group form-row">
+    <div class="col pull-left">
+      <button type="button"
+              secondaryButton
+              (click)="cancel()">cancel</button>
+    </div>
+    <div class="col text-right">
+      <button type="button"
+              primaryButton
+              (click)="save()"
+              [disabled]="!{{ names.base_class() | camel_case }}Form.form.valid || saving">save</button>
+    </div>
+  </div>
+</form>

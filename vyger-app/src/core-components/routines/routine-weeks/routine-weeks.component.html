@@ -1,0 +1,20 @@
+<div class="form-group">
+  <label for="weeks">Number of Weeks</label>
+  <select id="weeks"
+          name="weeks"
+          class="form-control"
+          required
+          [(ngModel)]="routine.weeks"
+          [class.is-invalid]="weeks.invalid"
+          #weeks="ngModel">
+    <option [value]="null">(select weeks)</option>
+    <option *ngFor="let week of totalWeeks"
+            [ngValue]="week">
+      {{ week }} Weeks per Cycle
+    </option>
+  </select>
+  <div class="invalid-feedback"
+       *ngIf="weeks.invalid && weeks.touched">
+    <div *ngIf="weeks.errors.required">weeks is required</div>
+  </div>
+</div>

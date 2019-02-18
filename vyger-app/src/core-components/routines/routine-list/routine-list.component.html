@@ -1,0 +1,32 @@
+<app-loading [loading]="routines == null"
+             [title]="'Routines'"></app-loading>
+
+<table class="table"
+       [hidden]="routines == null">
+  <thead>
+    <tr>
+      <th colspan="2">Name</th>
+      <th class="create-col">
+        <a class="btn btn-outline-success float-right"
+           routerLink="/routines/create">
+          Create
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tr *ngFor="let routine of routines">
+    <td [innerText]="routine.name"></td>
+    <td class="update-col">
+      <a class="btn btn-outline-secondary float-right"
+         routerLink="/routines/exercises/{{ routine.id }}">
+        Exercises
+      </a>
+    </td>
+    <td class="create-col">
+      <a class="btn btn-outline-secondary float-right"
+         routerLink="/routines/update/{{ routine.id }}">
+        Update
+      </a>
+    </td>
+  </tr>
+</table>

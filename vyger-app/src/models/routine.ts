@@ -1,5 +1,6 @@
 import { utilities } from 'src/models/utilities';
 import { RoutineExercise } from './routine-exercise';
+import { WorkoutSet } from './workout-set';
 
 export class Routine
 {
@@ -20,6 +21,23 @@ export class Routine
         {
             this.exercises = source.exercises.map(x => new RoutineExercise(x));
         }
+
+        if (this.sets)
+        {
+            let x = this.sets.join(', ');
+
+            this.sets = WorkoutSet.format(x);
+        }
+    }
+
+    get pattern(): string
+    {
+        return this.sets.join(', ');
+    }
+
+    set pattern(value: string)
+    {
+        this.sets = WorkoutSet.format(value);
     }
 
     static matches(r: Routine, name: string): boolean

@@ -1,0 +1,90 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { {{ names.base_class() }} } from 'src/models/{{ names.base_class() | spine_case }}';
+import { PageTitleService } from 'src/services/page-title.service';
+import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
+import { {{ names.base_class() }}Service } from 'src/services/{{ names.base_class() | spine_case }}.service';
+import { utilities } from 'src/models/utilities';
+import { FlashMessageService } from 'src/services/flash-message.service';
+
+@Component({
+    selector: 'app-{{ names.base_class() | spine_case }}-update',
+    templateUrl: './{{ names.base_class() | spine_case }}-update.component.html'
+})
+export class {{ names.base_class() }}UpdateComponent implements OnInit
+{
+    original: {{ names.base_class() }};
+    clone: {{ names.base_class() }};
+    saving: boolean;
+
+    constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private flashMessageService : FlashMessageService,
+        private breadCrumbService: BreadCrumbsService,
+        private pageTitleService: PageTitleService,
+        private {{ names.base_class() | camel_case }}Service: {{ names.base_class() }}Service) { }
+
+    ngOnInit()
+    {
+        this.pageTitleService.setTitle('Update {{ names.base_class() }}');
+
+        const id = this.activatedRoute.snapshot.paramMap.get('id');
+
+        this.{{ names.base_class() | camel_case }}Service
+            .get{{ names.base_class() }}(id)
+            .then(this.onloading{{ names.base_class() }});
+
+        this.updateBreadCrumbs();
+    }
+
+    private onloading{{ names.base_class() }} = ({{ names.base_class() | camel_case }}: {{ names.base_class() }}): void =>
+    {
+        if ({{ names.base_class() | camel_case }} == null)
+        {
+            let msg = 'Selected {{ names.base_class() | camel_case }} could not be found'
+
+            this.flashMessageService.danger(msg, true);
+
+            this.router.navigateByUrl('/{{ names.base_classes() | spine_case }}');
+        }
+        else
+        {
+            this.original = {{ names.base_class() | camel_case }};
+
+            this.clone = new {{ names.base_class() }}({ ...this.original });
+        }
+    }
+
+    cancel(): void
+    {
+        this.router.navigateByUrl('/{{ names.base_classes() | spine_case }}');
+    }
+
+    save(): void
+    {
+        const keys = ['properties'];
+
+        utilities.extend(this.original, this.clone, keys);
+
+        this.saving = true;
+
+        this.{{ names.base_class() | camel_case }}Service
+            .save()
+            .then(() =>
+            {
+                this.saving = false;
+                this.router.navigateByUrl('/{{ names.base_classes() | spine_case }}');
+            });
+    }
+
+    private updateBreadCrumbs = () =>
+    {
+        this.breadCrumbService.add('Home', '/');
+        this.breadCrumbService.add('{{ names.base_classes() }}', '/{{ names.base_classes() }}');
+        this.breadCrumbService.add('Update {{ names.base_classes() }}');
+    };
+}

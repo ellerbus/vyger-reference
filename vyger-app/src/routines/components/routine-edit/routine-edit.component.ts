@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Routine } from 'src/models/routine';
-import { RoutineService } from 'src/services/routine.service';
-import { PageTitleService } from 'src/services/page-title.service';
-import { utilities } from 'src/models/utilities';
 import { RoutineExercise } from 'src/models/routine-exercise';
+import { utilities } from 'src/models/utilities';
+import { PageTitleService } from 'src/services/page-title.service';
+import { RoutineService } from 'src/services/routine.service';
 
 @Component({
     selector: 'app-routine-edit',
@@ -50,7 +50,7 @@ export class RoutineEditComponent implements OnInit
         {
             this.routine = routine;
 
-            this.clone = { ...this.routine };
+            this.clone = new Routine({ ...this.routine });
 
             this.exercise.sets = this.routine.sets;
         }

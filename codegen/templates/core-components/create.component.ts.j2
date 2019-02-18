@@ -1,0 +1,59 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { {{ names.base_class() }} } from 'src/models/{{ names.base_class() | spine_case }}';
+import { PageTitleService } from 'src/services/page-title.service';
+import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
+import { {{ names.base_class() }}Service } from 'src/services/{{ names.base_class() | spine_case }}.service';
+
+@Component({
+    selector: 'app-{{ names.base_class() | spine_case }}-create',
+    templateUrl: './{{ names.base_class() | spine_case }}-create.component.html'
+})
+export class {{ names.base_class() }}CreateComponent implements OnInit
+{
+    {{ names.base_class() | camel_case }}: {{ names.base_class() }};
+    saving: boolean;
+
+    constructor(
+        private router: Router,
+        private breadCrumbService: BreadCrumbsService,
+        private pageTitleService: PageTitleService,
+        private {{ names.base_class() | camel_case }}Service: {{ names.base_class() }}Service) { }
+
+    ngOnInit()
+    {
+        this.pageTitleService.setTitle('Create {{ names.base_class() }}');
+
+        this.{{ names.base_class() | camel_case }} = new {{ names.base_class() }}();
+
+        this.updateBreadCrumbs();
+    }
+
+    cancel(): void
+    {
+        this.router.navigateByUrl('/{{ names.base_classes() | spine_case }}');
+    }
+
+    save(): void
+    {
+        this.saving = true;
+
+        this.{{ names.base_class() | camel_case }}Service
+            .add{{ names.base_class() }}(this.{{ names.base_class() | camel_case }})
+            .then(() =>
+            {
+                this.saving = false;
+                this.router.navigateByUrl('/{{ names.base_classes() | spine_case }}');
+            });
+    }
+
+    private updateBreadCrumbs = () =>
+    {
+        this.breadCrumbService.add('Home', '/');
+        this.breadCrumbService.add('{{ names.base_classes() }}', '/{{ names.base_classes() }}');
+        this.breadCrumbService.add('Create {{ names.base_classes() }}');
+    };
+}

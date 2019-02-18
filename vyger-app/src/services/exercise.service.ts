@@ -54,7 +54,7 @@ export class ExerciseService
             });
     }
 
-    add(exercise: Exercise): Promise<any>
+    addExercise(exercise: Exercise): Promise<any>
     {
         this.exercises.push(exercise);
 

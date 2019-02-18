@@ -1,0 +1,16 @@
+<div class="form-group">
+  <label for="pattern">Default Sets</label>
+  <input id="pattern"
+         name="pattern"
+         class="form-control"
+         type="text"
+         required
+         placeholder="routine pattern"
+         [(ngModel)]="routine.pattern"
+         [class.is-invalid]="pattern.invalid"
+         #pattern="ngModel">
+  <div class="invalid-feedback"
+       *ngIf="pattern.invalid ">
+    <div *ngIf="pattern.errors.required">pattern is required</div>
+  </div>
+</div>

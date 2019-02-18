@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
 import { FlashMessageService } from 'src/services/flash-message.service';
@@ -19,11 +19,17 @@ export class AppComponent implements OnInit
     ngOnInit()
     {
         this.router.events
+            .pipe(filter(event => event instanceof NavigationStart))
+            .subscribe(event =>
+            {
+                this.breadCrumbsService.clear();
+            });
+
+        this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(event =>
             {
                 this.flashMessageService.clear();
-                this.breadCrumbsService.clear();
 
                 window.scrollTo(0, 0);
             });

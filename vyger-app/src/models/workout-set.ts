@@ -62,9 +62,13 @@ export class WorkoutSet
             {
                 this.loadRepMax(word);
             }
+            else if (word.match(/^[=][Ll].*$/))
+            {
+                this.loadReferenceUsingAssignment(word);
+            }
             else if (word.match(/^\[[0-9L]\].*$/))
             {
-                this.loadReference(word);
+                this.loadReferenceUsingBrackets(word);
             }
         }
     }
@@ -90,11 +94,25 @@ export class WorkoutSet
         }
     }
 
-    private loadReference = (word: string): void =>
+    private loadReferenceUsingAssignment = (word: string): void =>
     {
         this.type = WorkoutSetTypes.Reference;
 
-        const pos = word.indexOf(']');
+        this.reference = word.substr(1, 1);
+
+        let pos = word.indexOf('-');
+
+        if (pos > -1)
+        {
+            this.loadPercent(word.substr(pos));
+        }
+    }
+
+    private loadReferenceUsingBrackets = (word: string): void =>
+    {
+        this.type = WorkoutSetTypes.Reference;
+
+        let pos = word.indexOf(']');
 
         this.reference = word.substr(1, pos - 1);
 
@@ -154,7 +172,7 @@ export class WorkoutSet
                 patterns.push(this.repmax + 'RM');
                 break;
             case WorkoutSetTypes.Reference:
-                patterns.push('[' + this.reference + ']');
+                patterns.push('=' + this.reference);
                 break;
         }
 

@@ -1,0 +1,23 @@
+<app-loading [loading]="exercise == null"
+             [title]="'Exercise'"></app-loading>
+
+<form class="col-lg-6 col-md-6 mx-auto"
+      #exerciseForm="ngForm">
+  <app-exercise-group [exercise]="exercise"></app-exercise-group>
+  <app-exercise-category [exercise]="exercise"></app-exercise-category>
+  <app-exercise-name [exercise]="exercise"></app-exercise-name>
+
+  <div class="form-group form-row">
+    <div class="col pull-left">
+      <button type="button"
+              secondaryButton
+              (click)="cancel()">cancel</button>
+    </div>
+    <div class="col text-right">
+      <button type="button"
+              primaryButton
+              (click)="save()"
+              [disabled]="!exerciseForm.form.valid || saving">save</button>
+    </div>
+  </div>
+</form>

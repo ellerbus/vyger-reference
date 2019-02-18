@@ -39,24 +39,36 @@ class CodeGenerator(object):
     def get_out_file(self, file):
         out_path = self.get_out_path(file)
         filename = self.get_filename(file)
-        return os.path.join(out_path, filename)
+        fullname = os.path.join(out_path, filename)
+        fullpath = os.path.dirname(fullname)
+        if not os.path.exists(fullpath):
+            os.makedirs(fullpath)
+        return fullname
 
     def get_out_path(self, file):
         out_path = os.path.dirname(file)
         out_path = out_path.replace(self.template_path, self.solution_path)
-        if 'Pages' in out_path:
-            #   special case for Pages
-            #   include table name
-            names = label_case(self.table).split(' ')
-            tree_path = "\\".join(map(lambda x: plural(x), names))
+        if 'core-components' in out_path:
+            #   create a path
+            #   pages/table/name
+            names = label_case(self.table).lower().split(' ')
+            tree_path = '-'.join(names)
             out_path = os.path.join(out_path, tree_path)
-        if not os.path.exists(out_path):
-            os.makedirs(out_path)
         return out_path
 
     def get_filename(self, file):
         filename = os.path.basename(file).replace('.j2', '')
-        if 'Pages' not in file:
+        if 'core-components' in file:
+            #   create a file name
+            #   table-name/table-name-component/table-name-component.ext
+            pos = filename.find('.')
+            names = label_case(self.table).lower().split(' ')
+            component = '-'.join(names) + '-' + filename[:pos]
+            filename = '-'.join(names) + '-' + filename
+            filename = os.path.join(component, filename)
+        else:
+            #   special case for when NOT in Pages
+            #   include table name
             filename = pascal_case(self.table) + filename
         return filename
 
@@ -78,7 +90,8 @@ class CodeGenerator(object):
 
     def load_paths(self):
         my_path = os.path.abspath(os.path.dirname(__file__))
-        self.solution_path = os.path.abspath(os.path.join(my_path, '../src'))
+        go_up = '../vyger-app/src'
+        self.solution_path = os.path.abspath(os.path.join(my_path, go_up))
         self.template_path = os.path.join(my_path, 'templates')
         self.log('Solution Path', self.solution_path)
         self.log('Template Path', self.template_path)

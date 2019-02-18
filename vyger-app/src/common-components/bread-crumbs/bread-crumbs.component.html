@@ -1,7 +1,7 @@
-<nav *ngIf="breadCrumbsService.crumbs && breadCrumbsService.crumbs.length > 0">
+<nav *ngIf="hasCrumbs()">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"
-        *ngFor="let crumb of breadCrumbsService.crumbs"
+        *ngFor="let crumb of getCrumbs()"
         [class.active]="crumb.active">
       <a [routerLink]="crumb.path"
          *ngIf="!crumb.active">
@@ -9,6 +9,11 @@
       </a>
       <span *ngIf="crumb.active">
         {{ crumb.title }}
+        <span class="text-muted"
+              *ngIf="crumb.filter">
+          <i class="fa fa-fw fa-filter"></i>
+          {{ crumb.filter }}
+        </span>
       </span>
     </li>
   </ol>

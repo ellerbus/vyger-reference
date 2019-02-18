@@ -1,6 +1,5 @@
 import { } from 'jasmine';
 import { WorkoutSet, WorkoutSetTypes } from './workout-set';
-import { worker } from 'cluster';
 
 describe('WorkoutSet', () =>
 {
@@ -108,39 +107,39 @@ describe('WorkoutSet', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]');
+            let subject = new WorkoutSet('=L');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]x1');
+            expect(subject.pattern).toBe('=Lx1');
         });
 
         it('should parse with reps', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]x5');
+            let subject = new WorkoutSet('=Lx5');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]x5');
+            expect(subject.pattern).toBe('=Lx5');
         });
 
         it('should parse with repeat', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]x5x3');
+            let subject = new WorkoutSet('=Lx5x3');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
-            expect(subject.pattern).toBe('[L]x5x3');
+            expect(subject.pattern).toBe('=Lx5x3');
         });
     });
 
@@ -150,42 +149,42 @@ describe('WorkoutSet', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]95%');
+            let subject = new WorkoutSet('=L95%');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]-95%x1');
+            expect(subject.pattern).toBe('=L-95%x1');
         });
 
         it('should parse with reps', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]95%x5');
+            let subject = new WorkoutSet('=L95%x5');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]-95%x5');
+            expect(subject.pattern).toBe('=L-95%x5');
         });
 
         it('should parse with repeat', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]95%x5x3');
+            let subject = new WorkoutSet('=L95%x5x3');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
-            expect(subject.pattern).toBe('[L]-95%x5x3');
+            expect(subject.pattern).toBe('=L-95%x5x3');
         });
     });
 
@@ -195,42 +194,42 @@ describe('WorkoutSet', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]-95%');
+            let subject = new WorkoutSet('=L-95%');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]-95%x1');
+            expect(subject.pattern).toBe('=L-95%x1');
         });
 
         it('should parse with reps', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]-95%x5');
+            let subject = new WorkoutSet('=L-95%x5');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]-95%x5');
+            expect(subject.pattern).toBe('=L-95%x5');
         });
 
         it('should parse with repeat', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]-95%x5x3');
+            let subject = new WorkoutSet('=L-95%x5x3');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
-            expect(subject.pattern).toBe('[L]-95%x5x3');
+            expect(subject.pattern).toBe('=L-95%x5x3');
         });
     });
 
@@ -240,39 +239,39 @@ describe('WorkoutSet', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]');
+            let subject = new WorkoutSet('=L');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]x1');
+            expect(subject.pattern).toBe('=Lx1');
         });
 
         it('should parse with reps', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]x5');
+            let subject = new WorkoutSet('=Lx5');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]x5');
+            expect(subject.pattern).toBe('=Lx5');
         });
 
         it('should parse with repeat', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]x5x3');
+            let subject = new WorkoutSet('=Lx5x3');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
-            expect(subject.pattern).toBe('[L]x5x3');
+            expect(subject.pattern).toBe('=Lx5x3');
         });
     });
 
@@ -282,42 +281,42 @@ describe('WorkoutSet', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]95%');
+            let subject = new WorkoutSet('=L95%');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]-95%x1');
+            expect(subject.pattern).toBe('=L-95%x1');
         });
 
         it('should parse with reps', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]95%x5');
+            let subject = new WorkoutSet('=L95%x5');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]-95%x5');
+            expect(subject.pattern).toBe('=L-95%x5');
         });
 
         it('should parse with repeat', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]95%x5x3');
+            let subject = new WorkoutSet('=L95%x5x3');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
-            expect(subject.pattern).toBe('[L]-95%x5x3');
+            expect(subject.pattern).toBe('=L-95%x5x3');
         });
     });
 
@@ -327,42 +326,42 @@ describe('WorkoutSet', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]-95%');
+            let subject = new WorkoutSet('=L-95%');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(1);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]-95%x1');
+            expect(subject.pattern).toBe('=L-95%x1');
         });
 
         it('should parse with reps', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]-95%x5');
+            let subject = new WorkoutSet('=L-95%x5');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(1);
-            expect(subject.pattern).toBe('[L]-95%x5');
+            expect(subject.pattern).toBe('=L-95%x5');
         });
 
         it('should parse with repeat', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('[L]-95%x5x3');
+            let subject = new WorkoutSet('=L-95%x5x3');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.Reference);
             expect(subject.reference).toBe('L');
             expect(subject.percent).toBe(95);
             expect(subject.reps).toBe(5);
             expect(subject.repeat).toBe(3);
-            expect(subject.pattern).toBe('[L]-95%x5x3');
+            expect(subject.pattern).toBe('=L-95%x5x3');
         });
     });
 });

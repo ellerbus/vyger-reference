@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-
-import { GoogleDriveService } from 'src/services/google-drive.service';
 import { FileInfo } from 'src/models/file-info';
-
-import { Routine } from '../models/routine';
+import { Routine } from 'src/models/routine';
+import { GoogleDriveService } from 'src/services/google-drive.service';
 
 @Injectable({
     providedIn: 'root'
@@ -56,7 +54,7 @@ export class RoutineService
             });
     }
 
-    add(routine: Routine): Promise<any>
+    addRoutine(routine: Routine): Promise<any>
     {
         this.routines.push(routine);
 

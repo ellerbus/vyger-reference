@@ -1,8 +1,9 @@
 <div class="row"
      *ngIf="flashMessageService.messages && flashMessageService.messages.length > 0">
-  <div class="col-12 alert alert-dismissible alert-info"
+  <div class="col alert alert-dismissible alert-info"
        role="alert"
        *ngFor="let msg of flashMessageService.messages"
+       [class.alert-success]="msg.severity == 'Success'"
        [class.alert-info]="msg.severity == 'Information'"
        [class.alert-warning]="msg.severity == 'Warning'"
        [class.alert-danger]="msg.severity == 'Danger'">
@@ -12,7 +13,7 @@
             (click)="flashMessageService.remove(msg)">
       <i class="fas fa-fw fa-times-circle"></i>
     </button>
-    <span class="pull-right ml-3"
+    <span class="float-right ml-3"
           *ngIf="msg.growl">{{ 15 - msg.seconds }}</span>
     {{ msg.message }}
   </div>

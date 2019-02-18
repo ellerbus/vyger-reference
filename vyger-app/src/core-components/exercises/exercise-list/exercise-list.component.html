@@ -1,0 +1,48 @@
+<app-loading [loading]="exercises == null"
+             [title]="'Exercises'"></app-loading>
+
+<table class="table"
+       [hidden]="exercises == null">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th class="create-col">
+        <a class="btn btn-outline-success float-right"
+           routerLink="/exercises/create">
+          Create
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let exercise of exercises">
+      <td>
+        <a routerLink="/exercises"
+           [queryParams]="{ group: exercise.group }">
+          {{ exercise.group }}
+        </a>
+        -
+        <a routerLink="/exercises"
+           [queryParams]="{ category: exercise.category }">
+          {{ exercise.category }}
+        </a>
+        -
+        {{ exercise.name }}
+      </td>
+      <td class="create-col">
+        <a class="btn btn-outline-secondary float-right"
+           routerLink="/exercises/update/{{ exercise.id }}">
+          Update
+        </a>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="group || category">
+    <tr>
+      <td>
+        <a routerLink="/exercises">ALL</a>
+      </td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>

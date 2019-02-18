@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Routine } from 'src/models/routine';
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { PageTitleService } from 'src/services/page-title.service';
-import { RoutineExercise } from 'src/models/routine-exercise';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Exercise } from 'src/models/exercise';
+import { Routine } from 'src/models/routine';
+import { RoutineExercise } from 'src/models/routine-exercise';
 import { ExerciseService } from 'src/services/exercise.service';
+import { PageTitleService } from 'src/services/page-title.service';
 import { RoutineService } from 'src/services/routine.service';
+
 
 @Component({
     selector: 'app-routine-exercise-add',

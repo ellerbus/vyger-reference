@@ -1,18 +1,17 @@
-import { NgModule, Directive } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { SortablejsModule } from 'angular-sortablejs';
-
-import { AuthenticationGuard } from 'src/guards/authentication.guard';
-import { LoadingModule } from 'src/loading/loading.module';
 import { DirectivesModule } from 'src/directives/directives.module';
-import { CycleListComponent } from './components/cycle-list/cycle-list.component';
+import { AuthenticationGuard } from 'src/guards/authentication.guard';
 import { CycleAddComponent } from './components/cycle-add/cycle-add.component';
-import { CycleInputListComponent } from './components/cycle-input-list/cycle-input-list.component';
-import { CycleExerciseListComponent } from './components/cycle-exercise-list/cycle-exercise-list.component';
 import { CycleExerciseDaysPickerComponent } from './components/cycle-exercise-days-picker/cycle-exercise-days-picker.component';
+import { CycleExerciseListComponent } from './components/cycle-exercise-list/cycle-exercise-list.component';
 import { CycleExerciseWeeksPickerComponent } from './components/cycle-exercise-weeks-picker/cycle-exercise-weeks-picker.component';
+import { CycleInputListComponent } from './components/cycle-input-list/cycle-input-list.component';
+import { CycleListComponent } from './components/cycle-list/cycle-list.component';
+
 
 const routes: Routes = [
     {
@@ -40,7 +39,6 @@ const routes: Routes = [
         BrowserModule,
         FormsModule,
         RouterModule,
-        LoadingModule,
         DirectivesModule,
         SortablejsModule,
         RouterModule.forRoot(routes, { useHash: true })

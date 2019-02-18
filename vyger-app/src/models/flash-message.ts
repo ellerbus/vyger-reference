@@ -26,7 +26,6 @@ export class FlashMessage
     {
         this.id = ++id;
         this.severity = FlashMessageSeverity.Information;
-        this.growl = false;
         this.seconds = 0;
 
         if (properties)

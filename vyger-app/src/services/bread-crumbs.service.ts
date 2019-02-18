@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BreadCrumb } from 'src/common-components/bread-crumbs/bread-crumb.model';
+import { BreadCrumb } from 'src/models/bread-crumb.model';
 
 @Injectable({
     providedIn: 'root'
@@ -13,9 +13,9 @@ export class BreadCrumbsService
         this.crumbs = [];
     }
 
-    add(title: string, path: string = null): void
+    add(title: string, path: string = null, filter: string = null): void
     {
-        let bc = new BreadCrumb(title, path, path == null);
+        let bc = new BreadCrumb(title, path, path == null, filter);
 
         this.crumbs.push(bc);
     }

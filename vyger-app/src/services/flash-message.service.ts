@@ -11,6 +11,8 @@ export class FlashMessageService
     constructor()
     {
         this.messages = [];
+
+        setInterval(this.callback, 1000);
     }
 
     clear()
@@ -55,4 +57,21 @@ export class FlashMessageService
 
         this.messages.push(msg);
     }
+
+    private callback = () =>
+    {
+        for (let i = 0; i < this.messages.length; i++)
+        {
+            let msg = this.messages[i];
+
+            msg.seconds += 1;
+
+            if (msg.growl && msg.seconds >= 15)
+            {
+                this.messages.splice(i, 1);
+
+                i -= 1;
+            }
+        }
+    };
 }

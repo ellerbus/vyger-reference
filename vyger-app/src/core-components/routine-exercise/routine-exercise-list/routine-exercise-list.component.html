@@ -1,0 +1,58 @@
+<app-loading [loading]="clones == null"
+             [title]="'Routine Exercises'"></app-loading>
+
+<app-routine-weeks-picker [routine]="routine"></app-routine-weeks-picker>
+<app-routine-days-picker [routine]="routine"></app-routine-days-picker>
+
+<table class="table dnd-table"
+       *ngIf="routine != null">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Exercise</th>
+      <th style="width: 600px">Workout</th>
+      <th class="pr-1 create-col">
+        <a class="btn btn-outline-success float-right"
+           href="#/routines/exercises/create/{{ routine.id }}">
+          Add
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody [sortablejs]="clones"
+         [sortablejsOptions]="{ handle: '.drag-handler', onUpdate: resequence }">
+    <tr *ngFor="let exercise of clones">
+      <td class="drag-handler"></td>
+      <td>
+        <a class="pointer float-right"
+           href="#/routines/exercises/delete/{{ routine.id }}?exercise={{ exercise.id }}&day={{ day }}">
+          <span class="fa fa-fw fa-times text-danger"></span>
+        </a>
+        <a href="#/routines/exercises/update/{{ routine.id }}?exercise={{ exercise.id }}&day={{ day }}">
+          {{ exercise.fullDisplay() }}
+        </a>
+      </td>
+      <td colspan="2"
+          class="p-1">
+        <input class="form-control workout-sets"
+               [(ngModel)]="exercise.pattern" />
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">
+        <a secondaryButton
+           href="#/routines/">
+          cancel
+        </a>
+      </td>
+      <td class="text-right">
+        <button type="button"
+                primaryButton
+                (click)="save()"
+                [disabled]="saving">save</button>
+      </td>
+    </tr>
+  </tfoot>
+</table>

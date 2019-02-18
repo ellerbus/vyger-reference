@@ -1,0 +1,29 @@
+<app-loading [loading]="clone == null"
+             [title]="'Routine'"></app-loading>
+
+<form class="col-lg-6 col-md-6 mx-auto"
+      #routineForm="ngForm"
+      *ngIf="clone != null">
+  <app-routine-name [routine]="clone"></app-routine-name>
+  <app-routine-weeks [routine]="clone"></app-routine-weeks>
+  <app-routine-days [routine]="clone"></app-routine-days>
+  <app-routine-pattern [routine]="clone"></app-routine-pattern>
+
+  <div class="form-group form-row">
+    <div class="col pull-left">
+      <button type="button"
+              secondaryButton
+              (click)="cancel()">cancel</button>
+    </div>
+    <div class="col text-right">
+      <a href="#/routines/exercises/{{ clone.id }}"
+         secondaryButton>
+        exercises
+      </a>
+      <button type="button"
+              primaryButton
+              (click)="save()"
+              [disabled]="!routineForm.form.valid || saving">save</button>
+    </div>
+  </div>
+</form>

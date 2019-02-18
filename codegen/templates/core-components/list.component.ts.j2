@@ -1,0 +1,43 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+import { Component, OnInit } from '@angular/core';
+import { PageTitleService } from 'src/services/page-title.service';
+import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
+import { {{ names.base_class() }} } from 'src/models/{{ names.base_class() | spine_case }}';
+import { {{ names.base_class() }}Service } from 'src/services/{{ names.base_class() | spine_case }}.service';
+
+@Component({
+    selector: 'app-{{ names.base_class() | spine_case }}-list',
+    templateUrl: './{{ names.base_class() | spine_case }}-list.component.html'
+})
+export class {{ names.base_class() }}ListComponent implements OnInit
+{
+    {{ names.base_class() | camel_case | plural }}: {{ names.base_class() }}[];
+
+    constructor(
+        private breadCrumbService: BreadCrumbsService,
+        private pageTitleService: PageTitleService,
+        private {{ names.base_class() | camel_case }}Service: {{ names.base_class() }}Service) { }
+
+    ngOnInit()
+    {
+        this.pageTitleService.setTitle('{{ names.base_class() | plural }}');
+
+        this.{{ names.base_class() | camel_case }}Service
+            .get{{ names.base_class() | plural }}()
+            .then(this.onloading{{ names.base_class() | plural }});
+   
+        this.updateBreadCrumbs();
+    }
+
+    private onloading{{ names.base_class() | plural }} = (data: {{ names.base_class() }}[]) =>
+    {
+        this.{{ names.base_class() | camel_case | plural }} = data.sort({{ names.base_class() }}.compare);
+    };
+
+    private updateBreadCrumbs = () =>
+    {
+        this.breadCrumbService.add('Home', '/');
+        this.breadCrumbService.add('{{ names.base_classes() }}');
+    };
+}
