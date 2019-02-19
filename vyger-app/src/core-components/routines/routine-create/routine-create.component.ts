@@ -45,7 +45,8 @@ export class RoutineCreateComponent implements OnInit
             .then(() =>
             {
                 this.saving = false;
-                this.router.navigateByUrl('/routines');
+
+                this.router.navigateByUrl('/routines/exercises/' + this.routine.id);
             });
     }
 

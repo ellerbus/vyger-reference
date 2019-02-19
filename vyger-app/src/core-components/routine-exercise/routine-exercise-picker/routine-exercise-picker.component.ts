@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
-
-import { Groups, Exercise, Categories } from 'src/models/exercise';
+import { Categories, Exercise, Groups } from 'src/models/exercise';
 import { Routine } from 'src/models/routine';
 import { RoutineExercise } from 'src/models/routine-exercise';
 import { ExerciseService } from 'src/services/exercise.service';
@@ -9,7 +8,6 @@ import { ExerciseService } from 'src/services/exercise.service';
 @Component({
     selector: 'app-routine-exercise-picker',
     templateUrl: './routine-exercise-picker.component.html',
-    styleUrls: ['./routine-exercise-picker.component.css'],
     viewProviders: [
         { provide: ControlContainer, useExisting: NgForm }
     ]

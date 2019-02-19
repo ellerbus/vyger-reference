@@ -1,0 +1,40 @@
+<app-loading [loading]="exercise == null"
+             [title]="'Routine Exercise'"></app-loading>
+
+<form class="col-lg-6 col-md-6 mx-auto"
+      *ngIf="exercise != null"
+      #routineExerciseForm="ngForm">
+
+  <app-routine-exercise-picker [routine]="routine"
+                               [exercise]="exercise"></app-routine-exercise-picker>
+  <div class="form-group">
+    <label for="pattern">Default Sets</label>
+    <input id="pattern"
+           name="pattern"
+           class="form-control"
+           type="text"
+           required
+           placeholder="exercise pattern"
+           [(ngModel)]="exercise.pattern"
+           [class.is-invalid]="pattern.invalid"
+           #pattern="ngModel">
+    <div class="invalid-feedback"
+         *ngIf="pattern.invalid ">
+      <div *ngIf="pattern.errors.required">pattern is required</div>
+    </div>
+  </div>
+
+  <div class="form-group form-row">
+    <div class="col pull-left">
+      <button type="button"
+              secondaryButton
+              (click)="cancel()">cancel</button>
+    </div>
+    <div class="col text-right">
+      <button type="button"
+              primaryButton
+              (click)="save()"
+              [disabled]="!routineExerciseForm.form.valid || saving">save</button>
+    </div>
+  </div>
+</form>

@@ -37,6 +37,13 @@ export class RoutineExercise extends Exercise
 
     static compare(a: RoutineExercise, b: RoutineExercise): number
     {
+        const week = a.week - b.week;
+
+        if (week != 0)
+        {
+            return week;
+        }
+
         const seq = a.sequence - b.sequence;
 
         if (seq != 0)

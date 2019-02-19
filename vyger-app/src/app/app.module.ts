@@ -18,8 +18,12 @@ import { ExerciseListComponent } from 'src/core-components/exercises/exercise-li
 import { ExerciseNameComponent } from 'src/core-components/exercises/exercise-name/exercise-name.component';
 import { ExerciseUpdateComponent } from 'src/core-components/exercises/exercise-update/exercise-update.component';
 import { HomeComponent } from 'src/core-components/home/home.component';
+import { RoutineExerciseCreateComponent } from 'src/core-components/routine-exercise/routine-exercise-create/routine-exercise-create.component';
 import { RoutineExerciseDaysPickerComponent } from 'src/core-components/routine-exercise/routine-exercise-days-picker/routine-exercise-days-picker.component';
+import { RoutineExerciseDeleteComponent } from 'src/core-components/routine-exercise/routine-exercise-delete/routine-exercise-delete.component';
 import { RoutineExerciseListComponent } from 'src/core-components/routine-exercise/routine-exercise-list/routine-exercise-list.component';
+import { RoutineExercisePickerComponent } from 'src/core-components/routine-exercise/routine-exercise-picker/routine-exercise-picker.component';
+import { RoutineExerciseUpdateComponent } from 'src/core-components/routine-exercise/routine-exercise-update/routine-exercise-update.component';
 import { RoutineExerciseWeeksPickerComponent } from 'src/core-components/routine-exercise/routine-exercise-weeks-picker/routine-exercise-weeks-picker.component';
 import { RoutineNameValidatorDirective } from 'src/core-components/routines/directives/routine-name-validator.directive';
 import { RoutineCreateComponent } from 'src/core-components/routines/routine-create/routine-create.component';
@@ -70,6 +74,9 @@ const routes: Routes = [
             { path: 'create', component: RoutineCreateComponent },
             { path: 'update/:id', component: RoutineUpdateComponent },
             { path: 'exercises/:id', component: RoutineExerciseListComponent },
+            { path: 'exercises/create/:id', component: RoutineExerciseCreateComponent },
+            { path: 'exercises/update/:id', component: RoutineExerciseUpdateComponent },
+            { path: 'exercises/delete/:id', component: RoutineExerciseDeleteComponent },
         ]
     },
 ];
@@ -113,6 +120,10 @@ const routes: Routes = [
         //  Routine Exercises
         //
         RoutineExerciseListComponent,
+        RoutineExerciseCreateComponent,
+        RoutineExerciseDeleteComponent,
+        RoutineExerciseUpdateComponent,
+        RoutineExercisePickerComponent,
         RoutineExerciseDaysPickerComponent,
         RoutineExerciseWeeksPickerComponent
     ],

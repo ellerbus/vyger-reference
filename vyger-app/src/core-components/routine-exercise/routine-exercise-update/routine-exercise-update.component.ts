@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Routine } from 'src/models/routine';
 import { RoutineExercise } from 'src/models/routine-exercise';
 import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
@@ -8,15 +8,14 @@ import { PageTitleService } from 'src/services/page-title.service';
 import { RoutineService } from 'src/services/routine.service';
 
 @Component({
-    selector: 'app-routine-exercise-list',
-    templateUrl: './routine-exercise-list.component.html'
+    selector: 'app-routine-exercise-update',
+    templateUrl: './routine-exercise-update.component.html'
 })
-export class RoutineExerciseListComponent implements OnInit
+export class RoutineExerciseUpdateComponent implements OnInit
 {
     saving: boolean;
     routine: Routine;
     clones: RoutineExercise[];
-    week: number;
     day: number;
 
     constructor(
@@ -27,7 +26,6 @@ export class RoutineExerciseListComponent implements OnInit
         private pageTitleService: PageTitleService,
         private routineService: RoutineService)
     {
-        this.week = 1;
         this.day = 1;
     }
 
@@ -37,23 +35,13 @@ export class RoutineExerciseListComponent implements OnInit
 
         const id = this.activatedRoute.snapshot.paramMap.get('id');
 
-        this.activatedRoute.queryParams.subscribe((x: Params) =>
-        {
-            if (x.week)
-            {
-                this.week = +x.week;
-            }
-            if (x.day)
-            {
-                this.day = +x.day;
-            }
+        this.day = +this.activatedRoute.snapshot.queryParamMap.get('day');
 
-            this.loadTitle();
+        this.loadTitle();
 
-            this.loadExercises();
+        this.loadExercises();
 
-            this.updateBreadCrumbs();
-        });
+        this.updateBreadCrumbs();
 
         this.routineService
             .getRoutine(id)
@@ -86,9 +74,9 @@ export class RoutineExerciseListComponent implements OnInit
     {
         if (this.routine)
         {
-            const subtitle = 'clones week=' + this.week + ' day=' + this.day;
+            // const subtitle = 'clones week=' + this.week + ' day=' + this.day;
 
-            this.pageTitleService.setTitle(this.routine.name, subtitle);
+            // this.pageTitleService.setTitle(this.routine.name, subtitle);
         }
     }
 
@@ -96,10 +84,21 @@ export class RoutineExerciseListComponent implements OnInit
     {
         if (this.routine)
         {
+            let exercise = this.activatedRoute.snapshot.queryParamMap.get('exercise');
+
             this.clones = this.routine.exercises
-                .filter(x => x.week == this.week && x.day == this.day)
+                .filter(x => x.day == this.day && x.id == exercise)
                 .sort(RoutineExercise.compare);
         }
+    }
+
+    cancel(): void
+    {
+        const queryParams = { week: 1, day: this.day };
+
+        let url = this.router.createUrlTree(['/routines/exercises/', this.routine.id], { queryParams });
+
+        this.router.navigateByUrl(url);
     }
 
     save(): void
@@ -127,57 +126,22 @@ export class RoutineExerciseListComponent implements OnInit
     {
         let original = this.routine
             .exercises
-            .find(x => x.week == this.week && x.day == this.day && x.id == clone.id);
+            .find(x => x.week == clone.week && x.day == this.day && x.id == clone.id);
 
         original.pattern = clone.pattern;
-        original.sequence = clone.sequence;
     };
-
-    //  syntacic crutch for sortablejs callback
-    resequence = (): void =>
-    {
-        if (this.clones)
-        {
-            const keys = this.getSequenceKeys();
-
-            for (let i = 0; i < this.clones.length; i++)
-            {
-                let ex = this.clones[i];
-
-                let seq = keys.indexOf(ex.id);
-
-                ex.sequence = seq + 1;
-            }
-
-            this.routineService.save();
-        }
-    }
-
-    private getSequenceKeys = (): string[] =>
-    {
-        let keys = [];
-
-        for (let i = 0; i < this.clones.length; i++)
-        {
-            const ex = this.clones[i];
-
-            keys.push(ex.id);
-        }
-
-        return keys;
-    }
 
     private updateBreadCrumbs = () =>
     {
         if (this.routine)
         {
-            let filter = 'Week=' + this.week + ', Day=' + this.day;
+            let filter = 'Day=' + this.day;
 
             this.breadCrumbService.clear();
             this.breadCrumbService.add('Home', '/');
             this.breadCrumbService.add('Routines', '/routines');
-            this.breadCrumbService.add(this.routine.name, '/routines/update/' + this.routine.id);
-            this.breadCrumbService.add('Update Exercises', null, filter);
+            this.breadCrumbService.add(this.routine.name, '/routines/exercises/' + this.routine.id);
+            this.breadCrumbService.add('Update Exercise', null, filter);
         }
     };
 }

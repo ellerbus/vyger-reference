@@ -63,7 +63,7 @@ export class ExerciseUpdateComponent implements OnInit
 
     save(): void
     {
-        const keys = ['properties'];
+        const keys = ['name', 'category', 'group'];
 
         utilities.extend(this.original, this.clone, keys);
 

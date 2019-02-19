@@ -64,7 +64,7 @@ export class RoutineUpdateComponent implements OnInit
 
     save(): void
     {
-        const keys = ['properties'];
+        const keys = ['name', 'weeks', 'days', 'pattern'];
 
         utilities.extend(this.original, this.clone, keys);
 
@@ -75,7 +75,8 @@ export class RoutineUpdateComponent implements OnInit
             .then(() =>
             {
                 this.saving = false;
-                this.router.navigateByUrl('/routines');
+
+                this.router.navigateByUrl('/routines/exercises/' + this.original.id);
             });
     }
 

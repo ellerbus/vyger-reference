@@ -1,12 +1,11 @@
-import { Component, OnInit, Input, SimpleChange, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-
 import { Routine } from 'src/models/routine';
+
 
 @Component({
     selector: 'app-routine-days-picker',
-    templateUrl: './routine-exercise-days-picker.component.html',
-    styleUrls: ['./routine-exercise-days-picker.component.css']
+    templateUrl: './routine-exercise-days-picker.component.html'
 })
 export class RoutineExerciseDaysPickerComponent implements OnInit, OnChanges
 {
