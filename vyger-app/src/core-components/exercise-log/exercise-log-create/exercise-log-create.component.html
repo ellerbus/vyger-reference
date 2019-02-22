@@ -1,14 +1,13 @@
-<app-loading [loading]="exercise == null"
-             [title]="'Routine Exercise'"></app-loading>
+<app-loading [loading]="logs == null"
+             [title]="'Exercise Log'"></app-loading>
 
 <form class="col-lg-6 col-md-6 mx-auto"
-      *ngIf="exercise != null"
-      #routineExerciseForm="ngForm">
+      *ngIf="logs != null"
+      #exerciseLogForm="ngForm">
 
-  <app-routine-exercise-picker [routine]="routine"
-                               [exercise]="exercise"></app-routine-exercise-picker>
+  <app-exercise-log-picker [logs]="logs"
+                           [exercise]="exercise"></app-exercise-log-picker>
   <div class="form-group">
-    <label for="pattern">Default Sets</label>
     <input id="pattern"
            name="pattern"
            class="form-control"
@@ -35,7 +34,7 @@
       <button type="button"
               primaryButton
               (click)="save()"
-              [disabled]="!routineExerciseForm.form.valid || saving">save</button>
+              [disabled]="!exerciseLogForm.form.valid || saving">save</button>
     </div>
   </div>
 </form>

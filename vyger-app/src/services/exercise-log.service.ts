@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-
-import { GoogleDriveService } from 'src/services/google-drive.service';
+import { ExerciseLog } from 'src/models/exercise-log';
 import { FileInfo } from 'src/models/file-info';
-import { LogExercise } from 'src/models/log-exercise';
+import { GoogleDriveService } from 'src/services/google-drive.service';
+
 
 @Injectable({
     providedIn: 'root'
@@ -10,12 +10,12 @@ import { LogExercise } from 'src/models/log-exercise';
 export class ExerciseLogService
 {
     private file: FileInfo;
-    private logs: LogExercise[];
+    private logs: ExerciseLog[];
 
     constructor(
         private googleDriveService: GoogleDriveService) { }
 
-    async getLogs(): Promise<LogExercise[]>
+    async getLogs(): Promise<ExerciseLog[]>
     {
         if (this.logs == null)
         {
@@ -23,9 +23,9 @@ export class ExerciseLogService
 
             if (this.file.contents && this.file.contents.length > 0)
             {
-                let parsed = <LogExercise[]>JSON.parse(this.file.contents);
+                let parsed = <ExerciseLog[]>JSON.parse(this.file.contents);
 
-                this.logs = parsed.map(x => new LogExercise(x));
+                this.logs = parsed.map(x => new ExerciseLog(x));
             }
             else
             {
@@ -38,86 +38,14 @@ export class ExerciseLogService
         return Promise.resolve(this.logs);
     }
 
-    async getLogsFor(ymd: string): Promise<LogExercise[]>
+    add(log: ExerciseLog): Promise<any>
     {
-        return this
-            .getLogs()
-            .then(logs =>
-            {
-                let subset = logs.filter(x => x.ymd == ymd);
+        let exists = this.logs.some(x => x.ymd == log.ymd && x.id == log.id);
 
-                return subset;
-            });
-    }
-
-    async getLogFor(ymd: string, id: string): Promise<LogExercise>
-    {
-        return this
-            .getLogs()
-            .then(logs =>
-            {
-                let subset = logs.filter(x => x.ymd == ymd && x.id == id);
-
-                if (subset && subset.length == 1)
-                {
-                    return subset[0];
-                }
-                return null;
-            });
-    }
-
-    async getMostRecent(id: string): Promise<LogExercise>
-    {
-        return this
-            .getLogs()
-            .then(logs =>
-            {
-                let exercise: LogExercise = null;
-                let max: string = null;
-
-                for (let i = 0; i < logs.length; i++)
-                {
-                    let e = logs[i];
-
-                    if (e.id == id)
-                    {
-                        if (max == null || max.localeCompare(e.ymd) < 0)
-                        {
-                            max = e.ymd;
-                            exercise = e;
-                        }
-                    }
-                }
-
-                return exercise;
-            });
-    }
-
-    async getMaxes(): Promise<{ [key: string]: LogExercise }>
-    {
-        return this
-            .getLogs()
-            .then(logs =>
-            {
-                let maxes: { [key: string]: LogExercise } = {};
-
-                for (let i = 0; i < logs.length; i++)
-                {
-                    let e = logs[i];
-
-                    if (maxes[e.id] == null || maxes[e.id].oneRepMax < e.oneRepMax)
-                    {
-                        maxes[e.id] = e;
-                    }
-                }
-
-                return maxes;
-            });
-    }
-
-    add(log: LogExercise): Promise<any>
-    {
-        this.logs.push(log);
+        if (!exists)
+        {
+            this.logs.push(log);
+        }
 
         return this.save();
     }

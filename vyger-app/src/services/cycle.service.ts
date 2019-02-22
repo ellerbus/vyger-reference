@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { GoogleDriveService } from 'src/services/google-drive.service';
-import { FileInfo } from 'src/models/file-info';
 import { Cycle } from 'src/models/cycle';
+import { FileInfo } from 'src/models/file-info';
+import { GoogleDriveService } from 'src/services/google-drive.service';
 
 @Injectable({
     providedIn: 'root'
@@ -71,6 +71,8 @@ export class CycleService
     {
         this.file.contents = JSON.stringify(this.cycles);
 
-        return this.googleDriveService.saveFile(this.file);
+        //return this.googleDriveService.saveFile(this.file);
+
+        return Promise.resolve();
     }
 }

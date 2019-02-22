@@ -40,8 +40,8 @@ def create_routine_exercise_table(meta):
     return t
 
 
-def create_log_exercise_table(meta):
-    t = Table('LogExercise',
+def create_exercise_log_table(meta):
+    t = Table('ExerciseLog',
               meta,
               Column('id', String(3),
                      primary_key=True, nullable=False),
@@ -105,7 +105,7 @@ def create_database_engine():
     create_exercise_table(meta)
     create_routine_table(meta)
     create_routine_exercise_table(meta)
-    create_log_exercise_table(meta)
+    create_exercise_log_table(meta)
     create_cycle_table(meta)
     create_cycle_input_table(meta)
     create_cycle_exercise_table(meta)

@@ -10,6 +10,16 @@ import { FlashMessagesComponent } from 'src/common-components/flash-messages/fla
 import { LoadingComponent } from 'src/common-components/loading/loading.component';
 import { PageHeaderComponent } from 'src/common-components/page-header/page-header.component';
 import { PageTitleComponent } from 'src/common-components/page-title/page-title.component';
+import { CycleExerciseListComponent } from 'src/core-components/cycle-exercises/cycle-exercise-list/cycle-exercise-list.component';
+import { CycleInputListComponent } from 'src/core-components/cycle-inputs/cycle-input-list/cycle-input-list.component';
+import { CycleCreateComponent } from 'src/core-components/cycles/cycle-create/cycle-create.component';
+import { CycleExerciseDaysPickerComponent } from 'src/core-components/cycles/cycle-exercise-days-picker/cycle-exercise-days-picker.component';
+import { CycleExerciseWeeksPickerComponent } from 'src/core-components/cycles/cycle-exercise-weeks-picker/cycle-exercise-weeks-picker.component';
+import { CycleListComponent } from 'src/core-components/cycles/cycle-list/cycle-list.component';
+import { ExerciseLogCreateComponent } from 'src/core-components/exercise-log/exercise-log-create/exercise-log-create.component';
+import { ExerciseLogDeleteComponent } from 'src/core-components/exercise-log/exercise-log-delete/exercise-log-delete.component';
+import { ExerciseLogListComponent } from 'src/core-components/exercise-log/exercise-log-list/exercise-log-list.component';
+import { ExerciseLogPickerComponent } from 'src/core-components/exercise-log/exercise-log-picker/exercise-log-picker.component';
 import { ExerciseNameValidatorDirective } from 'src/core-components/exercises/directives/exercise-name-validator.directive';
 import { ExerciseCategoryComponent } from 'src/core-components/exercises/exercise-category/exercise-category.component';
 import { ExerciseCreateComponent } from 'src/core-components/exercises/exercise-create/exercise-create.component';
@@ -34,10 +44,8 @@ import { RoutinePatternComponent } from 'src/core-components/routines/routine-pa
 import { RoutineUpdateComponent } from 'src/core-components/routines/routine-update/routine-update.component';
 import { RoutineWeeksComponent } from 'src/core-components/routines/routine-weeks/routine-weeks.component';
 import { SignInComponent } from 'src/core-components/sign-in/sign-in.component';
-import { CyclesModule } from 'src/cycles/cycles.module';
 import { DirectivesModule } from 'src/directives/directives.module';
 import { AuthenticationGuard } from 'src/guards/authentication.guard';
-import { LogsModule } from 'src/logs/logs.module';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { FlashMessageService } from 'src/services/flash-message.service';
 import { HttpErrorInterceptorService } from 'src/services/http-error-interceptor.service';
@@ -77,6 +85,26 @@ const routes: Routes = [
             { path: 'exercises/create/:id', component: RoutineExerciseCreateComponent },
             { path: 'exercises/update/:id', component: RoutineExerciseUpdateComponent },
             { path: 'exercises/delete/:id', component: RoutineExerciseDeleteComponent },
+        ]
+    },
+    {
+        path: 'cycles',
+        canActivate: [AuthenticationGuard],
+        children: [
+            { path: '', component: CycleListComponent },
+            { path: 'create', component: CycleCreateComponent },
+            { path: 'inputs/:id', component: CycleInputListComponent },
+            { path: 'exercises/:id', component: CycleExerciseListComponent },
+        ]
+    },
+    {
+        path: 'logs',
+        canActivate: [AuthenticationGuard],
+        children: [
+            //            { path: '', component: CycleListComponent },
+            { path: 'exercises/:date', component: ExerciseLogListComponent },
+            { path: 'exercises/create/:date', component: ExerciseLogCreateComponent },
+            { path: 'exercises/delete/:date', component: ExerciseLogDeleteComponent },
         ]
     },
 ];
@@ -125,14 +153,34 @@ const routes: Routes = [
         RoutineExerciseUpdateComponent,
         RoutineExercisePickerComponent,
         RoutineExerciseDaysPickerComponent,
-        RoutineExerciseWeeksPickerComponent
+        RoutineExerciseWeeksPickerComponent,
+        //
+        //  Cycles
+        //
+        CycleListComponent,
+        CycleCreateComponent,
+        //
+        //  Cycle Inputs
+        //
+        CycleInputListComponent,
+        //
+        //  Cycle Exercises
+        //
+        CycleExerciseListComponent,
+        CycleExerciseDaysPickerComponent,
+        CycleExerciseWeeksPickerComponent,
+        //
+        //  Exercise Logs
+        //
+        ExerciseLogListComponent,
+        ExerciseLogCreateComponent,
+        ExerciseLogDeleteComponent,
+        ExerciseLogPickerComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         RouterModule,
-        LogsModule,
-        CyclesModule,
         DirectivesModule,
         SortablejsModule.forRoot({ animation: 150 }),
         RouterModule.forRoot(routes, { useHash: true })

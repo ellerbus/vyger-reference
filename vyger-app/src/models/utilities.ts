@@ -100,4 +100,14 @@ export namespace utilities
     {
         return oneRepMax * (1.0278 - 0.0278 * reps);
     }
+
+    export function diffdays(then: string, now: string): number
+    {
+        let thenDt = toDate(then);
+        let nowDt = toDate(now);
+
+        let diff = nowDt.valueOf() - thenDt.valueOf();
+
+        return Math.round(diff / (1000 * 60 * 60 * 24));
+    }
 }

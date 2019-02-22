@@ -1,39 +1,44 @@
 <app-loading [loading]="clones == null"
-             [title]="'Routine Exercises'"></app-loading>
+             [title]="'Exercise Log'"></app-loading>
 
-<table class="table dnd-table"
-       *ngIf="routine != null">
+<table class="table dnd-table">
   <thead>
     <tr>
-      <th class="text-center create-col">Week</th>
+      <th></th>
       <th>Exercise</th>
       <th style="width: 600px">Workout</th>
+      <th class="pr-1 create-col">
+        <a class="btn btn-outline-success float-right"
+           href="#/logs/exercises/create/{{ date }}">
+          Add
+        </a>
+      </th>
     </tr>
   </thead>
-  <tbody>
+  <tbody [sortablejs]="clones"
+         [sortablejsOptions]="{ handle: '.drag-handler', onUpdate: resequence }">
     <tr *ngFor="let exercise of clones">
-      <td class="text-center">#{{ exercise.week }}</td>
+      <td class="drag-handler"></td>
       <td>
         <a class="pointer float-right"
-           href="#/routines/exercises/delete/{{ routine.id }}?exercise={{ exercise.id }}&day={{ day }}">
+           href="#/logs/exercises/delete/{{ date }}?exercise={{ exercise.id }}">
           <span class="fa fa-fw fa-times text-danger"></span>
         </a>
-        <a href="#/routines/exercises/update/{{ routine.id }}?exercise={{ exercise.id }}&day={{ day }}">
-          {{ exercise.fullDisplay() }}
-        </a>
+        {{ exercise.fullDisplay() }}
       </td>
-      <td class="p-1">
+      <td colspan="2"
+          class="p-1">
         <input class="form-control workout-sets"
                [ngModelOptions]="{updateOn:'blur'}"
                [(ngModel)]="exercise.pattern" />
       </td>
     </tr>
   </tbody>
-  <tfoot>
+  <tfoot *ngIf="clones && clones.length > 0">
     <tr>
-      <td colspan="2">
+      <td colspan="3">
         <a secondaryButton
-           href="#/routines/exercises/{{ routine.id }}">
+           href="#/logs/">
           cancel
         </a>
       </td>

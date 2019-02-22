@@ -32,6 +32,25 @@ export class Cycle
         }
     }
 
+    canLogWorkout(week: number, day: number): boolean
+    {
+        let w = parseInt((this.lastLogged || '0:0').split(':').shift());
+
+        let d = parseInt((this.lastLogged || '0:0').split(':').pop());
+
+        if (week > w)
+        {
+            return true;
+        }
+
+        if (week >= w && day > d)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     static compare(a: Cycle, b: Cycle): number
     {
         //  desc

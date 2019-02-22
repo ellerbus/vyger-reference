@@ -1,0 +1,46 @@
+<app-loading [loading]="cycles == null"
+             [title]="'Cycles'"></app-loading>
+
+<table class="table"
+       [hidden]="cycles == null">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th class="text-center"
+          style="width: 100px;">Seq</th>
+      <th class="text-center"
+          style="width: 100px;">Weeks</th>
+      <th class="text-center"
+          style="width: 100px;">Logged</th>
+      <th>
+        <a class="btn btn-outline-success float-right"
+           routerLink="/cycles/create">
+          Create
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tr *ngFor="let cycle of cycles">
+    <td [innerText]="cycle.name"></td>
+    <td class="text-center"
+        [innerText]="cycle.sequence"></td>
+    <td class="text-center"
+        [innerText]="cycle.weeks"></td>
+    <td class="text-center">
+      <span *ngIf="cycle.lastLogged"
+            [innerText]="cycle.lastLogged"></span>
+    </td>
+    <td class="create-col">
+      <a class="btn btn-outline-secondary float-right"
+         routerLink="/cycles/exercises/{{ cycle.id }}"
+         *ngIf="cycle.inputs && cycle.inputs.length > 0">
+        Exercises
+      </a>
+      <a class="btn btn-outline-secondary float-right"
+         routerLink="/cycles/inputs/{{ cycle.id }}"
+         *ngIf="cycle.inputs == null">
+        Inputs
+      </a>
+    </td>
+  </tr>
+</table>

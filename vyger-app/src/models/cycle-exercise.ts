@@ -46,6 +46,16 @@ export class CycleExercise extends Exercise
         return oneRepMax;
     }
 
+    get pattern(): string
+    {
+        return this.plan.join(', ');
+    }
+
+    set pattern(value: string)
+    {
+        this.plan = WorkoutSet.format(value);
+    }
+
     static compare(a: CycleExercise, b: CycleExercise): number
     {
         const seq = a.sequence - b.sequence;

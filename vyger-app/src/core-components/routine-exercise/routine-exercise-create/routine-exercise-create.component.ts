@@ -41,8 +41,6 @@ export class RoutineExerciseCreateComponent implements OnInit
 
         this.day = +this.activatedRoute.snapshot.queryParamMap.get('day');
 
-        this.loadTitle();
-
         this.updateBreadCrumbs();
 
         this.routineService
@@ -70,12 +68,11 @@ export class RoutineExerciseCreateComponent implements OnInit
 
             this.exercise = new RoutineExercise();
 
+            this.exercise.id = null;
             this.exercise.group = null;
             this.exercise.category = null;
             this.exercise.day = this.day;
             this.exercise.pattern = this.routine.pattern;
-
-            this.loadTitle();
 
             this.updateBreadCrumbs();
         }
@@ -84,16 +81,6 @@ export class RoutineExerciseCreateComponent implements OnInit
     private onloadingExercises = (exercises: Exercise[]): void =>
     {
         this.exercises = exercises;
-    }
-
-    private loadTitle = (): void =>
-    {
-        if (this.routine)
-        {
-            //  const subtitle = 'clones week=' + this.week + ' day=' + this.day;
-
-            //  this.pageTitleService.setTitle(this.routine.name, subtitle);
-        }
     }
 
     cancel(): void

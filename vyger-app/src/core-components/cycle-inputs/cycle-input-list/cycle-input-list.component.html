@@ -1,0 +1,71 @@
+<app-loading [loading]="clones == null"
+             [title]="'Cycle Inputs'"></app-loading>
+
+<table class="table"
+       [hidden]="clones == null">
+  <thead>
+    <tr>
+      <th>Exercise</th>
+      <th class="select-col">Weight</th>
+      <th class="select-col">Reps</th>
+      <th class="select-col">Pullback</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let input of clones">
+      <td>
+        {{ input.smartDisplay() }}
+      </td>
+      <td class="p-1">
+        <input name="weight"
+               type="number"
+               step="5"
+               class="form-control"
+               [disabled]="cycle.lastLogged"
+               [(ngModel)]="input.weight" />
+      </td>
+      <td class="p-1">
+        <select name="reps"
+                class="form-control"
+                [disabled]="cycle.lastLogged"
+                [(ngModel)]="input.reps"
+                (change)="update()">
+          <option *ngFor="let rep of reps"
+                  [value]="rep">
+            x{{ rep }}
+          </option>
+        </select>
+      </td>
+      <td class="p-1">
+        <select name="pullback"
+                class="form-control"
+                [disabled]="cycle.lastLogged"
+                [(ngModel)]="input.pullback"
+                (change)="update()">
+          <option *ngFor="let percent of percents"
+                  [value]="percent">
+            {{ percent }}%
+          </option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>
+        <button type="button"
+                secondaryButton
+                (click)="cancel()">cancel</button>
+      </td>
+      <td colspan="3"
+          class="text-right">
+        <button type="button"
+                primaryButton
+                (click)="save()"
+                [disabled]="saving">
+          next
+          <span class="fa fa-fw fa-caret-right"></span></button>
+      </td>
+    </tr>
+  </tfoot>
+</table>

@@ -6,6 +6,7 @@
          type="text"
          required
          placeholder="routine pattern"
+         [ngModelOptions]="{updateOn:'blur'}"
          [(ngModel)]="routine.pattern"
          [class.is-invalid]="pattern.invalid"
          #pattern="ngModel">

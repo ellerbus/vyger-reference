@@ -36,6 +36,7 @@
       <td colspan="2"
           class="p-1">
         <input class="form-control workout-sets"
+               [ngModelOptions]="{updateOn:'blur'}"
                [(ngModel)]="exercise.pattern" />
       </td>
     </tr>

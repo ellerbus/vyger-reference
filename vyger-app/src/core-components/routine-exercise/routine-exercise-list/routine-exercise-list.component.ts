@@ -148,8 +148,6 @@ export class RoutineExerciseListComponent implements OnInit
 
                 ex.sequence = seq + 1;
             }
-
-            this.routineService.save();
         }
     }
 

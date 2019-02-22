@@ -1,0 +1,40 @@
+<app-loading [loading]="routines == null"
+             [title]="'Routines'"></app-loading>
+
+<form class="col-lg-6 col-md-6 mx-auto"
+      #cycleForm="ngForm">
+  <div class="form-group">
+    <label for="routineId">Select Routine</label>
+    <select id="routineId"
+            name="routineId"
+            class="form-control"
+            required
+            [(ngModel)]="routine"
+            [class.is-invalid]="routineId.invalid"
+            #routineId="ngModel">
+      <option [value]="null">(select routine)</option>
+      <option *ngFor="let x of routines"
+              [ngValue]="x">
+        {{ x.name }}
+      </option>
+    </select>
+    <div class="invalid-feedback"
+         *ngIf="routineId.invalid && routineId.touched">
+      <div *ngIf="routineId.errors.required">routine is required</div>
+    </div>
+  </div>
+
+  <div class="form-group form-row">
+    <div class="col pull-left">
+      <button type="button"
+              secondaryButton
+              (click)="cancel()">cancel</button>
+    </div>
+    <div class="col text-right">
+      <button type="button"
+              primaryButton
+              (click)="save()"
+              [disabled]="!cycleForm.form.valid || saving">save</button>
+    </div>
+  </div>
+</form>
