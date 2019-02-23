@@ -20,6 +20,7 @@ import { ExerciseLogCreateComponent } from 'src/core-components/exercise-log/exe
 import { ExerciseLogCycleComponent } from 'src/core-components/exercise-log/exercise-log-cycle/exercise-log-cycle.component';
 import { ExerciseLogDeleteComponent } from 'src/core-components/exercise-log/exercise-log-delete/exercise-log-delete.component';
 import { ExerciseLogListComponent } from 'src/core-components/exercise-log/exercise-log-list/exercise-log-list.component';
+import { ExerciseLogMonthComponent } from 'src/core-components/exercise-log/exercise-log-month/exercise-log-month.component';
 import { ExerciseLogPickerComponent } from 'src/core-components/exercise-log/exercise-log-picker/exercise-log-picker.component';
 import { ExerciseNameValidatorDirective } from 'src/core-components/exercises/directives/exercise-name-validator.directive';
 import { ExerciseCategoryComponent } from 'src/core-components/exercises/exercise-category/exercise-category.component';
@@ -102,7 +103,7 @@ const routes: Routes = [
         path: 'logs',
         canActivate: [AuthenticationGuard],
         children: [
-            //            { path: '', component: CycleListComponent },
+            { path: '', component: ExerciseLogMonthComponent },
             { path: 'exercises/:date', component: ExerciseLogListComponent },
             { path: 'exercises/cycle/:date', component: ExerciseLogCycleComponent },
             { path: 'exercises/create/:date', component: ExerciseLogCreateComponent },
@@ -174,6 +175,7 @@ const routes: Routes = [
         //
         //  Exercise Logs
         //
+        ExerciseLogMonthComponent,
         ExerciseLogListComponent,
         ExerciseLogCycleComponent,
         ExerciseLogCreateComponent,

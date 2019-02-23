@@ -1,0 +1,36 @@
+<app-loading [loading]="calendar == null"
+             [title]="'Exercise Log'"></app-loading>
+
+<table class="table table-bordered table-calendar"
+       *ngIf="calendar">
+  <thead>
+    <tr>
+      <th class="text-center"
+          style="width:14.3%">Sun</th>
+      <th class="text-center"
+          style="width:14.3%">Mon</th>
+      <th class="text-center"
+          style="width:14.3%">Tue</th>
+      <th class="text-center"
+          style="width:14.3%">Wed</th>
+      <th class="text-center"
+          style="width:14.3%">Thu</th>
+      <th class="text-center"
+          style="width:14.3%">Fri</th>
+      <th class="text-center">Sat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let week of calendar.weeks">
+      <td *ngFor="let day of week.days"
+          [class.table-secondary]="!day.current"
+          [class.table-success]="day.active"
+          (click)="goto(day.date)">
+        <span class="float-right"
+              [class.text-muted]="!day.current">
+          {{ day.display }}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

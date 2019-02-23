@@ -56,6 +56,10 @@ table th.select-col,
 table td.select-col {
   width: 125px;
 }
+table.table-calendar tbody tr {
+  min-height: 100px;
+  height: 100px;
+}
 
 .drag-handler {
   width: 1.4em;

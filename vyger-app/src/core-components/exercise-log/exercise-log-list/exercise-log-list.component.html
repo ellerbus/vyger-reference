@@ -34,17 +34,18 @@
       </td>
     </tr>
   </tbody>
-  <tfoot *ngIf="clones && clones.length > 0">
+  <tfoot>
     <tr>
       <td colspan="3">
         <a secondaryButton
-           href="#/logs/">
+           href="#/logs?date={{ date }}">
           cancel
         </a>
       </td>
       <td class="text-right">
         <button type="button"
                 primaryButton
+                *ngIf="clones && clones.length > 0"
                 (click)="save()"
                 [disabled]="saving">save</button>
       </td>
