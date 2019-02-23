@@ -51,11 +51,11 @@ export class CycleExerciseListComponent implements OnInit
 
         let today = new Date();
 
-        this.dates.push();
+        this.dates.push(new DatePair(today));
 
         for (let i = 1; i < 10; i++)
         {
-            today.setDate(today.getDate() - i);
+            today.setDate(today.getDate() - 1);
 
             this.dates.push(new DatePair(today));
         }
@@ -132,6 +132,15 @@ export class CycleExerciseListComponent implements OnInit
                 .filter(x => x.week == this.week && x.day == this.day)
                 .sort(CycleExercise.compare);
         }
+    }
+
+    logIt(): void
+    {
+        const queryParams = { cycle: this.cycle.id, week: this.week, day: this.day };
+
+        let url = this.router.createUrlTree(['/logs/exercises/cycle/', this.date.value], { queryParams });
+
+        this.router.navigateByUrl(url);
     }
 
     private updateBreadCrumbs = () =>

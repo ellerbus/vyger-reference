@@ -17,6 +17,7 @@ import { CycleExerciseDaysPickerComponent } from 'src/core-components/cycles/cyc
 import { CycleExerciseWeeksPickerComponent } from 'src/core-components/cycles/cycle-exercise-weeks-picker/cycle-exercise-weeks-picker.component';
 import { CycleListComponent } from 'src/core-components/cycles/cycle-list/cycle-list.component';
 import { ExerciseLogCreateComponent } from 'src/core-components/exercise-log/exercise-log-create/exercise-log-create.component';
+import { ExerciseLogCycleComponent } from 'src/core-components/exercise-log/exercise-log-cycle/exercise-log-cycle.component';
 import { ExerciseLogDeleteComponent } from 'src/core-components/exercise-log/exercise-log-delete/exercise-log-delete.component';
 import { ExerciseLogListComponent } from 'src/core-components/exercise-log/exercise-log-list/exercise-log-list.component';
 import { ExerciseLogPickerComponent } from 'src/core-components/exercise-log/exercise-log-picker/exercise-log-picker.component';
@@ -103,6 +104,7 @@ const routes: Routes = [
         children: [
             //            { path: '', component: CycleListComponent },
             { path: 'exercises/:date', component: ExerciseLogListComponent },
+            { path: 'exercises/cycle/:date', component: ExerciseLogCycleComponent },
             { path: 'exercises/create/:date', component: ExerciseLogCreateComponent },
             { path: 'exercises/delete/:date', component: ExerciseLogDeleteComponent },
         ]
@@ -173,6 +175,7 @@ const routes: Routes = [
         //  Exercise Logs
         //
         ExerciseLogListComponent,
+        ExerciseLogCycleComponent,
         ExerciseLogCreateComponent,
         ExerciseLogDeleteComponent,
         ExerciseLogPickerComponent

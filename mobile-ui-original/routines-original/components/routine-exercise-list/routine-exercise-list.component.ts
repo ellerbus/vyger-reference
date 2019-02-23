@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Routine } from 'src/models/routine';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import { PageTitleService } from 'src/services/page-title.service';
 import { RoutineExercise } from 'src/models/routine-exercise';
+import { PageTitleService } from 'src/services/page-title.service';
 import { RoutineService } from 'src/services/routine.service';
+
 
 @Component({
     selector: 'app-routine-exercise-list',
@@ -106,8 +106,6 @@ export class RoutineExerciseListComponent implements OnInit
 
                 ex.sequence = seq + 1;
             }
-
-            this.RoutineService.save();
         }
     }
 

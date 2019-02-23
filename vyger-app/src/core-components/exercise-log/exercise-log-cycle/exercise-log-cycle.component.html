@@ -1,0 +1,46 @@
+<app-loading [loading]="clones == null"
+             [title]="'Exercise Log'"></app-loading>
+
+<table class="table dnd-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Exercise</th>
+      <th style="width: 600px">Workout</th>
+    </tr>
+  </thead>
+  <tbody [sortablejs]="clones"
+         [sortablejsOptions]="{ handle: '.drag-handler', onUpdate: resequence }">
+    <tr *ngFor="let exercise of clones">
+      <td class="drag-handler"></td>
+      <td>
+        <a class="pointer float-right"
+           href="#/logs/exercises/delete/{{ date }}?exercise={{ exercise.id }}">
+          <span class="fa fa-fw fa-times text-danger"></span>
+        </a>
+        {{ exercise.fullDisplay() }}
+      </td>
+      <td class="p-1">
+        <input class="form-control workout-sets"
+               [ngModelOptions]="{updateOn:'blur'}"
+               [(ngModel)]="exercise.pattern" />
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="clones && clones.length > 0">
+    <tr>
+      <td colspan="3">
+        <a secondaryButton
+           href="#/logs/exercises/{{ date }}">
+          cancel
+        </a>
+      </td>
+      <td class="text-right">
+        <button type="button"
+                primaryButton
+                (click)="save()"
+                [disabled]="saving">save</button>
+      </td>
+    </tr>
+  </tfoot>
+</table>
