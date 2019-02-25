@@ -31,7 +31,7 @@ export class RoutineExerciseUpdateComponent implements OnInit
 
     ngOnInit()
     {
-        this.pageTitleService.setTitle('RoutineExercises');
+        this.pageTitleService.setTitle('Routine Exercises');
 
         const id = this.activatedRoute.snapshot.paramMap.get('id');
 

@@ -9,7 +9,6 @@ import { BreadCrumbsComponent } from 'src/common-components/bread-crumbs/bread-c
 import { FlashMessagesComponent } from 'src/common-components/flash-messages/flash-messages.component';
 import { LoadingComponent } from 'src/common-components/loading/loading.component';
 import { PageHeaderComponent } from 'src/common-components/page-header/page-header.component';
-import { PageTitleComponent } from 'src/common-components/page-title/page-title.component';
 import { CycleExerciseListComponent } from 'src/core-components/cycle-exercises/cycle-exercise-list/cycle-exercise-list.component';
 import { CycleInputListComponent } from 'src/core-components/cycle-inputs/cycle-input-list/cycle-input-list.component';
 import { CycleCreateComponent } from 'src/core-components/cycles/cycle-create/cycle-create.component';
@@ -119,7 +118,6 @@ const routes: Routes = [
         //  Common
         //
         SideMenuComponent,
-        PageTitleComponent,
         PageHeaderComponent,
         FlashMessagesComponent,
         BreadCrumbsComponent,

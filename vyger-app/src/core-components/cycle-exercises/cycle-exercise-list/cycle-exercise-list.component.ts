@@ -65,7 +65,7 @@ export class CycleExerciseListComponent implements OnInit
 
     ngOnInit()
     {
-        this.pageTitleService.setTitle('CycleExercises');
+        this.pageTitleService.setTitle('Cycle Exercises');
 
         const id = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -79,8 +79,6 @@ export class CycleExerciseListComponent implements OnInit
             {
                 this.day = +x.day;
             }
-
-            this.loadTitle();
 
             this.loadExercises();
 
@@ -106,21 +104,9 @@ export class CycleExerciseListComponent implements OnInit
         {
             this.cycle = cycle;
 
-            this.loadTitle();
-
             this.loadExercises();
 
             this.updateBreadCrumbs();
-        }
-    }
-
-    private loadTitle = (): void =>
-    {
-        if (this.cycle)
-        {
-            const subtitle = 'clones week=' + this.week + ' day=' + this.day;
-
-            this.pageTitleService.setTitle(this.cycle.name, subtitle);
         }
     }
 

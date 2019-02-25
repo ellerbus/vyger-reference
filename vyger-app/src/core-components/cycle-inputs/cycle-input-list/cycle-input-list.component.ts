@@ -43,7 +43,7 @@ export class CycleInputListComponent implements OnInit
 
     ngOnInit()
     {
-        this.pageTitleService.setTitle('CycleInputs');
+        this.pageTitleService.setTitle('Cycle Inputs');
 
         this.id = this.activatedRoute.snapshot.paramMap.get('id');
 

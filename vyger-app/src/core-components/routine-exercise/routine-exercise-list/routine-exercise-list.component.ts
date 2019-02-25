@@ -33,7 +33,7 @@ export class RoutineExerciseListComponent implements OnInit
 
     ngOnInit()
     {
-        this.pageTitleService.setTitle('RoutineExercises');
+        this.pageTitleService.setTitle('Routine Exercises');
 
         const id = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -47,8 +47,6 @@ export class RoutineExerciseListComponent implements OnInit
             {
                 this.day = +x.day;
             }
-
-            this.loadTitle();
 
             this.loadExercises();
 
@@ -74,21 +72,9 @@ export class RoutineExerciseListComponent implements OnInit
         {
             this.routine = routine;
 
-            this.loadTitle();
-
             this.loadExercises();
 
             this.updateBreadCrumbs();
-        }
-    }
-
-    private loadTitle = (): void =>
-    {
-        if (this.routine)
-        {
-            const subtitle = 'clones week=' + this.week + ' day=' + this.day;
-
-            this.pageTitleService.setTitle(this.routine.name, subtitle);
         }
     }
 
