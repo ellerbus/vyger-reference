@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cycle } from 'src/models/cycle';
+import { CycleExercise } from 'src/models/cycle-exercise';
 import { ExerciseLog } from 'src/models/exercise-log';
 import { utilities } from 'src/models/utilities';
 import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
@@ -20,6 +21,8 @@ export class ExerciseLogCycleComponent implements OnInit
     exercises: ExerciseLog[];
     clones: ExerciseLog[];
     cycle: Cycle;
+    week: number;
+    day: number;
 
     constructor(
         private router: Router,
@@ -90,10 +93,12 @@ export class ExerciseLogCycleComponent implements OnInit
     {
         if (this.cycle && this.clones)
         {
-            let week = +this.activatedRoute.snapshot.queryParamMap.get('week');
-            let day = +this.activatedRoute.snapshot.queryParamMap.get('day');
+            this.week = +this.activatedRoute.snapshot.queryParamMap.get('week');
+            this.day = +this.activatedRoute.snapshot.queryParamMap.get('day');
 
-            let exercises = this.cycle.exercises.filter(x => x.week == week && x.day == day);
+            let exercises = this.cycle.exercises
+                .filter(x => x.week == this.week && x.day == this.day)
+                .sort(CycleExercise.compare);
 
             for (let i = 0; i < exercises.length; i++)
             {
@@ -131,6 +136,17 @@ export class ExerciseLogCycleComponent implements OnInit
         this.saving = false;
 
         this.flashMessageService.success('Saved Successfully', true);
+
+        this.cycle.lastLogged = this.week + ':' + this.day;
+
+        this.cycleService
+            .save()
+            .then(this.onsavedCycle);
+    };
+
+    private onsavedCycle = () =>
+    {
+        this.router.navigateByUrl('/logs/exercises/' + this.date);
     };
 
     private overlayOntoExercise = (clone: ExerciseLog): void =>

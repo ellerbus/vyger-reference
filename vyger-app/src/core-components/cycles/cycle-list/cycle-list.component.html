@@ -33,6 +33,7 @@
     <td class="create-col">
       <a class="btn btn-outline-secondary float-right"
          routerLink="/cycles/exercises/{{ cycle.id }}"
+         [queryParams]="getParams(cycle)"
          *ngIf="cycle.inputs && cycle.inputs.length > 0">
         Exercises
       </a>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PageTitleService } from 'src/services/page-title.service';
-import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
 import { Cycle } from 'src/models/cycle';
+import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
 import { CycleService } from 'src/services/cycle.service';
+import { PageTitleService } from 'src/services/page-title.service';
 
 @Component({
     selector: 'app-cycle-list',
@@ -24,7 +24,7 @@ export class CycleListComponent implements OnInit
         this.cycleService
             .getCycles()
             .then(this.onloadingCycles);
-   
+
         this.updateBreadCrumbs();
     }
 
@@ -38,4 +38,46 @@ export class CycleListComponent implements OnInit
         this.breadCrumbService.add('Home', '/');
         this.breadCrumbService.add('Cycles');
     };
+
+    getParams(cycle: Cycle): any
+    {
+        let [week, day] = this.getLastLogged(cycle);
+
+        if (week == 0)
+        {
+            week = 1;
+        }
+
+        if (day == 0)
+        {
+            day = 1;
+        }
+        else if (day + 1 > cycle.days)
+        {
+            week += 1;
+            day = 1;
+        }
+        else
+        {
+            day += 1;
+        }
+
+        if (week > cycle.weeks)
+        {
+            week = 1;
+            day = 1;
+        }
+
+        return { week, day };
+    }
+
+    private getLastLogged = (cycle: Cycle): number[] =>
+    {
+        let logged = cycle.lastLogged || '0:0';
+
+        let week = +(logged.split(':').shift());
+        let day = +(logged.split(':').pop());
+
+        return [week, day];
+    }
 }

@@ -34,9 +34,9 @@ export class Cycle
 
     canLogWorkout(week: number, day: number): boolean
     {
-        let w = parseInt((this.lastLogged || '0:0').split(':').shift());
+        let w = +((this.lastLogged || '0:0').split(':').shift());
 
-        let d = parseInt((this.lastLogged || '0:0').split(':').pop());
+        let d = +((this.lastLogged || '0:0').split(':').pop());
 
         if (week > w)
         {
