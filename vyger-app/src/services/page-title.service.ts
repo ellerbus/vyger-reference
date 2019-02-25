@@ -6,7 +6,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class PageTitleService
 {
-    private title: string = 'Vyger';
+    private title: string = 'vyger';
     private subtitle: string = null;
 
     constructor(
@@ -25,9 +25,9 @@ export class PageTitleService
         this.title = title;
 
         let display = this.title;
-        if (this.title != 'Vyger')
+        if (this.title != 'vyger')
         {
-            display = 'Vyger - ' + display;
+            display = 'vyger - ' + display;
         }
 
         this.titleService.setTitle(display);

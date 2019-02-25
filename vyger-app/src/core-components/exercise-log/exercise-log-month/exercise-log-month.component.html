@@ -20,7 +20,7 @@
       <th class="text-center">Sat</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="pointer">
     <tr *ngFor="let week of calendar.weeks">
       <td *ngFor="let day of week.days"
           [class.table-secondary]="!day.current"
@@ -34,3 +34,20 @@
     </tr>
   </tbody>
 </table>
+
+<div class="row">
+  <div class="col">
+    <button type="button"
+            secondaryButton
+            (click)="prev()">
+      Prev
+    </button>
+  </div>
+  <div class="col text-right">
+    <button type="button"
+            secondaryButton
+            (click)="next()">
+      Next
+    </button>
+  </div>
+</div>

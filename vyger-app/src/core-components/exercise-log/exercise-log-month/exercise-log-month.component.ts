@@ -77,9 +77,47 @@ export class ExerciseLogMonthComponent implements OnInit
         this.router.navigateByUrl('/logs/exercises/' + date);
     }
 
+    prev()
+    {
+        let d = utilities.toDate(this.date);
+
+        d.setDate(1);
+
+        d.setMonth(d.getMonth() - 1);
+
+        let p = utilities.getYMD(d);
+
+        let queryParams = { date: p };
+
+        let url = this.router.createUrlTree(['/logs'], { queryParams });
+
+        this.router.navigateByUrl(url);
+    }
+
+    next()
+    {
+        let d = utilities.toDate(this.date);
+
+        d.setDate(1);
+
+        d.setMonth(d.getMonth() + 1);
+
+        let n = utilities.getYMD(d);
+
+        let queryParams = { date: n };
+
+        let url = this.router.createUrlTree(['/logs'], { queryParams });
+
+        this.router.navigateByUrl(url);
+    }
+
     private updateBreadCrumbs = () =>
     {
-        let filter = 'Date=' + this.date;
+        let options = { month: 'long', year: 'numeric' };
+
+        let value = utilities.toDate(this.date);
+
+        let filter = value.toLocaleDateString('en-US', options);
 
         this.breadCrumbService.clear();
         this.breadCrumbService.add('Home', '/');

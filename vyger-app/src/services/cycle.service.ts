@@ -71,8 +71,6 @@ export class CycleService
     {
         this.file.contents = JSON.stringify(this.cycles);
 
-        //return this.googleDriveService.saveFile(this.file);
-
-        return Promise.resolve();
+        return this.googleDriveService.saveFile(this.file);
     }
 }
