@@ -27,7 +27,7 @@ export class WorkoutSet
         this.reps = 1;
         this.repeat = 1;
 
-        this.parse(set);
+        this.parse((set || '').toUpperCase());
     }
 
     get oneRepMax(): number
@@ -39,12 +39,12 @@ export class WorkoutSet
     {
         const parts = set.split(/[xX/]/gi);
 
-        this.loadWeight(parts);
-        this.loadReps(parts);
-        this.loadSets(parts);
+        this.parseWeight(parts);
+        this.parseReps(parts);
+        this.parseRepeat(parts);
     }
 
-    private loadWeight = (parts: string[]): void =>
+    private parseWeight = (parts: string[]): void =>
     {
         if (parts.length > 0)
         {
@@ -52,7 +52,7 @@ export class WorkoutSet
 
             if (word.match(/^[0-9]+$/))
             {
-                this.loadStaticWeight(word);
+                this.parseStaticWeight(word);
             }
             else if (word.match(/^BW$/))
             {
@@ -60,27 +60,27 @@ export class WorkoutSet
             }
             else if (word.match(/^[0-9]RM.*$/))
             {
-                this.loadRepMax(word);
+                this.parseRepMax(word);
             }
             else if (word.match(/^[=][Ll].*$/))
             {
-                this.loadReferenceUsingAssignment(word);
+                this.parseReferenceUsingAssignment(word);
             }
             else if (word.match(/^\[[0-9L]\].*$/))
             {
-                this.loadReferenceUsingBrackets(word);
+                this.parseReferenceUsingBrackets(word);
             }
         }
     }
 
-    private loadStaticWeight = (word: string): void =>
+    private parseStaticWeight = (word: string): void =>
     {
         this.type = WorkoutSetTypes.Static;
 
         this.weight = +word;
     }
 
-    private loadRepMax = (word: string): void =>
+    private parseRepMax = (word: string): void =>
     {
         this.type = WorkoutSetTypes.RepMax;
 
@@ -90,25 +90,32 @@ export class WorkoutSet
 
         if (items.length > 1)
         {
-            this.loadPercent(items[1]);
+            this.parsePercent(items[1]);
         }
     }
 
-    private loadReferenceUsingAssignment = (word: string): void =>
+    private parseReferenceUsingAssignment = (word: string): void =>
     {
         this.type = WorkoutSetTypes.Reference;
 
         this.reference = word.substr(1, 1);
 
-        let pos = word.indexOf('-');
-
-        if (pos > -1)
+        if (word.length > 2)
         {
-            this.loadPercent(word.substr(pos));
+            let pos = word.indexOf('-');
+
+            if (pos > -1)
+            {
+                this.parsePercent(word.substr(pos));
+            }
+            else
+            {
+                this.parsePercent(word.substr(2));
+            }
         }
     }
 
-    private loadReferenceUsingBrackets = (word: string): void =>
+    private parseReferenceUsingBrackets = (word: string): void =>
     {
         this.type = WorkoutSetTypes.Reference;
 
@@ -118,11 +125,11 @@ export class WorkoutSet
 
         if (word.length > pos + 1)
         {
-            this.loadPercent(word.substr(pos + 1));
+            this.parsePercent(word.substr(pos + 1));
         }
     }
 
-    private loadPercent = (word: string): void =>
+    private parsePercent = (word: string): void =>
     {
         if (word.match(/^-?[0-9]+(.[0-9]+)?%$/g))
         {
@@ -132,7 +139,7 @@ export class WorkoutSet
         }
     }
 
-    private loadReps = (parts: string[]): void =>
+    private parseReps = (parts: string[]): void =>
     {
         if (parts.length > 1)
         {
@@ -144,7 +151,7 @@ export class WorkoutSet
         }
     }
 
-    private loadSets = (parts: string[]): void =>
+    private parseRepeat = (parts: string[]): void =>
     {
         if (parts.length > 2)
         {
@@ -156,26 +163,25 @@ export class WorkoutSet
         }
     }
 
-    get pattern(): string
+    formatWeight(): string
     {
-        let patterns: string[] = [];
-
         switch (this.type)
         {
             case WorkoutSetTypes.BodyWeight:
-                patterns.push('BW');
-                break;
+                return 'BW';
             case WorkoutSetTypes.Static:
-                patterns.push('' + this.weight);
-                break;
+                return '' + this.weight;
             case WorkoutSetTypes.RepMax:
-                patterns.push(this.repmax + 'RM');
-                break;
+                return this.repmax + 'RM';
             case WorkoutSetTypes.Reference:
-                patterns.push('=' + this.reference);
-                break;
+                return '=' + this.reference;
         }
 
+        throw new Error('Unknown Format for ' + this.type);
+    }
+
+    formatPercent(): string
+    {
         switch (this.type)
         {
             case WorkoutSetTypes.RepMax:
@@ -186,20 +192,38 @@ export class WorkoutSet
 
                     if (p != '100')
                     {
-                        patterns.push('-' + p + '%');
+                        return '-' + p + '%';
                     }
                 }
                 break;
         }
 
-        patterns.push('x' + this.reps);
+        return '';
+    }
 
+    formatReps(): string
+    {
+        return 'x' + this.reps;
+    }
+
+    formatRepeat(): string
+    {
         if (this.repeat > 1)
         {
-            patterns.push('x' + this.repeat);
+            return 'x' + this.repeat;
         }
 
-        return patterns.join('');
+        return '';
+    }
+
+    get pattern(): string
+    {
+        let pattern = this.formatWeight()
+            + this.formatPercent()
+            + this.formatReps()
+            + this.formatRepeat();
+
+        return pattern;
     }
 
     set pattern(value: string)

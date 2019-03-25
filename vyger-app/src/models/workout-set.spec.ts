@@ -26,7 +26,7 @@ describe('WorkoutSet', () =>
         {
             //  arrange
             //  act
-            let subject = new WorkoutSet('BW');
+            let subject = new WorkoutSet('bw');
             //  assert
             expect(subject.type).toBe(WorkoutSetTypes.BodyWeight);
             expect(subject.reps).toBe(1);

@@ -14,10 +14,6 @@
     <tr *ngFor="let exercise of clones">
       <td class="drag-handler"></td>
       <td>
-        <a class="pointer float-right"
-           href="#/logs/exercises/delete/{{ date }}?exercise={{ exercise.id }}">
-          <span class="fa fa-fw fa-times text-danger"></span>
-        </a>
         {{ exercise.fullDisplay() }}
       </td>
       <td class="p-1">

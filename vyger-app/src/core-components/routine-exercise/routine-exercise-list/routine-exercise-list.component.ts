@@ -111,12 +111,18 @@ export class RoutineExerciseListComponent implements OnInit
 
     private overlayOntoExercise = (clone: RoutineExercise): void =>
     {
-        let original = this.routine
+        let originals = this.routine
             .exercises
-            .find(x => x.week == this.week && x.day == this.day && x.id == clone.id);
+            .filter(x => x.day == this.day && x.id == clone.id);
 
-        original.pattern = clone.pattern;
-        original.sequence = clone.sequence;
+        for (let i = 0; i < originals.length; i++)
+        {
+            if (originals[i].week == this.week)
+            {
+                originals[i].pattern = clone.pattern;
+            }
+            originals[i].sequence = clone.sequence;
+        }
     };
 
     //  syntacic crutch for sortablejs callback
