@@ -87,7 +87,7 @@ export class RoutineExerciseUpdateComponent implements OnInit
             let exercise = this.activatedRoute.snapshot.queryParamMap.get('exercise');
 
             this.clones = this.routine.exercises
-                .filter(x => x.day == this.day && x.id == exercise)
+                .filter(x => x.week <= this.routine.weeks && x.day == this.day && x.id == exercise)
                 .sort(RoutineExercise.compare);
         }
     }

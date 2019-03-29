@@ -24,9 +24,12 @@ export class RoutineCreateComponent implements OnInit
     {
         this.pageTitleService.setTitle('Create Routine');
 
-        this.routine = new Routine();
+        let options = {
+            name: '',
+            sets: ['5RM-90%x5', '5RMx4']
+        };
 
-        this.routine.pattern = '5RM-90%x5, 5RMx4';
+        this.routine = new Routine(options);
 
         this.updateBreadCrumbs();
     }

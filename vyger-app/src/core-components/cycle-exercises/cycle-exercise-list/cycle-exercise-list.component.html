@@ -17,7 +17,8 @@
       <td>
         {{ exercise.fullDisplay() }}
       </td>
-      <td [innerText]="exercise.pattern"></td>
+      <td class="workout-sets"
+          [innerText]="exercise.pattern"></td>
     </tr>
   </tbody>
   <tfoot *ngIf="cycle && cycle.canLogWorkout(week, day)">

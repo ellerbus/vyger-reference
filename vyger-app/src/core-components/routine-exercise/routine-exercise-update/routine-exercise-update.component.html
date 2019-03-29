@@ -14,10 +14,6 @@
     <tr *ngFor="let exercise of clones">
       <td class="text-center">#{{ exercise.week }}</td>
       <td>
-        <a class="pointer float-right"
-           href="#/routines/exercises/delete/{{ routine.id }}?exercise={{ exercise.id }}&day={{ day }}">
-          <span class="fa fa-fw fa-times text-danger"></span>
-        </a>
         <a href="#/routines/exercises/update/{{ routine.id }}?exercise={{ exercise.id }}&day={{ day }}">
           {{ exercise.fullDisplay() }}
         </a>

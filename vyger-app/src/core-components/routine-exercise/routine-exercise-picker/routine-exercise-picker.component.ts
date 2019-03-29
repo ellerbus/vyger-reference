@@ -20,6 +20,7 @@ export class RoutineExercisePickerComponent implements OnInit, OnChanges
 
     @Input() routine: Routine;
     @Input() exercise: RoutineExercise;
+    @Input() day: number;
 
     constructor(
         private ExerciseService: ExerciseService) { }
@@ -80,11 +81,14 @@ export class RoutineExercisePickerComponent implements OnInit, OnChanges
 
         for (let i = 0; i < this.routine.exercises.length; i++)
         {
-            let id = this.routine.exercises[i].id;
+            let ex = this.routine.exercises[i];
 
-            if (!picked.includes(id))
+            if (ex.day == this.day)
             {
-                picked.push(id);
+                if (!picked.includes(ex.id))
+                {
+                    picked.push(ex.id);
+                }
             }
         }
 

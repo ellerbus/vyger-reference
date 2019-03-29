@@ -20,6 +20,7 @@ export class WorkoutSet
 
     constructor(public set: string)
     {
+        this.type = WorkoutSetTypes.Static;
         this.reference = 'L';
         this.weight = 0;
         this.repmax = 1;
@@ -37,7 +38,7 @@ export class WorkoutSet
 
     private parse = (set: string): void =>
     {
-        const parts = set.split(/[xX/]/gi);
+        let parts = set.split(/[xX/]/gi);
 
         this.parseWeight(parts);
         this.parseReps(parts);
@@ -48,7 +49,7 @@ export class WorkoutSet
     {
         if (parts.length > 0)
         {
-            const word = parts[0];
+            let word = parts[0];
 
             if (word.match(/^[0-9]+$/))
             {
@@ -62,7 +63,7 @@ export class WorkoutSet
             {
                 this.parseRepMax(word);
             }
-            else if (word.match(/^[=][Ll].*$/))
+            else if (word.match(/^[=#]?[Ll].*$/))
             {
                 this.parseReferenceUsingAssignment(word);
             }
@@ -84,7 +85,7 @@ export class WorkoutSet
     {
         this.type = WorkoutSetTypes.RepMax;
 
-        const items = word.split(/RM/gi);
+        let items = word.split(/RM/gi);
 
         this.repmax = +items[0];
 
