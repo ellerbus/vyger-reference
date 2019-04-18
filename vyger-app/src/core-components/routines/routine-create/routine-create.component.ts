@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Routine } from 'src/models/routine';
+import { utilities } from 'src/models/utilities';
 import { BreadCrumbsService } from 'src/services/bread-crumbs.service';
 import { PageTitleService } from 'src/services/page-title.service';
 import { RoutineService } from 'src/services/routine.service';
@@ -16,6 +17,7 @@ export class RoutineCreateComponent implements OnInit
 
     constructor(
         private router: Router,
+        private activatedRoute: ActivatedRoute,
         private breadCrumbService: BreadCrumbsService,
         private pageTitleService: PageTitleService,
         private routineService: RoutineService) { }
@@ -32,6 +34,24 @@ export class RoutineCreateComponent implements OnInit
         this.routine = new Routine(options);
 
         this.updateBreadCrumbs();
+
+        const copy = this.activatedRoute.snapshot.queryParamMap.get('copy');
+
+        this.routineService
+            .getRoutine(copy)
+            .then(this.onloadingRoutine);
+    }
+
+    private onloadingRoutine = (routine: Routine): void =>
+    {
+        if (routine != null)
+        {
+            this.routine = new Routine({ ...routine });
+
+            this.routine.id = utilities.generateId('r', 2);
+
+            this.routine.name = 'Copy of ' + this.routine.name;
+        }
     }
 
     cancel(): void

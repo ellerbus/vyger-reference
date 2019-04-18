@@ -5,7 +5,7 @@
        [hidden]="routines == null">
   <thead>
     <tr>
-      <th colspan="2">Name</th>
+      <th colspan="3">Name</th>
       <th class="create-col">
         <a class="btn btn-outline-success float-right"
            routerLink="/routines/create">
@@ -20,6 +20,13 @@
       <a class="btn btn-outline-secondary float-right"
          routerLink="/routines/exercises/{{ routine.id }}">
         Exercises
+      </a>
+    </td>
+    <td class="create-col">
+      <a class="btn btn-outline-secondary float-right"
+         routerLink="/routines/create"
+         [queryParams]="{ copy: routine.id }">
+        Copy
       </a>
     </td>
     <td class="create-col">

@@ -30,7 +30,9 @@ export class CycleListComponent implements OnInit
 
     private onloadingCycles = (data: Cycle[]) =>
     {
-        this.cycles = data.sort(Cycle.compare);
+        let end = Math.min(4, data.length);
+
+        this.cycles = data.sort(Cycle.compare).slice(0, end);
     };
 
     private updateBreadCrumbs = () =>
